@@ -142,10 +142,6 @@
             <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="BaseDriverConnection" installItem="true" installedVersion="NONE" itemPath="com.kuka/BaseDriverConnection" selectedVersion="1" usage="Library">
                 <Interface id="com.kuka/BaseDriverConnection/BaseDriverConnection" version="0.1.0"/>
             </SoftwareItem>
-            <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="KUKA Sunrise.Basic Toolbox" installItem="true" installedVersion="NONE" itemPath="com.kuka/BasicToolbox" selectedVersion="1.3.1" usage="Feature">
-                <Interface id="com.kuka/BasicToolbox/BasicToolbox" version="1.3.1"/>
-            </SoftwareItem>
-            <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="KUKA Sunrise.Basic Toolbox Example Applications" installItem="false" installedVersion="NONE" itemPath="com.kuka/BasicToolboxExampleApplications" selectedVersion="NONE" usage="Feature"/>
             <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="Navigation Battery Manager Api" installItem="true" installedVersion="NONE" itemPath="com.kuka/BatteryManagerAPI" selectedVersion="1" usage="Feature"/>
             <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="Cabinet" installItem="true" installedVersion="NONE" itemPath="com.kuka/Cabinet" selectedVersion="1" usage="Library">
                 <Interface id="com.kuka/Cabinet/CabCtrl" version="0.8.4"/>
@@ -160,7 +156,6 @@
                 <Interface id="com.kuka/ControllerFramework/ConfigFiles" version="0.8.4"/>
                 <Interface id="com.kuka/NexxtGenSharedLib/ConfigFiles" version="0.8.4"/>
             </SoftwareItem>
-            <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="ConnectivityBasic RT-Libs" installItem="true" installedVersion="NONE" itemPath="com.kuka/ConnectivityBasicModules" selectedVersion="NONE" usage="Library"/>
             <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="ControlPanelDriver" installItem="true" installedVersion="NONE" itemPath="com.kuka/ControlPanelDriver" selectedVersion="1" usage="Library">
                 <Interface id="com.kuka/ControlPanelDriver/ControlPanelDriver" version="0.8.4"/>
             </SoftwareItem>
@@ -183,29 +178,17 @@
                 <Interface id="com.kuka/KMP/DiagnosticsSPRConfiguratorBase" version="0.1.0"/>
             </SoftwareItem>
             <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="Navigation Support Diagnostics SunriseCabinet" installItem="true" installedVersion="NONE" itemPath="com.kuka/DiagnosticsSunriseCabinet" selectedVersion="1" usage="Feature"/>
-            <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="DirectServoSupport" installItem="true" installedVersion="NONE" itemPath="com.kuka/DirectServoSupport" selectedVersion="NONE" usage="Library"/>
-            <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="Enhanced Velocity Controller" installItem="false" installedVersion="NONE" itemPath="com.kuka/EnhancedVelocityController" selectedVersion="NONE" usage="Feature"/>
             <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="EtherCATWrapper" installItem="true" installedVersion="NONE" itemPath="com.kuka/EtherCATWrapper" selectedVersion="1" usage="Library">
                 <Interface id="com.kuka/EtherCATWrapper/EtherCATWrapperBase" version="0.8.4"/>
             </SoftwareItem>
             <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="Nav FDI Support" installItem="true" installedVersion="NONE" itemPath="com.kuka/FDI" selectedVersion="1" usage="Feature"/>
             <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="FSoE Slave support" installItem="false" installedVersion="NONE" itemPath="com.kuka/FSoESlaveSupport" selectedVersion="NONE" usage="Feature"/>
-            <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="FastRobotInterface RT-Libs" installItem="true" installedVersion="NONE" itemPath="com.kuka/FastRobotInterface" selectedVersion="NONE" usage="Library"/>
-            <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="FastRobotInterface Client SDK" installItem="true" installedVersion="NONE" itemPath="com.kuka/FastRobotInterface_SDK_Cpp" selectedVersion="NONE" usage="Library"/>
             <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="Nav Finelocalization Support" installItem="true" installedVersion="NONE" itemPath="com.kuka/Finelocalization" selectedVersion="1" usage="Feature"/>
             <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="GMS Adjustment" installItem="false" installedVersion="NONE" itemPath="com.kuka/GMSAdjustment" selectedVersion="NONE" usage="Feature"/>
             <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="GenericSunriseIODevice" installItem="true" installedVersion="NONE" itemPath="com.kuka/GenericSunriseIODevice" selectedVersion="NONE" usage="Library"/>
-            <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="KUKA Sunrise.GripperToolbox" installItem="false" installedVersion="NONE" itemPath="com.kuka/GripperToolbox" selectedVersion="NONE" usage="Feature"/>
             <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="GrpcPortForwarding" installItem="true" installedVersion="NONE" itemPath="com.kuka/GrpcPortForwarding" selectedVersion="1" usage="Library">
                 <Interface id="com.kuka/KMP/GrpcPortForwarding" version="1.0.0"/>
             </SoftwareItem>
-            <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="GrpcWebProxy" installItem="true" installedVersion="NONE" itemPath="com.kuka/GrpcWebProxy" selectedVersion="1.0" usage="Library">
-                <Interface id="com.kuka/GrpcWebProxy/GrpcWebProxyInterface" version="0.1.0"/>
-            </SoftwareItem>
-            <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="GtbBackgroundTask" installItem="true" installedVersion="NONE" itemPath="com.kuka/GtbBackgroundTask" selectedVersion="NONE" usage="Library"/>
-            <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="GtbObjectTemplates" installItem="true" installedVersion="NONE" itemPath="com.kuka/GtbObjectTemplates" selectedVersion="NONE" usage="Library"/>
-            <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="GtbPartialProjects" installItem="true" installedVersion="NONE" itemPath="com.kuka/GtbPartialProjects" selectedVersion="NONE" usage="Library"/>
-            <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="GtbSmartHMI" installItem="true" installedVersion="NONE" itemPath="com.kuka/GtbSmartHMI" selectedVersion="NONE" usage="Library"/>
             <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="HandGuiding" installItem="true" installedVersion="NONE" itemPath="com.kuka/HandGuiding" selectedVersion="1" usage="Library">
                 <Interface id="com.kuka/HandGuiding/Realtime" version="1.0.0"/>
                 <Interface id="com.kuka/HandGuiding/SmartHMI" version="1.0.0"/>
@@ -240,7 +223,6 @@
             <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="Jay Remote Control IO Mapping without Lifting Device" installItem="true" installedVersion="NONE" itemPath="com.kuka/JaySupportIOConfig_noLDMapping" selectedVersion="1" usage="Library">
                 <Interface id="com.kuka/KMP/JaySupportIOConfigMapping" version="1.0.0"/>
             </SoftwareItem>
-            <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="JointOTGSupport" installItem="true" installedVersion="NONE" itemPath="com.kuka/JointOTGSupport" selectedVersion="NONE" usage="Library"/>
             <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="KMP OmniMove 200 IO Configuration" installItem="true" installedVersion="NONE" itemPath="com.kuka/KMP200IOConfig" selectedVersion="1" usage="Library">
                 <Interface id="com.kuka/IOConfig/KMP_Omnimove_200" version="0.1.0"/>
             </SoftwareItem>
@@ -302,7 +284,6 @@
             <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="KMR200 iiwa Support" installItem="true" installedVersion="NONE" itemPath="com.kuka/KMR200_iiwa_Support" selectedVersion="1" usage="Feature">
                 <Interface id="com.kuka/IOConfig/KMR_iiwa" version="0.1.0"/>
             </SoftwareItem>
-            <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="KUKA Option Network Interface" installItem="true" installedVersion="NONE" itemPath="com.kuka/KONISupport" selectedVersion="NONE" usage="Library"/>
             <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="KotlinRuntime" installItem="true" installedVersion="NONE" itemPath="com.kuka/KotlinRuntime" selectedVersion="1.2.51" usage="Library">
                 <Interface id="com.kuka/OSGi/kotlinx.atomicfu" version="0.10.3"/>
                 <Interface id="com.kuka/OSGi/kotlinx.coroutines.experimental.selects" version="0.23.4"/>
@@ -413,7 +394,7 @@
                     <Value>true</Value>
                 </Property>
                 <Property displayName="NAT IP" key="NATIP" regex="^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$" showInEditor="true" type="String">
-                    <Value>172.31.1.151</Value>
+                    <Value>172.32.1.201</Value>
                 </Property>
             </SoftwareItem>
             <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="Nav Support KMP Common Library Multirobot" installItem="true" installedVersion="NONE" itemPath="com.kuka/NavKMPCommonMultiRobotLibs" selectedVersion="1.0" usage="Library">
@@ -475,7 +456,6 @@
                 <Interface id="com.kuka/KMP/RobotInfoSyncFix" version="1.0.0"/>
             </SoftwareItem>
             <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="Roles &amp; Rights Expert" installItem="true" installedVersion="NONE" itemPath="com.kuka/RolesRightsFeature" selectedVersion="1.4.0" usage="Feature"/>
-            <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="Safe IO Config" installItem="true" installedVersion="NONE" itemPath="com.kuka/SafeIOConfig" selectedVersion="NONE" usage="Library"/>
             <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="General safety settings" installItem="true" installedVersion="NONE" itemPath="com.kuka/SafetyBasic" selectedVersion="1" usage="Library">
                 <Interface id="com.kuka/SafetyBasic/KRC4Safety" version="0.1.0"/>
             </SoftwareItem>
@@ -486,13 +466,6 @@
             <SoftwareItem autoSelected="true" canChangeSelection="false" displayName="SafetyRAPILibs" installItem="true" installedVersion="NONE" itemPath="com.kuka/SafetyRAPILibs" selectedVersion="1.0.0" usage="Feature"/>
             <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="Safe Operation" installItem="true" installedVersion="NONE" itemPath="com.kuka/SafetySOP" selectedVersion="1" usage="Feature"/>
             <SoftwareItem autoSelected="true" canChangeSelection="false" displayName="Safety Signal Observer LBR" installItem="true" installedVersion="NONE" itemPath="com.kuka/SafetySignalObsLBR" selectedVersion="1" usage="Feature"/>
-            <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="KUKA Sunrise.SafetyVisualization" installItem="true" installedVersion="NONE" itemPath="com.kuka/SafetyVisualization" selectedVersion="1.0.0" usage="Feature"/>
-            <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="Safety Visualization Realtime Extension" installItem="true" installedVersion="NONE" itemPath="com.kuka/SafetyVisualizationRTExtension" selectedVersion="1" usage="Library">
-                <Interface id="com.kuka/ExtensionSSR/GetIOInfoSSR" version="0.1.0"/>
-            </SoftwareItem>
-            <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="SafetyVisualizationUI" installItem="true" installedVersion="NONE" itemPath="com.kuka/SafetyVisualizationUI" selectedVersion="1.0" usage="Library">
-                <Interface id="com.kuka/SafetyVisualizationUI/SafetyVisualizationUI" version="0.1.0"/>
-            </SoftwareItem>
             <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="smartHMI" installItem="true" installedVersion="NONE" itemPath="com.kuka/SmartHMI" selectedVersion="1" usage="Feature">
                 <Interface id="com.kuka/SmartHMI/SmartHMI" version="0.1.0"/>
                 <PropertyGroup displayName="Calibration" key="Measurement" showInEditor="true">
@@ -543,7 +516,6 @@
             <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="SmartPad Updater" installItem="true" installedVersion="NONE" itemPath="com.kuka/SmartPadUpdater" selectedVersion="1" usage="Library">
                 <Interface id="com.kuka/SmartPadUpdater/SmartPadUpdater" version="0.1.0"/>
             </SoftwareItem>
-            <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="SmartServoLINSupport" installItem="true" installedVersion="NONE" itemPath="com.kuka/SmartServoLINSupport" selectedVersion="NONE" usage="Library"/>
             <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="StartKRC" installItem="true" installedVersion="NONE" itemPath="com.kuka/StartKRC" selectedVersion="1" usage="Library">
                 <Interface id="com.kuka/StartKRC/StartKRC" version="0.1.0"/>
                 <Interface id="com.kuka/StartKRC/StartKRCConfig" version="0.1.0"/>
@@ -591,10 +563,6 @@
             </SoftwareItem>
             <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="ThinMMSimulationDriver" installItem="true" installedVersion="NONE" itemPath="com.kuka/ThinMMSimulationDriver" selectedVersion="NONE" usage="Library"/>
             <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="TimeSync" installItem="true" installedVersion="NONE" itemPath="com.kuka/TimeSync" selectedVersion="NONE" usage="Library"/>
-            <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="TinyWeb" installItem="true" installedVersion="NONE" itemPath="com.kuka/TinyWeb" selectedVersion="1.0" usage="Library">
-                <Interface id="com.kuka/TinyWeb/TinyWeb" version="0.1.0"/>
-                <Interface id="com.kuka/WebServer/WebServer" version="0.1.0"/>
-            </SoftwareItem>
             <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="Trace" installItem="true" installedVersion="NONE" itemPath="com.kuka/Trace" selectedVersion="1" usage="Library">
                 <Interface id="com.kuka/Trace/Trace" version="0.8.4"/>
             </SoftwareItem>
@@ -716,34 +684,6 @@
             <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="com.kuka.backupManager" installItem="true" installedVersion="NONE" itemPath="com.kuka/com.kuka.backupManager" selectedVersion="NONE" usage="Library"/>
             <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="com.kuka.backupManager.service" installItem="true" installedVersion="NONE" itemPath="com.kuka/com.kuka.backupManager.service" selectedVersion="NONE" usage="Library"/>
             <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="com.kuka.backupManager.service.ncf" installItem="true" installedVersion="NONE" itemPath="com.kuka/com.kuka.backupManager.service.ncf" selectedVersion="NONE" usage="Library"/>
-            <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="com.kuka.basictoolbox" installItem="true" installedVersion="NONE" itemPath="com.kuka/com.kuka.basictoolbox" selectedVersion="1.3.1" usage="Library">
-                <Interface id="com.kuka/OSGi/com.kuka.basictoolbox.util" version="1.3.1"/>
-                <Interface id="com.kuka/OSGi/com.kuka.basictoolbox.blocking" version="1.3.1"/>
-                <Interface id="com.kuka/OSGi/com.kuka.basictoolbox.library" version="1.3.1"/>
-                <Interface id="com.kuka/OSGi/com.kuka.basictoolbox.gripper" version="1.3.1"/>
-                <Interface id="com.kuka/OSGi/com.kuka.basictoolbox.container" version="1.3.1"/>
-                <Interface id="com.kuka/OSGi/com.kuka.basictoolbox.impl" version="1.3.1"/>
-                <Interface id="com.kuka/Bundle/com.kuka.basictoolbox" version="1.3.1"/>
-                <Interface id="com.kuka/OSGi/com.kuka.basictoolbox.abstractBlock" version="1.3.1"/>
-            </SoftwareItem>
-            <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="com.kuka.basictoolbox.exampleApplications" installItem="true" installedVersion="NONE" itemPath="com.kuka/com.kuka.basictoolbox.exampleApplications" selectedVersion="NONE" usage="Library"/>
-            <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="com.kuka.collisiondetection" installItem="true" installedVersion="NONE" itemPath="com.kuka/com.kuka.collisiondetection" selectedVersion="1.3.1" usage="Library">
-                <Interface id="com.kuka/OSGi/com.kuka.collisiondetection.conditionImpl" version="1.3.1"/>
-                <Interface id="com.kuka/OSGi/com.kuka.collisiondetection.util" version="1.3.1"/>
-                <Interface id="com.kuka/OSGi/com.kuka.collisiondetection.abstractInterruptBehavior" version="1.3.1"/>
-                <Interface id="com.kuka/OSGi/com.kuka.collisiondetection.abstractResumeNotifier" version="1.3.1"/>
-                <Interface id="com.kuka/OSGi/com.kuka.collisiondetection.abstractCollisionCondition" version="1.3.1"/>
-                <Interface id="com.kuka/OSGi/com.kuka.collisiondetection.resumeBehaviorImpl" version="1.3.1"/>
-                <Interface id="com.kuka/OSGi/com.kuka.collisiondetection.collisionhandler" version="1.3.1"/>
-                <Interface id="com.kuka/OSGi/com.kuka.collisiondetection.abstractResumeBehavior" version="1.3.1"/>
-                <Interface id="com.kuka/Bundle/com.kuka.collisiondetection" version="1.3.1"/>
-                <Interface id="com.kuka/OSGi/com.kuka.collisiondetection.resumeConditionImpl" version="1.3.1"/>
-                <Interface id="com.kuka/OSGi/com.kuka.collisiondetection.interruptBehaviorImpl" version="1.3.1"/>
-            </SoftwareItem>
-            <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="com.kuka.collisiondetection.environments" installItem="true" installedVersion="NONE" itemPath="com.kuka/com.kuka.collisiondetection.environments" selectedVersion="1.3.1" usage="Library">
-                <Interface id="com.kuka/OSGi/com.kuka.collisiondetection.environments" version="1.3.1"/>
-                <Interface id="com.kuka/Bundle/com.kuka.collisiondetection.environments" version="1.3.1"/>
-            </SoftwareItem>
             <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="com.kuka.command.api" installItem="true" installedVersion="NONE" itemPath="com.kuka/com.kuka.command.api" selectedVersion="1.0.0.5" usage="Library">
                 <Interface id="com.kuka/OSGi/com.kuka.parameters" version="1.0.0"/>
                 <Interface id="com.kuka/OSGi/com.kuka.command" version="1.0.0"/>
@@ -819,16 +759,6 @@
                 <Interface id="com.kuka/Bundle/com.kuka.configuration.manager" version="2.0.1"/>
             </SoftwareItem>
             <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="com.kuka.connectionLib" installItem="true" installedVersion="NONE" itemPath="com.kuka/com.kuka.connectionLib" selectedVersion="NONE" usage="Library"/>
-            <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="com.kuka.connectivity.common.JniExtractor" installItem="true" installedVersion="NONE" itemPath="com.kuka/com.kuka.connectivity.common.JniExtractor" selectedVersion="NONE" usage="Library"/>
-            <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="Direct Servo Motion Extension" installItem="false" installedVersion="NONE" itemPath="com.kuka/com.kuka.connectivity.directServo" selectedVersion="NONE" usage="Feature"/>
-            <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="Direct Servo Motion Example Applications" installItem="false" installedVersion="NONE" itemPath="com.kuka/com.kuka.connectivity.directServo.exampleApplications" selectedVersion="NONE" usage="Feature"/>
-            <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="Fast Robot Interface Extension" installItem="false" installedVersion="NONE" itemPath="com.kuka/com.kuka.connectivity.fastRobotInterface" selectedVersion="NONE" usage="Feature"/>
-            <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="FastRobotInterface - Java SDK Libs" installItem="true" installedVersion="NONE" itemPath="com.kuka/com.kuka.connectivity.fastRobotInterface.clientSDK" selectedVersion="NONE" usage="Library"/>
-            <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="Fast Robot Interface Extension Example Applications" installItem="false" installedVersion="NONE" itemPath="com.kuka/com.kuka.connectivity.fastRobotInterface.exampleApplications" selectedVersion="NONE" usage="Feature"/>
-            <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="Smart Servo Motion Extension" installItem="false" installedVersion="NONE" itemPath="com.kuka/com.kuka.connectivity.smartServo" selectedVersion="NONE" usage="Feature"/>
-            <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="Smart Servo Motion Example Applications" installItem="false" installedVersion="NONE" itemPath="com.kuka/com.kuka.connectivity.smartServo.exampleApplications" selectedVersion="NONE" usage="Feature"/>
-            <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="Smart Servo Linear Motion Extension" installItem="false" installedVersion="NONE" itemPath="com.kuka/com.kuka.connectivity.smartServoLIN" selectedVersion="NONE" usage="Feature"/>
-            <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="Smart Servo Linear Motion Example Applications" installItem="false" installedVersion="NONE" itemPath="com.kuka/com.kuka.connectivity.smartServoLIN.exampleApplications" selectedVersion="NONE" usage="Feature"/>
             <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="com.kuka.deployment" installItem="true" installedVersion="NONE" itemPath="com.kuka/com.kuka.deployment" selectedVersion="1.0.0.5" usage="Library">
                 <Interface id="com.kuka/OSGi/com.kuka.deployment.errors" version="1.0.0"/>
                 <Interface id="com.kuka/OSGi/com.kuka.deployment.client" version="1.0.0"/>
@@ -854,30 +784,10 @@
                 <Interface id="com.kuka/OSGi/com.kuka.deployment.safetyDeployment.action" version="1.0.0"/>
                 <Interface id="com.kuka/Bundle/com.kuka.deployment.safetyDeployment" version="1.0.0"/>
             </SoftwareItem>
-            <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="com.kuka.flexfellow" installItem="true" installedVersion="NONE" itemPath="com.kuka/com.kuka.flexfellow" selectedVersion="NONE" usage="Library"/>
-            <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="com.kuka.flexfellow.ncf" installItem="true" installedVersion="NONE" itemPath="com.kuka/com.kuka.flexfellow.ncf" selectedVersion="NONE" usage="Library"/>
-            <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="com.kuka.flexfellow.service" installItem="true" installedVersion="NONE" itemPath="com.kuka/com.kuka.flexfellow.service" selectedVersion="NONE" usage="Library"/>
-            <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="com.kuka.flexfellow.statushandler" installItem="true" installedVersion="NONE" itemPath="com.kuka/com.kuka.flexfellow.statushandler" selectedVersion="NONE" usage="Library"/>
-            <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="com.kuka.flexfellow.statuspublisher" installItem="true" installedVersion="NONE" itemPath="com.kuka/com.kuka.flexfellow.statuspublisher" selectedVersion="NONE" usage="Library"/>
             <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="com.kuka.git" installItem="true" installedVersion="NONE" itemPath="com.kuka/com.kuka.git" selectedVersion="1.0.0.5" usage="Library">
                 <Interface id="com.kuka/OSGi/com.kuka.git.exceptions" version="1.0.0"/>
                 <Interface id="com.kuka/Bundle/com.kuka.git" version="1.0.0"/>
                 <Interface id="com.kuka/OSGi/com.kuka.git" version="1.0.0"/>
-            </SoftwareItem>
-            <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="com.kuka.grippertoolbox.api" installItem="true" installedVersion="NONE" itemPath="com.kuka/com.kuka.grippertoolbox.api" selectedVersion="NONE" usage="Library"/>
-            <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="com.kuka.grippertoolbox.common" installItem="true" installedVersion="NONE" itemPath="com.kuka/com.kuka.grippertoolbox.common" selectedVersion="NONE" usage="Library"/>
-            <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="com.kuka.grippertoolbox.gripper" installItem="true" installedVersion="NONE" itemPath="com.kuka/com.kuka.grippertoolbox.gripper" selectedVersion="NONE" usage="Library"/>
-            <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="com.kuka.grippertoolbox.impl" installItem="true" installedVersion="NONE" itemPath="com.kuka/com.kuka.grippertoolbox.impl" selectedVersion="NONE" usage="Library"/>
-            <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="com.kuka.grippertoolbox.service" installItem="true" installedVersion="NONE" itemPath="com.kuka/com.kuka.grippertoolbox.service" selectedVersion="NONE" usage="Library"/>
-            <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="com.kuka.grippertoolbox.service.ncf" installItem="true" installedVersion="NONE" itemPath="com.kuka/com.kuka.grippertoolbox.service.ncf" selectedVersion="NONE" usage="Library"/>
-            <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="com.kuka.grpc.api" installItem="true" installedVersion="NONE" itemPath="com.kuka/com.kuka.grpc.api" selectedVersion="1.0.0.V1161-0-0_2" usage="Library">
-                <Interface id="com.kuka/OSGi/com.kuka.grpc.api.server" version="1.0.0"/>
-                <Interface id="com.kuka/OSGi/com.kuka.grpc.api.util" version="1.0.0"/>
-                <Interface id="com.kuka/Bundle/com.kuka.grpc.api" version="1.0.0"/>
-            </SoftwareItem>
-            <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="com.kuka.grpc.server.provider" installItem="true" installedVersion="NONE" itemPath="com.kuka/com.kuka.grpc.server.provider" selectedVersion="1.0.0.V1161-0-0_2" usage="Library">
-                <Interface id="com.kuka/Bundle/com.kuka.grpc.server.provider" version="1.0.0"/>
-                <Interface id="com.kuka/GRPC/Server" version="0.1.0"/>
             </SoftwareItem>
             <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="com.kuka.jogging.provider.api" installItem="true" installedVersion="NONE" itemPath="com.kuka/com.kuka.jogging.provider.api" selectedVersion="1.0.0.5" usage="Library">
                 <Interface id="com.kuka/Bundle/com.kuka.jogging.provider.api" version="1.0.0"/>
@@ -1814,46 +1724,6 @@
                 <Interface id="com.kuka/OSGi/com.kuka.safety.crc32" version="1.0.0"/>
                 <Interface id="com.kuka/OSGi/com.kuka.safety.config.library.reader" version="1.0.0"/>
             </SoftwareItem>
-            <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="com.kuka.safetyvisualization.grpc" installItem="true" installedVersion="NONE" itemPath="com.kuka/com.kuka.safetyvisualization.grpc" selectedVersion="1.0.0.V1161-0-0_2" usage="Library">
-                <Interface id="com.kuka/OSGi/io.grpc.util" version="1.11.0"/>
-                <Interface id="com.kuka/OSGi/com.google.protobuf" version="3.5.1"/>
-                <Interface id="com.kuka/OSGi/com.google.common.collect" version="20.0.0"/>
-                <Interface id="com.kuka/OSGi/com.google.common.io" version="20.0.0"/>
-                <Interface id="com.kuka/OSGi/com.google.common.util.concurrent" version="20.0.0"/>
-                <Interface id="com.kuka/OSGi/io.grpc" version="1.11.0"/>
-                <Interface id="com.kuka/OSGi/io.grpc.stub" version="1.11.0"/>
-                <Interface id="com.kuka/OSGi/io.grpc.netty" version="1.11.0"/>
-                <Interface id="com.kuka/OSGi/org.apache.commons.lang3" version="3.5.0"/>
-                <Interface id="com.kuka/OSGi/io.grpc.internal" version="1.11.0"/>
-                <Interface id="com.kuka/OSGi/io.grpc.inprocess" version="1.11.0"/>
-                <Interface id="com.kuka/Bundle/com.kuka.safetyvisualization.grpc" version="1.0.0"/>
-                <Interface id="com.kuka/OSGi/io.grpc.protobuf" version="1.11.0"/>
-                <Interface id="com.kuka/OSGi/org.apache.commons.lang3.builder" version="3.5.0"/>
-            </SoftwareItem>
-            <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="com.kuka.safetyvisualization.grpc.service.provider" installItem="true" installedVersion="NONE" itemPath="com.kuka/com.kuka.safetyvisualization.grpc.service.provider" selectedVersion="1.0.0.V1161-0-0_2" usage="Library">
-                <Interface id="com.kuka/OSGi/com.kuka.grpc.service.kinematics.event" version="1.0.0"/>
-                <Interface id="com.kuka/Bundle/com.kuka.safetyvisualization.grpc.service.provider" version="1.0.0"/>
-                <Interface id="com.kuka/OSGi/com.kuka.grpc.service.project.type" version="1.0.0"/>
-                <Interface id="com.kuka/OSGi/com.kuka.grpc.service.safety" version="1.0.0"/>
-                <Interface id="com.kuka/OSGi/com.kuka.grpc.service.kinematics.type" version="1.0.0"/>
-                <Interface id="com.kuka/OSGi/com.kuka.grpc.common" version="1.0.0"/>
-                <Interface id="com.kuka/OSGi/com.kuka.grpc.service.project" version="1.0.0"/>
-                <Interface id="com.kuka/OSGi/com.kuka.grpc.service.project.event" version="1.0.0"/>
-                <Interface id="com.kuka/OSGi/com.kuka.grpc.service.safety.event" version="1.0.0"/>
-                <Interface id="com.kuka/OSGi/com.kuka.grpc.service.safety.type" version="1.0.0"/>
-                <Interface id="com.kuka/OSGi/com.kuka.grpc.service.kinematics" version="1.0.0"/>
-                <Interface id="com.kuka/OSGi/com.kuka.grpc.service.event" version="1.0.0"/>
-                <Interface id="com.kuka/OSGi/com.kuka.grpc.service.event.event" version="1.0.0"/>
-            </SoftwareItem>
-            <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="com.kuka.safetyvisualization.grpc.service.provider.api" installItem="true" installedVersion="NONE" itemPath="com.kuka/com.kuka.safetyvisualization.grpc.service.provider.api" selectedVersion="1.0.0.V1161-0-0_2" usage="Library">
-                <Interface id="com.kuka/OSGi/com.kuka.grpc.provider.api.event" version="1.0.0"/>
-                <Interface id="com.kuka/Bundle/com.kuka.safetyvisualization.grpc.service.provider.api" version="1.0.0"/>
-            </SoftwareItem>
-            <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="com.kuka.safetyvisualization.safetydataprovider" installItem="true" installedVersion="NONE" itemPath="com.kuka/com.kuka.safetyvisualization.safetydataprovider" selectedVersion="1.0.0.V1161-0-0_2" usage="Library">
-                <Interface id="com.kuka/OSGi/com.kuka.safetyvisualization.safety.model" version="1.0.0"/>
-                <Interface id="com.kuka/OSGi/com.kuka.safetyvisualization.safetydataprovider" version="1.0.0"/>
-                <Interface id="com.kuka/Bundle/com.kuka.safetyvisualization.safetydataprovider" version="1.0.0"/>
-            </SoftwareItem>
             <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="com.kuka.service.batteryManagerService" installItem="true" installedVersion="NONE" itemPath="com.kuka/com.kuka.service.batteryManagerService" selectedVersion="1.15.0.buildReleaseV1_13_167" usage="Library">
                 <Interface id="com.kuka/OSGi/com.battery.management.v1" version="1.0.0"/>
                 <Interface id="com.kuka/OSGi/com.kuka.roboticsAPI.applicationServer.services.batteryManagerService.capabilities.sideSocketCharging" version="1.0.0"/>
@@ -1975,7 +1845,6 @@
                 <Interface id="com.kuka/OSGi/com.kuka.task.provider.behaviors" version="1.0.0"/>
                 <Interface id="com.kuka/OSGi/com.kuka.task.provider.pause" version="1.0.0"/>
             </SoftwareItem>
-            <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="flexFellowSmartHMI" installItem="true" installedVersion="NONE" itemPath="com.kuka/flexFellowSmartHMI" selectedVersion="NONE" usage="Library"/>
             <Property displayName="userName" key="userName" type="String">
                 <Value>KUKA_Sunrise_Cabinet_1</Value>
             </Property>
@@ -2006,7 +1875,7 @@
                         <Value>Nav_KMR_200_iiwa_14_R820_2</Value>
                     </Property>
                     <Property displayName="Bifrost Tunnel Address" key="BifrostServerAddress" type="String">
-                        <Value>172.31.1.221</Value>
+                        <Value>172.32.1.101</Value>
                     </Property>
                 </SoftwareItem>
                 <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="CPUInformation" installItem="true" installedVersion="NONE" itemPath="com.kuka/CPUInformation" selectedVersion="1" usage="Library">
@@ -2150,7 +2019,7 @@
                     <Value>C:\NAV\Nav_KMR_200_iiwa_14_R820_2\Bin</Value>
                 </Property>
                 <Property displayName="ServerIP" key="ServerIP" regex="(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$" showInEditor="true" type="String">
-                    <Value>172.31.1.221</Value>
+                    <Value>172.32.1.101</Value>
                 </Property>
                 <Property displayName="InstanceId" key="InstanceId" optional="true" showInEditor="true" type="Integer">
                     <Value>2</Value>

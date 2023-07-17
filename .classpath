@@ -8,16 +8,6 @@
 			<attribute name="javadoc_location" value="jar:platform:/resource/Robot2/KUKAJavaLib/com.kuka.appframework.api_1.1.0.3-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="KUKAJavaLib/com.kuka.basictoolbox_1.3.1.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/Robot2/KUKAJavaLib/com.kuka.basictoolbox_1.3.1-javadoc.jar!/"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="KUKAJavaLib/com.kuka.collisiondetection_1.3.1.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/Robot2/KUKAJavaLib/com.kuka.collisiondetection_1.3.1-javadoc.jar!/"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="lib" path="KUKAJavaLib/com.kuka.command.api_1.0.0.5.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="jar:platform:/resource/Robot2/KUKAJavaLib/com.kuka.command.api_1.0.0.5-javadoc.jar!/"/>

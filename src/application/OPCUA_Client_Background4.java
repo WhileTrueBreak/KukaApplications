@@ -292,7 +292,7 @@ public class OPCUA_Client_Background4 {
 		MomY = data.getTorque().getY();
 		MomZ = data.getTorque().getZ();
 		
-		// Add Gripper Info here
+		// Add Gripper Info here CHARLES ADD OPEN CLOSE HERE!!
 		//Gstatus = (byte) gripper2F1.readObjectDetection();
 		//Gpos =  (byte) gripper2F1.readPos();
 

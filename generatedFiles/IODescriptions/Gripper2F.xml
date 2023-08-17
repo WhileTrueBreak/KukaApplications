@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Automatically generated IO group description. Please do NOT modify!
+-->
+<SunriseIOGroupDescription xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="1.0.0">
+  <IOGroup DisplayName="Gripper2F" IconName="Gripper2F" SignalTypes="InOut" TemplateName="Gripper2F">
+    <IOs>
+      <DigitalIOItem Name="GACT" DataType="BOOL" IOType="Input" UsedBitWidth="1" IsConnected="true">
+        <Description />
+      </DigitalIOItem>
+      <DigitalIOItem Name="GCurrent" DataType="BYTE" IOType="Input" UsedBitWidth="8" IsConnected="true">
+        <Description />
+      </DigitalIOItem>
+      <DigitalIOItem Name="GFault" DataType="BYTE" IOType="Input" UsedBitWidth="8" IsConnected="true">
+        <Description />
+      </DigitalIOItem>
+      <DigitalIOItem Name="GGTO" DataType="BOOL" IOType="Input" UsedBitWidth="1" IsConnected="true">
+        <Description />
+      </DigitalIOItem>
+      <DigitalIOItem Name="GOBJ0" DataType="BOOL" IOType="Input" UsedBitWidth="1" IsConnected="true">
+        <Description />
+      </DigitalIOItem>
+      <DigitalIOItem Name="GOBJ1" DataType="BOOL" IOType="Input" UsedBitWidth="1" IsConnected="true">
+        <Description />
+      </DigitalIOItem>
+      <DigitalIOItem Name="GPos" DataType="BYTE" IOType="Input" UsedBitWidth="8" IsConnected="true">
+        <Description />
+      </DigitalIOItem>
+      <DigitalIOItem Name="GSTA0" DataType="BOOL" IOType="Input" UsedBitWidth="1" IsConnected="true">
+        <Description />
+      </DigitalIOItem>
+      <DigitalIOItem Name="GSTA1" DataType="BOOL" IOType="Input" UsedBitWidth="1" IsConnected="true">
+        <Description />
+      </DigitalIOItem>
+      <DigitalIOItem Name="R_Force" DataType="BYTE" IOType="Output" UsedBitWidth="8" IsConnected="true">
+        <Description />
+      </DigitalIOItem>
+      <DigitalIOItem Name="R_Pos" DataType="BYTE" IOType="Output" UsedBitWidth="8" IsConnected="true">
+        <Description />
+      </DigitalIOItem>
+      <DigitalIOItem Name="R_Speed" DataType="BYTE" IOType="Output" UsedBitWidth="8" IsConnected="true">
+        <Description />
+      </DigitalIOItem>
+      <DigitalIOItem Name="RAct" DataType="BOOL" IOType="Output" UsedBitWidth="1" IsConnected="true">
+        <Description />
+      </DigitalIOItem>
+      <DigitalIOItem Name="RARD" DataType="BOOL" IOType="Output" UsedBitWidth="1" IsConnected="true">
+        <Description />
+      </DigitalIOItem>
+      <DigitalIOItem Name="RGTO" DataType="BOOL" IOType="Output" UsedBitWidth="1" IsConnected="true">
+        <Description />
+      </DigitalIOItem>
+      <DigitalIOItem Name="RLBP" DataType="BOOL" IOType="Output" UsedBitWidth="1" IsConnected="true">
+        <Description />
+      </DigitalIOItem>
+    </IOs>
+    <Description />
+  </IOGroup>
+</SunriseIOGroupDescription>

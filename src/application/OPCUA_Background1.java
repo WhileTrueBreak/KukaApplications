@@ -5,10 +5,10 @@ import java.util.concurrent.TimeUnit;
 import com.kuka.roboticsAPI.applicationModel.tasks.CycleBehavior;
 import com.kuka.roboticsAPI.applicationModel.tasks.RoboticsAPICyclicBackgroundTask;
 
-public class OPCUA_Background3 extends RoboticsAPICyclicBackgroundTask {
+public class OPCUA_Background1 extends RoboticsAPICyclicBackgroundTask {
 	
 	@Inject	
-	private OPCUA_Client_Background3 OPCUA;
+	private OPCUA_Client_Background1 OPCUA;
 	
 	@Override
 	public void initialize(){

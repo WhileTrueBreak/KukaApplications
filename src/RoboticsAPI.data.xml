@@ -21,41 +21,42 @@
                 </redundancy>
             </redundancyData>
         </frame>
-        <frame id="_7c0fa39a-5011-4b53-b42e-d6c252ecfc25" name="BASE_0">
-            <transformation a="0.0" b="-0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
+        <gravitation x="0.0" y="0.0" z="9.81" />
+        <frame name="BASE_0">
+            <transformation a="0.000000" b="-0.000000" c="0.000000" x="0.000" y="0.000" z="0.000" />
             <additionalInformation>
-                <info key="LastModificationTime" type="java.lang.Long" value="1692337378618"/>
-                <info key="UseAsBaseForJogging" type="java.lang.Boolean" value="true"/>
+                <info key="LastModificationTime" type="java.lang.Long" value="1692337378618" />
+                <info key="UseAsBaseForJogging" type="java.lang.Boolean" value="true" />
             </additionalInformation>
-            <frame id="_b36a2ec6-5361-4fef-8621-2ed6f4b4f1c6" name="P1">
-                <transformation a="1.210193" b="0.050369" c="3.100532" x="-114.946" y="-410.909" z="363.904"/>
+            <frame name="P1">
+                <transformation a="1.210193" b="0.050369" c="3.100532" x="-114.946" y="-410.909" z="363.904" />
                 <additionalInformation>
-                    <info key="LastModificationTime" type="java.lang.Long" value="1692337378619"/>
+                    <info key="LastModificationTime" type="java.lang.Long" value="1692337378619" />
                     <info base="Robot" controller="Controller" device="Robot" tcpName="SimulationTool/TCP_1" tool="SimulationTool" type="com.kuka.roboticsAPI.deviceModel.TeachInformation">
-                        <tcpTransformation a="0.0" b="-0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
+                        <tcpTransformation a="0.000000" b="-0.000000" c="0.000000" x="0.000" y="0.000" z="0.000" />
                     </info>
                 </additionalInformation>
                 <redundancyData>
                     <redundancy transformationProviderName="Controller/Robot" type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy">
-                        <info type="com.kuka.roboticsAPI.deviceModel.StatusTurnRedundancy$StatusParameter" value="2" valueType="java.lang.Integer"/>
-                        <info type="com.kuka.roboticsAPI.deviceModel.StatusTurnRedundancy$TurnParameter" value="13" valueType="java.lang.Integer"/>
-                        <info type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy$E1Parameter" value="-0.0" valueType="java.lang.Double"/>
+                        <info type="com.kuka.roboticsAPI.deviceModel.StatusTurnRedundancy$StatusParameter" value="2" valueType="java.lang.Integer" />
+                        <info type="com.kuka.roboticsAPI.deviceModel.StatusTurnRedundancy$TurnParameter" value="13" valueType="java.lang.Integer" />
+                        <info type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy$E1Parameter" value="-0.000" valueType="java.lang.Double" />
                     </redundancy>
                 </redundancyData>
             </frame>
-            <frame id="_df6026fd-2a12-41cd-a81f-126a043074e5" name="P2">
-                <transformation a="1.209971" b="0.050273" c="3.100624" x="384.139" y="-410.827" z="363.798"/>
+            <frame name="P2">
+                <transformation a="1.209971" b="0.050273" c="3.100624" x="384.139" y="-410.827" z="363.798" />
                 <additionalInformation>
-                    <info key="LastModificationTime" type="java.lang.Long" value="1692337378619"/>
+                    <info key="LastModificationTime" type="java.lang.Long" value="1692337378619" />
                     <info base="Robot" controller="Controller" device="Robot" tcpName="SimulationTool/TCP_1" tool="SimulationTool" type="com.kuka.roboticsAPI.deviceModel.TeachInformation">
-                        <tcpTransformation a="0.0" b="-0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
+                        <tcpTransformation a="0.000000" b="-0.000000" c="0.000000" x="0.000" y="0.000" z="0.000" />
                     </info>
                 </additionalInformation>
                 <redundancyData>
                     <redundancy transformationProviderName="Controller/Robot" type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy">
-                        <info type="com.kuka.roboticsAPI.deviceModel.StatusTurnRedundancy$StatusParameter" value="2" valueType="java.lang.Integer"/>
-                        <info type="com.kuka.roboticsAPI.deviceModel.StatusTurnRedundancy$TurnParameter" value="25" valueType="java.lang.Integer"/>
-                        <info type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy$E1Parameter" value="0.0" valueType="java.lang.Double"/>
+                        <info type="com.kuka.roboticsAPI.deviceModel.StatusTurnRedundancy$StatusParameter" value="2" valueType="java.lang.Integer" />
+                        <info type="com.kuka.roboticsAPI.deviceModel.StatusTurnRedundancy$TurnParameter" value="25" valueType="java.lang.Integer" />
+                        <info type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy$E1Parameter" value="0.000" valueType="java.lang.Double" />
                     </redundancy>
                 </redundancyData>
             </frame>
@@ -167,11 +168,12 @@
         </toolTemplate>
         <toolTemplate class="" name="SimulationTool">
             <frames>
-                <frame id="_c3d09025-d151-4d30-80cd-cb8d5cd4e6ce" name="TCP_1">
-                    <transformation a="0.0" b="-0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
+                <frame name="TCP_1">
+                    <transformation a="0.000000" b="-0.000000" c="0.000000" x="0.000" y="0.000" z="0.000" />
                 </frame>
             </frames>
-            <loadData cogA="0.0" cogB="0.0" cogC="0.0" cogX="0.0" cogY="0.0" cogZ="0.0" inertiaX="0.0" inertiaY="0.0" inertiaZ="0.0" mass="0.0"/>
+            <loadData cogA="0.0" cogB="0.0" cogC="0.0" cogX="0.0" cogY="0.0" cogZ="0.0" inertiaX="0.0" inertiaY="0.0" inertiaZ="0.0" mass="0.0" />
         </toolTemplate>
     </objectTemplates>
+    
 </RoboticsAPIData>

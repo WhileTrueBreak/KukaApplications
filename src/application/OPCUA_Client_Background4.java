@@ -40,7 +40,7 @@ import com.prosysopc.ua.stack.core.ReferenceDescription;
 import com.prosysopc.ua.stack.transport.security.SecurityMode;
 import com.prosysopc.ua.stack.builtintypes.NodeId;
 
-public class OPCUA_Client_Background2 {
+public class OPCUA_Client_Background4 {
 	// ~~~ Injecting other Classes ~~~ \\
 	@Inject
 	private LBR robot;				//Access to Robot Info
@@ -155,7 +155,7 @@ public class OPCUA_Client_Background2 {
 
 	
 	// Input Server Endpoint
-	public UaClient client = new UaClient("opc.tcp://172.32.1.236:4840/");
+	public UaClient client = new UaClient("opc.tcp://172.32.1.101:4840/");
 
 	public void SetUp() throws Exception {
 		gripper.attachTo(robot.getFlange()); //Gripper attached to flange, move robot by moving gripper!
@@ -172,36 +172,36 @@ public class OPCUA_Client_Background2 {
 		target = findNode("Objects", references);
 		nodeId = target;
 		references = client.getAddressSpace().browse(nodeId);
-		target = findNode("robot2", references);
+		target = findNode("robot4", references);
 		nodeId = target;
 		references = client.getAddressSpace().browse(nodeId);
 		NID_Disconnect = findNode("R4d_Disconnect",references);
-		NID_Joi1 = findNode("R2d_Joi1", references);
-		NID_Joi2 = findNode("R2d_Joi2", references);
-		NID_Joi3 = findNode("R2d_Joi3", references);
-		NID_Joi4 = findNode("R2d_Joi4", references);
-		NID_Joi5 = findNode("R2d_Joi5", references);
-		NID_Joi6 = findNode("R2d_Joi6", references);
-		NID_Joi7 = findNode("R2d_Joi7", references);
-		NID_Tor1 = findNode("R2d_Tor1", references);
-		NID_Tor2 = findNode("R2d_Tor2", references);
-		NID_Tor3 = findNode("R2d_Tor3", references);
-		NID_Tor4 = findNode("R2d_Tor4", references);
-		NID_Tor5 = findNode("R2d_Tor5", references);
-		NID_Tor6 = findNode("R2d_Tor6", references);
-		NID_Tor7 = findNode("R2d_Tor7", references);
-		NID_PosX = findNode("R2d_PosX", references);
-		NID_PosY = findNode("R2d_PosY", references);
-		NID_PosZ = findNode("R2d_PosZ", references);
-		NID_RotA = findNode("R2d_RotA", references);
-		NID_RotB = findNode("R2d_RotB", references);
-		NID_RotC = findNode("R2d_RotC", references);
-		NID_ForX = findNode("R2d_ForX", references);
-		NID_ForY = findNode("R2d_ForY", references);
-		NID_ForZ = findNode("R2d_ForZ", references);
-		NID_MomX = findNode("R2d_MomX", references);
-		NID_MomY = findNode("R2d_MomY", references);
-		NID_MomZ = findNode("R2d_MomZ", references);
+		NID_Joi1 = findNode("R4d_Joi1", references);
+		NID_Joi2 = findNode("R4d_Joi2", references);
+		NID_Joi3 = findNode("R4d_Joi3", references);
+		NID_Joi4 = findNode("R4d_Joi4", references);
+		NID_Joi5 = findNode("R4d_Joi5", references);
+		NID_Joi6 = findNode("R4d_Joi6", references);
+		NID_Joi7 = findNode("R4d_Joi7", references);
+		NID_Tor1 = findNode("R4d_Tor1", references);
+		NID_Tor2 = findNode("R4d_Tor2", references);
+		NID_Tor3 = findNode("R4d_Tor3", references);
+		NID_Tor4 = findNode("R4d_Tor4", references);
+		NID_Tor5 = findNode("R4d_Tor5", references);
+		NID_Tor6 = findNode("R4d_Tor6", references);
+		NID_Tor7 = findNode("R4d_Tor7", references);
+		NID_PosX = findNode("R4d_PosX", references);
+		NID_PosY = findNode("R4d_PosY", references);
+		NID_PosZ = findNode("R4d_PosZ", references);
+		NID_RotA = findNode("R4d_RotA", references);
+		NID_RotB = findNode("R4d_RotB", references);
+		NID_RotC = findNode("R4d_RotC", references);
+		NID_ForX = findNode("R4d_ForX", references);
+		NID_ForY = findNode("R4d_ForY", references);
+		NID_ForZ = findNode("R4d_ForZ", references);
+		NID_MomX = findNode("R4d_MomX", references);
+		NID_MomY = findNode("R4d_MomY", references);
+		NID_MomZ = findNode("R4d_MomZ", references);
 	}
 
 	public void ServerUpdate() throws Exception {
@@ -241,9 +241,9 @@ public class OPCUA_Client_Background2 {
 	protected static void initialize(UaClient client) throws SecureIdentityException, IOException, UnknownHostException {
 		// *** Application Description is sent to the server
 		ApplicationDescription appDescription = new ApplicationDescription();
-		appDescription.setApplicationName(new LocalizedText("Robot2_Background", Locale.ENGLISH));
-		appDescription.setApplicationUri("Robot2_Background");
-		appDescription.setProductUri("Robot2_Background");
+		appDescription.setApplicationName(new LocalizedText("Robot4_Background", Locale.ENGLISH));
+		appDescription.setApplicationUri("Robot4_Background");
+		appDescription.setProductUri("Robot4_Background");
 		appDescription.setApplicationType(ApplicationType.Client);
 		final ApplicationIdentity identity = new ApplicationIdentity();
 		identity.setApplicationDescription(appDescription);

@@ -175,7 +175,7 @@ public class OPCUA_Client_Background2 {
 		target = findNode("robot2", references);
 		nodeId = target;
 		references = client.getAddressSpace().browse(nodeId);
-		NID_Disconnect = findNode("R4d_Disconnect",references);
+		NID_Disconnect = findNode("R2d_Disconnect",references);
 		NID_Joi1 = findNode("R2d_Joi1", references);
 		NID_Joi2 = findNode("R2d_Joi2", references);
 		NID_Joi3 = findNode("R2d_Joi3", references);

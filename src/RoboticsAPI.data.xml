@@ -157,7 +157,7 @@
         <toolTemplate class="" defaultMotionFrameRef="/TCP" name="RobotiqGripper">
             <frames>
                 <frame id="_05adbd0a-5855-4433-a388-962737bba197" name="TCP">
-                    <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="174.0"/>
+                    <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="244.0"/>
                 </frame>
             </frames>
             <additionalInformation>

@@ -15,19 +15,19 @@ public class OPCUA_Background2 extends RoboticsAPICyclicBackgroundTask {
 
 		// Comment Between Here
 		
-		try {
-			OPCUA.SetUp();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
-			OPCUA.ServerUpdate();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+//		try {
+//			OPCUA.SetUp();
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		try {
+//			OPCUA.ServerUpdate();
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
 		
 		// AND HERE
 		
@@ -39,19 +39,19 @@ public class OPCUA_Background2 extends RoboticsAPICyclicBackgroundTask {
 		// Comment Between Here
 		
 		
-		if (OPCUA.Disconnect==false) {
-			try {
-				OPCUA.ServerUpdate();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		} else if (OPCUA.Disconnect==true) {
-			OPCUA.clientDisconnect();
-			while (true){
-				
-			}
-		}
+//		if (OPCUA.Disconnect==false) {
+//			try {
+//				OPCUA.ServerUpdate();
+//			} catch (Exception e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//		} else if (OPCUA.Disconnect==true) {
+//			OPCUA.clientDisconnect();
+//			while (true){
+//				
+//			}
+//		}
 		
 		
 		

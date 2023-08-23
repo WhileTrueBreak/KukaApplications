@@ -2,163 +2,173 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="lib/prosys-opc-ua-sdk-client-4.6.2-1636.jar"/>
 	<classpathentry kind="lib" path="KUKAJavaLib/javax.inject_1.0.0.v20091030.jar"/>
 	<classpathentry kind="lib" path="KUKAJavaLib/com.kuka.appframework.api_1.1.0.3.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/Robot2/_Robot2/KUKAJavaLib/com.kuka.appframework.api_1.1.0.3-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:platform:/resource/Robot2_Charles/KUKAJavaLib/com.kuka.appframework.api_1.1.0.3-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="KUKAJavaLib/com.kuka.basictoolbox_1.3.1.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/Robot2_Charles/KUKAJavaLib/com.kuka.basictoolbox_1.3.1-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="KUKAJavaLib/com.kuka.collisiondetection_1.3.1.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/Robot2_Charles/KUKAJavaLib/com.kuka.collisiondetection_1.3.1-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="KUKAJavaLib/com.kuka.command.api_1.0.0.5.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/Robot2/_Robot2/KUKAJavaLib/com.kuka.command.api_1.0.0.5-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:platform:/resource/Robot2_Charles/KUKAJavaLib/com.kuka.command.api_1.0.0.5-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="KUKAJavaLib/com.kuka.common.api_2.0.0.5.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/Robot2/_Robot2/KUKAJavaLib/com.kuka.common.api_2.0.0.5-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:platform:/resource/Robot2_Charles/KUKAJavaLib/com.kuka.common.api_2.0.0.5-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="KUKAJavaLib/com.kuka.common.datatypes_1.15.0.5.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/Robot2/_Robot2/KUKAJavaLib/com.kuka.common.datatypes_1.15.0.5-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:platform:/resource/Robot2_Charles/KUKAJavaLib/com.kuka.common.datatypes_1.15.0.5-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="KUKAJavaLib/com.kuka.common.utilities_1.5.0.5.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/Robot2/_Robot2/KUKAJavaLib/com.kuka.common.utilities_1.5.0.5-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:platform:/resource/Robot2_Charles/KUKAJavaLib/com.kuka.common.utilities_1.5.0.5-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="KUKAJavaLib/com.kuka.mastering.provider.api_1.5.0.5.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/Robot2/_Robot2/KUKAJavaLib/#Bundle-JavaDoc#!/"/>
+			<attribute name="javadoc_location" value="jar:platform:/resource/Robot2_Charles/KUKAJavaLib/#Bundle-JavaDoc#!/"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="KUKAJavaLib/com.kuka.mobile.robotics.java6_1.0.1.20210415-164356-release_release_1_4_0-6ae20f2652.jar"/>
 	<classpathentry kind="lib" path="KUKAJavaLib/com.kuka.nav.api_1.0.0.22_release_release_1_19_a1e4f4af2d.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/Robot2/_Robot2/KUKAJavaLib/com.kuka.nav.api_1.0.0.22_release_release_1_19_a1e4f4af2d-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:platform:/resource/Robot2_Charles/KUKAJavaLib/com.kuka.nav.api_1.0.0.22_release_release_1_19_a1e4f4af2d-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="KUKAJavaLib/com.kuka.nav.appdata.api_1.0.0.22_release_release_1_19_a1e4f4af2d.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/Robot2/_Robot2/KUKAJavaLib/com.kuka.nav.appdata.api_1.0.0.22_release_release_1_19_a1e4f4af2d-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:platform:/resource/Robot2_Charles/KUKAJavaLib/com.kuka.nav.appdata.api_1.0.0.22_release_release_1_19_a1e4f4af2d-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="KUKAJavaLib/com.kuka.nav.battery.manager.api_1.0.0.22_release_release_1_19_a1e4f4af2d.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/Robot2/_Robot2/KUKAJavaLib/com.kuka.nav.battery.manager.api_1.0.0.22_release_release_1_19_a1e4f4af2d-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:platform:/resource/Robot2_Charles/KUKAJavaLib/com.kuka.nav.battery.manager.api_1.0.0.22_release_release_1_19_a1e4f4af2d-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="KUKAJavaLib/com.kuka.nav.comm.api_1.0.0.22_release_release_1_19_a1e4f4af2d.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/Robot2/_Robot2/KUKAJavaLib/com.kuka.nav.comm.api_1.0.0.22_release_release_1_19_a1e4f4af2d-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:platform:/resource/Robot2_Charles/KUKAJavaLib/com.kuka.nav.comm.api_1.0.0.22_release_release_1_19_a1e4f4af2d-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="KUKAJavaLib/com.kuka.nav.fineloc.api_1.0.0.22_release_release_1_19_a1e4f4af2d.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/Robot2/_Robot2/KUKAJavaLib/com.kuka.nav.fineloc.api_1.0.0.22_release_release_1_19_a1e4f4af2d-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:platform:/resource/Robot2_Charles/KUKAJavaLib/com.kuka.nav.fineloc.api_1.0.0.22_release_release_1_19_a1e4f4af2d-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="KUKAJavaLib/com.kuka.nav.fleet.api_1.0.0.22_release_release_1_19_a1e4f4af2d.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/Robot2/_Robot2/KUKAJavaLib/com.kuka.nav.fleet.api_1.0.0.22_release_release_1_19_a1e4f4af2d-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:platform:/resource/Robot2_Charles/KUKAJavaLib/com.kuka.nav.fleet.api_1.0.0.22_release_release_1_19_a1e4f4af2d-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="KUKAJavaLib/com.kuka.nav.graph_1.0.0.22_release_release_1_19_a1e4f4af2d.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/Robot2/_Robot2/KUKAJavaLib/com.kuka.nav.graph_1.0.0.22_release_release_1_19_a1e4f4af2d-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:platform:/resource/Robot2_Charles/KUKAJavaLib/com.kuka.nav.graph_1.0.0.22_release_release_1_19_a1e4f4af2d-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="KUKAJavaLib/com.kuka.nav.kmp.battery.api_1.0.0.22_release_release_1_19_a1e4f4af2d.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/Robot2/_Robot2/KUKAJavaLib/com.kuka.nav.kmp.battery.api_1.0.0.22_release_release_1_19_a1e4f4af2d-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:platform:/resource/Robot2_Charles/KUKAJavaLib/com.kuka.nav.kmp.battery.api_1.0.0.22_release_release_1_19_a1e4f4af2d-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="KUKAJavaLib/com.kuka.nav.kmp.omnimove.api_1.0.0.22_release_release_1_19_a1e4f4af2d.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/Robot2/_Robot2/KUKAJavaLib/com.kuka.nav.kmp.omnimove.api_1.0.0.22_release_release_1_19_a1e4f4af2d-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:platform:/resource/Robot2_Charles/KUKAJavaLib/com.kuka.nav.kmp.omnimove.api_1.0.0.22_release_release_1_19_a1e4f4af2d-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="KUKAJavaLib/com.kuka.nav.kmp.omnimove200.api_1.0.0.22_release_release_1_19_a1e4f4af2d.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/Robot2/_Robot2/KUKAJavaLib/com.kuka.nav.kmp.omnimove200.api_1.0.0.22_release_release_1_19_a1e4f4af2d-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:platform:/resource/Robot2_Charles/KUKAJavaLib/com.kuka.nav.kmp.omnimove200.api_1.0.0.22_release_release_1_19_a1e4f4af2d-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="KUKAJavaLib/com.kuka.nav.maintenance.api_1.0.0.22_release_release_1_19_a1e4f4af2d.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/Robot2/_Robot2/KUKAJavaLib/com.kuka.nav.maintenance.api_1.0.0.22_release_release_1_19_a1e4f4af2d-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:platform:/resource/Robot2_Charles/KUKAJavaLib/com.kuka.nav.maintenance.api_1.0.0.22_release_release_1_19_a1e4f4af2d-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="KUKAJavaLib/com.kuka.nav.maintenance.backup.api_1.0.0.22_release_release_1_19_a1e4f4af2d.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/Robot2/_Robot2/KUKAJavaLib/com.kuka.nav.maintenance.backup.api_1.0.0.22_release_release_1_19_a1e4f4af2d-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:platform:/resource/Robot2_Charles/KUKAJavaLib/com.kuka.nav.maintenance.backup.api_1.0.0.22_release_release_1_19_a1e4f4af2d-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="KUKAJavaLib/com.kuka.nav.object.handling.api_1.0.0.22_release_release_1_19_a1e4f4af2d.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/Robot2/_Robot2/KUKAJavaLib/com.kuka.nav.object.handling.api_1.0.0.22_release_release_1_19_a1e4f4af2d-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:platform:/resource/Robot2_Charles/KUKAJavaLib/com.kuka.nav.object.handling.api_1.0.0.22_release_release_1_19_a1e4f4af2d-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="KUKAJavaLib/com.kuka.nav.object.manager.api_1.0.0.22_release_release_1_19_a1e4f4af2d.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/Robot2/_Robot2/KUKAJavaLib/com.kuka.nav.object.manager.api_1.0.0.22_release_release_1_19_a1e4f4af2d-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:platform:/resource/Robot2_Charles/KUKAJavaLib/com.kuka.nav.object.manager.api_1.0.0.22_release_release_1_19_a1e4f4af2d-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="KUKAJavaLib/com.kuka.nav.systemfailure.api_1.0.0.22_release_release_1_19_a1e4f4af2d.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/Robot2/_Robot2/KUKAJavaLib/com.kuka.nav.systemfailure.api_1.0.0.22_release_release_1_19_a1e4f4af2d-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:platform:/resource/Robot2_Charles/KUKAJavaLib/com.kuka.nav.systemfailure.api_1.0.0.22_release_release_1_19_a1e4f4af2d-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="KUKAJavaLib/com.kuka.nav.systemfailureevent.api_1.0.0.22_release_release_1_19_a1e4f4af2d.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/Robot2/_Robot2/KUKAJavaLib/com.kuka.nav.systemfailureevent.api_1.0.0.22_release_release_1_19_a1e4f4af2d-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:platform:/resource/Robot2_Charles/KUKAJavaLib/com.kuka.nav.systemfailureevent.api_1.0.0.22_release_release_1_19_a1e4f4af2d-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="KUKAJavaLib/com.kuka.nav.task.remote.api_1.0.0.22_release_release_1_19_a1e4f4af2d.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/Robot2/_Robot2/KUKAJavaLib/com.kuka.nav.task.remote.api_1.0.0.22_release_release_1_19_a1e4f4af2d-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:platform:/resource/Robot2_Charles/KUKAJavaLib/com.kuka.nav.task.remote.api_1.0.0.22_release_release_1_19_a1e4f4af2d-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="KUKAJavaLib/com.kuka.nav.virtualLine.api_1.0.0.22_release_release_1_19_a1e4f4af2d.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/Robot2/_Robot2/KUKAJavaLib/com.kuka.nav.virtualLine.api_1.0.0.22_release_release_1_19_a1e4f4af2d-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:platform:/resource/Robot2_Charles/KUKAJavaLib/com.kuka.nav.virtualLine.api_1.0.0.22_release_release_1_19_a1e4f4af2d-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="KUKAJavaLib/com.kuka.resource.api_1.0.0.5.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/Robot2/_Robot2/KUKAJavaLib/com.kuka.resource.api_1.0.0.5-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:platform:/resource/Robot2_Charles/KUKAJavaLib/com.kuka.resource.api_1.0.0.5-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="KUKAJavaLib/com.kuka.roboticsAPI_1.15.2.5.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/Robot2/_Robot2/KUKAJavaLib/com.kuka.roboticsAPI_1.15.2.5-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:platform:/resource/Robot2_Charles/KUKAJavaLib/com.kuka.roboticsAPI_1.15.2.5-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="KUKAJavaLib/com.kuka.roboticsAPI.handGuiding_1.17.0.5.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/Robot2/_Robot2/KUKAJavaLib/com.kuka.roboticsAPI.handGuiding_1.17.0.5-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:platform:/resource/Robot2_Charles/KUKAJavaLib/com.kuka.roboticsAPI.handGuiding_1.17.0.5-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="KUKAJavaLib/com.kuka.roboticsAPI.kmpOmniMove_1.15.0.buildReleaseV1_13_167.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/Robot2/_Robot2/KUKAJavaLib/com.kuka.roboticsAPI.kmpOmniMove_1.15.0.buildReleaseV1_13_167-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:platform:/resource/Robot2_Charles/KUKAJavaLib/com.kuka.roboticsAPI.kmpOmniMove_1.15.0.buildReleaseV1_13_167-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="KUKAJavaLib/com.kuka.sunrise.common_1.0.0.5.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/Robot2/_Robot2/KUKAJavaLib/com.kuka.sunrise.common_1.0.0.5-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:platform:/resource/Robot2_Charles/KUKAJavaLib/com.kuka.sunrise.common_1.0.0.5-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="KUKAJavaLib/com.kuka.task.api_1.0.0.5.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/Robot2/_Robot2/KUKAJavaLib/com.kuka.task.api_1.0.0.5-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:platform:/resource/Robot2_Charles/KUKAJavaLib/com.kuka.task.api_1.0.0.5-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="KUKAJavaLib/com.kuka.jogging.provider.api_1.0.0.5.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/Robot2/_Robot2/KUKAJavaLib/#Bundle-JavaDoc#!/"/>
+			<attribute name="javadoc_location" value="jar:platform:/resource/Robot2_Charles/KUKAJavaLib/#Bundle-JavaDoc#!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/prosys-opc-ua-sdk-client-4.6.2-1636.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

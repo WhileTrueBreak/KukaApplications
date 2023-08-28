@@ -41,8 +41,13 @@ public class TestProgram extends RoboticsAPIApplication {
     }
     
     private void Main() {
-        robot.move(lin(data.getFrame("/BASE_0/P1")).setCartVelocity(2000));
-        robot.move(lin(data.getFrame("/BASE_0/P2")).setCartVelocity(2000));
+        robot.move(ptp(data.getFrame("/BASE_0/P1")).setJointAccelerationRel(1.00));
+        robot.move(ptp(data.getFrame("/BASE_0/P2")).setJointAccelerationRel(1.00));
+        robot.move(ptp(data.getFrame("/BASE_0/P3")).setJointAccelerationRel(1.00));
+        robot.move(ptp(data.getFrame("/BASE_0/P4")).setJointAccelerationRel(1.00));
+        robot.move(ptp(data.getFrame("/BASE_0/P5")).setJointAccelerationRel(1.00));
+        robot.move(ptp(data.getFrame("/BASE_0/P6")).setJointAccelerationRel(1.00));
+        robot.move(ptp(data.getFrame("/BASE_0/P7")).setJointAccelerationRel(1.00));
     }
     
 }

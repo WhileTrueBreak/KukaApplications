@@ -41,19 +41,27 @@ public class TestProgram3 extends RoboticsAPIApplication {
     }
     
     private void Main() {
-        robot.move(lin(data.getFrame("/BASE_0/P2")).setCartVelocity(2000));
+        robot.move(ptp(data.getFrame("/BASE_0/P2")).setJointAccelerationRel(1.00));
         logger.info("PickUp - Close Gripper");
         ThreadUtil.milliSleep(2000);
+        robot.move(lin(data.getFrame("/BASE_0/P1")).setCartVelocity(2000));
         robot.move(lin(data.getFrame("/BASE_0/P3")).setCartVelocity(2000));
         robot.move(lin(data.getFrame("/BASE_0/P4")).setCartVelocity(2000));
-        robot.move(lin(data.getFrame("/BASE_0/P5")).setCartVelocity(2000));
         logger.info("Drop-OpenGripper");
         ThreadUtil.milliSleep(2000);
+        robot.move(lin(data.getFrame("/BASE_0/P5")).setCartVelocity(2000));
         robot.move(lin(data.getFrame("/BASE_0/P6")).setCartVelocity(2000));
+        logger.info("PickUp - Close Gripper");
+        ThreadUtil.milliSleep(2000);
+        robot.move(lin(data.getFrame("/BASE_0/P7")).setCartVelocity(2000));
+        robot.move(lin(data.getFrame("/BASE_0/P8")).setCartVelocity(2000));
+        robot.move(lin(data.getFrame("/BASE_0/P9")).setCartVelocity(2000));
+        logger.info("Drop-OpenGripper");
+        ThreadUtil.milliSleep(2000);
+        robot.move(lin(data.getFrame("/BASE_0/P10")).setCartVelocity(2000));
     }
     
     private void Sequence1() {
-        robot.move(ptp(data.getFrame("/BASE_0/P1")).setJointAccelerationRel(1.00));
     }
     
 }

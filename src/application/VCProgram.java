@@ -10,7 +10,7 @@ import com.kuka.roboticsAPI.conditionModel.*;
 import com.kuka.task.ITaskLogger;
 import com.kuka.common.ThreadUtil;
 
-public class TestProgram3 extends RoboticsAPIApplication {
+public class VCProgram extends RoboticsAPIApplication {
     
     @Inject
     private ITaskLogger logger;
@@ -41,27 +41,24 @@ public class TestProgram3 extends RoboticsAPIApplication {
     }
     
     private void Main() {
-        robot.move(ptp(data.getFrame("/BASE_0/P2")).setJointAccelerationRel(1.00));
-        logger.info("PickUp - Close Gripper");
-        ThreadUtil.milliSleep(2000);
-        robot.move(lin(data.getFrame("/BASE_0/P1")).setCartVelocity(2000));
         robot.move(lin(data.getFrame("/BASE_0/P3")).setCartVelocity(2000));
+        logger.info("close gripper");
+        ThreadUtil.milliSleep(1000);
+        robot.move(lin(data.getFrame("/BASE_0/P1")).setCartVelocity(2000));
+        robot.move(lin(data.getFrame("/BASE_0/P2")).setCartVelocity(2000));
         robot.move(lin(data.getFrame("/BASE_0/P4")).setCartVelocity(2000));
-        logger.info("Drop-OpenGripper");
-        ThreadUtil.milliSleep(2000);
+        logger.info("open");
+        ThreadUtil.milliSleep(1000);
         robot.move(lin(data.getFrame("/BASE_0/P5")).setCartVelocity(2000));
         robot.move(lin(data.getFrame("/BASE_0/P6")).setCartVelocity(2000));
-        logger.info("PickUp - Close Gripper");
-        ThreadUtil.milliSleep(2000);
+        logger.info("closeAgain");
+        ThreadUtil.milliSleep(1000);
         robot.move(lin(data.getFrame("/BASE_0/P7")).setCartVelocity(2000));
         robot.move(lin(data.getFrame("/BASE_0/P8")).setCartVelocity(2000));
         robot.move(lin(data.getFrame("/BASE_0/P9")).setCartVelocity(2000));
-        logger.info("Drop-OpenGripper");
-        ThreadUtil.milliSleep(2000);
+        logger.info("OpenAgain");
+        ThreadUtil.milliSleep(1000);
         robot.move(lin(data.getFrame("/BASE_0/P10")).setCartVelocity(2000));
-    }
-    
-    private void Sequence1() {
     }
     
 }

@@ -74,19 +74,22 @@ public class RobotPickandPlace extends RoboticsAPIApplication {
 		
 		gripper2F1.open();
 		gripper.move(lin(getApplicationData().getFrame("/P1")).setCartVelocity(200));//frame1
+		gripper.move(linRel(0, 0, 30, World.Current.getRootFrame()).setCartVelocity(50));// move up
+	    gripper.move(linRel(0, 30, 0, World.Current.getRootFrame()).setCartVelocity(50));// move left
+	    gripper.move(linRel(0, 0, -30, World.Current.getRootFrame()).setCartVelocity(50));// move down
 		gripper2F1.close();
 		
 	    gripper.move(linRel(0, 0, 30, World.Current.getRootFrame()).setCartVelocity(50));// move up
-	    gripper.move(linRel(0, 90, 0, World.Current.getRootFrame()).setCartVelocity(50));// move left
+	    gripper.move(linRel(0, 60, 0, World.Current.getRootFrame()).setCartVelocity(50));// move left
 	    gripper2F1.open();
 	    
 	    
-	    gripper.move(linRel(0, -60, 0, World.Current.getRootFrame()).setCartVelocity(50));// move right
+	    gripper.move(linRel(0, -30, 0, World.Current.getRootFrame()).setCartVelocity(50));// move right
 	    gripper.move(linRel(0, 0, -30, World.Current.getRootFrame()).setCartVelocity(50));// move down
 	    gripper2F1.close();
 	    
 	    gripper.move(linRel(0, 0, 60, World.Current.getRootFrame()).setCartVelocity(50));// move up
-	    gripper.move(linRel(0, 60, 0, World.Current.getRootFrame()).setCartVelocity(50));// move left
+	    gripper.move(linRel(0, 30, 0, World.Current.getRootFrame()).setCartVelocity(50));// move left
 		gripper2F1.open();
 		
 //		gripper.move(linRel(0, -30, 0, World.Current.getRootFrame()).setCartVelocity(50));// move right

@@ -67,38 +67,50 @@ public class RobotPickandPlace extends RoboticsAPIApplication {
 		//mF.setLEDGreen(true);
 		//gripper.move(ptp(getApplicationData().getFrame("/P2")).setJointVelocityRel(0.3));
 		//gripper2F1.open();
-		//mF.setLEDGreen(false)
-		;
+		//mF.setLEDGreen(false);
 		
-		// blocks are 30mm	
-		
-		gripper2F1.open();
 		gripper.move(lin(getApplicationData().getFrame("/P1")).setCartVelocity(200));//frame1
-		gripper.move(linRel(0, 0, 30, World.Current.getRootFrame()).setCartVelocity(50));// move up
-	    gripper.move(linRel(0, 30, 0, World.Current.getRootFrame()).setCartVelocity(50));// move left
-	    gripper.move(linRel(0, 0, -30, World.Current.getRootFrame()).setCartVelocity(50));// move down
+	    gripper.move(linRel(0, 0, -30, World.Current.getRootFrame()).setCartVelocity(50));//going down
 		gripper2F1.close();
-		
-	    gripper.move(linRel(0, 0, 30, World.Current.getRootFrame()).setCartVelocity(50));// move up
-	    gripper.move(linRel(0, 60, 0, World.Current.getRootFrame()).setCartVelocity(50));// move left
-	    gripper2F1.open();
-	    
-	    
-	    gripper.move(linRel(0, -30, 0, World.Current.getRootFrame()).setCartVelocity(50));// move right
-	    gripper.move(linRel(0, 0, -30, World.Current.getRootFrame()).setCartVelocity(50));// move down
-	    gripper2F1.close();
-	    
-	    gripper.move(linRel(0, 0, 60, World.Current.getRootFrame()).setCartVelocity(50));// move up
-	    gripper.move(linRel(0, 30, 0, World.Current.getRootFrame()).setCartVelocity(50));// move left
+		mF.setLEDBlue(true);
+		gripper.move(lin(getApplicationData().getFrame("/P1")).setCartVelocity(100));//get back to frame1
+		gripper.move(lin(getApplicationData().getFrame("/P2")).setCartVelocity(200));// go to frame2
+	    gripper.move(linRel(0, 0, -90, World.Current.getRootFrame()).setCartVelocity(50));// going down
 		gripper2F1.open();
+		mF.setLEDBlue(false);
+	    gripper.move(lin(getApplicationData().getFrame("/P2")).setCartVelocity(100));
+
 		
-//		gripper.move(linRel(0, -30, 0, World.Current.getRootFrame()).setCartVelocity(50));// move right
-//	    gripper.move(linRel(0, 0, -90, World.Current.getRootFrame()).setCartVelocity(50));// move down
-//	    gripper2F1.close();
-//	    
-//	    gripper.move(linRel(0, 0, 60, World.Current.getRootFrame()).setCartVelocity(50));// move up
-//	    gripper.move(linRel(0, 60, 0, World.Current.getRootFrame()).setCartVelocity(50));// move left
-//		gripper2F1.open();
+		gripper.move(lin(getApplicationData().getFrame("/P1")).setCartVelocity(200));//frame1
+	    gripper.move(linRel(0, 0, -60, World.Current.getRootFrame()).setCartVelocity(50));//going down
+		gripper2F1.close();
+		gripper.move(lin(getApplicationData().getFrame("/P1")).setCartVelocity(100));//get back to frame1
+		gripper.move(lin(getApplicationData().getFrame("/P2")).setCartVelocity(200));// go to frame2
+	    gripper.move(linRel(0, 0, -60, World.Current.getRootFrame()).setCartVelocity(50));// going down
+		gripper2F1.open();
+	    gripper.move(lin(getApplicationData().getFrame("/P2")).setCartVelocity(100));
 		
+		gripper.move(lin(getApplicationData().getFrame("/P1")).setCartVelocity(200));//frame1
+	    gripper.move(linRel(0, 0, -90, World.Current.getRootFrame()).setCartVelocity(50));//going down
+		gripper2F1.close();
+		mF.setLEDBlue(true);
+		gripper.move(lin(getApplicationData().getFrame("/P1")).setCartVelocity(100));//get back to frame1
+		gripper.move(lin(getApplicationData().getFrame("/P2")).setCartVelocity(200));// go to frame2
+	    gripper.move(linRel(0, 0, -30, World.Current.getRootFrame()).setCartVelocity(50));// going down
+		gripper2F1.open();
+		mF.setLEDBlue(false);
+	    gripper.move(lin(getApplicationData().getFrame("/P2")).setCartVelocity(100));
+		
+//		gripper.move(lin(getApplicationData().getFrame("/P1")).setCartVelocity(200));
+//		gripper2F1.close();
+//		mF.setLEDBlue(true);
+//		ThreadUtil.milliSleep(200);
+//		mF.setLEDBlue(false);
+//		mF.setLEDRed(true);
+//		ThreadUtil.milliSleep(200);
+//		mF.setLEDRed(false);
+//		mF.setLEDGreen(true);
+//		ThreadUtil.milliSleep(200);
+//		mF.setLEDGreen(false);
 	}
 }

@@ -4,6 +4,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.*;
+
+import com.kuka.roboticsAPI.conditionModel.ForceCondition;
 import com.kuka.roboticsAPI.deviceModel.LBR;
 import com.kuka.roboticsAPI.geometricModel.Tool;
 import com.kuka.roboticsAPI.geometricModel.World;
@@ -56,19 +58,18 @@ public class RobotPickandPlace extends RoboticsAPIApplication {
 		ThreadUtil.milliSleep(200);
 		mF.setLEDBlue(false);
 		ThreadUtil.milliSleep(200);
-		ThreadUtil.milliSleep(200);
+		
+		//FORCE CONDITIONS EXAMPLE
+		ForceCondition touch10 = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"),10 );
+		ForceCondition touch15 = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"),15 );
+		//USAGE, will move to next line when triggered
+		//LOOK at pipecutting.java for examples on analysing the break condition. 
+		//gripper.move(linRel(0, 0, -30, World.Current.getRootFrame()).setCartVelocity(50).breakWhen(touch10)); 
 	}
 
 	@Override
 	public void run() {
-		// your application execution starts here
-		//gripper.move(ptp(getApplicationData().getFrame("/P1")).setJointVelocityRel(0.3));
-		//gripper2F1.close();
-		//mF.setLEDGreen(true);
-		//gripper.move(ptp(getApplicationData().getFrame("/P2")).setJointVelocityRel(0.3));
-		//gripper2F1.open();
-		//mF.setLEDGreen(false);
-		
+
 		gripper.move(lin(getApplicationData().getFrame("/P1")).setCartVelocity(200));//frame1
 	    gripper.move(linRel(0, 0, -30, World.Current.getRootFrame()).setCartVelocity(50));//going down
 		gripper2F1.close();
@@ -101,16 +102,5 @@ public class RobotPickandPlace extends RoboticsAPIApplication {
 		mF.setLEDBlue(false);
 	    gripper.move(lin(getApplicationData().getFrame("/P2")).setCartVelocity(100));
 		
-//		gripper.move(lin(getApplicationData().getFrame("/P1")).setCartVelocity(200));
-//		gripper2F1.close();
-//		mF.setLEDBlue(true);
-//		ThreadUtil.milliSleep(200);
-//		mF.setLEDBlue(false);
-//		mF.setLEDRed(true);
-//		ThreadUtil.milliSleep(200);
-//		mF.setLEDRed(false);
-//		mF.setLEDGreen(true);
-//		ThreadUtil.milliSleep(200);
-//		mF.setLEDGreen(false);
 	}
 }

@@ -16,6 +16,7 @@ import com.kuka.roboticsAPI.geometricModel.World;
 import com.kuka.task.ITaskLogger;
 import com.kuka.common.ThreadUtil;
 import com.kuka.generated.ioAccess.MediaFlangeIOGroup;
+import com.kuka.roboticsAPI.motionModel.IMotionContainer;
 
  
 
@@ -89,11 +90,23 @@ public class RobotPickandPlace extends RoboticsAPIApplication {
 	}
 
 	public void pickup(int index){
-		ForceCondition touch10 = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"),10 );
+		ForceCondition touch10 = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"),15 );
+		
 		gripper.move(lin(getApplicationData().getFrame("/P1")).setCartVelocity(moveSpeed));//frame1
+
+		
+		
 		gripper2F1.close();
-	    gripper.move(linRel(0, 0, -90, World.Current.getRootFrame()).setCartVelocity(breakSpeed).breakWhen(touch10));//going down
-	    gripper.move(linRel(0, 0, 5, World.Current.getRootFrame()).setCartVelocity(speed));
+		IMotionContainer motion_return = gripper.move(linRel(0, 0, -90, World.Current.getRootFrame()).setCartVelocity(breakSpeed).breakWhen(touch10));//going down
+		if (motion_return.getFiredBreakConditionInfo() == null){
+			logger.info("No Collision Detected");
+		}
+		else{
+			logger.info("Collision Detected");
+			logger.info(motion_return.getFiredBreakConditionInfo().toString());
+		}
+		
+		gripper.move(linRel(0, 0, 5, World.Current.getRootFrame()).setCartVelocity(speed));
 		gripper2F1.open();
 		gripper.move(linRel(0, 0, -35, World.Current.getRootFrame()).setCartVelocity(speed));
 		gripper2F1.close();

@@ -128,7 +128,7 @@ public class RobotPickandPlace extends RoboticsAPIApplication {
 		z = 0;
 		for (int i = 0; i < 3; i++) {
 			  pickup(i,z);
-			  z = z - 60;
+			  z = z - 50;
 		}
 
 	}

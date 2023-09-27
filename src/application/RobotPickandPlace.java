@@ -97,7 +97,7 @@ public class RobotPickandPlace extends RoboticsAPIApplication {
 		
 		
 		gripper2F1.close();
-		IMotionContainer motion_return = gripper.move(linRel(0, 0, -90, World.Current.getRootFrame()).setCartVelocity(breakSpeed).breakWhen(touch10));//going down
+		IMotionContainer motion_return = gripper.move(linRel(0, z, -90, World.Current.getRootFrame()).setCartVelocity(breakSpeed).breakWhen(touch10));//going down
 		if (motion_return.getFiredBreakConditionInfo() == null){
 			logger.info("No Collision Detected");
 		}
@@ -106,7 +106,6 @@ public class RobotPickandPlace extends RoboticsAPIApplication {
 			logger.info(motion_return.getFiredBreakConditionInfo().toString());
 		}
 		
-		gripper.move(linRel(0, z, 5, World.Current.getRootFrame()).setCartVelocity(speed));
 		gripper.move(linRel(0, 0, 5, World.Current.getRootFrame()).setCartVelocity(speed));
 		gripper2F1.open();
 		gripper.move(linRel(0, 0, -35, World.Current.getRootFrame()).setCartVelocity(speed));

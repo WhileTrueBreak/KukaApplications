@@ -11,11 +11,13 @@ import static com.kuka.roboticsAPI.motionModel.BasicMotions.*;
 
 import com.kuka.roboticsAPI.conditionModel.ForceCondition;
 import com.kuka.roboticsAPI.deviceModel.LBR;
+import com.kuka.roboticsAPI.geometricModel.ObjectFrame;
 import com.kuka.roboticsAPI.geometricModel.Tool;
 import com.kuka.roboticsAPI.geometricModel.World;
 import com.kuka.task.ITaskLogger;
 import com.kuka.common.ThreadUtil;
 import com.kuka.generated.ioAccess.MediaFlangeIOGroup;
+import com.kuka.roboticsAPI.motionModel.IMotion;
 import com.kuka.roboticsAPI.motionModel.IMotionContainer;
 
  
@@ -112,7 +114,8 @@ public class RobotPickandPlace extends RoboticsAPIApplication {
 		gripper.move(linRel(0, 0, -25, World.Current.getRootFrame()).setCartVelocity(speed));
 		gripper2F1.close();
 		mF.setLEDBlue(true);
-		gripper.move(lin(getApplicationData().getFrame("/P1")).setCartVelocity(upSpeed));//get back to frame1
+		gripper.move(circ(getApplicationData().getFrame("/P1")));
+		//gripper.move(lin(getApplicationData().getFrame("/P1")).setCartVelocity(upSpeed));//get back to frame1
 		gripper.move(lin(getApplicationData().getFrame("/P2")).setCartVelocity(moveSpeed));// go to frame2
 	    gripper.move(linRel(0, 0, -90, World.Current.getRootFrame()).setCartVelocity(breakSpeed).breakWhen(touch10));// going down
 		gripper2F1.open();
@@ -121,6 +124,11 @@ public class RobotPickandPlace extends RoboticsAPIApplication {
 	}
 
  
+
+	private IMotion circ(ObjectFrame frame) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	@Override
 	public void run() {

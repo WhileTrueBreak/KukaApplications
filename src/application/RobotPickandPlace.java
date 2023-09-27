@@ -89,7 +89,7 @@ public class RobotPickandPlace extends RoboticsAPIApplication {
 		//gripper.move(linRel(0, 0, -30, World.Current.getRootFrame()).setCartVelocity(50).breakWhen(touch10)); 
 	}
 
-	public void pickup(int index){
+	public void pickup(int index,int z){
 		ForceCondition touch10 = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"),15 );
 		
 		gripper.move(lin(getApplicationData().getFrame("/P1")).setCartVelocity(moveSpeed));//frame1
@@ -106,6 +106,7 @@ public class RobotPickandPlace extends RoboticsAPIApplication {
 			logger.info(motion_return.getFiredBreakConditionInfo().toString());
 		}
 		
+		gripper.move(linRel(0, z, 5, World.Current.getRootFrame()).setCartVelocity(speed));
 		gripper.move(linRel(0, 0, 5, World.Current.getRootFrame()).setCartVelocity(speed));
 		gripper2F1.open();
 		gripper.move(linRel(0, 0, -35, World.Current.getRootFrame()).setCartVelocity(speed));
@@ -123,8 +124,11 @@ public class RobotPickandPlace extends RoboticsAPIApplication {
 
 	@Override
 	public void run() {
+		int z;
+		z = 0;
 		for (int i = 0; i < 3; i++) {
-			  pickup(i);
+			  pickup(i,z);
+			  z = z - 15;
 		}
 
 	}

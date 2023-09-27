@@ -109,7 +109,7 @@ public class RobotPickandPlace extends RoboticsAPIApplication {
 		
 		gripper.move(linRel(0, 0, 5, World.Current.getRootFrame()).setCartVelocity(speed));
 		gripper2F1.open();
-		gripper.move(linRel(0, 0, -35, World.Current.getRootFrame()).setCartVelocity(speed));
+		gripper.move(linRel(0, 0, -25, World.Current.getRootFrame()).setCartVelocity(speed));
 		gripper2F1.close();
 		mF.setLEDBlue(true);
 		gripper.move(lin(getApplicationData().getFrame("/P1")).setCartVelocity(upSpeed));//get back to frame1
@@ -128,7 +128,7 @@ public class RobotPickandPlace extends RoboticsAPIApplication {
 		z = 0;
 		for (int i = 0; i < 3; i++) {
 			  pickup(i,z);
-			  z = z - 15;
+			  z = z - 60;
 		}
 
 	}

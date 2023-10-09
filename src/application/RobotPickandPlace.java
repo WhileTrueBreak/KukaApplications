@@ -71,7 +71,7 @@ public class RobotPickandPlace extends RoboticsAPIApplication {
 		int AV = 5;// angular velocity
 		int Descendspeed = 70;//pick and place speed
 		int cs = 30; //cube size
-		int clearance = 150;//distance to avoid collision
+		int clearance = 140;//distance to avoid collision
 	
 
 		

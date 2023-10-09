@@ -38,9 +38,9 @@
             </redundancyData>
         </frame>
         <frame id="_d9bd8c29-7ed4-41fa-a916-1b249a6eed35" name="P2">
-            <transformation a="3.0972650229745153" b="-0.08172236036322549" c="-3.119988946104064" x="-402.4504100077078" y="-561.5675056328113" z="204.52623027303608"/>
+            <transformation a="3.0972650229745153" b="0.0" c="-3.119988946104064" x="-402.4504100077078" y="-561.5675056328113" z="204.52623027303608"/>
             <additionalInformation>
-                <info key="LastModificationTime" type="java.lang.Long" value="1696817888621"/>
+                <info key="LastModificationTime" type="java.lang.Long" value="1696828066996"/>
                 <info base="LBR_iiwa_14_R820_1" controller="KUKA_Sunrise_Cabinet_1" device="LBR_iiwa_14_R820_1" tcpName="RobotiqGripper/TCP" tool="RobotiqGripper" type="com.kuka.roboticsAPI.deviceModel.TeachInformation">
                     <tcpTransformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="174.0"/>
                 </info>

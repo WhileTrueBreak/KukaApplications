@@ -67,9 +67,9 @@ public class RobotPickandPlace extends RoboticsAPIApplication {
 
 	@Override
 	public void run() {
-		int Hspeed = 300;//movement speed
+		int Hspeed = 400;//movement speed
 		int AV = 5;// angular velocity
-		int Descendspeed = 70;//pick and place speed
+		int Descendspeed = 100;//pick and place speed
 		int cs = 30; //cube size
 		int clearance = 140;//distance to avoid collision
 	
@@ -99,7 +99,6 @@ public class RobotPickandPlace extends RoboticsAPIApplication {
 	    gripper.move(linRel(0, 0, ((-2)*cs), World.Current.getRootFrame()).setCartVelocity(Descendspeed));// going down to place
 		gripper2F1.open();
 	    gripper.move(lin(getApplicationData().getFrame("/P2")).setCartVelocity(Hspeed)); //home position
-	    gripper.move(ptp(getApplicationData().getFrame("/P3")).setJointVelocityRel(0.5)); //home position
 
 	    //3rd
 	    gripper.move(ptp(getApplicationData().getFrame("/P1")).setJointVelocityRel(0.5));//frame1

@@ -107,31 +107,31 @@ public class RobotPickandPlace extends RoboticsAPIApplication {
 	   
 	    
 	    
-		gripper.move(ptp(getApplicationData().getFrame("/P3")).setJointVelocityRel(0.3)); //home position
+		gripper.move(ptp(getApplicationData().getFrame("/P3")).setJointVelocityRel(1)); //home position
 	    
-		gripper.move(ptp(getApplicationData().getFrame("/P2")).setJointVelocityRel(0.3));//frame1
+		gripper.move(ptp(getApplicationData().getFrame("/P2")).setJointVelocityRel(1));//frame1
 	    gripper.move(linRel(0, 0, (-clearance), World.Current.getRootFrame()).setCartVelocity(Hspeed));//going down
 	    gripper.move(linRel(0, 0, ((-1)*cs), World.Current.getRootFrame()).setCartVelocity(Descendspeed));//going down to pick
 		gripper2F1.close();//close gripper
 		gripper.move(lin(getApplicationData().getFrame("/P2")).setCartVelocity(Hspeed));//get back to frame1
-		gripper.move(ptp(getApplicationData().getFrame("/P1")).setJointVelocityRel(0.3));// go to frame2
+		gripper.move(ptp(getApplicationData().getFrame("/P1")).setJointVelocityRel(1));// go to frame2
 	    gripper.move(linRel(0, 0, (-clearance), World.Current.getRootFrame()).setCartVelocity(Hspeed));//going down
 	    gripper.move(linRel(0, 0, (-2)*cs, World.Current.getRootFrame()).setCartVelocity(Descendspeed));// going down to place
 		gripper2F1.open();//open gripper
 	    gripper.move(lin(getApplicationData().getFrame("/P1")).setCartVelocity(Hspeed));
 
 		  
-	    gripper.move(ptp(getApplicationData().getFrame("/P2")).setJointVelocityRel(0.3));//frame1
+	    gripper.move(ptp(getApplicationData().getFrame("/P2")).setJointVelocityRel(1));//frame1
 	    gripper.move(linRel(0, 0, (-clearance), World.Current.getRootFrame()).setCartVelocity(Hspeed));//going down
 	    gripper.move(linRel(0, 0, ((-2)*cs), World.Current.getRootFrame()).setCartVelocity(Descendspeed));//going down to pick
 		gripper2F1.close();
 		gripper.move(lin(getApplicationData().getFrame("/P2")).setCartVelocity(Hspeed));//get back to frame1
-		gripper.move(ptp(getApplicationData().getFrame("/P1")).setJointVelocityRel(0.3));// go to frame2
+		gripper.move(ptp(getApplicationData().getFrame("/P1")).setJointVelocityRel(1));// go to frame2
 	    gripper.move(linRel(0, 0, (-clearance), World.Current.getRootFrame()).setCartVelocity(Hspeed));//going down
 	    gripper.move(linRel(0, 0, ((-1)*cs), World.Current.getRootFrame()).setCartVelocity(Descendspeed));// going down to place
 		gripper2F1.open();
 	    gripper.move(lin(getApplicationData().getFrame("/P1")).setCartVelocity(Hspeed)); //home position
-	    gripper.move(ptp(getApplicationData().getFrame("/P3")).setJointVelocityRel(0.3)); //home position
+	    gripper.move(ptp(getApplicationData().getFrame("/P3")).setJointVelocityRel(1)); //home position
 
 	}
 }

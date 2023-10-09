@@ -91,7 +91,7 @@ public class RobotPickandPlace extends RoboticsAPIApplication {
 		  //second cube
 	    gripper.move(ptp(getApplicationData().getFrame("/P1")).setJointVelocityRel(0.5));//frame1
 	    gripper.move(linRel(0, 35, (-clearance), World.Current.getRootFrame()).setCartVelocity(Hspeed));//going down
-	    gripper.move(linRel(0, 35, ((-3)*cs), World.Current.getRootFrame()).setCartVelocity(Descendspeed));//going down to pick
+	    gripper.move(linRel(0, 0, ((-3)*cs), World.Current.getRootFrame()).setCartVelocity(Descendspeed));//going down to pick
 		gripper2F1.close();
 		gripper.move(lin(getApplicationData().getFrame("/P1")).setCartVelocity(Hspeed));//get back to frame1
 		gripper.move(ptp(getApplicationData().getFrame("/P2")).setJointVelocityRel(0.5));// go to frame2
@@ -104,7 +104,7 @@ public class RobotPickandPlace extends RoboticsAPIApplication {
 	    //3rd
 	    gripper.move(ptp(getApplicationData().getFrame("/P1")).setJointVelocityRel(0.5));//frame1
 	    gripper.move(linRel(0, 70, (-clearance), World.Current.getRootFrame()).setCartVelocity(Hspeed));//going down
-	    gripper.move(linRel(0, 70, ((-3)*cs), World.Current.getRootFrame()).setCartVelocity(Descendspeed));//going down to pick
+	    gripper.move(linRel(0, 0, ((-3)*cs), World.Current.getRootFrame()).setCartVelocity(Descendspeed));//going down to pick
 		gripper2F1.close();
 		gripper.move(lin(getApplicationData().getFrame("/P1")).setCartVelocity(Hspeed));//get back to frame1
 		gripper.move(ptp(getApplicationData().getFrame("/P2")).setJointVelocityRel(0.5));// go to frame2

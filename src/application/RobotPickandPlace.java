@@ -67,7 +67,7 @@ public class RobotPickandPlace extends RoboticsAPIApplication {
 
 	@Override
 	public void run() {
-		int Hspeed = 300;//movement speed
+		int Hspeed = 490;//movement speed
 		int AV = 5;// angular velocity
 		int Descendspeed = 70;//pick and place speed
 		int cs = 30; //cube size
@@ -75,7 +75,7 @@ public class RobotPickandPlace extends RoboticsAPIApplication {
 	
 
 		
-		gripper.move(ptp(getApplicationData().getFrame("/P3")).setJointVelocityRel(0.3)); //home position
+		gripper.move(ptp(getApplicationData().getFrame("/P3")).setJointVelocityRel(1)); //home position
 	    
 		gripper.move(ptp(getApplicationData().getFrame("/P1")).setJointVelocityRel(0.3));//frame1
 	    gripper.move(linRel(0, 0, (-clearance), World.Current.getRootFrame()).setCartVelocity(Hspeed));//going down

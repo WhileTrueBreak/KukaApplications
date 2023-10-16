@@ -65,11 +65,12 @@ public class RobotPickandPlace extends RoboticsAPIApplication {
 	public void run() {
 		gripper2F1.open();
 		mF.setLEDBlue(true);
-		gripper.move(lin(getApplicationData().getFrame("/P1")).setCartVelocity(100));//get back to frame1
-		gripper.move(ptp(getApplicationData().getFrame("/P2")).setJointVelocityRel(0.2));//get back to frame1
-		gripper.move(ptp(getApplicationData().getFrame("/P3")).setJointVelocityRel(0.2));//get back to frame1
+		gripper.move(lin(getApplicationData().getFrame("/P1")).setCartVelocity(499));//get back to frame1
+		gripper.move(ptp(getApplicationData().getFrame("/P2")).setJointVelocityRel(0.5));//get back to frame1
+		gripper.move(ptp(getApplicationData().getFrame("/P3")).setJointVelocityRel(0.5));//get back to frame1
 		gripper2F1.close();
-		gripper.move(ptp(getApplicationData().getFrame("/P4")).setJointVelocityRel(0.2));//get back to frame1
+		gripper.move(linRel(0, 0, 20, World.Current.getRootFrame()).setCartVelocity(20));
+		gripper.move(ptp(getApplicationData().getFrame("/P4")).setJointVelocityRel(0.3));//get back to frame1
 				
 	}
 }

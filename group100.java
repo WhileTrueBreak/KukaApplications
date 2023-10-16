@@ -59,22 +59,25 @@ public class RobotPickandPlace extends RoboticsAPIApplication {
 		mF.setLEDBlue(false);
 		ThreadUtil.milliSleep(200);
 		
-		
+		//FORCE CONDITIONS EXAMPLE
+		ForceCondition touch10 = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"),10 );
+		ForceCondition touch15 = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"),15 );
+		//USAGE, will move to next line when triggered
+		//LOOK at pipecutting.java for examples on analysing the break condition. 
+		//gripper.move(linRel(0, 0, -30, World.Current.getRootFrame()).setCartVelocity(50).breakWhen(touch10)); 
 	}
 
 	@Override
 	public void run() {
 		
-		//gripper.move(lin(getApplicationData().getFrame("/P1")).setCartVelocity(499));//frame1
-		gripper.move(linRel(0, 0, 15, World.Current.getRootFrame()).setCartVelocity(50));//going down
+		gripper.move(lin(getApplicationData().getFrame("/P1")).setCartVelocity(499));//frame1
+		//gripper.move(linRel(0, 0, 0, World.Current.getRootFrame()).setCartVelocity(50));//going down
+		
 		gripper.move(lin(getApplicationData().getFrame("/P2")).setCartVelocity(499));//frame1
+		gripper2F1.close();
+		gripper.move(lin(getApplicationData().getFrame("/P1")).setCartVelocity(499));//frame1
 		gripper.move(lin(getApplicationData().getFrame("/P3")).setCartVelocity(499));//frame1
-		gripper.move(lin(getApplicationData().getFrame("/P2")).setCartVelocity(499));//frame1
-		gripper.move(lin(getApplicationData().getFrame("/P5")).setCartVelocity(499));//frame1
-		gripper.move(lin(getApplicationData().getFrame("/P4")).setCartVelocity(499));//frame1
-		gripper.move(lin(getApplicationData().getFrame("/P5")).setCartVelocity(499));//frame1
-//		gripper.move(lin(getApplicationData().getFrame("/P1")).setCartVelocity(499));//frame1
-//		gripper2F1.open();
-
+		gripper2F1.open();
+		gripper.move(lin(getApplicationData().getFrame("/P1")).setCartVelocity(499));//frame1
 	}
 }

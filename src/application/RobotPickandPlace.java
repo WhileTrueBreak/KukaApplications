@@ -57,29 +57,50 @@ public class RobotPickandPlace extends RoboticsAPIApplication {
 		mF.setLEDBlue(true);
 		ThreadUtil.milliSleep(200);
 		mF.setLEDBlue(false);
-		gripper2F1.close();
 		ThreadUtil.milliSleep(200);
 		
 		//FORCE CONDITIONS EXAMPLE
-		
+		ForceCondition touch10 = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"),10 );
+		ForceCondition touch15 = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"),15 );
+		//USAGE, will move to next line when triggered
+		//LOOK at pipecutting.java for examples on analysing the break condition. 
 		//gripper.move(linRel(0, 0, -30, World.Current.getRootFrame()).setCartVelocity(50).breakWhen(touch10)); 
 	}
 
 	@Override
 	public void run() {
 
-		gripper.move(ptp(getApplicationData().getFrame("/P1")).setJointVelocityRel(0.8));//frame1
+		gripper.move(lin(getApplicationData().getFrame("/P1")).setCartVelocity(200));//frame1
 	    gripper.move(linRel(0, 0, -30, World.Current.getRootFrame()).setCartVelocity(50));//going down
-		gripper2F1.open();
-		gripper.move(linRel(-50, 0, 5, World.Current.getRootFrame()).setCartVelocity(490));
-		gripper.move(linRel(0, 0, 60, World.Current.getRootFrame()).setCartVelocity(490));
-		mF.setLEDBlue(true);
-		gripper.move(ptp(getApplicationData().getFrame("/P2")).setJointVelocityRel(1));// go to frame2
-	    gripper.move(linRel(0, 0, -5, World.Current.getRootFrame()).setCartVelocity(50));// going down
 		gripper2F1.close();
+		mF.setLEDBlue(true);
+		gripper.move(lin(getApplicationData().getFrame("/P1")).setCartVelocity(100));//get back to frame1
+		gripper.move(lin(getApplicationData().getFrame("/P2")).setCartVelocity(200));// go to frame2
+	    gripper.move(linRel(0, 0, -90, World.Current.getRootFrame()).setCartVelocity(50));// going down
+		gripper2F1.open();
 		mF.setLEDBlue(false);
+	    gripper.move(lin(getApplicationData().getFrame("/P2")).setCartVelocity(100));
+
 		
-		gripper.move(ptp(getApplicationData().getFrame("/P1")).setJointVelocityRel(0.4));//frame1
-				
+		gripper.move(lin(getApplicationData().getFrame("/P1")).setCartVelocity(200));//frame1
+	    gripper.move(linRel(0, 0, -60, World.Current.getRootFrame()).setCartVelocity(50));//going down
+		gripper2F1.close();
+		gripper.move(lin(getApplicationData().getFrame("/P1")).setCartVelocity(100));//get back to frame1
+		gripper.move(lin(getApplicationData().getFrame("/P2")).setCartVelocity(200));// go to frame2
+	    gripper.move(linRel(0, 0, -60, World.Current.getRootFrame()).setCartVelocity(50));// going down
+		gripper2F1.open();
+	    gripper.move(lin(getApplicationData().getFrame("/P2")).setCartVelocity(100));
+		
+		gripper.move(lin(getApplicationData().getFrame("/P1")).setCartVelocity(200));//frame1
+	    gripper.move(linRel(0, 0, -90, World.Current.getRootFrame()).setCartVelocity(50));//going down
+		gripper2F1.close();
+		mF.setLEDBlue(true);
+		gripper.move(lin(getApplicationData().getFrame("/P1")).setCartVelocity(100));//get back to frame1
+		gripper.move(lin(getApplicationData().getFrame("/P2")).setCartVelocity(200));// go to frame2
+	    gripper.move(linRel(0, 0, -30, World.Current.getRootFrame()).setCartVelocity(50));// going down
+		gripper2F1.open();
+		mF.setLEDBlue(false);
+	    gripper.move(lin(getApplicationData().getFrame("/P2")).setCartVelocity(100));
+		
 	}
 }

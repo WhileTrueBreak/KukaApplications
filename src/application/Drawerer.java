@@ -74,7 +74,7 @@ public class Drawerer extends RoboticsAPIApplication{
 	@Override
 	public void run() {
 		// Move to bottom left
-		gripper.move(lin(getApplicationData().getFrame("/bottom_left")).setCartVelocity(200).setMode(springRobot));
+		gripper.move(ptp(getApplicationData().getFrame("/bottom_left")).setMode(springRobot));
 		
 		
 		m1 = gripper.moveAsync(positionHold(springRobot, -1, TimeUnit.SECONDS));

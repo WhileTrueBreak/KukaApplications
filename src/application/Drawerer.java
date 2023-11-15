@@ -85,11 +85,17 @@ public class Drawerer extends RoboticsAPIApplication{
 		Position current_pos = new Position(0, 0);
 		
 		penDown();
+		ThreadUtil.milliSleep(300);
 		penUp();
+		ThreadUtil.milliSleep(300);
 		penDown();
+		ThreadUtil.milliSleep(300);
 		penUp();
+		ThreadUtil.milliSleep(300);
 		penDown();
+		ThreadUtil.milliSleep(300);
 		penUp();
+		ThreadUtil.milliSleep(300);
 //		current_pos = springyMove(current_pos, path.get(0));
 //		penDown();
 //		for (Position position:path){

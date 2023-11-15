@@ -95,7 +95,8 @@ public class Drawerer extends RoboticsAPIApplication{
 		// TODO: Take in a file and return the points here.
 
 		// temp path
-		Position[] path = {new Position(0,0), new Position(0, 300), new Position(300,300), new Position(300,0), new Position(0,0)};
+		Position[] path = {new Position(150,150), new Position(100,150), new Position(100,100), new Position(50,100), new Position(50,200), new Position(100,200), new Position(100,250), new Position(200,250), new Position(200,200), new Position(150,200), new Position(150,150),new Position(150,50), new Position(200,50), new Position(200,100), new Position(250,100), new Position(250,150), new Position(150,150)};
+//		Position[] path = {};
 		return Arrays.asList(path);
 	}
 

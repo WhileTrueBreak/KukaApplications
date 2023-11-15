@@ -70,7 +70,7 @@ public class Drawerer extends RoboticsAPIApplication{
 //		gripper2F1.open();
 //		mF.setLEDBlue(true);
 //		ThreadUtil.milliSleep(10000);
-//		mF.setLEDBlue(false);
+		mF.setLEDBlue(false);
 		gripper2F1.close();
 		ThreadUtil.milliSleep(200);
 	}
@@ -99,7 +99,7 @@ public class Drawerer extends RoboticsAPIApplication{
 		
 		
 		mF.setLEDBlue(true);
-		ThreadUtil.milliSleep(120000);
+//		ThreadUtil.milliSleep(120000);
 	}
 	
 	private List<Position> getPath(){

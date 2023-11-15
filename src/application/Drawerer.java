@@ -83,10 +83,14 @@ public class Drawerer extends RoboticsAPIApplication{
 		gripper.move(ptp(getApplicationData().getFrame("/bottom_left")).setJointVelocityRel(0.2));
 		path = getPath(); // have a file here probably
 		Position current_pos = new Position(0, 0);
-
+		
+		
+		current_pos = springyMove(current_pos, path.get(0));
+		penDown();
 		for (Position position:path){
 			current_pos = springyMove(current_pos, position);
 		}
+		penUp();
 		
 		ThreadUtil.milliSleep(120000);
 	}
@@ -95,8 +99,8 @@ public class Drawerer extends RoboticsAPIApplication{
 		// TODO: Take in a file and return the points here.
 
 		// temp path
-		Position[] path = {new Position(150,150), new Position(100,150), new Position(100,100), new Position(50,100), new Position(50,200), new Position(100,200), new Position(100,250), new Position(200,250), new Position(200,200), new Position(150,200), new Position(150,150),new Position(150,50), new Position(200,50), new Position(200,100), new Position(250,100), new Position(250,150), new Position(150,150)};
-//		Position[] path = {};
+//		Position[] path = {new Position(150,150), new Position(100,150), new Position(100,100), new Position(50,100), new Position(50,200), new Position(100,200), new Position(100,250), new Position(200,250), new Position(200,200), new Position(150,200), new Position(150,150),new Position(150,50), new Position(200,50), new Position(200,100), new Position(250,100), new Position(250,150), new Position(150,150)};
+		Position[] path = {new Position(231.64819944598335,130.89868774121362),new Position(231.64819944598335,131.01969730082018),new Position(231.74168975069253,131.06092493638764),new Position(231.85595567867034,130.99030470914127),new Position(231.97022160664818,130.9196844818949),new Position(232.06371191135733,130.82067666039862),new Position(232.06371191135733,130.77028732803845),new Position(232.06371191135733,130.71989799567822),new Position(231.97022160664818,130.6786703601108),new Position(231.85595567867034,130.6786703601108),new Position(231.74168975069253,130.6786703601108),new Position(231.64819944598335,130.7776781816071),new Position(231.64819944598335,130.89868774121362)};
 		return Arrays.asList(path);
 	}
 
@@ -105,5 +109,12 @@ public class Drawerer extends RoboticsAPIApplication{
 		Position move_pos = next_pos.getRelDistance(current_pos);
 		gripper.move(linRel(-move_pos.x, move_pos.y, 0).setMode(springRobot).setJointVelocityRel(vel));
 		return next_pos;
+	}
+	
+	private void penUp(){
+		gripper.move(linRel(0,0, -10).setMode(springRobot).setJointVelocityRel(0.2));
+	}
+	private void penDown(){
+		gripper.move(linRel(0,0, 10).setMode(springRobot).setJointVelocityRel(0.2));
 	}
 }

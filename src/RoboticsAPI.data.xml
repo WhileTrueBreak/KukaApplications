@@ -53,6 +53,32 @@
                 </redundancy>
             </redundancyData>
         </frame>
+        <frame id="_d4215809-80f0-4c25-b8ee-3b55546b03f2" name="bottom_left">
+            <transformation a="1.6" b="0.0" c="1.6" x="694.0" y="-288.1" z="440.1"/>
+            <additionalInformation>
+                <info key="LastModificationTime" type="java.lang.Long" value="1700028239343"/>
+            </additionalInformation>
+            <redundancyData>
+                <redundancy transformationProviderName="legacy" type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy">
+                    <info type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy$E1Parameter" value="0.1" valueType="java.lang.Double"/>
+                    <info type="com.kuka.roboticsAPI.deviceModel.StatusTurnRedundancy$TurnParameter" value="73" valueType="java.lang.Integer"/>
+                    <info type="com.kuka.roboticsAPI.deviceModel.StatusTurnRedundancy$StatusParameter" value="2" valueType="java.lang.Integer"/>
+                </redundancy>
+            </redundancyData>
+        </frame>
+        <frame id="_50aeb1d2-3669-4e83-879f-d5cc1e5e755d" name="top_right">
+            <transformation a="1.6" b="0.0" c="1.6" x="694.0" y="-288.1" z="440.1"/>
+            <additionalInformation>
+                <info key="LastModificationTime" type="java.lang.Long" value="1700028275090"/>
+            </additionalInformation>
+            <redundancyData>
+                <redundancy transformationProviderName="legacy" type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy">
+                    <info type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy$E1Parameter" value="0.1" valueType="java.lang.Double"/>
+                    <info type="com.kuka.roboticsAPI.deviceModel.StatusTurnRedundancy$TurnParameter" value="73" valueType="java.lang.Integer"/>
+                    <info type="com.kuka.roboticsAPI.deviceModel.StatusTurnRedundancy$StatusParameter" value="2" valueType="java.lang.Integer"/>
+                </redundancy>
+            </redundancyData>
+        </frame>
     </world>
     <objectTemplates>
         <toolTemplate class="" name="NoLoad">

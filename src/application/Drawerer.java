@@ -126,9 +126,9 @@ public class Drawerer extends RoboticsAPIApplication{
 	}
 	
 	private void penUp(){
-		gripper.move(linRel(0,0, -20).setMode(springRobot).setJointVelocityRel(0.2));
+		gripper.move(linRel(0,0, -20).setJointVelocityRel(0.2));
 	}
 	private void penDown(){
-		gripper.move(linRel(0,0, 20).setMode(springRobot).setJointVelocityRel(0.2));
+		gripper.move(linRel(0,0, 20).setJointVelocityRel(0.2));
 	}
 }

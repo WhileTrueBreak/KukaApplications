@@ -101,7 +101,7 @@ public class Drawerer extends RoboticsAPIApplication{
 	private Position springyMove(Position current_pos, Position next_pos){
 		double vel = 0.2;
 		Position move_pos = next_pos.getRelDistance(current_pos);
-		gripper.move(linRel(0, -move_pos.x, move_pos.y).setJointVelocityRel(vel));
+		gripper.move(linRel(move_pos.x, move_pos.y, 0).setJointVelocityRel(vel));
 		return next_pos;
 	}
 }

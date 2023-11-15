@@ -53,8 +53,8 @@ public class Drawerer extends RoboticsAPIApplication{
 
 		// TODO: Stiff in every direction except plane perpendicular to flange
 		springRobot.parametrize(CartDOF.X).setStiffness(50);
-		springRobot.parametrize(CartDOF.Y).setStiffness(1000);
-		springRobot.parametrize(CartDOF.Z).setStiffness(1000);
+		springRobot.parametrize(CartDOF.Y).setStiffness(5000);
+		springRobot.parametrize(CartDOF.Z).setStiffness(5000);
 
 		// Stiff rotation
 		springRobot.parametrize(CartDOF.C).setStiffness(300);
@@ -84,13 +84,18 @@ public class Drawerer extends RoboticsAPIApplication{
 		path = getPath(); // have a file here probably
 		Position current_pos = new Position(0, 0);
 		
-		
-		current_pos = springyMove(current_pos, path.get(0));
 		penDown();
-		for (Position position:path){
-			current_pos = springyMove(current_pos, position);
-		}
 		penUp();
+		penDown();
+		penUp();
+		penDown();
+		penUp();
+//		current_pos = springyMove(current_pos, path.get(0));
+//		penDown();
+//		for (Position position:path){
+//			current_pos = springyMove(current_pos, position);
+//		}
+//		penUp();
 		
 		
 		mF.setLEDBlue(true);

@@ -80,7 +80,7 @@ public class Drawerer extends RoboticsAPIApplication{
 	@Override
 	public void run() {
 		// Move to bottom left
-		gripper.move(ptp(getApplicationData().getFrame("/bottom_left")).setMode(springRobot).setJointVelocityRel(0.2));
+		gripper.move(ptp(getApplicationData().getFrame("/bottom_left")).setJointVelocityRel(0.2));
 		path = getPath(); // have a file here probably
 		Position current_pos = new Position(0, 0);
 
@@ -95,14 +95,14 @@ public class Drawerer extends RoboticsAPIApplication{
 		// TODO: Take in a file and return the points here.
 
 		// temp path
-		Position[] path = {new Position(100,50), new Position(300,300)};
+		Position[] path = {new Position(0,0), new Position(0, 300), new Position(300,300), new Position(300,0), new Position(0,0)};
 		return Arrays.asList(path);
 	}
 
 	private Position springyMove(Position current_pos, Position next_pos){
 		double vel = 0.2;
 		Position move_pos = next_pos.getRelDistance(current_pos);
-		gripper.move(linRel(-move_pos.x, move_pos.y, 0).setJointVelocityRel(vel));
+		gripper.move(linRel(-move_pos.x, move_pos.y, 0).setMode(springRobot).setJointVelocityRel(vel));
 		return next_pos;
 	}
 }

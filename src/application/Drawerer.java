@@ -57,9 +57,9 @@ public class Drawerer extends RoboticsAPIApplication{
 		springRobot.parametrize(CartDOF.Z).setStiffness(1000);
 
 		// Stiff rotation
-		springRobot.parametrize(CartDOF.C).setStiffness(1000);
-		springRobot.parametrize(CartDOF.B).setStiffness(1000);
-		springRobot.parametrize(CartDOF.A).setStiffness(1000);
+		springRobot.parametrize(CartDOF.C).setStiffness(300);
+		springRobot.parametrize(CartDOF.B).setStiffness(300);
+		springRobot.parametrize(CartDOF.A).setStiffness(300);
 		springRobot.setReferenceSystem(World.Current.getRootFrame());
 		springRobot.parametrize(CartDOF.ALL).setDamping(0.4);
 		

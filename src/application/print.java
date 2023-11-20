@@ -53,15 +53,10 @@ public class print extends RoboticsAPIApplication {
 	@Override
 	public void initialize() {
 		gripper.attachTo(robot.getFlange());
-		gripper2F1.initalise();
-		gripper2F1.setSpeed(189);
-		gripper2F1.close();
+		gripper2F1.setPos(178);
+		ThreadUtil.milliSleep(100);
+		gripper2F1.setForce(150);
 		mF.setLEDBlue(true);
-		gripper.move(ptp(getApplicationData().getFrame("/DrivePos")).setJointVelocityRel(0.2));
-		ThreadUtil.milliSleep(200);
-		mF.setLEDBlue(false);
-		ThreadUtil.milliSleep(200);
-		
 		
 	}
 

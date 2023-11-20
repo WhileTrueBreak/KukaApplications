@@ -55,8 +55,9 @@ public class print extends RoboticsAPIApplication {
 		gripper.attachTo(robot.getFlange());
 		gripper2F1.initalise();
 		gripper2F1.setSpeed(189);
-		gripper2F1.open();
+		gripper2F1.close();
 		mF.setLEDBlue(true);
+		gripper.move(lin(getApplicationData().getFrame("/DrivePos")).setCartVelocity(499));
 		ThreadUtil.milliSleep(200);
 		mF.setLEDBlue(false);
 		ThreadUtil.milliSleep(200);

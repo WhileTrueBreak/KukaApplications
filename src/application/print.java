@@ -66,8 +66,16 @@ public class print extends RoboticsAPIApplication {
 		gripper.move(ptp(getApplicationData().getFrame("/P6")).setJointVelocityRel(0.2));//frame1
 		mF.setLEDBlue(true);
 	    //JointTorqueCondition cond_1 = new JointTorqueCondition(JointEnum.J3, -12.0, 0.0);
-		ForceCondition cond_2 = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 30.0);
-		gripper.move(linRel(0, 0, -200, World.Current.getRootFrame()).setCartVelocity(50).breakWhen(cond_2));//going down
+		ForceCondition cond_2 = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 15.0);
+		gripper.move(linRel(0, 0, -400, World.Current.getRootFrame()).setCartVelocity(50).breakWhen(cond_2));//going down
+		
+		
+//		if (motion2.getFiredBreakConditionInfo() == null){
+//			logger.info("No Collision Detected");
+//		}
+//		else{
+//			logger.info("Collision Detected");
+//		}
 		ThreadUtil.milliSleep(200);
 		mF.setLEDBlue(false);
 		//gripper2F1.open();

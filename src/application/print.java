@@ -82,7 +82,7 @@ public class print extends RoboticsAPIApplication {
 			logger.info("Collision Detected");
 			mF.setLEDBlue(true);
 		}
-		IMotionContainer motion1 = gripper.move(linRel(0, 500, 10, World.Current.getRootFrame()).setCartVelocity(100).breakWhen(cond_2));//going left
+		IMotionContainer motion1 = gripper.move(linRel(0, 70, 10, World.Current.getRootFrame()).setCartVelocity(100).breakWhen(cond_2));//going left
 		if (motion1.getFiredBreakConditionInfo() == null){
 			logger.info("No Collision Detected");
 			mF.setLEDBlue(false);

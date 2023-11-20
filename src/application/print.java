@@ -69,6 +69,8 @@ public class print extends RoboticsAPIApplication {
 	    //JointTorqueCondition cond_1 = new JointTorqueCondition(JointEnum.J3, -12.0, 0.0);
 		ForceCondition cond_2 = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 10.0);
 		gripper.move(linRel(0, 0, -500, World.Current.getRootFrame()).setCartVelocity(100).breakWhen(cond_2));//going down
+		mF.setLEDBlue(false);
+		ThreadUtil.milliSleep(200);
 //		if (cond_2 == True){
 //			logger.info("No Collision Detected");
 //			mF.setLEDBlue(false);

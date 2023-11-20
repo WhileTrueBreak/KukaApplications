@@ -2,6 +2,7 @@ package application;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+
 import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.*;
 
@@ -11,6 +12,7 @@ import com.kuka.roboticsAPI.deviceModel.JointEnum;
 import com.kuka.roboticsAPI.deviceModel.LBR;
 import com.kuka.roboticsAPI.geometricModel.Tool;
 import com.kuka.roboticsAPI.geometricModel.World;
+import com.kuka.roboticsAPI.motionModel.IMotionContainer;
 import com.kuka.task.ITaskLogger;
 import com.kuka.common.ThreadUtil;
 import com.kuka.generated.ioAccess.MediaFlangeIOGroup;
@@ -68,20 +70,27 @@ public class print extends RoboticsAPIApplication {
 		mF.setLEDBlue(true);
 	    //JointTorqueCondition cond_1 = new JointTorqueCondition(JointEnum.J3, -12.0, 0.0);
 		ForceCondition cond_2 = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 10.0);
-		gripper.move(linRel(0, 0, -500, World.Current.getRootFrame()).setCartVelocity(100).breakWhen(cond_2));//going down
+		IMotionContainer motion0 = gripper.move(linRel(0, 0, -500, World.Current.getRootFrame()).setCartVelocity(100).breakWhen(cond_2));//going down
 		mF.setLEDBlue(false);
 		ThreadUtil.milliSleep(200);
 		mF.setLEDBlue(true);
-//		if (cond_2 == null){
-//			logger.info("No Collision Detected");
-//			mF.setLEDBlue(false);
-//			ThreadUtil.milliSleep(200);
-//		}
-//		else{
-//			logger.info("Collision Detected");
-//			mF.setLEDBlue(true);
-//			ThreadUtil.milliSleep(200);
-//		}
+		if (motion0.getFiredBreakConditionInfo() == null){
+			logger.info("No Collision Detected");
+			mF.setLEDBlue(false);
+		}
+		else{
+			logger.info("Collision Detected");
+			mF.setLEDBlue(true);
+			IMotionContainer motion1 = gripper.move(linRel(0, 500, 0, World.Current.getRootFrame()).setCartVelocity(100).breakWhen(cond_2));//going left
+			if (motion1.getFiredBreakConditionInfo() == null){
+				logger.info("No Collision Detected");
+				mF.setLEDBlue(false);
+			}
+			else{
+				logger.info("Collision Detected");
+				mF.setLEDBlue(true);
+			}
+		}
 		//gripper2F1.open();
 
 	}

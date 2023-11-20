@@ -64,10 +64,11 @@ public class print extends RoboticsAPIApplication {
 	public void run() {
 		
 		gripper.move(ptp(getApplicationData().getFrame("/P6")).setJointVelocityRel(0.2));//frame1
+		ThreadUtil.milliSleep(200);
 		mF.setLEDBlue(true);
 	    //JointTorqueCondition cond_1 = new JointTorqueCondition(JointEnum.J3, -12.0, 0.0);
 		ForceCondition cond_2 = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 10.0);
-		gripper.move(linRel(0, 0, -400, World.Current.getRootFrame()).setCartVelocity(50).breakWhen(cond_2));//going down
+		gripper.move(linRel(0, 0, -100, World.Current.getRootFrame()).setCartVelocity(50).breakWhen(cond_2));//going down
 		if (cond_2 == null){
 			logger.info("No Collision Detected");
 			mF.setLEDBlue(false);

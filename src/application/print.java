@@ -68,11 +68,11 @@ public class print extends RoboticsAPIApplication {
 	@Override
 	public void run() {
 		
-		gripper.move(lin(getApplicationData().getFrame("/P6")).setCartVelocity(499));//frame1
+		gripper.move(ptp(getApplicationData().getFrame("/P6")).setJointVelocityRel(0.2));//frame1
 		mF.setLEDBlue(true);
 	    //JointTorqueCondition cond_1 = new JointTorqueCondition(JointEnum.J3, -12.0, 0.0);
 		ForceCondition cond_2 = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 30.0);
-		gripper.move(linRel(0, 0, -50, World.Current.getRootFrame()).setCartVelocity(5).breakWhen(cond_2));//going down
+		gripper.move(linRel(0, 0, -50, World.Current.getRootFrame()).setCartVelocity(10).breakWhen(cond_2));//going down
 		ThreadUtil.milliSleep(200);
 		mF.setLEDBlue(false);
 		//gripper2F1.open();

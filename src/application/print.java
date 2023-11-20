@@ -71,7 +71,8 @@ public class print extends RoboticsAPIApplication {
 		gripper.move(linRel(0, 0, -500, World.Current.getRootFrame()).setCartVelocity(100).breakWhen(cond_2));//going down
 		mF.setLEDBlue(false);
 		ThreadUtil.milliSleep(200);
-//		if (cond_2 == True){
+		mF.setLEDBlue(true);
+//		if (cond_2 == null){
 //			logger.info("No Collision Detected");
 //			mF.setLEDBlue(false);
 //			ThreadUtil.milliSleep(200);

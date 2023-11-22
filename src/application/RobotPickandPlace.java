@@ -4,8 +4,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.*;
-
-import com.kuka.roboticsAPI.conditionModel.ForceCondition;
 import com.kuka.roboticsAPI.deviceModel.LBR;
 import com.kuka.roboticsAPI.geometricModel.Tool;
 import com.kuka.roboticsAPI.geometricModel.World;
@@ -58,26 +56,58 @@ public class RobotPickandPlace extends RoboticsAPIApplication {
 		ThreadUtil.milliSleep(200);
 		mF.setLEDBlue(false);
 		ThreadUtil.milliSleep(200);
-		
-		
+		ThreadUtil.milliSleep(200);
 	}
 
 	@Override
 	public void run() {
+		// your application execution starts here
+		//gripper.move(ptp(getApplicationData().getFrame("/P1")).setJointVelocityRel(0.3));
+		//gripper2F1.close();
+		//mF.setLEDGreen(true);
+		//gripper.move(ptp(getApplicationData().getFrame("/P2")).setJointVelocityRel(0.3));
+		//gripper2F1.open();
+		//mF.setLEDGreen(false);
 		
-		//gripper.move(lin(getApplicationData().getFrame("/P1")).setCartVelocity(499));//frame1
-		gripper.move(linRel(0, 0, 15, World.Current.getRootFrame()).setCartVelocity(50));//going down
-		gripper.move(lin(getApplicationData().getFrame("/P2")).setCartVelocity(499));//frame1
-		gripper.move(lin(getApplicationData().getFrame("/P3")).setCartVelocity(499));//frame1
-		gripper.move(lin(getApplicationData().getFrame("/P2")).setCartVelocity(499));//frame1
-		gripper.move(lin(getApplicationData().getFrame("/P4")).setCartVelocity(499));//frame1
-		gripper.move(lin(getApplicationData().getFrame("/P5")).setCartVelocity(499));//frame1
+		gripper.move(ptp(getApplicationData().getFrame("/P1")).setJointVelocityRel(0.5));//frame1
+	    gripper.move(linRel(0, 0, -200, World.Current.getRootFrame()).setCartVelocity(200));//going down
+		gripper2F1.close();
 		mF.setLEDBlue(true);
-		ThreadUtil.milliSleep(5000);
-		mF.setLEDBlue(false);
-		gripper.move(lin(getApplicationData().getFrame("/P4")).setCartVelocity(499));//frame1
-		gripper.move(lin(getApplicationData().getFrame("/P1")).setCartVelocity(499));//frame1
+		gripper.move(lin(getApplicationData().getFrame("/P1")).setCartVelocity(200));//get back to frame1
+		gripper.move(lin(getApplicationData().getFrame("/P2")).setCartVelocity(200));// go to frame2
+	    gripper.move(linRel(0, 0, -200, World.Current.getRootFrame()).setCartVelocity(200));// going down
 		gripper2F1.open();
-
+		mF.setLEDBlue(false);
+	    gripper.move(lin(getApplicationData().getFrame("/P2")).setCartVelocity(200));
+	    gripper.move(linRel(0, 0, -200, World.Current.getRootFrame()).setCartVelocity(200));// going down
+		gripper2F1.close();
+		mF.setLEDBlue(true);
+	    gripper.move(lin(getApplicationData().getFrame("/P2")).setCartVelocity(200));
+	    gripper.move(lin(getApplicationData().getFrame("/P3")).setCartVelocity(200));// go to frame2
+	    gripper.move(linRel(0, 0, -200, World.Current.getRootFrame()).setCartVelocity(200));// going down
+		gripper2F1.open();
+		mF.setLEDBlue(false);
+		gripper.move(lin(getApplicationData().getFrame("/P3")).setCartVelocity(200));
+		gripper.move(linRel(0, 0, -200, World.Current.getRootFrame()).setCartVelocity(200));// going down
+		gripper2F1.close();
+		mF.setLEDBlue(true);
+	    gripper.move(lin(getApplicationData().getFrame("/P3")).setCartVelocity(200));
+	    gripper.move(ptp(getApplicationData().getFrame("/P1")).setJointVelocityRel(0.5));
+	    gripper.move(linRel(0, 0, -200, World.Current.getRootFrame()).setCartVelocity(200));// going down
+		gripper2F1.open();
+		mF.setLEDBlue(false);
+	    gripper.move(lin(getApplicationData().getFrame("/P1")).setCartVelocity(200));
+		
+//		gripper.move(lin(getApplicationData().getFrame("/P1")).setCartVelocity(200));
+//		gripper2F1.close();
+//		mF.setLEDBlue(true);
+//		ThreadUtil.milliSleep(200);
+//		mF.setLEDBlue(false);
+//		mF.setLEDRed(true);
+//		ThreadUtil.milliSleep(200);
+//		mF.setLEDRed(false);
+//		mF.setLEDGreen(true);
+//		ThreadUtil.milliSleep(200);
+//		mF.setLEDGreen(false);
 	}
 }

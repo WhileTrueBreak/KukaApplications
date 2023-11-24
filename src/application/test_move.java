@@ -19,6 +19,7 @@ import static com.kuka.roboticsAPI.motionModel.BasicMotions.*;
 
 import com.kuka.roboticsAPI.conditionModel.ForceCondition;
 import com.kuka.roboticsAPI.deviceModel.LBR;
+import com.kuka.roboticsAPI.deviceModel.kmp.SunriseOmniMoveMobilePlatform;
 import com.kuka.roboticsAPI.geometricModel.Tool;
 import com.kuka.roboticsAPI.geometricModel.World;
 import com.kuka.task.ITaskLogger;
@@ -44,10 +45,10 @@ import com.kuka.generated.ioAccess.MediaFlangeIOGroup;
  * @see #dispose()
  */
 @NavTaskCategory(maxInstances = 2)
-public class test_move extends RoboticsAPITask {
+public class test_move extends RoboticsAPIApplication {
 	@Inject
 	private LBR robot;
-
+	
 	@Inject
 	private MobileRobotManager robotManager;
 	

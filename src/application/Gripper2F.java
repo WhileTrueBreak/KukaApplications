@@ -5,11 +5,9 @@ import javax.inject.Singleton;
 
 import com.kuka.common.ThreadUtil;
 import com.kuka.generated.ioAccess.Gripper2FIOGroup;
-import com.kuka.nav.task.NavTaskCategory;
 import com.kuka.task.ITaskLogger;
 
 @Singleton  //??
-@NavTaskCategory(maxInstances = 2)
 public class Gripper2F {
 	@Inject
 	private Gripper2FIOGroup gripperIO;

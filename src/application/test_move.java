@@ -11,7 +11,10 @@ import com.kuka.nav.data.LocationData;
 import com.kuka.nav.rel.RelativeMotion;
 import com.kuka.nav.robot.MobileRobot;
 import com.kuka.nav.robot.MobileRobotManager;
+import com.kuka.nav.task.NavTaskCategory;
 import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
+import com.kuka.roboticsAPI.applicationModel.tasks.RoboticsAPITask;
+
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.*;
 
 import com.kuka.roboticsAPI.conditionModel.ForceCondition;
@@ -40,7 +43,8 @@ import com.kuka.generated.ioAccess.MediaFlangeIOGroup;
  * @see #run()
  * @see #dispose()
  */
-public class test_move extends RoboticsAPIApplication {
+@NavTaskCategory(maxInstances = 2)
+public class test_move extends RoboticsAPITask {
 	@Inject
 	private LBR robot;
 
@@ -70,10 +74,6 @@ public class test_move extends RoboticsAPIApplication {
 		gripper2F1.initalise();
 		gripper2F1.setSpeed(189);
 		gripper2F1.open();
-		mF.setLEDBlue(true);
-		ThreadUtil.milliSleep(200);
-		mF.setLEDBlue(false);
-		ThreadUtil.milliSleep(200);
 	}
 
 	@Override
@@ -82,7 +82,7 @@ public class test_move extends RoboticsAPIApplication {
 		// “[Name in StationSetup]”
 		//Pose currentPose = robot.getPose();
 		
-		//Collection<MobileRobot> robots = robotManager.getRobots(MobileRobot.class);
+		//Collections<MobileRobot> robots = robotManager.getRobots(MobileRobot.class);
 
 		//Collection<Location> locations = locationData.getAll();
 		

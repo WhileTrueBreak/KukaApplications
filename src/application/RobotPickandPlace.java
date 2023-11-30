@@ -115,7 +115,8 @@ public class RobotPickandPlace extends RoboticsAPIApplication {
 		gripper2F1.open();
 		mF.setLEDBlue(false);
 	    gripper.move(lin(getApplicationData().getFrame("/P2")).setCartVelocity(100));
-	    gripper.move(lin(getApplicationData().getFrame("/DrivePos")).setCartVelocity(100));
+	    
+	    robot.move(lin(getApplicationData().getFrame("/DrivePos")).setCartVelocity(100));
 		
 	}
 }

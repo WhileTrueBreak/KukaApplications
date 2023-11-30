@@ -2,6 +2,7 @@ package application;
 
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.lin;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.linRel;
+import static com.kuka.roboticsAPI.motionModel.BasicMotions.ptp;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -80,7 +81,8 @@ public class test_move extends RoboticsAPIApplication {
 
 		mF.setLEDBlue(false);
 		ThreadUtil.milliSleep(200);
-		gripper.move(lin(getApplicationData().getFrame("/P1")).setCartVelocity(200));//frame1
-	    gripper.move(linRel(0, 0, -30, World.Current.getRootFrame()).setCartVelocity(50));//going down
+		robot.move(ptp(0,0,0,0,0,0,0.1));
+		//robot.move(lin(getApplicationData().getFrame("/P1")).setCartVelocity(200));//frame1
+		//robot.move(linRel(0, 0, -30, World.Current.getRootFrame()).setCartVelocity(50));//going down
 	}
 }

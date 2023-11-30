@@ -1,166 +1,77 @@
 package application;
 
-import static com.kuka.roboticsAPI.motionModel.BasicMotions.ptpHome;
-
 import javax.inject.Inject;
 import javax.inject.Named;
-
-//import com.kuka.nav.OrientationMode;
-//import com.kuka.nav.Orientations;
-//import com.kuka.nav.Pose;
-//import com.kuka.nav.Position;
-//import com.kuka.nav.fleet.ChangeGraphCommand;
-//import com.kuka.nav.fleet.FleetManager;
-//import com.kuka.nav.fleet.GraphMotion;
-//import com.kuka.nav.fleet.filter.InstanceFilter;
-//import com.kuka.nav.fleet.graph.TopologyGraph;
-//import com.kuka.nav.fleet.graph.TopologyNode;
-//import com.kuka.nav.line.VirtualLine;
-//import com.kuka.nav.line.VirtualLineMotion;
-//import com.kuka.nav.recover.OffStartPoseCondition;
-//import com.kuka.nav.recover.ReturnToStartPoseRecover;
-//import com.kuka.nav.rel.RelativeMotion;
-//import com.kuka.nav.robot.MobileRobot;
-import com.kuka.nav.fleet.ChangeGraphCommand;
-import com.kuka.nav.fleet.FleetManager;
-import com.kuka.nav.rel.RelativeMotion;
-import com.kuka.nav.robot.MobileRobot;
 import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
+
+
+import com.kuka.roboticsAPI.conditionModel.ForceCondition;
 import com.kuka.roboticsAPI.deviceModel.LBR;
+import com.kuka.roboticsAPI.geometricModel.Tool;
+
 import com.kuka.task.ITaskLogger;
+import com.kuka.common.ThreadUtil;
+import com.kuka.generated.ioAccess.MediaFlangeIOGroup;
 
 /**
  * Implementation of a robot application.
  * <p>
- * This {@link RoboticsAPIApplication} provides a {@link #run()} method. This method 
- * will be called in the application lifecycle after the {@link #initialize()}-method 
- * and before the{@link #dispose()}-method (which may both be overriden). The application  
- * will terminate automatically after the {@link #run()} method has finished or after 
- * stopping the task. The {@link #dispose()} method will be called, even if an 
+ * The application provides a {@link RoboticsAPITask#initialize()} and a 
+ * {@link RoboticsAPITask#run()} method, which will be called successively in 
+ * the application lifecycle. The application will terminate automatically after 
+ * the {@link RoboticsAPITask#run()} method has finished or after stopping the 
+ * task. The {@link RoboticsAPITask#dispose()} method will be called, even if an 
  * exception is thrown during initialization or run. 
  * <p>
  * <b>It is imperative to call <code>super.dispose()</code> when overriding the 
- * {@link #dispose()} method.</b> 
+ * {@link RoboticsAPITask#dispose()} method.</b> 
  * 
+ * @see UseRoboticsAPIContext
  * @see #initialize()
  * @see #run()
  * @see #dispose()
  */
-public class test_move extends RoboticsAPIApplication
-{
+public class test_move extends RoboticsAPIApplication {
 	@Inject
-	private ITaskLogger log;
+	private LBR robot;
+
+	@Inject 
+	private Gripper2F gripper2F1;
+
+	@Inject
+	private MediaFlangeIOGroup mF;
+
+	@Inject
+	@Named("RobotiqGripper")
+	private Tool gripper;
+
+	@Inject
+	private ITaskLogger logger;
 	
-	/**
-	 * Inject LBR.
-	 */
-	@Inject
-	private LBR lbrIiwa14R820;
-	
-	/**
-	 * Inject KMR-resource --- note that the name in the @Named annotation must be the same as the name given
-	 * to the Nav KMR omniMove 200 in the topology.
-	 */ 
-	@Inject
-	@Named("Nav_KMR_iiwa_14_R820_1")
-	private MobileRobot kmr;
-	
-	/**
-	 * Inject fleet manager --- note that the fleet manager is only available for injection in the single installation case
-	 * (any application) or in the fleet installation case (applications running on the server). If in the fleet installation
-	 * case an application involving the fleet manager is deployed and started on the robot the application will fail.
-	 */
-	@Inject
-	private FleetManager fleetManager;
+	@Override
+	public void initialize() {
+		gripper.attachTo(robot.getFlange());
+		gripper2F1.initalise();
+		gripper2F1.setSpeed(189);
+		gripper2F1.open();
+		mF.setLEDBlue(true);
+		ThreadUtil.milliSleep(200);
+		mF.setLEDBlue(false);
+		ThreadUtil.milliSleep(200);
+		
+		//FORCE CONDITIONS EXAMPLE
+		ForceCondition touch10 = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"),10 );
+		ForceCondition touch15 = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"),15 );
+		//USAGE, will move to next line when triggered
+		//LOOK at pipecutting.java for examples on analysing the break condition. 
+		//gripper.move(linRel(0, 0, -30, World.Current.getRootFrame()).setCartVelocity(50).breakWhen(touch10)); 
+	}
 
 	@Override
-	public void run() throws Exception
-	{
-		lbrIiwa14R820.move(ptpHome());
-		
-		double x = 0.2;
-		double y = 0.0;
-		double theta = Math.toRadians(5.0);
-		
-		try
-		{
-			/*
-			 * All navigation motions require the robot to be locked first.
-			 */
-			kmr.lock();
-			
-			/*
-			 * Performs a relative motion to the given pose (x, y, theta).
-			 */
-			kmr.execute(new RelativeMotion(x, y, theta));
-			
-			/*
-			 * Performs a motion on a virtual line from the current pose of
-			 * the robot to the given goal pose (x, y, theta). The platform
-			 * will rotate while moving on the line to reach the given
-			 * orientation theta.
-			 */
-			//kmr.execute(new VirtualLineMotion(kmr.getPose(), new Pose(x, y, theta)));
-			
-			/*
-			 * Performs a motion on a virtual line from the current pose of
-			 * the robot to the given goal position (x, y). The allowed
-			 * orientations of the platform relative to the line are 0°
-			 * and 180°. If this is not the case the motion will fail.
-			 */
-			/*
-			 kmr.execute(new VirtualLineMotion(
-					VirtualLine.from(kmr.getPose().toPosition()).to(new Position(x, y)),
-					Orientations.LENGTHWISE, OrientationMode.FIXED));
-			*/
-			/*
-			 * Performs a motion on a virtual line from the current pose of
-			 * the robot to the given goal pose (x, y, theta). The allowed
-			 * orientations of the platform relative to the line are 0°
-			 * and 180°. If this is not the case the platform will rotate
-			 * to the closest orientation.
-			 */
-			 /*
-			kmr.execute(new VirtualLineMotion(
-					VirtualLine.from(kmr.getPose().toPosition()).to(new Position(x, y)),
-					Orientations.LENGTHWISE, OrientationMode.FIXED)
-					.recoverWhen(new OffStartPoseCondition(0.1, Math.toRadians(180)), new ReturnToStartPoseRecover()));
-			*/
-		}
-		catch (Exception e)
-		{
-			log.error("Something went wrong while trying to excecute navigation motions on the robot.", e);
-		}
-		finally
-		{
-			/*
-			 * Make sure that platform is unlocked in the end.
-			 */
-			kmr.unlock();
-		}
-		
-		/*
-		 * Uses the fleet manager to command a graph motion in graph 1 to node 2. Before executing the motion the platform must be set to the graph.
-		 * For this purpose the robot must be at node 1.
-		 * 
-		 * Note that the robot does not have to be explicitly locked (and should not be, since the graph motion will fail otherwise) before commanding
-		 * the graph motion to the fleet manager.
-		 * 
-		 * Note again that the fleet manager is only available in the single installation case (any application) or in the
-		 * fleet installation case (applications running on the server). If in the fleet installation case an application involving 
-		 * the fleet manager is deployed and started on a robot the application will fail.
-		 */
-		try
-		{
-			kmr.lock();
-			kmr.execute(new ChangeGraphCommand(1, 1));
-		}
-		finally
-		{
-			kmr.unlock();
-		}
-		
-		//fleetManager.execute(new GraphMotion(TopologyGraph.withId(1), TopologyNode.withId(1))
-		//		.setResourceFilter(new InstanceFilter(kmr.getId())));
+	public void run() {
+		gripper2F1.close();
+		mF.setLEDBlue(true);
+		ThreadUtil.milliSleep(200);
+		gripper2F1.open();
 	}
 }

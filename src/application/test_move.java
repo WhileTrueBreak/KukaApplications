@@ -1,5 +1,8 @@
 package application;
 
+import static com.kuka.roboticsAPI.motionModel.BasicMotions.lin;
+import static com.kuka.roboticsAPI.motionModel.BasicMotions.linRel;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
@@ -8,6 +11,7 @@ import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
 import com.kuka.roboticsAPI.conditionModel.ForceCondition;
 import com.kuka.roboticsAPI.deviceModel.LBR;
 import com.kuka.roboticsAPI.geometricModel.Tool;
+import com.kuka.roboticsAPI.geometricModel.World;
 
 import com.kuka.task.ITaskLogger;
 import com.kuka.common.ThreadUtil;
@@ -73,5 +77,10 @@ public class test_move extends RoboticsAPIApplication {
 		mF.setLEDBlue(true);
 		ThreadUtil.milliSleep(200);
 		gripper2F1.open();
+
+		mF.setLEDBlue(false);
+		ThreadUtil.milliSleep(200);
+		gripper.move(lin(getApplicationData().getFrame("/P1")).setCartVelocity(200));//frame1
+	    gripper.move(linRel(0, 0, -30, World.Current.getRootFrame()).setCartVelocity(50));//going down
 	}
 }

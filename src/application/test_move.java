@@ -3,6 +3,7 @@ package application;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.lin;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.linRel;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.ptp;
+import static com.kuka.roboticsAPI.motionModel.BasicMotions.ptpHome;
 
 import javax.inject.Inject;
 import javax.inject.Named;

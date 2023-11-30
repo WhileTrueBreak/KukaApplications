@@ -5,8 +5,10 @@ import javax.inject.Named;
 import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.*;
 
+import com.kuka.roboticsAPI.capabilities.honk.IHonkCapability;
 import com.kuka.roboticsAPI.conditionModel.ForceCondition;
 import com.kuka.roboticsAPI.deviceModel.LBR;
+import com.kuka.roboticsAPI.deviceModel.kmp.SunriseOmniMoveMobilePlatform;
 import com.kuka.roboticsAPI.geometricModel.Tool;
 import com.kuka.roboticsAPI.geometricModel.World;
 import com.kuka.task.ITaskLogger;
@@ -48,6 +50,9 @@ public class RobotPickandPlace extends RoboticsAPIApplication {
 	@Inject
 	private ITaskLogger logger;
 	
+	@Inject 
+	private SunriseOmniMoveMobilePlatform kmp;
+	
 	@Override
 	public void initialize() {
 		gripper.attachTo(robot.getFlange());
@@ -69,6 +74,15 @@ public class RobotPickandPlace extends RoboticsAPIApplication {
 
 	@Override
 	public void run() {
+		IHonkCapability honkCapability = kmp.getCapability(IHonkCapability.class);
+		honkCapability.honk();
+		gripper2F1.close();
+		mF.setLEDBlue(true);
+		ThreadUtil.milliSleep(200);
+		gripper2F1.open();
+
+		mF.setLEDBlue(false);
+		ThreadUtil.milliSleep(200);
 
 		gripper.move(lin(getApplicationData().getFrame("/P1")).setCartVelocity(200));//frame1
 	    gripper.move(linRel(0, 0, -30, World.Current.getRootFrame()).setCartVelocity(50));//going down

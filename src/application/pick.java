@@ -84,8 +84,8 @@ public class pick extends RoboticsAPIApplication {
 		mF.setLEDBlue(false);
 		ThreadUtil.milliSleep(200);
 
-		gripper.move(lin(getApplicationData().getFrame("/P4")).setCartVelocity(200));//frame4
-		gripper.move(lin(getApplicationData().getFrame("/P5")).setCartVelocity(200));//frame5(going down)
+		robot.move(lin(getApplicationData().getFrame("/P4")).setCartVelocity(200));//frame4
+		robot.move(lin(getApplicationData().getFrame("/P5")).setCartVelocity(200));//frame5(going down)
 		gripper2F1.close();
 		mF.setLEDBlue(true);
 		gripper.move(lin(getApplicationData().getFrame("/P4")).setCartVelocity(100));//get back to frame4

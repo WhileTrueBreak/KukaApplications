@@ -88,15 +88,15 @@ public class pick extends RoboticsAPIApplication {
 		for (int i = 0; i <= 500; i = i+100){
 			gripper.move(ptp(getApplicationData().getFrame("/P4")).setJointVelocityRel(0.4));//frame4
 			gripper.move(linRel(i, 0, 0, World.Current.getRootFrame()).setCartVelocity(50));//going left/right
-			gripper.move(linRel(0, 0, -130, World.Current.getRootFrame()).setCartVelocity(50));//going left/right
+			gripper.move(linRel(0, 0, -130, World.Current.getRootFrame()).setCartVelocity(50));//going down
 			gripper2F1.close();
 			mF.setLEDBlue(true);
-			gripper.move(ptp(getApplicationData().getFrame("/P4")).setJointVelocityRel(0.4));//get back to frame4
+			gripper.move(linRel(0, 0, -130, World.Current.getRootFrame()).setCartVelocity(50));//going up
 			robot.move(ptp(getApplicationData().getFrame("/DrivePos")).setJointVelocityRel(0.4));// go to DrivePos frame
 			gripper.move(linRel(-i, 0, 0, World.Current.getRootFrame()).setCartVelocity(50));//going left/right
-			gripper.move(linRel(0, 0, -150, World.Current.getRootFrame()).setCartVelocity(50));//going left/right
+			gripper.move(linRel(0, 0, -150, World.Current.getRootFrame()).setCartVelocity(50));//going down
 			gripper2F1.open();
-			gripper.move(linRel(0, 0, 150, World.Current.getRootFrame()).setCartVelocity(50));//going left/right
+			gripper.move(linRel(0, 0, 150, World.Current.getRootFrame()).setCartVelocity(50));//going up
 		}
 	
 		

@@ -89,7 +89,7 @@ public class pick extends RoboticsAPIApplication {
 		gripper2F1.close();
 		mF.setLEDBlue(true);
 		gripper.move(ptp(getApplicationData().getFrame("/P4")));//get back to frame4
-		gripper.move(ptp(getApplicationData().getFrame("/DrivePos")));// go to DrivePos frame
+		robot.move(ptp(getApplicationData().getFrame("/DrivePos")));// go to DrivePos frame
 		
 	}
 }

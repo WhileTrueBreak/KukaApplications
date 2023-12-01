@@ -85,6 +85,10 @@ public class pick extends RoboticsAPIApplication {
 		ThreadUtil.milliSleep(200);
 
 		gripper.move(ptp(getApplicationData().getFrame("/P4")).setJointVelocityRel(0.5));//frame4
+		for (int i = 0; i <= 25; i = i+5){
+			gripper.move(linRel(0, i, 0, World.Current.getRootFrame()).setCartVelocity(50));//going left/right
+			
+		}
 		gripper.move(ptp(getApplicationData().getFrame("/P5")).setJointVelocityRel(0.5));//frame5(going down)
 		gripper2F1.close();
 		mF.setLEDBlue(true);

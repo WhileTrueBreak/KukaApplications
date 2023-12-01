@@ -91,7 +91,7 @@ public class pick extends RoboticsAPIApplication {
 			gripper.move(linRel(0, 0, -130, World.Current.getRootFrame()).setCartVelocity(50));//going down
 			gripper2F1.close();
 			mF.setLEDBlue(true);
-			gripper.move(linRel(0, 0, -130, World.Current.getRootFrame()).setCartVelocity(50));//going up
+			gripper.move(linRel(0, 0, 130, World.Current.getRootFrame()).setCartVelocity(50));//going up
 			robot.move(ptp(getApplicationData().getFrame("/DrivePos")).setJointVelocityRel(0.4));// go to DrivePos frame
 			gripper.move(linRel(-i, 0, 0, World.Current.getRootFrame()).setCartVelocity(50));//going left/right
 			gripper.move(linRel(0, 0, -150, World.Current.getRootFrame()).setCartVelocity(50));//going down

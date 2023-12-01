@@ -85,7 +85,7 @@ public class pick extends RoboticsAPIApplication {
 		ThreadUtil.milliSleep(200);
 
 		
-		for (int i = 0; i <= 250; i = i+50){
+		for (int i = 0; i <= 500; i = i+100){
 			gripper.move(ptp(getApplicationData().getFrame("/P4")).setJointVelocityRel(0.4));//frame4
 			gripper.move(linRel(-i, 0, 0, World.Current.getRootFrame()).setCartVelocity(50));//going left/right
 			gripper.move(linRel(0, 0, -130, World.Current.getRootFrame()).setCartVelocity(50));//going left/right

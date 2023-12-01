@@ -84,16 +84,19 @@ public class pick extends RoboticsAPIApplication {
 		mF.setLEDBlue(false);
 		ThreadUtil.milliSleep(200);
 
-		gripper.move(ptp(getApplicationData().getFrame("/P4")).setJointVelocityRel(0.5));//frame4
+		
 		for (int i = 0; i <= 25; i = i+5){
-			gripper.move(linRel(0, i, 0, World.Current.getRootFrame()).setCartVelocity(50));//going left/right
-			
+			gripper.move(ptp(getApplicationData().getFrame("/P4")).setJointVelocityRel(0.5));//frame4
+			gripper.move(linRel(i, 0, 0, World.Current.getRootFrame()).setCartVelocity(50));//going left/right
+			gripper.move(ptp(getApplicationData().getFrame("/P5")).setJointVelocityRel(0.5));//frame5(going down)
+			gripper2F1.close();
+			mF.setLEDBlue(true);
+			gripper.move(ptp(getApplicationData().getFrame("/P4")).setJointVelocityRel(0.5));//get back to frame4
+			robot.move(ptp(getApplicationData().getFrame("/DrivePos")).setJointVelocityRel(0.5));// go to DrivePos frame
+			gripper.move(linRel(i, 0, -10, World.Current.getRootFrame()).setCartVelocity(50));//going left/right
+			gripper2F1.open();
 		}
-		gripper.move(ptp(getApplicationData().getFrame("/P5")).setJointVelocityRel(0.5));//frame5(going down)
-		gripper2F1.close();
-		mF.setLEDBlue(true);
-		gripper.move(ptp(getApplicationData().getFrame("/P4")).setJointVelocityRel(0.5));//get back to frame4
-		robot.move(ptp(getApplicationData().getFrame("/DrivePos")).setJointVelocityRel(0.5));// go to DrivePos frame
+	
 		
 	}
 }

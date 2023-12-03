@@ -132,38 +132,38 @@ public class RobotPickandPlace extends RoboticsAPIApplication {
 		/// try circ and spline motions///
 		
 		// // ///// force conditions / torquea ////////
-		double forceInX = 0;
-		double forceInY = 0;
-		double forceInZ = 0;
-		
-		while (forceInX < 10) {
-			logger.info("No force in X ditected"+forceInX);
-			mF.setLEDBlue(false);
-			ForceSensorData data = robot.getExternalForceTorque(robot.getFlange(),World.Current.getRootFrame());
-			Vector force = data.getForce();
-			forceInX = force.getX();
-			ThreadUtil.milliSleep(200);
-		}
-		gripper2F1.open();
-		logger.info("Force in X ditected"+forceInX);
+//		double forceInX = 0;
+//		double forceInY = 0;
+//		double forceInZ = 0;
+//		
+//		while (forceInX < 10) {
+//			logger.info("No force in X ditected"+forceInX);
+//			mF.setLEDBlue(false);
+//			ForceSensorData data = robot.getExternalForceTorque(robot.getFlange(),World.Current.getRootFrame());
+//			Vector force = data.getForce();
+//			forceInX = force.getX();
+//			ThreadUtil.milliSleep(200);
+//		}
+//		gripper2F1.open();
+//		logger.info("Force in X ditected"+forceInX);
 		
 		//
 //		
-//		ForceCondition condition = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 10.0);
-//
-//		
-//		gripper2F1.open();
-//		ICallbackAction Action = new ICallbackAction() {
-//			@Override
-//			public void onTriggerFired(IFiredTriggerInfo triggerInformation) {
-//			 //toggle output state when trigger fired
-//				gripper2F1.open();
-//			}
-//		};
-//		
-//
-//		robot.move(linRel(0, 0, -60, World.Current.getRootFrame()).setCartVelocity(10).triggerWhen(condition, Action));
-//		robot.move(linRel(0, 0, 60, World.Current.getRootFrame()).setCartVelocity(10));
+		ForceCondition condition = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 10.0);
+
+		
+		gripper2F1.open();
+		ICallbackAction Action = new ICallbackAction() {
+			@Override
+			public void onTriggerFired(IFiredTriggerInfo triggerInformation) {
+			 //toggle output state when trigger fired
+				gripper2F1.open();
+			}
+		};
+		
+
+		robot.move(linRel(0, 0, -60, World.Current.getRootFrame()).setCartVelocity(10).triggerWhen(condition, Action));
+		robot.move(linRel(0, 0, 60, World.Current.getRootFrame()).setCartVelocity(10));
 		
 //		ForceCondition cond_2 = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 10.0);
 //		gripper.move(linRel(0, 400, 0, World.Current.getRootFrame()).setCartVelocity(20).breakWhen(cond_2));//going straight

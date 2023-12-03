@@ -120,14 +120,14 @@ public class RobotPickandPlace extends RoboticsAPIApplication {
 //	    robot.move(lin(getApplicationData().getFrame("/DrivePos")).setCartVelocity(100));
 		
 		/// try this hand guiding mode ///
-//		double x = 0.3;
-//		double y = 0.3;
-//		robot.setESMState("1");
-//		robot.move(ptp(getApplicationData().getFrame("/P1")).setJointVelocityRel(x));
-//		robot.setESMState("2");
-//		robot.move(handGuiding().setJointVelocityLimit(x));
-//		robot.setESMState("1");
-//		robot.move(ptp(getApplicationData().getFrame("/P2")));
+		double x = 0.3;
+		double y = 0.3;
+		robot.setESMState("1");
+		robot.move(ptp(getApplicationData().getFrame("/P1")).setJointVelocityRel(x));
+		robot.setESMState("2");
+		robot.move(handGuiding().setJointVelocityLimit(x));
+		robot.setESMState("1");
+		robot.move(ptp(getApplicationData().getFrame("/P2")));
 //		
 		/// try circ and spline motions///
 		
@@ -148,23 +148,23 @@ public class RobotPickandPlace extends RoboticsAPIApplication {
 //		logger.info("Force in X ditected"+forceInX);
 		
 		//
+////		
+//		ForceCondition condition = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 10.0);
+//
 //		
-		ForceCondition condition = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 10.0);
-
-		
-		ICallbackAction Action = new ICallbackAction() {
-			@Override
-			public void onTriggerFired(IFiredTriggerInfo triggerInformation) {
-			 //toggle output state when trigger fired
-				gripper2F1.open();
-				logger.info("yay");
-			}
-		};
-		
-
-		robot.move(linRel(0, 0, -60, World.Current.getRootFrame()).setCartVelocity(10).triggerWhen(condition, Action));
-		robot.move(linRel(0, 0, 60, World.Current.getRootFrame()).setCartVelocity(10));
-		
+//		ICallbackAction Action = new ICallbackAction() {
+//			@Override
+//			public void onTriggerFired(IFiredTriggerInfo triggerInformation) {
+//			 //toggle output state when trigger fired
+//				gripper2F1.open();
+//				logger.info("yay");
+//			}
+//		};
+//		
+//
+//		robot.move(linRel(0, 0, -60, World.Current.getRootFrame()).setCartVelocity(10).triggerWhen(condition, Action));
+//		robot.move(linRel(0, 0, 60, World.Current.getRootFrame()).setCartVelocity(10));
+//		
 //		ForceCondition cond_2 = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 10.0);
 //		gripper.move(linRel(0, 400, 0, World.Current.getRootFrame()).setCartVelocity(20).breakWhen(cond_2));//going straight
 //		if (cond_2 == null){

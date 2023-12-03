@@ -132,19 +132,20 @@ public class RobotPickandPlace extends RoboticsAPIApplication {
 		/// try circ and spline motions///
 		
 		// // ///// force conditions / torquea ////////
-		ForceSensorData data = robot.getExternalForceTorque(robot.getFlange(),World.Current.getRootFrame());
-		Vector force = data.getForce();
-		double forceInX = force.getX();
-		double forceInY = force.getY();
-		double forceInZ = force.getZ();
+		double forceInX = 0;
+		double forceInY = 0;
+		double forceInZ = 0;
 		
 		while (forceInX < 10) {
-			logger.info("No force in X ditected");
+			logger.info("No force in X ditected"+forceInX);
 			mF.setLEDBlue(false);
+			ForceSensorData data = robot.getExternalForceTorque(robot.getFlange(),World.Current.getRootFrame());
+			Vector force = data.getForce();
+			forceInX = force.getX();
 			ThreadUtil.milliSleep(200);
 		}
 		gripper2F1.open();
-		logger.info("Force in X ditected");
+		logger.info("Force in X ditected"+forceInX);
 		
 		//
 //		

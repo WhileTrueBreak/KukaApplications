@@ -83,9 +83,6 @@ public class RobotPickandPlace extends RoboticsAPIApplication {
 		IHonkCapability honkCapability = kmp.getCapability(IHonkCapability.class);
 		honkCapability.honk();
 		gripper2F1.close();
-		mF.setLEDBlue(true);
-		ThreadUtil.milliSleep(200);
-		gripper2F1.open();
  
 		mF.setLEDBlue(false);
 		ThreadUtil.milliSleep(200);
@@ -123,15 +120,15 @@ public class RobotPickandPlace extends RoboticsAPIApplication {
 //	    robot.move(lin(getApplicationData().getFrame("/DrivePos")).setCartVelocity(100));
 		
 		/// try this hand guiding mode ///
-		double x = 0.3;
-		double y = 0.3;
-		robot.setESMState("1");
-		robot.move(ptp(getApplicationData().getFrame("/P1")).setJointVelocityRel(x));
-		robot.setESMState("2");
-		robot.move(handGuiding().setJointVelocityLimit(x));
-		robot.setESMState("1");
-		robot.move(ptp(getApplicationData().getFrame("/P2")));
-		
+//		double x = 0.3;
+//		double y = 0.3;
+//		robot.setESMState("1");
+//		robot.move(ptp(getApplicationData().getFrame("/P1")).setJointVelocityRel(x));
+//		robot.setESMState("2");
+//		robot.move(handGuiding().setJointVelocityLimit(x));
+//		robot.setESMState("1");
+//		robot.move(ptp(getApplicationData().getFrame("/P2")));
+//		
 		/// try circ and spline motions///
 		
 		// // ///// force conditions / torquea ////////
@@ -146,6 +143,7 @@ public class RobotPickandPlace extends RoboticsAPIApplication {
 			mF.setLEDBlue(false);
 			ThreadUtil.milliSleep(200);
 		}
+		gripper2F1.open();
 		logger.info("Force in X ditected");
 		
 		//

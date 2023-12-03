@@ -124,6 +124,7 @@ public class RobotPickandPlace extends RoboticsAPIApplication {
 		double y = 0.3;
 		robot.move(ptp(getApplicationData().getFrame("/P1")).setJointVelocityRel(x));
 		robot.move(handGuiding().setJointVelocityLimit(x));
+		//robot.setESMState("1");
 		robot.move(ptp(getApplicationData().getFrame("/P2")));
 //		
 		/// try circ and spline motions///

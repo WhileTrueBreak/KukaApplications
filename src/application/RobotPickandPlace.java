@@ -152,12 +152,12 @@ public class RobotPickandPlace extends RoboticsAPIApplication {
 		ForceCondition condition = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 10.0);
 
 		
-		gripper2F1.open();
 		ICallbackAction Action = new ICallbackAction() {
 			@Override
 			public void onTriggerFired(IFiredTriggerInfo triggerInformation) {
 			 //toggle output state when trigger fired
 				gripper2F1.open();
+				logger.info("yay");
 			}
 		};
 		

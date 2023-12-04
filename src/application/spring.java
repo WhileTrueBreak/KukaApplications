@@ -55,8 +55,6 @@ public class spring extends RoboticsAPIApplication {
 		springRobot.setReferenceSystem(World.Current.getRootFrame());
 		springRobot.parametrize(CartDOF.ALL).setDamping(0.1);
 		
-		logger.info("Initalizing Automatic Mode");
-		logger.info("Connecting to OPC UA Local Server...");
 		
 //		try {
 //			OPCUA.setGripperControl(false);
@@ -88,6 +86,8 @@ public class spring extends RoboticsAPIApplication {
 
 				gripper.moveAsync(positionHold(springRobot, -1, TimeUnit.SECONDS));
 				logger.info("Communication Signals Reset");// End If (Start)
+
+				ThreadUtil.milliSleep(10000);
 	}//END RUN
 }
 

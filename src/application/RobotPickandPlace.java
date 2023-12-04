@@ -120,12 +120,12 @@ public class RobotPickandPlace extends RoboticsAPIApplication {
 //	    robot.move(lin(getApplicationData().getFrame("/DrivePos")).setCartVelocity(100));
 		
 		/// try this hand guiding mode ///
-		double x = 0.3;
-		double y = 0.3;
-		robot.move(ptp(getApplicationData().getFrame("/P1")).setJointVelocityRel(x));
-		robot.move(handGuiding().setJointVelocityLimit(x));
-		//robot.setESMState("1");
-		robot.move(ptp(getApplicationData().getFrame("/P2")));
+//		double x = 0.3;
+//		double y = 0.3;
+//		robot.move(ptp(getApplicationData().getFrame("/P1")).setJointVelocityRel(x));
+//		robot.move(handGuiding().setJointVelocityLimit(x));
+//		//robot.setESMState("1");
+//		robot.move(ptp(getApplicationData().getFrame("/P2")));
 //		
 		/// try circ and spline motions///
 		

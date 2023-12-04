@@ -46,14 +46,14 @@ public class spring extends RoboticsAPIApplication {
 		springRobot = new CartesianImpedanceControlMode(); 
 		
 		
-		springRobot.parametrize(CartDOF.X).setStiffness(50);
-		springRobot.parametrize(CartDOF.Y).setStiffness(50);
-		springRobot.parametrize(CartDOF.Z).setStiffness(50);
-		springRobot.parametrize(CartDOF.C).setStiffness(50);
-		springRobot.parametrize(CartDOF.B).setStiffness(50);
-		springRobot.parametrize(CartDOF.A).setStiffness(50);
+		springRobot.parametrize(CartDOF.X).setStiffness(100);
+		springRobot.parametrize(CartDOF.Y).setStiffness(100);
+		springRobot.parametrize(CartDOF.Z).setStiffness(100);
+		springRobot.parametrize(CartDOF.C).setStiffness(100);
+		springRobot.parametrize(CartDOF.B).setStiffness(100);
+		springRobot.parametrize(CartDOF.A).setStiffness(100);
 		springRobot.setReferenceSystem(World.Current.getRootFrame());
-		springRobot.parametrize(CartDOF.ALL).setDamping(0.1);
+		springRobot.parametrize(CartDOF.ALL).setDamping(0.4);
 		
 		
 //		try {

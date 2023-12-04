@@ -46,14 +46,14 @@ public class spring extends RoboticsAPIApplication {
 		springRobot = new CartesianImpedanceControlMode(); 
 		
 		
-		springRobot.parametrize(CartDOF.X).setStiffness(1000);
-		springRobot.parametrize(CartDOF.Y).setStiffness(1000);
-		springRobot.parametrize(CartDOF.Z).setStiffness(1000);
+		springRobot.parametrize(CartDOF.X).setStiffness(50);
+		springRobot.parametrize(CartDOF.Y).setStiffness(50);
+		springRobot.parametrize(CartDOF.Z).setStiffness(50);
 		springRobot.parametrize(CartDOF.C).setStiffness(50);
 		springRobot.parametrize(CartDOF.B).setStiffness(50);
-		springRobot.parametrize(CartDOF.A).setStiffness(300);
+		springRobot.parametrize(CartDOF.A).setStiffness(50);
 		springRobot.setReferenceSystem(World.Current.getRootFrame());
-		springRobot.parametrize(CartDOF.ALL).setDamping(0.2);
+		springRobot.parametrize(CartDOF.ALL).setDamping(0.1);
 		
 		logger.info("Initalizing Automatic Mode");
 		logger.info("Connecting to OPC UA Local Server...");

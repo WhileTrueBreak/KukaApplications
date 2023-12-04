@@ -85,8 +85,8 @@ public class spring extends RoboticsAPIApplication {
 	public void run(){
 //					gripper2F1.close();
 				gripper.move(ptp(0.0,-0.785398,0.0,1.13446,0.0,0.436332,-1.5708).setJointVelocityRel(0.2).setMode(springRobot));
-				ThreadUtil.milliSleep(10000);
-				//gripper.moveAsync(positionHold(springRobot, -1, TimeUnit.SECONDS));
+
+				gripper.moveAsync(positionHold(springRobot, -1, TimeUnit.SECONDS));
 				logger.info("Communication Signals Reset");// End If (Start)
 	}//END RUN
 }

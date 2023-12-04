@@ -77,7 +77,7 @@ public class spring extends RoboticsAPIApplication {
 //		gripper2F1.setSpeed(255);
 		ThreadUtil.milliSleep(100);
 		mF.setLEDBlue(true);
-		gripper.move(ptp(getApplicationData().getFrame("/DrivePos")).setJointVelocityRel(0.4));
+		//gripper.move(ptp(getApplicationData().getFrame("/DrivePos")).setJointVelocityRel(0.4));
 		
 	}
 
@@ -85,7 +85,7 @@ public class spring extends RoboticsAPIApplication {
 	public void run(){
 //					gripper2F1.close();
 				gripper.move(ptp(0.0,-0.785398,0.0,1.13446,0.0,0.436332,-1.5708).setJointVelocityRel(0.2).setMode(springRobot));
-				gripper.moveAsync(positionHold(springRobot, -1, TimeUnit.SECONDS));
+				gripper.moveAsync(positionHold(springRobot, -10, TimeUnit.SECONDS));
 				logger.info("Communication Signals Reset");// End If (Start)
 	}//END RUN
 }

@@ -46,9 +46,9 @@ public class spring extends RoboticsAPIApplication {
 		springRobot = new CartesianImpedanceControlMode(); 
 		
 		
-		springRobot.parametrize(CartDOF.X).setStiffness(500);
+		springRobot.parametrize(CartDOF.X).setStiffness(1000);
 		springRobot.parametrize(CartDOF.Y).setStiffness(1000);
-		springRobot.parametrize(CartDOF.Z).setStiffness(200);
+		springRobot.parametrize(CartDOF.Z).setStiffness(1000);
 		springRobot.parametrize(CartDOF.C).setStiffness(50);
 		springRobot.parametrize(CartDOF.B).setStiffness(50);
 		springRobot.parametrize(CartDOF.A).setStiffness(300);
@@ -85,7 +85,7 @@ public class spring extends RoboticsAPIApplication {
 	public void run(){
 //					gripper2F1.close();
 				gripper.move(ptp(0.0,-0.785398,0.0,1.13446,0.0,0.436332,-1.5708).setJointVelocityRel(0.2).setMode(springRobot));
-				gripper.moveAsync(positionHold(springRobot, -10, TimeUnit.SECONDS));
+				gripper.moveAsync(positionHold(springRobot, -1, TimeUnit.SECONDS));
 				logger.info("Communication Signals Reset");// End If (Start)
 	}//END RUN
 }

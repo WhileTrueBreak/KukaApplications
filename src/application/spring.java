@@ -87,7 +87,7 @@ public class spring extends RoboticsAPIApplication {
 				gripper.moveAsync(positionHold(springRobot, -1, TimeUnit.SECONDS));
 				logger.info("Communication Signals Reset");// End If (Start)
 
-				ThreadUtil.milliSleep(10000);
+				ThreadUtil.milliSleep(20000);
 	}//END RUN
 }
 

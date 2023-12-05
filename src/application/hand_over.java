@@ -85,7 +85,7 @@ public class hand_over extends RoboticsAPIApplication {
 		
 		
 		springRobot.parametrize(CartDOF.X).setStiffness(2000);
-		springRobot.parametrize(CartDOF.Y).setStiffness(150);
+		springRobot.parametrize(CartDOF.Y).setStiffness(180);
 		springRobot.parametrize(CartDOF.Z).setStiffness(2000);
 		springRobot.parametrize(CartDOF.C).setStiffness(300);
 		springRobot.parametrize(CartDOF.B).setStiffness(300);
@@ -118,7 +118,7 @@ public class hand_over extends RoboticsAPIApplication {
 ////////////
 		
 		//TCP
-		ForceCondition condition = ForceCondition.createSpatialForceCondition(gripper.getFrame("/HAND_OVER"), 18.0);
+		ForceCondition condition = ForceCondition.createSpatialForceCondition(gripper.getFrame("/HAND_OVER"), 17.0);
 
 		ICallbackAction Action = new ICallbackAction() {
 			@Override

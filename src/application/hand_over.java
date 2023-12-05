@@ -116,7 +116,7 @@ public class hand_over extends RoboticsAPIApplication {
 ////////////
 		
 		
-		ForceCondition condition = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 20.0);
+		ForceCondition condition = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 10.0);
 
 		ICallbackAction Action = new ICallbackAction() {
 			@Override
@@ -128,7 +128,7 @@ public class hand_over extends RoboticsAPIApplication {
 		};
 		
 		gripper.moveAsync(positionHold(springRobot, -1, TimeUnit.SECONDS));
-		robot.moveAsync(linRel(60, 0, 0, World.Current.getRootFrame()).setCartVelocity(10).triggerWhen(condition, Action));
+		robot.moveAsync(linRel(0, 0, 60, World.Current.getRootFrame()).setCartVelocity(10).triggerWhen(condition, Action));
 		
 	}
 }

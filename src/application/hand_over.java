@@ -84,12 +84,12 @@ public class hand_over extends RoboticsAPIApplication {
 		springRobot = new CartesianImpedanceControlMode(); 
 		
 		
-		springRobot.parametrize(CartDOF.X).setStiffness(100);
-		springRobot.parametrize(CartDOF.Y).setStiffness(100);
-		springRobot.parametrize(CartDOF.Z).setStiffness(100);
-		springRobot.parametrize(CartDOF.C).setStiffness(100);
-		springRobot.parametrize(CartDOF.B).setStiffness(100);
-		springRobot.parametrize(CartDOF.A).setStiffness(100);
+		springRobot.parametrize(CartDOF.X).setStiffness(50);
+		springRobot.parametrize(CartDOF.Y).setStiffness(50);
+		springRobot.parametrize(CartDOF.Z).setStiffness(50);
+		springRobot.parametrize(CartDOF.C).setStiffness(50);
+		springRobot.parametrize(CartDOF.B).setStiffness(50);
+		springRobot.parametrize(CartDOF.A).setStiffness(50);
 		springRobot.setReferenceSystem(World.Current.getRootFrame());
 		springRobot.parametrize(CartDOF.ALL).setDamping(0.4);
 		//USAGE, will move to next line when triggered
@@ -110,13 +110,15 @@ public class hand_over extends RoboticsAPIApplication {
 		robot.move(ptp(getApplicationData().getFrame("/PART_1")).setJointVelocityRel(0.3));//frame1
 		gripper2F1.close();
 		robot.move(ptp(getApplicationData().getFrame("/PART_1/p1_transition")).setJointVelocityRel(0.3));//frame1
-		robot.move(ptp(getApplicationData().getFrame("/HAND_OVER")).setJointVelocityRel(0.3));
+		robot.move(lin(getApplicationData().getFrame("/HAND_OVER")).setJointVelocityRel(0.3));
 		
+		mF.setLEDBlue(true);
+		ThreadUtil.milliSleep(200);
 		
 ////////////
 		
 		
-		ForceCondition condition = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 10.0);
+		ForceCondition condition = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 1.0);
 
 		ICallbackAction Action = new ICallbackAction() {
 			@Override
@@ -129,6 +131,7 @@ public class hand_over extends RoboticsAPIApplication {
 		};
 		
 		gripper.moveAsync(positionHold(springRobot, -1, TimeUnit.SECONDS).triggerWhen(condition, Action));
+		
 		
 	}
 }

@@ -197,10 +197,10 @@
                 </redundancyData>
             </frame>
         </frame>
-        <frame id="_cc96b89b-00df-4dc5-9139-932ee63b0558" name="P1">
+        <frame id="_cc96b89b-00df-4dc5-9139-932ee63b0558" name="HAND_OVER">
             <transformation a="1.148403146704862" b="1.558132947167986" c="-1.9936570156908637" x="-410.5701274111775" y="-515.1083401971449" z="540.2530212020647"/>
             <additionalInformation>
-                <info key="LastModificationTime" type="java.lang.Long" value="1701748814632"/>
+                <info key="LastModificationTime" type="java.lang.Long" value="1701751829284"/>
                 <info base="LBR_iiwa_14_R820_1" controller="KUKA_Sunrise_Cabinet_1" device="LBR_iiwa_14_R820_1" tcpName="Flange" tool="Flange" type="com.kuka.roboticsAPI.deviceModel.TeachInformation">
                     <tcpTransformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
                 </info>

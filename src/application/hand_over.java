@@ -88,8 +88,8 @@ public class hand_over extends RoboticsAPIApplication {
 		springRobot.parametrize(CartDOF.Y).setStiffness(1000);
 		springRobot.parametrize(CartDOF.Z).setStiffness(1000);
 		springRobot.parametrize(CartDOF.C).setStiffness(1000);
-		springRobot.parametrize(CartDOF.B).setStiffness(1000);
-		springRobot.parametrize(CartDOF.A).setStiffness(1000);
+		springRobot.parametrize(CartDOF.B).setStiffness(250);
+		springRobot.parametrize(CartDOF.A).setStiffness(250);
 		springRobot.setReferenceSystem(World.Current.getRootFrame());
 		springRobot.parametrize(CartDOF.ALL).setDamping(0.7);
 		//USAGE, will move to next line when triggered
@@ -120,17 +120,17 @@ public class hand_over extends RoboticsAPIApplication {
 		//TCP
 		ForceCondition condition = ForceCondition.createSpatialForceCondition(gripper.getFrame("/HAND_OVER"), 15.0);
 
-//		ICallbackAction Action = new ICallbackAction() {
-//			@Override
-//			public void onTriggerFired(IFiredTriggerInfo triggerInformation) {
-//			 //toggle output state when trigger fired
-//				gripper2F1.open();
-//				logger.info("yaaaaayyyyyyyyyyyy");
-//			}
-//		};
-//		
+		ICallbackAction Action = new ICallbackAction() {
+			@Override
+			public void onTriggerFired(IFiredTriggerInfo triggerInformation) {
+			 //toggle output state when trigger fired
+				gripper2F1.open();
+				logger.info("yaaaaayyyyyyyyyyyy");
+			}
+		};
+		
 //		triggerWhen(condition, action)
-		gripper.move(positionHold(springRobot, -1, TimeUnit.SECONDS).breakWhen(condition));
+		gripper.move(positionHold(springRobot, -1, TimeUnit.SECONDS).triggerWhen(condition, Action));
 		
 		
 	}

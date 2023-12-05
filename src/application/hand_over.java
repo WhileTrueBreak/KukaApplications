@@ -84,9 +84,9 @@ public class hand_over extends RoboticsAPIApplication {
 		springRobot = new CartesianImpedanceControlMode(); 
 		
 		
-		springRobot.parametrize(CartDOF.X).setStiffness(700);
+		springRobot.parametrize(CartDOF.X).setStiffness(1000);
 		springRobot.parametrize(CartDOF.Y).setStiffness(250);
-		springRobot.parametrize(CartDOF.Z).setStiffness(700);
+		springRobot.parametrize(CartDOF.Z).setStiffness(1000);
 		springRobot.parametrize(CartDOF.C).setStiffness(250);
 		springRobot.parametrize(CartDOF.B).setStiffness(250);
 		springRobot.parametrize(CartDOF.A).setStiffness(250);
@@ -111,28 +111,28 @@ public class hand_over extends RoboticsAPIApplication {
 		gripper2F1.close();
 		robot.move(ptp(getApplicationData().getFrame("/PART_1/p1_transition")).setJointVelocityRel(0.3));//frame1
 		robot.moveAsync(lin(getApplicationData().getFrame("/HAND_OVER")).setJointVelocityRel(0.3));
-		
+		robot.move(lin(getApplicationData().getFrame("/HAND_OVER")).setJointVelocityRel(0.3));
 		mF.setLEDBlue(true);
 		ThreadUtil.milliSleep(200);
 		
 ////////////
 		
 		//TCP
-		ForceCondition condition = ForceCondition.createSpatialForceCondition(gripper.getFrame("/HAND_OVER"), 15.0);
+		ForceCondition condition = ForceCondition.createSpatialForceCondition(gripper.getFrame("/HAND_OVER"), 14.0);
 
 		ICallbackAction Action = new ICallbackAction() {
 			@Override
 			public void onTriggerFired(IFiredTriggerInfo triggerInformation) {
 			 //toggle output state when trigger fired
-				ThreadUtil.milliSleep(1000);
+				ThreadUtil.milliSleep(200);
 				gripper2F1.open();
 				logger.info("yaaaaayyyyyyyyyyyy");
 			}
 		};
 		
 //		triggerWhen(condition, action)
-		robot.moveAsync(positionHold(springRobot, -1, TimeUnit.SECONDS).triggerWhen(condition, Action));
-		robot.moveAsync(lin(getApplicationData().getFrame("/HAND_OVER")).setJointVelocityRel(0.3));
+		mF.setLEDBlue(true);
+		robot.move(positionHold(springRobot, -1, TimeUnit.SECONDS).triggerWhen(condition, Action));
 		ThreadUtil.milliSleep(10000);
 		
 	}

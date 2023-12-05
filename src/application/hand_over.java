@@ -118,7 +118,7 @@ public class hand_over extends RoboticsAPIApplication {
 ////////////
 		
 		
-		ForceCondition condition = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 5.0);
+		ForceCondition condition = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 10.0);
 
 		ICallbackAction Action = new ICallbackAction() {
 			@Override

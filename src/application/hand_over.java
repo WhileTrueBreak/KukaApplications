@@ -91,7 +91,7 @@ public class hand_over extends RoboticsAPIApplication {
 		springRobot.parametrize(CartDOF.B).setStiffness(50);
 		springRobot.parametrize(CartDOF.A).setStiffness(50);
 		springRobot.setReferenceSystem(World.Current.getRootFrame());
-		springRobot.parametrize(CartDOF.ALL).setDamping(0.4);
+		springRobot.parametrize(CartDOF.ALL).setDamping(0.7);
 		//USAGE, will move to next line when triggered
 		//LOOK at pipecutting.java for examples on analysing the break condition. 
 		//gripper.move(linRel(0, 0, -30, World.Current.getRootFrame()).setCartVelocity(50).breakWhen(touch10)); 
@@ -118,7 +118,7 @@ public class hand_over extends RoboticsAPIApplication {
 ////////////
 		
 		
-		ForceCondition condition = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 1.0);
+		ForceCondition condition = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 5.0);
 
 		ICallbackAction Action = new ICallbackAction() {
 			@Override

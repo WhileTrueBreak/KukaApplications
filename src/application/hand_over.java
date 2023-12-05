@@ -131,8 +131,8 @@ public class hand_over extends RoboticsAPIApplication {
 		};
 		
 //		triggerWhen(condition, action)
-		gripper.moveAsync(positionHold(springRobot, -1, TimeUnit.SECONDS).triggerWhen(condition, Action));
-		
+		robot.moveAsync(positionHold(springRobot, -1, TimeUnit.SECONDS).triggerWhen(condition, Action));
+		robot.moveAsync(lin(getApplicationData().getFrame("/HAND_OVER")).setJointVelocityRel(0.3));
 		ThreadUtil.milliSleep(10000);
 		
 	}

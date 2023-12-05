@@ -84,12 +84,12 @@ public class hand_over extends RoboticsAPIApplication {
 		springRobot = new CartesianImpedanceControlMode(); 
 		
 		
-		springRobot.parametrize(CartDOF.X).setStiffness(1000);
-		springRobot.parametrize(CartDOF.Y).setStiffness(250);
-		springRobot.parametrize(CartDOF.Z).setStiffness(1000);
-		springRobot.parametrize(CartDOF.C).setStiffness(250);
-		springRobot.parametrize(CartDOF.B).setStiffness(250);
-		springRobot.parametrize(CartDOF.A).setStiffness(250);
+		springRobot.parametrize(CartDOF.X).setStiffness(2000);
+		springRobot.parametrize(CartDOF.Y).setStiffness(200);
+		springRobot.parametrize(CartDOF.Z).setStiffness(2000);
+		springRobot.parametrize(CartDOF.C).setStiffness(300);
+		springRobot.parametrize(CartDOF.B).setStiffness(300);
+		springRobot.parametrize(CartDOF.A).setStiffness(300);
 		springRobot.setReferenceSystem(World.Current.getRootFrame());
 		springRobot.parametrize(CartDOF.ALL).setDamping(0.5);
 		//USAGE, will move to next line when triggered
@@ -118,7 +118,7 @@ public class hand_over extends RoboticsAPIApplication {
 ////////////
 		
 		//TCP
-		ForceCondition condition = ForceCondition.createSpatialForceCondition(gripper.getFrame("/HAND_OVER"), 14.0);
+		ForceCondition condition = ForceCondition.createSpatialForceCondition(gripper.getFrame("/HAND_OVER"), 16.0);
 
 		ICallbackAction Action = new ICallbackAction() {
 			@Override

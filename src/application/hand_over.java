@@ -124,9 +124,8 @@ public class hand_over extends RoboticsAPIApplication {
 			@Override
 			public void onTriggerFired(IFiredTriggerInfo triggerInformation) {
 			 //toggle output state when trigger fired
-				
 				gripper2F1.open();
-				logger.info("yay");
+				logger.info("yaaaaayyyyyyyyyyyy");
 			}
 		};
 		

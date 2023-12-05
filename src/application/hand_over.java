@@ -110,7 +110,7 @@ public class hand_over extends RoboticsAPIApplication {
 		robot.move(ptp(getApplicationData().getFrame("/PART_1")).setJointVelocityRel(0.3));//frame1
 		gripper2F1.close();
 		robot.move(ptp(getApplicationData().getFrame("/PART_1/p1_transition")).setJointVelocityRel(0.3));//frame1
-		robot.move(lin(getApplicationData().getFrame("/HAND_OVER")).setJointVelocityRel(0.3));
+		robot.moveAsync(lin(getApplicationData().getFrame("/HAND_OVER")).setJointVelocityRel(0.3));
 		
 		mF.setLEDBlue(true);
 		ThreadUtil.milliSleep(200);
@@ -131,8 +131,9 @@ public class hand_over extends RoboticsAPIApplication {
 		};
 		
 //		triggerWhen(condition, action)
-		gripper.move(positionHold(springRobot, -1, TimeUnit.SECONDS).triggerWhen(condition, Action));
+		gripper.moveAsync(positionHold(springRobot, -1, TimeUnit.SECONDS).triggerWhen(condition, Action));
 		
+		ThreadUtil.milliSleep(10000);
 		
 	}
 }

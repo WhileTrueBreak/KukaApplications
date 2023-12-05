@@ -73,7 +73,7 @@ public class hand_over extends RoboticsAPIApplication {
 		
 		gripper.attachTo(robot.getFlange());
 		gripper2F1.initalise();
-		gripper2F1.setSpeed(100);
+		gripper2F1.setSpeed(180);
 		gripper2F1.open();
 		mF.setLEDBlue(true);
 		ThreadUtil.milliSleep(200);
@@ -85,7 +85,7 @@ public class hand_over extends RoboticsAPIApplication {
 		
 		
 		springRobot.parametrize(CartDOF.X).setStiffness(500);
-		springRobot.parametrize(CartDOF.Y).setStiffness(500);
+		springRobot.parametrize(CartDOF.Y).setStiffness(200);
 		springRobot.parametrize(CartDOF.Z).setStiffness(500);
 		springRobot.parametrize(CartDOF.C).setStiffness(250);
 		springRobot.parametrize(CartDOF.B).setStiffness(250);
@@ -124,6 +124,7 @@ public class hand_over extends RoboticsAPIApplication {
 			@Override
 			public void onTriggerFired(IFiredTriggerInfo triggerInformation) {
 			 //toggle output state when trigger fired
+				ThreadUtil.milliSleep(1000);
 				gripper2F1.open();
 				logger.info("yaaaaayyyyyyyyyyyy");
 			}

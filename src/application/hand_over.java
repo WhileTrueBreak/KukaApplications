@@ -84,9 +84,9 @@ public class hand_over extends RoboticsAPIApplication {
 		springRobot = new CartesianImpedanceControlMode(); 
 		
 		
-		springRobot.parametrize(CartDOF.X).setStiffness(1000);
-		springRobot.parametrize(CartDOF.Y).setStiffness(1000);
-		springRobot.parametrize(CartDOF.Z).setStiffness(1000);
+		springRobot.parametrize(CartDOF.X).setStiffness(500);
+		springRobot.parametrize(CartDOF.Y).setStiffness(500);
+		springRobot.parametrize(CartDOF.Z).setStiffness(500);
 		springRobot.parametrize(CartDOF.C).setStiffness(250);
 		springRobot.parametrize(CartDOF.B).setStiffness(250);
 		springRobot.parametrize(CartDOF.A).setStiffness(250);

@@ -120,16 +120,17 @@ public class hand_over extends RoboticsAPIApplication {
 		//TCP
 		ForceCondition condition = ForceCondition.createSpatialForceCondition(gripper.getFrame("/HAND_OVER"), 15.0);
 
-		ICallbackAction Action = new ICallbackAction() {
-			@Override
-			public void onTriggerFired(IFiredTriggerInfo triggerInformation) {
-			 //toggle output state when trigger fired
-				gripper2F1.open();
-				logger.info("yaaaaayyyyyyyyyyyy");
-			}
-		};
-		
-		gripper.move(positionHold(springRobot, -1, TimeUnit.SECONDS).triggerWhen(condition, Action));
+//		ICallbackAction Action = new ICallbackAction() {
+//			@Override
+//			public void onTriggerFired(IFiredTriggerInfo triggerInformation) {
+//			 //toggle output state when trigger fired
+//				gripper2F1.open();
+//				logger.info("yaaaaayyyyyyyyyyyy");
+//			}
+//		};
+//		
+//		triggerWhen(condition, action)
+		gripper.move(positionHold(springRobot, -1, TimeUnit.SECONDS).breakWhen(condition));
 		
 		
 	}

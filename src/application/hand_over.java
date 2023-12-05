@@ -87,7 +87,7 @@ public class hand_over extends RoboticsAPIApplication {
 		springRobot.parametrize(CartDOF.X).setStiffness(1000);
 		springRobot.parametrize(CartDOF.Y).setStiffness(1000);
 		springRobot.parametrize(CartDOF.Z).setStiffness(1000);
-		springRobot.parametrize(CartDOF.C).setStiffness(1000);
+		springRobot.parametrize(CartDOF.C).setStiffness(250);
 		springRobot.parametrize(CartDOF.B).setStiffness(250);
 		springRobot.parametrize(CartDOF.A).setStiffness(250);
 		springRobot.setReferenceSystem(World.Current.getRootFrame());

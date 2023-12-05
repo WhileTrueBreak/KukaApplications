@@ -124,14 +124,21 @@ public class hand_over extends RoboticsAPIApplication {
 			@Override
 			public void onTriggerFired(IFiredTriggerInfo triggerInformation) {
 			 //toggle output state when trigger fired
+				mF.setLEDBlue(true);
 				ThreadUtil.milliSleep(200);
 				gripper2F1.open();
 				logger.info("yaaaaayyyyyyyyyyyy");
+				mF.setLEDBlue(false);
+				ThreadUtil.milliSleep(1000);
+				mF.setLEDBlue(true);
+				gripper2F1.close();
 			}
 		};
 		
 //		triggerWhen(condition, action)
 		mF.setLEDBlue(true);
+		ThreadUtil.milliSleep(200);
+		mF.setLEDBlue(false);
 		robot.move(positionHold(springRobot, -1, TimeUnit.SECONDS).triggerWhen(condition, Action));
 		ThreadUtil.milliSleep(10000);
 		

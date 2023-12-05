@@ -134,9 +134,9 @@
             </frame>
         </frame>
         <frame id="_69a8d508-2d4e-4c63-baf6-de2b7a17610b" name="PART_4">
-            <transformation a="0.0" b="0.0" c="-3.108391605532935" x="-275.1351080831081" y="-516.7462662273635" z="248.5"/>
+            <transformation a="0.0" b="0.0" c="-3.108391605532935" x="-275.1351080831081" y="-516.7462662273635" z="255.0"/>
             <additionalInformation>
-                <info key="LastModificationTime" type="java.lang.Long" value="1701747210051"/>
+                <info key="LastModificationTime" type="java.lang.Long" value="1701749925280"/>
                 <info base="LBR_iiwa_14_R820_1" controller="KUKA_Sunrise_Cabinet_1" device="LBR_iiwa_14_R820_1" tcpName="Flange" tool="Flange" type="com.kuka.roboticsAPI.deviceModel.TeachInformation">
                     <tcpTransformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
                 </info>

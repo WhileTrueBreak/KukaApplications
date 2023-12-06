@@ -2,15 +2,12 @@ package application;
 
 
 import javax.inject.Inject;
+
+import com.kuka.nav.task.NavTaskCategory;
 import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.*;
-
-import com.kuka.roboticsAPI.capabilities.floorMountedCharge.ChargingType;
-import com.kuka.roboticsAPI.capabilities.floorMountedCharge.IFloorMountedChargeCapability;
-import com.kuka.roboticsAPI.capabilities.interfaces.ICapability;
 import com.kuka.roboticsAPI.deviceModel.LBR;
 import com.kuka.roboticsAPI.deviceModel.kmp.KmpOmniMove;
-import com.kuka.roboticsAPI.deviceModel.kmp.SunriseOmniMoveMobilePlatform;
 
 /**
  * Implementation of a robot application.
@@ -30,10 +27,13 @@ import com.kuka.roboticsAPI.deviceModel.kmp.SunriseOmniMoveMobilePlatform;
  * @see #run()
  * @see #dispose()
  */
-public class RobotCharging extends RoboticsAPIApplication {
+@NavTaskCategory(maxInstances=1)
+public class AppManagerTest extends RoboticsAPIApplication {
+	@Inject
+	private LBR lBR_iiwa_14_R820_1;
 
 	@Inject
-	private SunriseOmniMoveMobilePlatform kmp;
+	private KmpOmniMove kMR_omniMove_200_1;
 
 	@Override
 	public void initialize() {
@@ -41,11 +41,8 @@ public class RobotCharging extends RoboticsAPIApplication {
 	}
 
 	@Override
-	public void run() {
-		// Charges with floor contacts for 10 minutes.
-		int timeoutInSeconds = 60; // value in seconds
-		IFloorMountedChargeCapability chargeCapability = kmp.getCapability(IFloorMountedChargeCapability.class);
-		chargeCapability.enableCharge(ChargingType.FOR_GIVEN_TIME,timeoutInSeconds);
-		// kmp.enableCharge(ChargingType.FOR_GIVEN_TIME, timeoutInSeconds);
+	public void run() throws Exception {
+		// your application execution starts here
+		lBR_iiwa_14_R820_1.move(ptpHome());
 	}
 }

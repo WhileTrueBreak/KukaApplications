@@ -4,6 +4,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+
 import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.*;
  
@@ -11,6 +12,7 @@ import com.kuka.roboticsAPI.capabilities.honk.IHonkCapability;
 import com.kuka.roboticsAPI.conditionModel.BooleanIOCondition;
 import com.kuka.roboticsAPI.conditionModel.ForceCondition;
 import com.kuka.roboticsAPI.conditionModel.ICallbackAction;
+import com.kuka.roboticsAPI.conditionModel.ICondition;
 import com.kuka.roboticsAPI.conditionModel.ITriggerAction;
 import com.kuka.roboticsAPI.deviceModel.JointPosition;
 import com.kuka.roboticsAPI.deviceModel.LBR;
@@ -21,6 +23,7 @@ import com.kuka.roboticsAPI.geometricModel.Frame;
 import com.kuka.roboticsAPI.geometricModel.Tool;
 import com.kuka.roboticsAPI.geometricModel.World;
 import com.kuka.roboticsAPI.geometricModel.math.Vector;
+import com.kuka.roboticsAPI.motionModel.IMotionContainer;
 import com.kuka.roboticsAPI.motionModel.controlModeModel.CartesianImpedanceControlMode;
 import com.kuka.roboticsAPI.sensorModel.ForceSensorData;
 import com.kuka.roboticsAPI.sensorModel.TorqueSensorData;
@@ -47,7 +50,7 @@ import static com.kuka.roboticsAPI.motionModel.HRCMotions.*;
  * @see #run()
  * @see #dispose()
  */
-public class IndirectHandoverFinlay extends RoboticsAPIApplication {
+public class DirectHandoverFinlay extends RoboticsAPIApplication {
 	@Inject
 	private LBR robot;
 
@@ -68,6 +71,8 @@ public class IndirectHandoverFinlay extends RoboticsAPIApplication {
 	private SunriseOmniMoveMobilePlatform kmp;
 
 	CartesianImpedanceControlMode springRobot;
+	
+	IMotionContainer m1;
 	
 	@Override
 	public void initialize() {
@@ -104,24 +109,35 @@ public class IndirectHandoverFinlay extends RoboticsAPIApplication {
 	
 	@Override
 	public void run() {
-		
-		get_part(3, 147);
-		drop_part();
-		get_from_drop(3,147);
-		
-		get_part(4, 147);
-		drop_part();
-		get_from_drop(4,147);
-		
-		get_part(1, 0);
-		drop_part();
-		get_from_drop(1,0);
-		
-		get_part(2, 0);
-		drop_part();
-		get_from_drop(2,0);
+
 		
 		
+		gripper2F1.close();		
+		
+		get_part(1, 1);
+		
+		go_to_frame("/handover");	
+			
+		detect_handover();		
+		
+		gripper2F1.open();
+		
+		detect_handover();	
+		
+		take_to_jig(1, 1);
+		
+		get_part(2, 1);
+		
+		go_to_frame("/handover");
+		
+		detect_handover();
+		
+		gripper2F1.open();
+		
+		detect_handover();	
+		
+		take_to_jig(2, 1);
+
 
 		mF.setLEDBlue(true);
 		
@@ -134,6 +150,25 @@ public class IndirectHandoverFinlay extends RoboticsAPIApplication {
 		return dist;
 	}
 	
+	public void detect_handover(){
+		
+		m1 = robot.moveAsync(positionHold(springRobot, -1, TimeUnit.SECONDS));
+		
+		Frame Position = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"));
+		double x1 = Position.getX();
+		double y1 = Position.getY();
+		double z1 = Position.getZ();
+		double dist = 0;
+		
+
+		while (dist < 25) {
+			  ThreadUtil.milliSleep(700);
+			  Position = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"));
+			  dist = calc_dist(x1, y1, z1, Position.getX(), Position.getY(), Position.getZ());
+			}
+		m1.cancel();
+				
+	}
 	public void get_part(int part, int grip_offset){
 		// part: integer 1-4
 		// grip offset: how wide the gripper should be picking up parts - important for certain parts, 0 is open
@@ -168,5 +203,21 @@ public class IndirectHandoverFinlay extends RoboticsAPIApplication {
 		robot.move(ptp(getApplicationData().getFrame("/PART_"+ Integer.toString(part) +"/p" + Integer.toString(part) + "_transition")).setJointVelocityRel(0.3));
 	}
 	
+	public void go_to_frame(String frame){
+		// part: integer 1-4
+		// grip offset: how wide the gripper should be picking up parts - important for certain parts, 0 is open
+		robot.move(ptp(getApplicationData().getFrame(frame)).setJointVelocityRel(0.3));//frame1
+
+	}
+	
+	public void take_to_jig(int part, int grip_offset){
+		// part: integer 1-4
+		// grip offset: how wide the gripper should be picking up parts - important for certain parts, 0 is open
+		gripper2F1.close();
+		robot.move(ptp(getApplicationData().getFrame("/PART_"+ Integer.toString(part) +"/p" + Integer.toString(part) + "_transition")).setJointVelocityRel(0.3));
+		robot.move(ptp(getApplicationData().getFrame("/PART_" + Integer.toString(part))).setJointVelocityRel(0.3));
+		gripper2F1.setPos(grip_offset);
+		robot.move(ptp(getApplicationData().getFrame("/PART_"+ Integer.toString(part) +"/p" + Integer.toString(part) + "_transition")).setJointVelocityRel(0.3));
+	}
 	
 }

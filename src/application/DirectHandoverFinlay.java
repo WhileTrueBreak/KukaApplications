@@ -47,7 +47,7 @@ import static com.kuka.roboticsAPI.motionModel.HRCMotions.*;
  * @see #run()
  * @see #dispose()
  */
-public class IndirectHandoverFinlay extends RoboticsAPIApplication {
+public class DirectHandoverFinlay extends RoboticsAPIApplication {
 	@Inject
 	private LBR robot;
 
@@ -104,24 +104,30 @@ public class IndirectHandoverFinlay extends RoboticsAPIApplication {
 	
 	@Override
 	public void run() {
+
+		robot.moveAsync(positionHold(springRobot, -1, TimeUnit.SECONDS));
 		
-		get_part(3, 147);
-		drop_part();
-		get_from_drop(3,147);
+		gripper2F1.close();
+		Frame Position = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"));
+		double x1 = Position.getX();
+		double y1 = Position.getY();
+		double z1 = Position.getZ();
+		double dist = 0;
 		
-		get_part(4, 147);
-		drop_part();
-		get_from_drop(3,147);
-		
-		get_part(1, 0);
-		drop_part();
-		get_from_drop(3,0);
-		
-		get_part(2, 0);
-		drop_part();
-		get_from_drop(3,0);
-		
-		
+
+		while (dist < 100) {
+			  dist = calc_dist(x1, y1, z1, Position.getX(), Position.getY(), Position.getZ());
+			  logger.info("X is :");
+			  logger.info(Double.toString(Position.getX()));
+			  
+			  logger.info("y is :");
+			  logger.info(Double.toString(Position.getY()));
+			  
+			  logger.info("X is :");
+			  logger.info(Double.toString(Position.getZ()));
+			}
+		gripper2F1.open();
+
 
 		mF.setLEDBlue(true);
 		
@@ -132,40 +138,6 @@ public class IndirectHandoverFinlay extends RoboticsAPIApplication {
 		double dist = Math.sqrt(Math.pow(x1-x2,2) +Math.pow(y1-y2,2)  + Math.pow(z1-z2,2) );
 		
 		return dist;
-	}
-	
-	public void get_part(int part, int grip_offset){
-		// part: integer 1-4
-		// grip offset: how wide the gripper should be picking up parts - important for certain parts, 0 is open
-		
-		robot.move(ptp(getApplicationData().getFrame("/PART_"+ Integer.toString(part) +" /p" + Integer.toString(part) + "_transition")).setJointVelocityRel(0.3));
-		gripper2F1.setPos(grip_offset);
-		robot.move(ptp(getApplicationData().getFrame("/PART_" + Integer.toString(part))).setJointVelocityRel(0.3));//frame1
-		gripper2F1.close();
-		robot.move(ptp(getApplicationData().getFrame("/PART_"+ Integer.toString(part) +" /p" + Integer.toString(part) + "_transition")).setJointVelocityRel(0.3));
-		
-	}
-	
-	public void drop_part(){
-		// part: integer 1-4
-		// grip offset: how wide the gripper should be picking up parts - important for certain parts, 0 is open
-		robot.move(ptp(getApplicationData().getFrame("/drop_point/drop_transition")).setJointVelocityRel(0.3));//frame1
-		robot.move(ptp(getApplicationData().getFrame("/drop_point/drop_DROP")).setJointVelocityRel(0.3));//frame1
-		gripper2F1.open();
-		robot.move(ptp(getApplicationData().getFrame("/drop_point/drop_transition")).setJointVelocityRel(0.3));//frame1
-	}
-	
-	public void get_from_drop(int part, int grip_offset){
-		// part: integer 1-4
-		// grip offset: how wide the gripper should be picking up parts - important for certain parts, 0 is open
-		robot.move(ptp(getApplicationData().getFrame("/drop_point/drop_transition")).setJointVelocityRel(0.3));//frame1
-		robot.move(ptp(getApplicationData().getFrame("/drop_point")).setJointVelocityRel(0.3));//frame1
-		gripper2F1.close();
-		robot.move(ptp(getApplicationData().getFrame("/drop_point/drop_transition")).setJointVelocityRel(0.3));
-		robot.move(ptp(getApplicationData().getFrame("/PART_"+ Integer.toString(part) +" /p" + Integer.toString(part) + "_transition")).setJointVelocityRel(0.3));
-		robot.move(ptp(getApplicationData().getFrame("/PART_" + Integer.toString(part))).setJointVelocityRel(0.3));
-		gripper2F1.setPos(grip_offset);
-		robot.move(ptp(getApplicationData().getFrame("/PART_"+ Integer.toString(part) +" /p" + Integer.toString(part) + "_transition")).setJointVelocityRel(0.3));
 	}
 	
 	

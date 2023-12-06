@@ -185,6 +185,7 @@ public class hand_over2 extends RoboticsAPIApplication {
 //			robot.move(positionHold(springRobot, -1, TimeUnit.SECONDS).triggerWhen(condition, Action).breakWhen(condition));
 //			ThreadUtil.milliSleep(2000);
 //		}
+		robot.moveAsync(positionHold(springRobot, -1, TimeUnit.SECONDS));
 		update();
 		logger.info("Please, Take the thing :)");
 		mF.setLEDBlue(true);
@@ -194,7 +195,6 @@ public class hand_over2 extends RoboticsAPIApplication {
 		
 		boolean condition = false;
 		
-		robot.moveAsync(positionHold(springRobot, -1, TimeUnit.SECONDS));
 		while (condition != true) {
 			update();
 			Vector3D v1 = new Vector3D((PosX_pre-PosX), (PosY_pre-PosY), (PosZ_pre-PosZ));

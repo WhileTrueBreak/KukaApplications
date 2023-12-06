@@ -118,6 +118,8 @@ public class DirectHandoverFinlay extends RoboticsAPIApplication {
 		detect_handover();		
 		
 		gripper2F1.open();
+		
+		get_part(2, 1);
 
 
 		mF.setLEDBlue(true);
@@ -139,7 +141,7 @@ public class DirectHandoverFinlay extends RoboticsAPIApplication {
 		double dist = 0;
 		
 
-		while (dist < 10) {
+		while (dist < 100) {
 			  ThreadUtil.milliSleep(700);
 			  Position = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"));
 			  dist = calc_dist(x1, y1, z1, Position.getX(), Position.getY(), Position.getZ());

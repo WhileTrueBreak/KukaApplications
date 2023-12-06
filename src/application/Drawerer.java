@@ -125,8 +125,8 @@ public class Drawerer extends RoboticsAPIApplication{
 		return new Pair<Vector3D, Vector3D>(hor, ver);
 	}
 
-	private Vector3D canvasToWorld(Vector2D point, Pair<Vector3D, Vector3D> canvas){
-		return canvas.getA().multiply(point.getX()).add(canvas.getB().multiply(point.getY()));
+	private Vector3D canvasToWorld(Vector2D point, Pair<Vector3D, Vector3D> canvas, double size){
+		return canvas.getA().multiply(point.getX()*size).add(canvas.getB().multiply(point.getY()*size));
 	}
 	
 	private Frame vectorToFrame(Vector3D vector, Frame baseFrame){
@@ -208,7 +208,10 @@ public class Drawerer extends RoboticsAPIApplication{
 		for (int i=0;i<paths.length;i++){
 			Frame[] tempFrames = new Frame[paths[i].length];
 			for (int j=0;j<paths[i].length;j++) {
-				tempFrames[j] = vectorToFrame(canvasToWorld(paths[i][j].multiply(size), canvas), originFrame);
+				logger.info(i + "-" + j + " : " + paths[i][j].toString());
+				Vector3D path3D = canvasToWorld(paths[i][j], canvas, size);
+				tempFrames[j] = vectorToFrame(path3D, originFrame);
+				logger.info(i + "-" + j + " : " + path3D.toString());
 			}
 
 			splines[i] = framesToSpline(tempFrames);
@@ -223,7 +226,7 @@ public class Drawerer extends RoboticsAPIApplication{
 			int index = splineIterator.nextIndex();
 			logger.info("Start path "+index);
 			gripper.move(lin(originUpFrame).setCartVelocity(100));
-			Vector3D first = canvasToWorld(paths[index][0], canvas);
+			Vector3D first = canvasToWorld(paths[index][0], canvas, size);
 			logger.info("Moving to first frame");
 			gripper.move(linRel(first.getX(), first.getY(), first.getZ()).setCartVelocity(100));
 			logger.info("Start spline path");

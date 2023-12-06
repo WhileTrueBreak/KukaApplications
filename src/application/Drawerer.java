@@ -99,15 +99,15 @@ public class Drawerer extends RoboticsAPIApplication{
 	}
 	
 	private Frame calibrateFrame(Tool grip){
-		ForceCondition touch = ForceCondition.createSpatialForceCondition(gripper.getFrame("/bottom_left"), 10);
-		IMotionContainer motion1 = gripper.move(linRel(0, 0, 150, gripper.getFrame("/bottom_left")).setCartVelocity(20).breakWhen(touch));
+		ForceCondition touch = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 10);
+		IMotionContainer motion1 = gripper.move(linRel(0, 0, 150, gripper.getFrame("/TCP")).setCartVelocity(20).breakWhen(touch));
 		if (motion1.getFiredBreakConditionInfo() == null){
 			logger.info("No Collision Detected");
 			return null;
 		}
 		else{
 			logger.info("Collision Detected");
-			return robot.getCurrentCartesianPosition(gripper.getFrame("/bottom_left"));
+			return robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"));
 		}
 
 	}
@@ -175,7 +175,7 @@ public class Drawerer extends RoboticsAPIApplication{
 		}
 
 		// gets top right fraem
-		Vector3D top_right = frameToVector(robot.getCurrentCartesianPosition(gripper.getFrame("/bottom_left")));
+		Vector3D top_right = frameToVector(robot.getCurrentCartesianPosition(gripper.getFrame("/TCP")));
 		double diag_mag = top_right.subtract(origin).length();
 		double size = diag_mag/diag.length()*diag_size;
 		mF.setLEDBlue(false);

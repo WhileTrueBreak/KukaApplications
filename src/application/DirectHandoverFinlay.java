@@ -116,8 +116,10 @@ public class DirectHandoverFinlay extends RoboticsAPIApplication {
 		
 
 		while (dist < 100) {
-			  ThreadUtil.milliSleep(300);
+			  ThreadUtil.milliSleep(700);
+			  Position = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"));
 			  dist = calc_dist(x1, y1, z1, Position.getX(), Position.getY(), Position.getZ());
+			  
 			  logger.info("new X is :" + Double.toString(Position.getX()) + "original is: " + Double.toString(x1));
 			  
 			  logger.info("y is :" + Double.toString(Position.getY()) + "original is: " + Double.toString(y1));

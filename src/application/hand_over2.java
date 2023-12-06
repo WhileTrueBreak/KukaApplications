@@ -211,7 +211,7 @@ public class hand_over2 extends RoboticsAPIApplication {
 		}
 		
 		robot.move(lin(getApplicationData().getFrame("/HAND_OVER")).setJointVelocityRel(0.4));
-		robot.moveAsync(positionHold(springRobot, -1, TimeUnit.SECONDS));
+		robot.moveAsync(positionHold(springRobot, 1, TimeUnit.SECONDS));
 		logger.info("smak me to grab :)");
 		condition = false;
 		while (condition != true) {

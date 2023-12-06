@@ -73,7 +73,7 @@ public class hand_over extends RoboticsAPIApplication {
 		
 		gripper.attachTo(robot.getFlange());
 		gripper2F1.initalise();
-		gripper2F1.setSpeed(180);
+		gripper2F1.setSpeed(200);
 		gripper2F1.open();
 		mF.setLEDBlue(true);
 		ThreadUtil.milliSleep(200);
@@ -97,6 +97,7 @@ public class hand_over extends RoboticsAPIApplication {
 		//gripper.move(linRel(0, 0, -30, World.Current.getRootFrame()).setCartVelocity(50).breakWhen(touch10)); 
 	}
  
+	
 	@Override
 	public void run() {
 		IHonkCapability honkCapability = kmp.getCapability(IHonkCapability.class);
@@ -104,30 +105,51 @@ public class hand_over extends RoboticsAPIApplication {
 		gripper2F1.open();
  
 		mF.setLEDBlue(false);
-		ThreadUtil.milliSleep(200);
+		ThreadUtil.milliSleep(180);
 		
-		robot.move(ptp(getApplicationData().getFrame("/PART_1/p1_transition")).setJointVelocityRel(0.3));//frame1
-		robot.move(ptp(getApplicationData().getFrame("/PART_1")).setJointVelocityRel(0.3));//frame1
+		robot.move(ptp(getApplicationData().getFrame("/PART_1/p1_transition")).setJointVelocityRel(0.4));//frame1
+		robot.move(ptp(getApplicationData().getFrame("/PART_1")).setJointVelocityRel(0.4));//frame1
 		gripper2F1.close();
-		robot.move(ptp(getApplicationData().getFrame("/PART_1/p1_transition")).setJointVelocityRel(0.3));//frame1
-		robot.moveAsync(lin(getApplicationData().getFrame("/HAND_OVER")).setJointVelocityRel(0.3));
-		robot.move(lin(getApplicationData().getFrame("/HAND_OVER")).setJointVelocityRel(0.3));
+		
+		ThreadUtil.milliSleep(3000);
+		
+		if (gripper2F1.readObjectDetection() == 2){
+			logger.info("Object detected");
+			mF.setLEDBlue(true);
+			ThreadUtil.milliSleep(200);
+		} else if (gripper2F1.readObjectDetection() == 3) {
+			logger.info("No objects detected");
+			honkCapability.honk();
+			mF.setLEDBlue(false);
+			ThreadUtil.milliSleep(200);
+			ThreadUtil.milliSleep(200);
+			mF.setLEDBlue(false);
+			ThreadUtil.milliSleep(200);
+			ThreadUtil.milliSleep(200);
+			ThreadUtil.milliSleep(200);
+			mF.setLEDBlue(false);
+			ThreadUtil.milliSleep(200);
+			ThreadUtil.milliSleep(200);
+		}
+		
+		robot.move(ptp(getApplicationData().getFrame("/PART_1/p1_transition")).setJointVelocityRel(0.4));//frame1
+		robot.moveAsync(lin(getApplicationData().getFrame("/HAND_OVER")).setJointVelocityRel(0.4));
+		
 		mF.setLEDBlue(true);
 		ThreadUtil.milliSleep(200);
 		
 ////////////
 		
-		//TCP
-		ForceCondition condition = ForceCondition.createSpatialForceCondition(gripper.getFrame("/HAND_OVER"), 16.5);
+		ForceCondition condition = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 16.5);
 
 		ICallbackAction Action = new ICallbackAction() {
 			@Override
 			public void onTriggerFired(IFiredTriggerInfo triggerInformation) {
-			 //toggle output state when trigger fired
+			  //toggle output state when trigger fired
 				mF.setLEDBlue(true);
 				ThreadUtil.milliSleep(200);
 				gripper2F1.open();
-				logger.info("yaaaaayyyyyyyyyyyy");
+				logger.info("yaaaaayyyyyyyyyyyy :)");
 				mF.setLEDBlue(false);
 				ThreadUtil.milliSleep(1000);
 				mF.setLEDBlue(true);
@@ -135,12 +157,24 @@ public class hand_over extends RoboticsAPIApplication {
 			}
 		};
 		
-//		triggerWhen(condition, action)
-		mF.setLEDBlue(true);
-		ThreadUtil.milliSleep(200);
-		mF.setLEDBlue(false);
-		robot.move(positionHold(springRobot, -1, TimeUnit.SECONDS).triggerWhen(condition, Action));
-		ThreadUtil.milliSleep(10000);
+//		while (gripper2F1.readPos() != 0) {
+//			logger.info("Please, Take the thing :)");
+//			mF.setLEDBlue(true);
+//			robot.move(positionHold(springRobot, -1, TimeUnit.SECONDS).triggerWhen(condition, Action).breakWhen(condition));
+//			ThreadUtil.milliSleep(2000);
+//		}
 		
+		logger.info("Please, Take the thing :)");
+		mF.setLEDBlue(true);
+		robot.move(positionHold(springRobot, -1, TimeUnit.SECONDS).triggerWhen(condition, Action).breakWhen(condition));
+		ThreadUtil.milliSleep(5000);
+		honkCapability.honk();
+		
+		//		
+		robot.move(ptp(getApplicationData().getFrame("/PART_1/p1_transition")).setJointVelocityRel(0.4));//frame1
+		robot.move(ptp(getApplicationData().getFrame("/PART_1")).setJointVelocityRel(0.4));//frame1
+		gripper2F1.open();
+		//moving back
+		robot.move(ptp(getApplicationData().getFrame("/PART_1/p1_transition")).setJointVelocityRel(0.4));
 	}
 }

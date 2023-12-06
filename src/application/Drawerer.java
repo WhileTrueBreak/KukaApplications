@@ -93,14 +93,16 @@ public class Drawerer extends RoboticsAPIApplication{
 
 	private void penUp(){
 		gripper.move(linRel(0,0, -20).setJointVelocityRel(0.2));
+		logger.info("Moving Pen Up");
 	}
 	private void penDown(){
 		gripper.move(linRel(0,0, 20).setMode(springRobot).setJointVelocityRel(0.2));
+		logger.info("Moving Pen Down");
 	}
 	
 	private Frame calibrateFrame(Tool grip){
 		ForceCondition touch = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 10);
-		IMotionContainer motion1 = gripper.move(linRel(0, 0, 150, gripper.getFrame("/TCP")).setCartVelocity(20).breakWhen(touch));
+		IMotionContainer motion1 = gripper.move(linRel(0, 0, 150, gripper.getFrame("/TCP")).setCartVelocity(100).breakWhen(touch));
 		if (motion1.getFiredBreakConditionInfo() == null){
 			logger.info("No Collision Detected");
 			return null;
@@ -151,42 +153,57 @@ public class Drawerer extends RoboticsAPIApplication{
 	public void run() {
 		// Calibration sequence
 		mF.setLEDBlue(true);
+		logger.info("Moving to bottom left");
 		gripper.move(ptp(getApplicationData().getFrame("/bottom_left")).setJointVelocityRel(0.2));
+		logger.info("Calibrating point 1");
 		Frame originFrame = calibrateFrame(gripper);
 		Vector3D origin = frameToVector(originFrame);
+		logger.info(String.format("Origin: %s", origin.toString()));
 
+		logger.info("Moving to bottom left");
 		gripper.move(ptp(getApplicationData().getFrame("/bottom_left")).setJointVelocityRel(0.2));
-		gripper.move(linRel(0, 20, 0).setJointVelocityRel(0.2));
+		gripper.move(linRel(0, 40, 0).setJointVelocityRel(0.2));
+		logger.info("Calibrating point 2");
 		Vector3D up = frameToVector(calibrateFrame(gripper));
+		logger.info(String.format("Up: %s", up.toString()));
 
+		logger.info("Moving to bottom left");
 		gripper.move(ptp(getApplicationData().getFrame("/bottom_left")).setJointVelocityRel(0.2));
-		gripper.move(linRel(20, 0,0).setJointVelocityRel(0.2));
+		gripper.move(linRel(-40, 0,0).setJointVelocityRel(0.2));
+		logger.info("Calibrating point 3");
 		Vector3D right = frameToVector(calibrateFrame(gripper));
+		logger.info(String.format("Right: %s", right.toString()));
+		
 
 		// get world unit vectors
 		Pair<Vector3D,Vector3D> canvas = getCanvasPlane(origin, up, right);
+		logger.info(String.format("Canvas X, Y: (%s), (%s)", canvas.getA().toString(), canvas.getB().toString()));
 
 		// check upper right bound
 		double diag_size = 10;
 		gripper.move(ptp(getApplicationData().getFrame("/bottom_left")).setJointVelocityRel(0.2));
 		Vector3D diag = canvas.getA().add(canvas.getB()).multiply(diag_size);
+		logger.info("Moving to top right");
 		for(int i =0;i<10;i++){
-			gripper.move(linRel(diag.getX(), diag.getY(), diag.getZ()).setCartVelocity(10));
+			gripper.move(linRel(diag.getX(), diag.getY(), diag.getZ()).setCartVelocity(100));
 		}
+		logger.info(String.format("Found max at top right: %s", diag.toString()));
 
 		// gets top right fraem
 		Vector3D top_right = frameToVector(robot.getCurrentCartesianPosition(gripper.getFrame("/TCP")));
 		double diag_mag = top_right.subtract(origin).length();
 		double size = diag_mag/diag.length()*diag_size;
+		logger.info(String.format("Canvas size: %f", size));
 		mF.setLEDBlue(false);
-
+		logger.info("Calibration completed.");
+		
 		Vector2D[][] paths = getPaths();
 		Spline[] splines = new Spline[paths.length];
 
 		for (int i=0;i<paths.length;i++){
 			Frame[] tempFrames = new Frame[paths[i].length];
 			for (int j=0;j<paths[i].length;j++) {
-				tempFrames[j] = vectorToFrame(canvasToWorld(paths[i][j], canvas, origin), originFrame);
+				tempFrames[j] = vectorToFrame(canvasToWorld(paths[i][j].multiply(size), canvas, origin), originFrame);
 			}
 
 			splines[i] = framesToSpline(tempFrames);
@@ -199,7 +216,7 @@ public class Drawerer extends RoboticsAPIApplication{
 		penUp();
 		while(splineIterator.hasNext()){
 			int index = splineIterator.nextIndex();
-			gripper.move(lin(vectorToFrame(canvasToWorld(paths[index][0], canvas, origin), originFrame)).setCartVelocity(10));
+			gripper.move(lin(vectorToFrame(canvasToWorld(paths[index][0], canvas, origin), originFrame)).setCartVelocity(100));
 			penDown();
 			springyMove(splineIterator.next());
 			penUp();

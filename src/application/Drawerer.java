@@ -145,8 +145,8 @@ public class Drawerer extends RoboticsAPIApplication{
 	}
 
 	private void springyMove(Spline path){
-		double vel = 0.2;
-		gripper.move(path.setMode(springRobot).setJointVelocityRel(vel));
+		int vel = 40;
+		gripper.move(path.setMode(springRobot).setCartVelocity(vel));
 	}
 	
 	IMotionContainer m1;
@@ -210,7 +210,7 @@ public class Drawerer extends RoboticsAPIApplication{
 			Frame[] tempFrames = new Frame[paths[i].length];
 			for (int j=0;j<paths[i].length;j++) {
 				logger.info(i + "-" + j + " : " + paths[i][j].toString());
-				Vector3D path3D = canvasToWorld(paths[i][j], canvas, size).add(origin);
+				Vector3D path3D = canvasToWorld(paths[i][j], canvas, size).add(origin).add(v);
 				tempFrames[j] = vectorToFrame(path3D, originFrame);
 				logger.info(i + "-" + j + " : " + path3D.toString());
 			}

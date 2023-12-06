@@ -70,83 +70,7 @@ public class IndirectHandoverFinlay extends RoboticsAPIApplication {
 	
 	@Override
 	public void run() {
-		
-		// CELL COVERS
 
-		robot.move(ptp(getApplicationData().getFrame("/PART_3/p3_transition")).setJointVelocityRel(0.3));
-		gripper2F1.setPos(147);
-		robot.move(ptp(getApplicationData().getFrame("/PART_3")).setJointVelocityRel(0.3));//frame1
-		gripper2F1.close();
-		robot.move(ptp(getApplicationData().getFrame("/PART_3/p3_transition")).setJointVelocityRel(0.3));
-		robot.move(ptp(getApplicationData().getFrame("/drop_point/drop_transition")).setJointVelocityRel(0.3));//frame1
-		robot.move(ptp(getApplicationData().getFrame("/drop_point/drop_DROP")).setJointVelocityRel(0.3));//frame1
-		gripper2F1.open();
-		robot.move(ptp(getApplicationData().getFrame("/drop_point/drop_transition")).setJointVelocityRel(0.3));//frame1
-		robot.move(ptp(getApplicationData().getFrame("/drop_point")).setJointVelocityRel(0.3));//frame1
-		gripper2F1.close();
-		robot.move(ptp(getApplicationData().getFrame("/drop_point/drop_transition")).setJointVelocityRel(0.3));
-		robot.move(ptp(getApplicationData().getFrame("/PART_3/p3_transition")).setJointVelocityRel(0.3));
-		robot.move(ptp(getApplicationData().getFrame("/PART_3")).setJointVelocityRel(0.3));//frame1
-		gripper2F1.setPos(147);
-		robot.move(ptp(getApplicationData().getFrame("/PART_3/p3_transition")).setJointVelocityRel(0.3));
-		
-		
-
-		robot.move(ptp(getApplicationData().getFrame("/PART_4/p4_transition")).setJointVelocityRel(0.3));
-		gripper2F1.setPos(147);
-		robot.move(ptp(getApplicationData().getFrame("/PART_4")).setJointVelocityRel(0.3));//frame1
-		gripper2F1.close();
-		robot.move(ptp(getApplicationData().getFrame("/PART_4/p4_transition")).setJointVelocityRel(0.3));
-		robot.move(ptp(getApplicationData().getFrame("/drop_point/drop_transition")).setJointVelocityRel(0.3));//frame1
-		robot.move(ptp(getApplicationData().getFrame("/drop_point/drop_DROP")).setJointVelocityRel(0.3));//frame1
-		gripper2F1.open();
-		robot.move(ptp(getApplicationData().getFrame("/drop_point/drop_transition")).setJointVelocityRel(0.3));//frame1
-		robot.move(ptp(getApplicationData().getFrame("/drop_point")).setJointVelocityRel(0.3));//frame1
-		gripper2F1.close();
-		robot.move(ptp(getApplicationData().getFrame("/drop_point/drop_transition")).setJointVelocityRel(0.3));
-		robot.move(ptp(getApplicationData().getFrame("/PART_4/p4_transition")).setJointVelocityRel(0.3));
-		robot.move(ptp(getApplicationData().getFrame("/PART_4")).setJointVelocityRel(0.3));//frame1
-		gripper2F1.setPos(147);
-		robot.move(ptp(getApplicationData().getFrame("/PART_4/p4_transition")).setJointVelocityRel(0.3));
-				
-		
-		robot.move(ptp(getApplicationData().getFrame("/PART_1/p1_transition")).setJointVelocityRel(0.3));
-		gripper2F1.open();
-		robot.move(ptp(getApplicationData().getFrame("/PART_1")).setJointVelocityRel(0.3));//frame1
-		gripper2F1.close();
-		robot.move(ptp(getApplicationData().getFrame("/PART_1/p1_transition")).setJointVelocityRel(0.3));
-		robot.move(ptp(getApplicationData().getFrame("/drop_point/drop_transition")).setJointVelocityRel(0.3));//frame1
-		robot.move(ptp(getApplicationData().getFrame("/drop_point/drop_DROP")).setJointVelocityRel(0.3));//frame1
-		gripper2F1.open();
-		robot.move(ptp(getApplicationData().getFrame("/drop_point/drop_transition")).setJointVelocityRel(0.3));//frame1
-		robot.move(ptp(getApplicationData().getFrame("/drop_point")).setJointVelocityRel(0.3));//frame1
-		gripper2F1.close();
-		robot.move(ptp(getApplicationData().getFrame("/drop_point/drop_transition")).setJointVelocityRel(0.3));
-		robot.move(ptp(getApplicationData().getFrame("/PART_1/p1_transition")).setJointVelocityRel(0.3));
-		robot.move(ptp(getApplicationData().getFrame("/PART_1")).setJointVelocityRel(0.3));//frame1
-		gripper2F1.open();
-		robot.move(ptp(getApplicationData().getFrame("/PART_1/p1_transition")).setJointVelocityRel(0.3));
-		
-		robot.move(ptp(getApplicationData().getFrame("/PART_1/p1_transition")).setJointVelocityRel(0.3));
-		gripper2F1.open();
-		robot.move(ptp(getApplicationData().getFrame("/PART_2")).setJointVelocityRel(0.3));//frame1
-		gripper2F1.close();
-		robot.move(ptp(getApplicationData().getFrame("/PART_2/p2_transition")).setJointVelocityRel(0.3));
-		robot.move(ptp(getApplicationData().getFrame("/drop_point/drop_transition")).setJointVelocityRel(0.3));//frame1
-		robot.move(ptp(getApplicationData().getFrame("/drop_point/drop_DROP")).setJointVelocityRel(0.3));//frame1
-		gripper2F1.open();
-		robot.move(ptp(getApplicationData().getFrame("/drop_point/drop_transition")).setJointVelocityRel(0.3));//frame1
-		robot.move(ptp(getApplicationData().getFrame("/drop_point")).setJointVelocityRel(0.3));//frame1
-		gripper2F1.close();
-		robot.move(ptp(getApplicationData().getFrame("/drop_point/drop_transition")).setJointVelocityRel(0.3));
-		robot.move(ptp(getApplicationData().getFrame("/PART_2/p2_transition")).setJointVelocityRel(0.3));
-		robot.move(ptp(getApplicationData().getFrame("/PART_2")).setJointVelocityRel(0.3));//frame1
-		gripper2F1.open();
-		robot.move(ptp(getApplicationData().getFrame("/PART_2/p2_transition")).setJointVelocityRel(0.3));
-		
-		
-		
-		/*
 		// part 1
 		robot.move(ptp(getApplicationData().getFrame("/PART_1/p1_transition")).setJointVelocityRel(0.3));//frame1
 		robot.move(ptp(getApplicationData().getFrame("/PART_1")).setJointVelocityRel(0.3));//frame1
@@ -188,7 +112,7 @@ public class IndirectHandoverFinlay extends RoboticsAPIApplication {
 		robot.move(ptp(getApplicationData().getFrame("/drop_point/drop_transition")).setJointVelocityRel(0.3));//frame1
 		robot.move(ptp(getApplicationData().getFrame("/drop_point")).setJointVelocityRel(0.3));//frame1
 		gripper2F1.open();
-		*/
+		
 		mF.setLEDBlue(true);
 		
 	}

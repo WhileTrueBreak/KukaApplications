@@ -119,7 +119,15 @@ public class DirectHandoverFinlay extends RoboticsAPIApplication {
 		
 		gripper2F1.open();
 		
+		logger.info("gripper opened, getting part 2");
+		
 		get_part(2, 1);
+		
+		go_to_frame("/handover");
+		
+		detect_handover();
+		
+		gripper2F1.open();
 
 
 		mF.setLEDBlue(true);

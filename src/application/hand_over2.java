@@ -205,11 +205,11 @@ public class hand_over2 extends RoboticsAPIApplication {
 				gripper2F1.open();
 				logger.info("yaaaaayyyyyyyyyyyy :)");
 				mF.setLEDBlue(false);
-				ThreadUtil.milliSleep(1000);
 				condition = true;
 			} 
 			
 		}
+		
 		
 		condition = false;
 		while (condition != true) {
@@ -221,7 +221,6 @@ public class hand_over2 extends RoboticsAPIApplication {
 				gripper2F1.close();
 				logger.info("yaaaaayyyyyyyyyyyy :)");
 				mF.setLEDBlue(false);
-				ThreadUtil.milliSleep(1000);
 				condition = true;
 			}
 		} 

@@ -107,27 +107,15 @@ public class DirectHandoverFinlay extends RoboticsAPIApplication {
 
 		robot.moveAsync(positionHold(springRobot, -1, TimeUnit.SECONDS));
 		
-		gripper2F1.close();
-		Frame Position = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"));
-		double x1 = Position.getX();
-		double y1 = Position.getY();
-		double z1 = Position.getZ();
-		double dist = 0;
+		gripper2F1.close();		
 		
-
-		while (dist < 100) {
-			  ThreadUtil.milliSleep(700);
-			  Position = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"));
-			  dist = calc_dist(x1, y1, z1, Position.getX(), Position.getY(), Position.getZ());
-			  
-			  logger.info("new X is :" + Double.toString(Position.getX()) + "original is: " + Double.toString(x1));
-			  
-			  logger.info("y is :" + Double.toString(Position.getY()) + "original is: " + Double.toString(y1));
-			  
-			  logger.info("Calc dist: " + Double.toString(dist));
-			  
-			  
-			}
+		get_part(1, 1);
+		
+		go_to_frame("/handover");	
+		
+		
+		detect_handover();		
+		
 		gripper2F1.open();
 
 
@@ -140,6 +128,63 @@ public class DirectHandoverFinlay extends RoboticsAPIApplication {
 		double dist = Math.sqrt(Math.pow(x1-x2,2) +Math.pow(y1-y2,2)  + Math.pow(z1-z2,2) );
 		
 		return dist;
+	}
+	
+	public void detect_handover(){
+		Frame Position = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"));
+		double x1 = Position.getX();
+		double y1 = Position.getY();
+		double z1 = Position.getZ();
+		double dist = 0;
+		
+
+		while (dist < 10) {
+			  ThreadUtil.milliSleep(700);
+			  Position = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"));
+			  dist = calc_dist(x1, y1, z1, Position.getX(), Position.getY(), Position.getZ());
+			}
+		
+				
+	}
+	public void get_part(int part, int grip_offset){
+		// part: integer 1-4
+		// grip offset: how wide the gripper should be picking up parts - important for certain parts, 0 is open
+		
+		robot.move(ptp(getApplicationData().getFrame("/PART_"+ Integer.toString(part) +"/p" + Integer.toString(part) + "_transition")).setJointVelocityRel(0.3));
+		gripper2F1.setPos(grip_offset);
+		robot.move(ptp(getApplicationData().getFrame("/PART_" + Integer.toString(part))).setJointVelocityRel(0.3));//frame1
+		gripper2F1.close();
+		robot.move(ptp(getApplicationData().getFrame("/PART_"+ Integer.toString(part) +"/p" + Integer.toString(part) + "_transition")).setJointVelocityRel(0.3));
+		
+	}
+	
+	public void drop_part(){
+		// part: integer 1-4
+		// grip offset: how wide the gripper should be picking up parts - important for certain parts, 0 is open
+		robot.move(ptp(getApplicationData().getFrame("/drop_point/drop_transition")).setJointVelocityRel(0.3));//frame1
+		robot.move(ptp(getApplicationData().getFrame("/drop_point/drop_DROP")).setJointVelocityRel(0.3));//frame1
+		gripper2F1.open();
+		robot.move(ptp(getApplicationData().getFrame("/drop_point/drop_transition")).setJointVelocityRel(0.3));//frame1
+	}
+	
+	public void get_from_drop(int part, int grip_offset){
+		// part: integer 1-4
+		// grip offset: how wide the gripper should be picking up parts - important for certain parts, 0 is open
+		robot.move(ptp(getApplicationData().getFrame("/drop_point/drop_transition")).setJointVelocityRel(0.3));//frame1
+		robot.move(ptp(getApplicationData().getFrame("/drop_point")).setJointVelocityRel(0.3));//frame1
+		gripper2F1.close();
+		robot.move(ptp(getApplicationData().getFrame("/drop_point/drop_transition")).setJointVelocityRel(0.3));
+		robot.move(ptp(getApplicationData().getFrame("/PART_"+ Integer.toString(part) +"/p" + Integer.toString(part) + "_transition")).setJointVelocityRel(0.3));
+		robot.move(ptp(getApplicationData().getFrame("/PART_" + Integer.toString(part))).setJointVelocityRel(0.3));
+		gripper2F1.setPos(grip_offset);
+		robot.move(ptp(getApplicationData().getFrame("/PART_"+ Integer.toString(part) +"/p" + Integer.toString(part) + "_transition")).setJointVelocityRel(0.3));
+	}
+	
+	public void go_to_frame(String frame){
+		// part: integer 1-4
+		// grip offset: how wide the gripper should be picking up parts - important for certain parts, 0 is open
+		robot.move(ptp(getApplicationData().getFrame(frame)).setJointVelocityRel(0.3));//frame1
+
 	}
 	
 	

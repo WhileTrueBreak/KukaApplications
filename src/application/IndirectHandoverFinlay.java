@@ -117,6 +117,7 @@ public class IndirectHandoverFinlay extends RoboticsAPIApplication {
 
 		while (dist < 100) {
 			  dist = calc_dist(x1, y1, z1, Position.getX(), Position.getY(), Position.getZ() );
+			  logger.info(Double.toString(dist));
 			}
 		gripper2F1.open();
 

@@ -111,15 +111,15 @@ public class IndirectHandoverFinlay extends RoboticsAPIApplication {
 		
 		get_part(4, 147);
 		drop_part();
-		get_from_drop(3,147);
+		get_from_drop(4,147);
 		
 		get_part(1, 0);
 		drop_part();
-		get_from_drop(3,0);
+		get_from_drop(1,0);
 		
 		get_part(2, 0);
 		drop_part();
-		get_from_drop(3,0);
+		get_from_drop(2,0);
 		
 		
 

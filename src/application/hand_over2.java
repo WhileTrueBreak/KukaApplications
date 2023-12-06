@@ -186,7 +186,6 @@ public class hand_over2 extends RoboticsAPIApplication {
 //			robot.move(positionHold(springRobot, -1, TimeUnit.SECONDS).triggerWhen(condition, Action).breakWhen(condition));
 //			ThreadUtil.milliSleep(2000);
 //		}
-		robot.moveAsync(positionHold(springRobot, -1, TimeUnit.SECONDS));
 		update();
 		logger.info("Please, Take the thing :)");
 		mF.setLEDBlue(true);
@@ -194,14 +193,15 @@ public class hand_over2 extends RoboticsAPIApplication {
 		double PosY_pre = PosY;
 		double PosZ_pre = PosZ;
 		
+		robot.moveAsync(positionHold(springRobot, -1, TimeUnit.SECONDS));
+		
 		boolean condition = false;
 		
 		while (condition != true) {
 			update();
 			Vector3D v1 = new Vector3D((PosX_pre-PosX), (PosY_pre-PosY), (PosZ_pre-PosZ));
-			if (v1.length() > 30 && v1.getX() > 0) {
+			if (v1.length() > 20 && v1.getX() > 0) {
 				mF.setLEDBlue(true);
-				ThreadUtil.milliSleep(200);
 				gripper2F1.open();
 				logger.info("yaaaaayyyyyyyyyyyy :)");
 				mF.setLEDBlue(false);
@@ -215,9 +215,8 @@ public class hand_over2 extends RoboticsAPIApplication {
 		while (condition != true) {
 			update();
 			Vector3D v1 = new Vector3D((PosX_pre-PosX), (PosY_pre-PosY), (PosZ_pre-PosZ));
-			if (v1.length() > 30 && v1.getX() < 0) {
+			if (v1.length() > 20 && v1.getX() < 0) {
 				mF.setLEDBlue(true);
-				ThreadUtil.milliSleep(200);
 				gripper2F1.close();
 				logger.info("yaaaaayyyyyyyyyyyy :)");
 				mF.setLEDBlue(false);

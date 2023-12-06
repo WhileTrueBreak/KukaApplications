@@ -1,17 +1,33 @@
 package application;
 
+import java.util.concurrent.TimeUnit;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.*;
  
+import com.kuka.roboticsAPI.capabilities.honk.IHonkCapability;
+import com.kuka.roboticsAPI.conditionModel.BooleanIOCondition;
 import com.kuka.roboticsAPI.conditionModel.ForceCondition;
+import com.kuka.roboticsAPI.conditionModel.ICallbackAction;
+import com.kuka.roboticsAPI.conditionModel.ITriggerAction;
+import com.kuka.roboticsAPI.deviceModel.JointPosition;
 import com.kuka.roboticsAPI.deviceModel.LBR;
+import com.kuka.roboticsAPI.deviceModel.kmp.SunriseOmniMoveMobilePlatform;
+import com.kuka.roboticsAPI.executionModel.IFiredTriggerInfo;
+import com.kuka.roboticsAPI.geometricModel.CartDOF;
 import com.kuka.roboticsAPI.geometricModel.Frame;
 import com.kuka.roboticsAPI.geometricModel.Tool;
+import com.kuka.roboticsAPI.geometricModel.World;
+import com.kuka.roboticsAPI.geometricModel.math.Vector;
+import com.kuka.roboticsAPI.motionModel.controlModeModel.CartesianImpedanceControlMode;
+import com.kuka.roboticsAPI.sensorModel.ForceSensorData;
+import com.kuka.roboticsAPI.sensorModel.TorqueSensorData;
 import com.kuka.task.ITaskLogger;
 import com.kuka.common.ThreadUtil;
 import com.kuka.generated.ioAccess.MediaFlangeIOGroup;
+import static com.kuka.roboticsAPI.motionModel.HRCMotions.*;
 
 /**
  * Implementation of a robot application.
@@ -48,6 +64,11 @@ public class IndirectHandoverFinlay extends RoboticsAPIApplication {
 	@Inject
 	private ITaskLogger logger;
 	
+	@Inject
+	private SunriseOmniMoveMobilePlatform kmp;
+
+	CartesianImpedanceControlMode springRobot;
+	
 	@Override
 	public void initialize() {
 		gripper.attachTo(robot.getFlange());
@@ -65,12 +86,26 @@ public class IndirectHandoverFinlay extends RoboticsAPIApplication {
 		//USAGE, will move to next line when triggered
 		//LOOK at pipecutting.java for examples on analysing the break condition. 
 		//gripper.move(linRel(0, 0, -30, World.Current.getRootFrame()).setCartVelocity(50).breakWhen(touch10)); 
+		springRobot = new CartesianImpedanceControlMode();
+		
+		springRobot.parametrize(CartDOF.X).setStiffness(1000);
+		springRobot.parametrize(CartDOF.Y).setStiffness(180);
+		springRobot.parametrize(CartDOF.Z).setStiffness(1000);
+		springRobot.parametrize(CartDOF.C).setStiffness(300);
+		springRobot.parametrize(CartDOF.B).setStiffness(300);
+		springRobot.parametrize(CartDOF.A).setStiffness(300);
+		springRobot.setReferenceSystem(World.Current.getRootFrame());
+		springRobot.parametrize(CartDOF.ALL).setDamping(0.5);
+		//USAGE, will move to next line when triggered
+		//LOOK at pipecutting.java for examples on analysing the break condition.
+		//gripper.move(linRel(0, 0, -30, World.Current.getRootFrame()).setCartVelocity(50).breakWhen(touch10));
 	}
 
 	
 	@Override
 	public void run() {
 
+		robot.moveAsync(positionHold(springRobot, -1, TimeUnit.SECONDS));
 		
 		gripper2F1.close();
 		Frame Position = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"));

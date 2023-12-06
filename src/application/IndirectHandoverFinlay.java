@@ -138,11 +138,11 @@ public class IndirectHandoverFinlay extends RoboticsAPIApplication {
 		// part: integer 1-4
 		// grip offset: how wide the gripper should be picking up parts - important for certain parts, 0 is open
 		
-		robot.move(ptp(getApplicationData().getFrame("/PART_"+ Integer.toString(part) +" /p" + Integer.toString(part) + "_transition")).setJointVelocityRel(0.3));
+		robot.move(ptp(getApplicationData().getFrame("/PART_"+ Integer.toString(part) +"/p" + Integer.toString(part) + "_transition")).setJointVelocityRel(0.3));
 		gripper2F1.setPos(grip_offset);
 		robot.move(ptp(getApplicationData().getFrame("/PART_" + Integer.toString(part))).setJointVelocityRel(0.3));//frame1
 		gripper2F1.close();
-		robot.move(ptp(getApplicationData().getFrame("/PART_"+ Integer.toString(part) +" /p" + Integer.toString(part) + "_transition")).setJointVelocityRel(0.3));
+		robot.move(ptp(getApplicationData().getFrame("/PART_"+ Integer.toString(part) +"/p" + Integer.toString(part) + "_transition")).setJointVelocityRel(0.3));
 		
 	}
 	
@@ -162,10 +162,10 @@ public class IndirectHandoverFinlay extends RoboticsAPIApplication {
 		robot.move(ptp(getApplicationData().getFrame("/drop_point")).setJointVelocityRel(0.3));//frame1
 		gripper2F1.close();
 		robot.move(ptp(getApplicationData().getFrame("/drop_point/drop_transition")).setJointVelocityRel(0.3));
-		robot.move(ptp(getApplicationData().getFrame("/PART_"+ Integer.toString(part) +" /p" + Integer.toString(part) + "_transition")).setJointVelocityRel(0.3));
+		robot.move(ptp(getApplicationData().getFrame("/PART_"+ Integer.toString(part) +"/p" + Integer.toString(part) + "_transition")).setJointVelocityRel(0.3));
 		robot.move(ptp(getApplicationData().getFrame("/PART_" + Integer.toString(part))).setJointVelocityRel(0.3));
 		gripper2F1.setPos(grip_offset);
-		robot.move(ptp(getApplicationData().getFrame("/PART_"+ Integer.toString(part) +" /p" + Integer.toString(part) + "_transition")).setJointVelocityRel(0.3));
+		robot.move(ptp(getApplicationData().getFrame("/PART_"+ Integer.toString(part) +"/p" + Integer.toString(part) + "_transition")).setJointVelocityRel(0.3));
 	}
 	
 	

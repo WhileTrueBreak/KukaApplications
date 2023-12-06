@@ -158,7 +158,7 @@ public class Drawerer extends RoboticsAPIApplication{
 		logger.info("Calibrating point 1");
 		Frame originFrame = calibrateFrame(gripper);
 		penUp();
-		Frame originUpFrame = calibrateFrame(gripper);
+		Frame originUpFrame = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"));
 		Vector3D origin = frameToVector(originFrame);
 		logger.info(String.format("Origin: %s", origin.toString()));
 

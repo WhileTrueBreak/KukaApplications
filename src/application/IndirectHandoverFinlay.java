@@ -74,7 +74,7 @@ public class IndirectHandoverFinlay extends RoboticsAPIApplication {
 		// CELL COVERS
 
 		robot.move(ptp(getApplicationData().getFrame("/PART_3/p3_transition")).setJointVelocityRel(0.3));
-		gripper2F1.setPos(156);
+		gripper2F1.setPos(147);
 		robot.move(ptp(getApplicationData().getFrame("/PART_3")).setJointVelocityRel(0.3));//frame1
 		gripper2F1.close();
 		robot.move(ptp(getApplicationData().getFrame("/PART_3/p3_transition")).setJointVelocityRel(0.3));
@@ -84,7 +84,7 @@ public class IndirectHandoverFinlay extends RoboticsAPIApplication {
 		
 
 		robot.move(ptp(getApplicationData().getFrame("/PART_4/p4_transition")).setJointVelocityRel(0.3));
-		gripper2F1.setPos(156);
+		gripper2F1.setPos(147);
 		robot.move(ptp(getApplicationData().getFrame("/PART_4")).setJointVelocityRel(0.3));//frame1
 		gripper2F1.close();
 		robot.move(ptp(getApplicationData().getFrame("/PART_4/p4_transition")).setJointVelocityRel(0.3));

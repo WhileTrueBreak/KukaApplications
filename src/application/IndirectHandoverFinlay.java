@@ -71,7 +71,7 @@ public class IndirectHandoverFinlay extends RoboticsAPIApplication {
 	@Override
 	public void run() {
 		
-		gripper2F1.setPos(163);
+		gripper2F1.setPos(156);
 		robot.move(ptp(getApplicationData().getFrame("/PART_3/p3_transition")).setJointVelocityRel(0.3));
 		robot.move(ptp(getApplicationData().getFrame("/PART_3")).setJointVelocityRel(0.3));//frame1
 		gripper2F1.close();

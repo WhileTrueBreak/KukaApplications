@@ -199,7 +199,7 @@ public class hand_over2 extends RoboticsAPIApplication {
 		while (condition != true) {
 			update();
 			Vector3D v1 = new Vector3D((PosX_pre-PosX), (PosY_pre-PosY), (PosZ_pre-PosZ));
-			if (v1.length() > 10 && v1.getX() > 0) {
+			if (v1.length() > 30 && v1.getX() > 0) {
 				mF.setLEDBlue(true);
 				ThreadUtil.milliSleep(200);
 				gripper2F1.open();
@@ -215,7 +215,7 @@ public class hand_over2 extends RoboticsAPIApplication {
 		while (condition != true) {
 			update();
 			Vector3D v1 = new Vector3D((PosX_pre-PosX), (PosY_pre-PosY), (PosZ_pre-PosZ));
-			if (v1.length() > 10 && v1.getX() < 0) {
+			if (v1.length() > 30 && v1.getX() < 0) {
 				mF.setLEDBlue(true);
 				ThreadUtil.milliSleep(200);
 				gripper2F1.close();

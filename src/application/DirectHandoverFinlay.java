@@ -116,15 +116,17 @@ public class DirectHandoverFinlay extends RoboticsAPIApplication {
 		
 
 		while (dist < 100) {
+			  ThreadUtil.milliSleep(300);
 			  dist = calc_dist(x1, y1, z1, Position.getX(), Position.getY(), Position.getZ());
-			  logger.info("X is :");
-			  logger.info(Double.toString(Position.getX()));
+			  logger.info("X is :" + Double.toString(Position.getX()));
 			  
-			  logger.info("y is :");
-			  logger.info(Double.toString(Position.getY()));
+			  logger.info("y is :" + Double.toString(Position.getY()));
 			  
-			  logger.info("X is :");
-			  logger.info(Double.toString(Position.getZ()));
+			  logger.info("X is :" + Double.toString(Position.getZ()));
+			  
+			  logger.info("Calc dist: " + Double.toString(dist));
+			  
+			  
 			}
 		gripper2F1.open();
 

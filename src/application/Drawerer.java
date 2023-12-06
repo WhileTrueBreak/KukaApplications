@@ -208,7 +208,7 @@ public class Drawerer extends RoboticsAPIApplication{
 		for (int i=0;i<paths.length;i++){
 			Frame[] tempFrames = new Frame[paths[i].length];
 			for (int j=0;j<paths[i].length;j++) {
-				tempFrames[j] = vectorToFrame(canvasToWorld(paths[i][j].multiply(size), canvas).add(v), originFrame);
+				tempFrames[j] = vectorToFrame(canvasToWorld(paths[i][j].multiply(size), canvas), originFrame);
 			}
 
 			splines[i] = framesToSpline(tempFrames);

@@ -105,7 +105,7 @@ public class DirectHandoverFinlay extends RoboticsAPIApplication {
 	@Override
 	public void run() {
 
-		robot.moveAsync(positionHold(springRobot, -1, TimeUnit.SECONDS));
+		
 		
 		gripper2F1.close();		
 		
@@ -113,6 +113,7 @@ public class DirectHandoverFinlay extends RoboticsAPIApplication {
 		
 		go_to_frame("/handover");	
 		
+		robot.moveAsync(positionHold(springRobot, -1, TimeUnit.SECONDS));
 		
 		detect_handover();		
 		

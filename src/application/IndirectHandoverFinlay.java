@@ -72,7 +72,7 @@ public class IndirectHandoverFinlay extends RoboticsAPIApplication {
 	public void run() {
 		
 		robot.move(ptp(getApplicationData().getFrame("/PART_1/p1_transition")).setJointVelocityRel(0.3));
-		gripper2F1.setPos(180);
+		gripper2F1.open();
 		robot.move(ptp(getApplicationData().getFrame("/PART_1")).setJointVelocityRel(0.3));//frame1
 		gripper2F1.close();
 		robot.move(ptp(getApplicationData().getFrame("/PART_1/p1_transition")).setJointVelocityRel(0.3));
@@ -85,7 +85,7 @@ public class IndirectHandoverFinlay extends RoboticsAPIApplication {
 		robot.move(ptp(getApplicationData().getFrame("/drop_point/drop_transition")).setJointVelocityRel(0.3));
 		robot.move(ptp(getApplicationData().getFrame("/PART_1/p1_transition")).setJointVelocityRel(0.3));
 		robot.move(ptp(getApplicationData().getFrame("/PART_1")).setJointVelocityRel(0.3));//frame1
-		gripper2F1.setPos(180);
+		gripper2F1.open();
 		robot.move(ptp(getApplicationData().getFrame("/PART_1/p1_transition")).setJointVelocityRel(0.3));
 		
 		

@@ -102,7 +102,7 @@ public class Drawerer extends RoboticsAPIApplication{
 	
 	private Frame calibrateFrame(Tool grip){
 		ForceCondition touch = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 10);
-		IMotionContainer motion1 = gripper.move(linRel(0, 0, 150, gripper.getFrame("/TCP")).setCartVelocity(100).breakWhen(touch));
+		IMotionContainer motion1 = gripper.move(linRel(0, 0, 150, gripper.getFrame("/TCP")).setCartVelocity(20).breakWhen(touch));
 		if (motion1.getFiredBreakConditionInfo() == null){
 			logger.info("No Collision Detected");
 			return null;
@@ -183,9 +183,10 @@ public class Drawerer extends RoboticsAPIApplication{
 		double diag_size = 10;
 		gripper.move(ptp(getApplicationData().getFrame("/bottom_left")).setJointVelocityRel(0.2));
 		Vector3D diag = canvas.getA().add(canvas.getB()).multiply(diag_size);
+		logger.info("Diagonal vector: " + diag.toString());
 		logger.info("Moving to top right");
 		for(int i =0;i<10;i++){
-			gripper.move(linRel(diag.getX(), diag.getY(), diag.getZ()).setCartVelocity(100));
+			gripper.move(linRel(diag.getY(), diag.getZ(), diag.getX()).setCartVelocity(100));
 		}
 		logger.info(String.format("Found max at top right: %s", diag.toString()));
 

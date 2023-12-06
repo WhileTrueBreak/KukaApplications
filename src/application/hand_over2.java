@@ -193,7 +193,7 @@ public class hand_over2 extends RoboticsAPIApplication {
 		double PosY_pre = PosY;
 		double PosZ_pre = PosZ;
 		
-		robot.moveAsync(positionHold(springRobot, -1, TimeUnit.SECONDS));
+		robot.moveAsync(positionHold(springRobot, 1, TimeUnit.SECONDS));
 		
 		boolean condition = false;
 		

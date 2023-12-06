@@ -153,7 +153,7 @@ public class hand_over2 extends RoboticsAPIApplication {
 		}
 		
 		robot.move(ptp(getApplicationData().getFrame("/PART_1/p1_transition")).setJointVelocityRel(0.4));//frame1
-		robot.moveAsync(lin(getApplicationData().getFrame("/HAND_OVER")).setJointVelocityRel(0.4));
+		robot.move(lin(getApplicationData().getFrame("/HAND_OVER")).setJointVelocityRel(0.4));
 		
 		mF.setLEDBlue(true);
 		ThreadUtil.milliSleep(200);

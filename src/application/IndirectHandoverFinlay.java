@@ -4,11 +4,11 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.*;
-
+ 
 import com.kuka.roboticsAPI.conditionModel.ForceCondition;
 import com.kuka.roboticsAPI.deviceModel.LBR;
+import com.kuka.roboticsAPI.geometricModel.Frame;
 import com.kuka.roboticsAPI.geometricModel.Tool;
-import com.kuka.roboticsAPI.geometricModel.World;
 import com.kuka.task.ITaskLogger;
 import com.kuka.common.ThreadUtil;
 import com.kuka.generated.ioAccess.MediaFlangeIOGroup;
@@ -71,49 +71,31 @@ public class IndirectHandoverFinlay extends RoboticsAPIApplication {
 	@Override
 	public void run() {
 
-		// part 1
-		robot.move(ptp(getApplicationData().getFrame("/PART_1/p1_transition")).setJointVelocityRel(0.3));//frame1
-		robot.move(ptp(getApplicationData().getFrame("/PART_1")).setJointVelocityRel(0.3));//frame1
-		gripper2F1.close();
-		robot.move(ptp(getApplicationData().getFrame("/PART_1/p1_transition")).setJointVelocityRel(0.3));//frame1
-		robot.move(ptp(getApplicationData().getFrame("/drop_point/drop_transition")).setJointVelocityRel(0.3));//frame1
-		robot.move(ptp(getApplicationData().getFrame("/drop_point")).setJointVelocityRel(0.3));//frame1
-		gripper2F1.open();
 		
-		// part 2
-		robot.move(ptp(getApplicationData().getFrame("/PART_2/p2_transition")).setJointVelocityRel(0.3));//frame1
-		robot.move(ptp(getApplicationData().getFrame("/PART_2")).setJointVelocityRel(0.3));//frame1
 		gripper2F1.close();
-		robot.move(ptp(getApplicationData().getFrame("/PART_2/p2_transition")).setJointVelocityRel(0.3));//frame1
-		robot.move(ptp(getApplicationData().getFrame("/drop_point/drop_transition")).setJointVelocityRel(0.3));//frame1
-		robot.move(ptp(getApplicationData().getFrame("/drop_point")).setJointVelocityRel(0.3));//frame1
-		gripper2F1.open();
+		Frame Position = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"));
+		double x1 = Position.getX();
+		double y1 = Position.getY();
+		double z1 = Position.getZ();
+		double dist = 0;
 		
-		robot.move(ptp(getApplicationData().getFrame("/PART_3/p3_transition")).setJointVelocityRel(0.3));//frame1
-		robot.move(ptp(getApplicationData().getFrame("/PART_3")).setJointVelocityRel(0.3));//frame1
-		gripper2F1.close();
-		robot.move(ptp(getApplicationData().getFrame("/PART_3/p3_transition")).setJointVelocityRel(0.3));//frame1
-		robot.move(ptp(getApplicationData().getFrame("/drop_point/drop_transition")).setJointVelocityRel(0.3));//frame1
-		robot.move(ptp(getApplicationData().getFrame("/drop_point")).setJointVelocityRel(0.3));//frame1
+
+		while (dist < 100) {
+			  dist = calc_dist(x1, y1, z1, Position.getX(), Position.getY(), Position.getZ() );
+			}
 		gripper2F1.open();
-		
-		robot.move(ptp(getApplicationData().getFrame("/PART_4/p4_transition")).setJointVelocityRel(0.3));//frame1
-		robot.move(ptp(getApplicationData().getFrame("/PART_4")).setJointVelocityRel(0.3));//frame1
-		gripper2F1.close();
-		robot.move(ptp(getApplicationData().getFrame("/PART_4/p4_transition")).setJointVelocityRel(0.3));//frame1
-		robot.move(ptp(getApplicationData().getFrame("/drop_point/drop_transition")).setJointVelocityRel(0.3));//frame1
-		robot.move(ptp(getApplicationData().getFrame("/drop_point")).setJointVelocityRel(0.3));//frame1
-		gripper2F1.open();
-		
-		robot.move(ptp(getApplicationData().getFrame("/PART_5/p5_transition")).setJointVelocityRel(0.3));//frame1
-		robot.move(ptp(getApplicationData().getFrame("/PART_5")).setJointVelocityRel(0.3));//frame1
-		gripper2F1.close();
-		robot.move(ptp(getApplicationData().getFrame("/PART_5/p5_transition")).setJointVelocityRel(0.3));//frame1
-		robot.move(ptp(getApplicationData().getFrame("/drop_point/drop_transition")).setJointVelocityRel(0.3));//frame1
-		robot.move(ptp(getApplicationData().getFrame("/drop_point")).setJointVelocityRel(0.3));//frame1
-		gripper2F1.open();
-		
+
+
 		mF.setLEDBlue(true);
 		
 	}
+	
+	public static double calc_dist(double x1, double y1, double z1, double x2, double y2, double z2){
+		
+		double dist = Math.sqrt(Math.pow(x1-x2,2) +Math.pow(y1-y2,2)  + Math.pow(z1-z2,2) );
+		
+		return dist;
+	}
+	
+	
 }

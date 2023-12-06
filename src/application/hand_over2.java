@@ -122,7 +122,7 @@ public class hand_over2 extends RoboticsAPIApplication {
 	@Override
 	public void run() {
 		IHonkCapability honkCapability = kmp.getCapability(IHonkCapability.class);
-		honkCapability.honk();
+		//honkCapability.honk();
 		gripper2F1.open();
  
 		mF.setLEDBlue(false);

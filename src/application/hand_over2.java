@@ -34,6 +34,7 @@ import com.kuka.common.ThreadUtil;
 import com.kuka.generated.ioAccess.MediaFlangeIOGroup;
 import com.vividsolutions.jts.math.Vector3D;
 
+
 import static com.kuka.roboticsAPI.motionModel.HRCMotions.*;
 
  
@@ -134,26 +135,42 @@ public class hand_over2 extends RoboticsAPIApplication {
 		robot.move(ptp(getApplicationData().getFrame("/PART_1")).setJointVelocityRel(0.4));//frame1
 		gripper2F1.close();
 		
-		ThreadUtil.milliSleep(1000);
+//		ThreadUtil.milliSleep(1000);
 		
-		if (gripper2F1.readObjectDetection() == 2){
-			logger.info("Object detected");
-			mF.setLEDBlue(true);
-			ThreadUtil.milliSleep(200);
-		} else if (gripper2F1.readObjectDetection() == 3) {
+		while (gripper2F1.readObjectDetection() == 3){
 			logger.info("No objects detected");
 			honkCapability.honk();
+			gripper2F1.open();
 			mF.setLEDBlue(false);
 			ThreadUtil.milliSleep(200);
+			mF.setLEDBlue(true);
 			ThreadUtil.milliSleep(200);
 			mF.setLEDBlue(false);
 			ThreadUtil.milliSleep(200);
-			ThreadUtil.milliSleep(200);
-			ThreadUtil.milliSleep(200);
-			mF.setLEDBlue(false);
-			ThreadUtil.milliSleep(200);
-			ThreadUtil.milliSleep(200);
+			
+			robot.move(ptp(getApplicationData().getFrame("/PART_1/p1_transition")).setJointVelocityRel(0.4));//frame1
+			robot.move(ptp(getApplicationData().getFrame("/PART_1")).setJointVelocityRel(0.4));//frame1
+			gripper2F1.close();
 		}
+//		
+//		if (gripper2F1.readObjectDetection() == 2){
+//			logger.info("Object detected");
+//			mF.setLEDBlue(true);
+//			ThreadUtil.milliSleep(200);
+//		} else if (gripper2F1.readObjectDetection() == 3) {
+//			logger.info("No objects detected");
+//			honkCapability.honk();
+//			mF.setLEDBlue(false);
+//			ThreadUtil.milliSleep(200);
+//			mF.setLEDBlue(true);
+//			ThreadUtil.milliSleep(200);
+//			mF.setLEDBlue(false);
+//			ThreadUtil.milliSleep(200);
+//		}
+		
+		logger.info("Object detected");
+		mF.setLEDBlue(true);
+		ThreadUtil.milliSleep(200);
 		
 		robot.move(ptp(getApplicationData().getFrame("/PART_1/p1_transition")).setJointVelocityRel(0.4));//frame1
 		robot.move(lin(getApplicationData().getFrame("/HAND_OVER")).setJointVelocityRel(0.4));
@@ -161,33 +178,6 @@ public class hand_over2 extends RoboticsAPIApplication {
 		mF.setLEDBlue(true);
 		ThreadUtil.milliSleep(200);
 		
-////////////
-		
-		
-		
-		//ForceCondition condition = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 16.5);
-
-//		ICallbackAction Action = new ICallbackAction() {
-//			@Override
-//			public void onTriggerFired(IFiredTriggerInfo triggerInformation) {
-//			  //toggle output state when trigger fired
-//				mF.setLEDBlue(true);
-//				ThreadUtil.milliSleep(200);
-//				gripper2F1.open();
-//				logger.info("yaaaaayyyyyyyyyyyy :)");
-//				mF.setLEDBlue(false);
-//				ThreadUtil.milliSleep(1000);
-//				mF.setLEDBlue(true);
-//				gripper2F1.close();
-//			}
-//		};
-		
-//		while (gripper2F1.readPos() != 0) {
-//			logger.info("Please, Take the thing :)");
-//			mF.setLEDBlue(true);
-//			robot.move(positionHold(springRobot, -1, TimeUnit.SECONDS).triggerWhen(condition, Action).breakWhen(condition));
-//			ThreadUtil.milliSleep(2000);
-//		}
 		update();
 		logger.info("Please, Take the thing :)");
 		mF.setLEDBlue(true);

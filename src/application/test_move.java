@@ -17,6 +17,7 @@ import com.kuka.roboticsAPI.applicationModel.tasks.RoboticsAPITask;
 
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.*;
 
+import com.kuka.roboticsAPI.capabilities.honk.IHonkCapability;
 import com.kuka.roboticsAPI.conditionModel.ForceCondition;
 import com.kuka.roboticsAPI.deviceModel.LBR;
 import com.kuka.roboticsAPI.deviceModel.kmp.SunriseOmniMoveMobilePlatform;
@@ -49,6 +50,9 @@ public class test_move extends RoboticsAPIApplication {
 	@Inject
 	@Named("lBR_iiwa_14_R820_1")
 	private LBR robot;
+	
+	@Inject 
+	private SunriseOmniMoveMobilePlatform kmp;
 	
 	@Inject
 	private MobileRobotManager robotManager;
@@ -88,13 +92,8 @@ public class test_move extends RoboticsAPIApplication {
 
 		//Collection<Location> locations = locationData.getAll();
 		
-		int robotID = 1;
-		MobileRobot platform = robotManager.getRobot(robotID);
-		double x = 0.05; // In meters
-		double y = 0.05; // In meters
-		// Convert degrees to radians
-		double theta = Math.toRadians(5);
-		RelativeMotion motion = new RelativeMotion(x, y, theta);
-		platform.execute(motion);
+
+		IHonkCapability honkCapability = kmp.getCapability(IHonkCapability.class);
+		honkCapability.honk();
 	}
 }

@@ -77,8 +77,11 @@ public class test_move extends RoboticsAPIApplication {
 	@Override
 	public void initialize() {
 		gripper.attachTo(robot.getFlange());
+		
 		gripper2F1.initalise();
 		gripper2F1.setSpeed(189);
+		gripper2F1.close();
+		ThreadUtil.milliSleep(200);
 		gripper2F1.open();
 	}
 

@@ -43,7 +43,7 @@ public class RobotCharging extends RoboticsAPIApplication {
 	@Override
 	public void run() {
 		// Charges with floor contacts for 10 minutes.
-		int timeoutInSeconds = 60; // value in seconds
+		int timeoutInSeconds = 3600; // value in seconds
 		IFloorMountedChargeCapability chargeCapability = kmp.getCapability(IFloorMountedChargeCapability.class);
 		chargeCapability.enableCharge(ChargingType.FOR_GIVEN_TIME,timeoutInSeconds);
 		// kmp.enableCharge(ChargingType.FOR_GIVEN_TIME, timeoutInSeconds);

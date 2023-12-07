@@ -31,8 +31,6 @@ import com.kuka.roboticsAPI.deviceModel.kmp.SunriseOmniMoveMobilePlatform;
  * @see #dispose()
  */
 public class RobotCharging extends RoboticsAPIApplication {
-	@Inject
-	private LBR lBR_iiwa_14_R820_1;
 
 	@Inject
 	private SunriseOmniMoveMobilePlatform kmp;
@@ -45,7 +43,7 @@ public class RobotCharging extends RoboticsAPIApplication {
 	@Override
 	public void run() {
 		// Charges with floor contacts for 10 minutes.
-		int timeoutInSeconds = 600; // value in seconds
+		int timeoutInSeconds = 60; // value in seconds
 		IFloorMountedChargeCapability chargeCapability = kmp.getCapability(IFloorMountedChargeCapability.class);
 		chargeCapability.enableCharge(ChargingType.FOR_GIVEN_TIME,timeoutInSeconds);
 		// kmp.enableCharge(ChargingType.FOR_GIVEN_TIME, timeoutInSeconds);

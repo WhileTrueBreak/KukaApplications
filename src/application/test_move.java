@@ -45,7 +45,7 @@ import com.kuka.generated.ioAccess.MediaFlangeIOGroup;
  * @see #run()
  * @see #dispose()
  */
-@NavTaskCategory(maxInstances = 2)
+
 public class test_move extends RoboticsAPIApplication {
 	@Inject
 	@Named("lBR_iiwa_14_R820_1")

@@ -149,6 +149,7 @@ public class hand_over2 extends RoboticsAPIApplication {
 			ThreadUtil.milliSleep(200);
 			
 			robot.move(ptp(getApplicationData().getFrame("/PART_1/p1_transition")).setJointVelocityRel(0.4));//frame1
+			ThreadUtil.milliSleep(200);
 			robot.move(ptp(getApplicationData().getFrame("/PART_1")).setJointVelocityRel(0.4));//frame1
 			gripper2F1.close();
 		}
@@ -191,7 +192,7 @@ public class hand_over2 extends RoboticsAPIApplication {
 		while (condition != true) {
 			update();
 			Vector3D v1 = new Vector3D((PosX_pre-PosX), (PosY_pre-PosY), (PosZ_pre-PosZ));
-			if (v1.length() > 20 && v1.getX() > 0) {
+			if (v1.length() > 30 && v1.getZ() < 0) {
 				mF.setLEDBlue(true);
 				gripper2F1.open();
 				logger.info("yaaaaayyyyyyyyyyyy :)");

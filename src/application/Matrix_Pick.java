@@ -79,6 +79,7 @@ public class Matrix_Pick extends RoboticsAPIApplication {
 		mF.setLEDBlue(false);
 		ThreadUtil.milliSleep(200);
 
+		
 		gripper.move(ptp(getApplicationData().getFrame("/Pick_job/P1")).setJointVelocityRel(0.3));//frame1
 		gripper.move(ptp(getApplicationData().getFrame("/Pick_job")).setJointVelocityRel(0.3));//frame1
 		gripper2F1.close();

@@ -78,16 +78,16 @@ public class Matrix_Place extends RoboticsAPIApplication {
 		mF.setLEDBlue(false);
 		ThreadUtil.milliSleep(200);
 
-		gripper.move(lin(getApplicationData().getFrame("/Base/P1")).setCartVelocity(200));//frame1
-		gripper.move(lin(getApplicationData().getFrame("/Base")).setCartVelocity(200));//frame1
+		gripper.move(ptp(getApplicationData().getFrame("/Base/P1")).setJointVelocityRel(0.3));//frame1
+		gripper.move(ptp(getApplicationData().getFrame("/Base")).setJointVelocityRel(0.3));//frame1
 		gripper2F1.close();
 		mF.setLEDBlue(true);
-		gripper.move(lin(getApplicationData().getFrame("/Base/P1")).setCartVelocity(200));
-		gripper.move(lin(getApplicationData().getFrame("/Place_Job/P3")).setCartVelocity(200));
-		gripper.move(lin(getApplicationData().getFrame("/Place_Job/P2")).setCartVelocity(200));
+		gripper.move(ptp(getApplicationData().getFrame("/Base/P1")).setJointVelocityRel(0.3));
+		gripper.move(ptp(getApplicationData().getFrame("/Place_Job/P3")).setJointVelocityRel(0.3));
+		gripper.move(ptp(getApplicationData().getFrame("/Place_Job/P2")).setJointVelocityRel(0.3));
 		gripper2F1.open();
 		
-	    robot.move(lin(getApplicationData().getFrame("/DrivePos")).setCartVelocity(100));
+	    robot.move(ptp(getApplicationData().getFrame("/DrivePos")).setJointVelocityRel(0.3));
 		
 	}
 }

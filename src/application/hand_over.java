@@ -56,7 +56,7 @@ import static com.kuka.roboticsAPI.motionModel.HRCMotions.*;
 * @see #run()
 * @see #dispose()
 */
-public class hand_over2 extends RoboticsAPIApplication {
+public class hand_over extends RoboticsAPIApplication {
 	@Inject
 	private LBR robot;
  
@@ -149,24 +149,10 @@ public class hand_over2 extends RoboticsAPIApplication {
 			ThreadUtil.milliSleep(200);
 			
 			robot.move(ptp(getApplicationData().getFrame("/PART_1/p1_transition")).setJointVelocityRel(0.4));//frame1
+			ThreadUtil.milliSleep(200);
 			robot.move(ptp(getApplicationData().getFrame("/PART_1")).setJointVelocityRel(0.4));//frame1
 			gripper2F1.close();
 		}
-//		
-//		if (gripper2F1.readObjectDetection() == 2){
-//			logger.info("Object detected");
-//			mF.setLEDBlue(true);
-//			ThreadUtil.milliSleep(200);
-//		} else if (gripper2F1.readObjectDetection() == 3) {
-//			logger.info("No objects detected");
-//			honkCapability.honk();
-//			mF.setLEDBlue(false);
-//			ThreadUtil.milliSleep(200);
-//			mF.setLEDBlue(true);
-//			ThreadUtil.milliSleep(200);
-//			mF.setLEDBlue(false);
-//			ThreadUtil.milliSleep(200);
-//		}
 		
 		logger.info("Object detected");
 		mF.setLEDBlue(true);
@@ -191,7 +177,7 @@ public class hand_over2 extends RoboticsAPIApplication {
 		while (condition != true) {
 			update();
 			Vector3D v1 = new Vector3D((PosX_pre-PosX), (PosY_pre-PosY), (PosZ_pre-PosZ));
-			if (v1.length() > 20 && v1.getZ() > 0) {
+			if (v1.length() > 30 && v1.getZ() < 0) {
 				mF.setLEDBlue(true);
 				gripper2F1.open();
 				logger.info("yaaaaayyyyyyyyyyyy :)");
@@ -219,17 +205,12 @@ public class hand_over2 extends RoboticsAPIApplication {
 		} 
 	
 		
-//////// ???? ///////
-		
 		
 		ThreadUtil.milliSleep(5000);
 		honkCapability.honk();
-		
-//		//		
+			
 		robot.move(ptp(getApplicationData().getFrame("/PART_1/p1_transition")).setJointVelocityRel(0.4));//frame1
 		robot.move(ptp(getApplicationData().getFrame("/PART_1")).setJointVelocityRel(0.4));//frame1
 		gripper2F1.open();
-//		//moving back
-//		robot.move(ptp(getApplicationData().getFrame("/PART_1/p1_transition")).setJointVelocityRel(0.4));
 	}
 }

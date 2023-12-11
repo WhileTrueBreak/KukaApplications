@@ -83,7 +83,7 @@ public class Matrix_Place extends RoboticsAPIApplication {
 		mF.setLEDBlue(false);
 		ThreadUtil.milliSleep(200);
 		
-		SplineJP avoidPole_place = new SplineJP(ptp(getApplicationData().getFrame("/P1ace_Job/P4")),ptp(getApplicationData().getFrame("/Place_Job/P3"))).setJointVelocityRel(0.75);
+		SplineJP avoidPole_place = new SplineJP(ptp(getApplicationData().getFrame("/Place_Job/P4")),ptp(getApplicationData().getFrame("/Place_Job/P3"))).setJointVelocityRel(0.75);
 		
 		gripper.move(ptp(getApplicationData().getFrame("/Base")).setJointVelocityRel(0.3));//frame1
 		gripper2F1.close();

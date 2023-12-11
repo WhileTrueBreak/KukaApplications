@@ -2,6 +2,8 @@ package application;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+
+import com.kuka.math.geometry.Vector3D;
 import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.*;
 
@@ -11,8 +13,10 @@ import com.kuka.roboticsAPI.deviceModel.LBR;
 import com.kuka.roboticsAPI.deviceModel.kmp.SunriseOmniMoveMobilePlatform;
 import com.kuka.roboticsAPI.geometricModel.Tool;
 import com.kuka.roboticsAPI.geometricModel.World;
+import com.kuka.roboticsAPI.motionModel.SplineJP;
 import com.kuka.task.ITaskLogger;
 import com.kuka.common.ThreadUtil;
+import com.kuka.core.geometry.Frame;
 import com.kuka.generated.ioAccess.MediaFlangeIOGroup;
 
 /**
@@ -66,6 +70,7 @@ public class Matrix_Place extends RoboticsAPIApplication {
 		 
 	}
 
+	
 	@Override
 	public void run() {
 		IHonkCapability honkCapability = kmp.getCapability(IHonkCapability.class);
@@ -77,13 +82,14 @@ public class Matrix_Place extends RoboticsAPIApplication {
 
 		mF.setLEDBlue(false);
 		ThreadUtil.milliSleep(200);
-
-		gripper.move(ptp(getApplicationData().getFrame("/Base/P1")).setJointVelocityRel(0.3));//frame1
+		
+		SplineJP avoidPole_place = new SplineJP(ptp(getApplicationData().getFrame("/P1ace_Job/P4")),ptp(getApplicationData().getFrame("/Place_Job/P3"))).setJointVelocityRel(0.75);
+		
 		gripper.move(ptp(getApplicationData().getFrame("/Base")).setJointVelocityRel(0.3));//frame1
 		gripper2F1.close();
 		mF.setLEDBlue(true);
 		gripper.move(ptp(getApplicationData().getFrame("/Base/P1")).setJointVelocityRel(0.3));
-		gripper.move(ptp(getApplicationData().getFrame("/Place_Job/P3")).setJointVelocityRel(0.3));
+		gripper.move(avoidPole_place);
 		gripper.move(ptp(getApplicationData().getFrame("/Place_Job/P2")).setJointVelocityRel(0.3));
 		gripper2F1.open();
 		

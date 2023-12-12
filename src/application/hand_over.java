@@ -120,11 +120,11 @@ public class hand_over extends RoboticsAPIApplication {
 		ThreadUtil.milliSleep(180);
 		
 		Frame object = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"));
-		ForceCondition detectObject = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"),5 );
+		ForceCondition detectObject = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"),10 );
 		
 		gripper2F1.close();
 		robot.move(ptp(getApplicationData().getFrame("/DrivePos")).setJointVelocityRel(0.4));
-		robot.move(linRel(0, 0, -300, World.Current.getRootFrame()).setCartVelocity(50).breakWhen(detectObject));
+		robot.move(linRel(0, 0, 1000, World.Current.getRootFrame()).setCartVelocity(50).breakWhen(detectObject));
 		robot.move(linRel(0, 0, 10, World.Current.getRootFrame()).setCartVelocity(50));
 		object = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"));
 		
@@ -148,8 +148,8 @@ public class hand_over extends RoboticsAPIApplication {
 			ThreadUtil.milliSleep(200);
 		}
 		
-		robot.move(ptp(getApplicationData().getFrame("/pickUp")).setJointVelocityRel(0.4));
-		robot.move(lin(getApplicationData().getFrame("/handOver")).setJointVelocityRel(0.4));
+		robot.move(ptp(getApplicationData().getFrame("/DrivePos")).setJointVelocityRel(0.4));
+		robot.move(lin(getApplicationData().getFrame("/HAND_OVER")).setJointVelocityRel(0.4));
 		
 		mF.setLEDBlue(true);
 		ThreadUtil.milliSleep(200);
@@ -202,7 +202,7 @@ public class hand_over extends RoboticsAPIApplication {
 				
 				ThreadUtil.milliSleep(3000);
 				
-				robot.move(ptp(getApplicationData().getFrame("/pickUp")).setJointVelocityRel(0.4));//frame1
+				robot.move(ptp(getApplicationData().getFrame("/DrivePos")).setJointVelocityRel(0.4));//frame1
 				robot.move(ptp(getApplicationData().getFrame("/object")).setJointVelocityRel(0.4));//frame1
 				gripper2F1.open();
 			}

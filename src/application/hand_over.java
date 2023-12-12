@@ -185,6 +185,7 @@ public class hand_over extends RoboticsAPIApplication {
 		
 		
 		logger.info("slap me to take back the object");
+		keepRunning = true;
 		
 		Timer timer = new Timer();
 		timer.schedule(new TimerTask() {
@@ -198,10 +199,12 @@ public class hand_over extends RoboticsAPIApplication {
 		
 		
 		
+		
+		System.out.println("waiting time is 2mins...");
+		
 		while (keepRunning) {
 			Vector3D currentPos = frameToVector();
 			Vector3D v2 = currentPos.subtract(fixPos);
-			System.out.println("waiting time is 2mins...");
 			if (v2.length() > 10) {
 				mF.setLEDBlue(true);
 				ThreadUtil.milliSleep(400);

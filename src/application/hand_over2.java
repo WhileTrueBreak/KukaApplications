@@ -5,12 +5,11 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-//import com.kuka.math.geometry.Vector3D;
-import com.kuka.nav.geometry.Vector2D;
+import com.kuka.math.geometry.Vector3D;
 import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.*;
- 
-import com.kuka.roboticsAPI.capabilities.honk.IHonkCapability;
+import java.util.Arrays;
+
 import com.kuka.roboticsAPI.conditionModel.BooleanIOCondition;
 import com.kuka.roboticsAPI.conditionModel.ForceCondition;
 import com.kuka.roboticsAPI.conditionModel.ICallbackAction;
@@ -18,28 +17,29 @@ import com.kuka.roboticsAPI.conditionModel.ICondition;
 import com.kuka.roboticsAPI.conditionModel.ITriggerAction;
 import com.kuka.roboticsAPI.deviceModel.JointPosition;
 import com.kuka.roboticsAPI.deviceModel.LBR;
-import com.kuka.roboticsAPI.deviceModel.kmp.SunriseOmniMoveMobilePlatform;
 import com.kuka.roboticsAPI.executionModel.IFiredTriggerInfo;
 import com.kuka.roboticsAPI.geometricModel.CartDOF;
 import com.kuka.roboticsAPI.geometricModel.Frame;
 import com.kuka.roboticsAPI.geometricModel.Tool;
 import com.kuka.roboticsAPI.geometricModel.World;
-import com.kuka.roboticsAPI.geometricModel.math.Vector;
-import com.kuka.roboticsAPI.motionModel.IMotionContainer;
 import com.kuka.roboticsAPI.motionModel.controlModeModel.CartesianImpedanceControlMode;
-import com.kuka.roboticsAPI.sensorModel.ForceSensorData;
-import com.kuka.roboticsAPI.sensorModel.TorqueSensorData;
 import com.kuka.task.ITaskLogger;
 import com.kuka.common.ThreadUtil;
 import com.kuka.generated.ioAccess.MediaFlangeIOGroup;
-import com.vividsolutions.jts.math.Vector3D;
 
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static com.kuka.roboticsAPI.motionModel.HRCMotions.*;
 
  
 /**
-* Implementation of a robot application.
+* By: Sri :)
+* last edited: 9/12/23
+* FROM ROBOTICS TEAM
+* 
+* Implementation of a robot application to hand over and take bak an object.
+* 
 * <p>
 * The application provides a {@link RoboticsAPITask#initialize()} and a 
 * {@link RoboticsAPITask#run()} method, which will be called successively in 
@@ -56,7 +56,7 @@ import static com.kuka.roboticsAPI.motionModel.HRCMotions.*;
 * @see #run()
 * @see #dispose()
 */
-public class hand_over extends RoboticsAPIApplication {
+public class hand_over2 extends RoboticsAPIApplication {
 	@Inject
 	private LBR robot;
  
@@ -73,29 +73,27 @@ public class hand_over extends RoboticsAPIApplication {
 	@Inject
 	private ITaskLogger logger;
 	
-	@Inject 
-	private SunriseOmniMoveMobilePlatform kmp;
-	
 	CartesianImpedanceControlMode springRobot;
-	IMotionContainer m1;
 	
-	private double PosX, PosY, PosZ;
+	public double PosX, PosY, PosZ;
+	private static boolean keepRunning = true;
 	
 	@Override
 	public void initialize() {
 		
 		gripper.attachTo(robot.getFlange());
 		gripper2F1.initalise();
-		gripper2F1.setSpeed(200);
+		gripper2F1.setSpeed(180);
 		gripper2F1.open();
 		mF.setLEDBlue(true);
 		ThreadUtil.milliSleep(200);
 		mF.setLEDBlue(false);
 		ThreadUtil.milliSleep(200);
+		gripper2F1.close();
+		
 		//Spring motion initialisation
 		
 		springRobot = new CartesianImpedanceControlMode(); 
-		
 		
 		springRobot.parametrize(CartDOF.X).setStiffness(180);
 		springRobot.parametrize(CartDOF.Y).setStiffness(180);
@@ -104,113 +102,113 @@ public class hand_over extends RoboticsAPIApplication {
 		springRobot.parametrize(CartDOF.B).setStiffness(300);
 		springRobot.parametrize(CartDOF.A).setStiffness(300);
 		springRobot.setReferenceSystem(World.Current.getRootFrame());
-		springRobot.parametrize(CartDOF.ALL).setDamping(0.5);
-		//USAGE, will move to next line when triggered
-		//LOOK at pipecutting.java for examples on analysing the break condition. 
-		//gripper.move(linRel(0, 0, -30, World.Current.getRootFrame()).setCartVelocity(50).breakWhen(touch10)); 
+		springRobot.parametrize(CartDOF.ALL).setDamping(0.4);
+		
 	}
 	
-	public void update(){
-		Frame Position = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"));
-		
-		PosX = Position.getX();
-		PosY = Position.getY();
-		PosZ = Position.getZ();
-		double PosA = Position.getAlphaRad();
-		double PosB = Position.getBetaRad();
-		double PosC = Position.getGammaRad();
-		
+	public Vector3D frameToVector(){
+		Frame frame = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"));
+		return Vector3D.of(frame.getX(), frame.getY(), frame.getZ());		
 	}
+	
+	
 	
 	@Override
-	public void run() {
-		IHonkCapability honkCapability = kmp.getCapability(IHonkCapability.class);
-		//honkCapability.honk();
-		gripper2F1.open();
+	public void run(){
  
 		mF.setLEDBlue(false);
 		ThreadUtil.milliSleep(180);
 		
-		robot.move(ptp(getApplicationData().getFrame("/PART_1/p1_transition")).setJointVelocityRel(0.4));//frame1
-		robot.move(ptp(getApplicationData().getFrame("/PART_1")).setJointVelocityRel(0.4));//frame1
+		Frame object = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"));
+		ForceCondition detectObject = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"),10 );
+		
+		gripper2F1.close();
+		robot.move(ptp(getApplicationData().getFrame("/pickUp")).setJointVelocityRel(0.4));
+		robot.move(linRel(0, 0, -110, World.Current.getRootFrame()).setCartVelocity(50).breakWhen(detectObject));
+		robot.move(linRel(0, 0, 10, World.Current.getRootFrame()).setCartVelocity(50));
+		object = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"));
+		
+		gripper2F1.open();
+		robot.move(linRel(0, 0, -20, World.Current.getRootFrame()).setCartVelocity(50).breakWhen(detectObject));
 		gripper2F1.close();
 		
-//		ThreadUtil.milliSleep(1000);
+		ThreadUtil.milliSleep(2000);
 		
-		while (gripper2F1.readObjectDetection() == 3){
-			logger.info("No objects detected");
-			honkCapability.honk();
-			gripper2F1.open();
-			mF.setLEDBlue(false);
+		if (gripper2F1.readObjectDetection() == 2){
+			logger.info("Object detected");
+			mF.setLEDBlue(true);
 			ThreadUtil.milliSleep(200);
+		} else if (gripper2F1.readObjectDetection() == 3) {
+			logger.info("No objects detected");
 			mF.setLEDBlue(true);
 			ThreadUtil.milliSleep(200);
 			mF.setLEDBlue(false);
 			ThreadUtil.milliSleep(200);
-			
-			robot.move(ptp(getApplicationData().getFrame("/PART_1/p1_transition")).setJointVelocityRel(0.4));//frame1
+			mF.setLEDBlue(true);
 			ThreadUtil.milliSleep(200);
-			robot.move(ptp(getApplicationData().getFrame("/PART_1")).setJointVelocityRel(0.4));//frame1
-			gripper2F1.close();
 		}
 		
-		logger.info("Object detected");
-		mF.setLEDBlue(true);
-		ThreadUtil.milliSleep(200);
-		
-		robot.move(ptp(getApplicationData().getFrame("/PART_1/p1_transition")).setJointVelocityRel(0.4));//frame1
-		robot.move(lin(getApplicationData().getFrame("/HAND_OVER")).setJointVelocityRel(0.4));
+		robot.move(ptp(getApplicationData().getFrame("/pickUp")).setJointVelocityRel(0.4));
+		robot.move(lin(getApplicationData().getFrame("/handOver")).setJointVelocityRel(0.4));
 		
 		mF.setLEDBlue(true);
 		ThreadUtil.milliSleep(200);
 		
-		update();
+		robot.moveAsync(positionHold(springRobot, -1, TimeUnit.SECONDS));
+		Vector3D fixPos = frameToVector();
+		
 		logger.info("Please, Take the thing :)");
 		mF.setLEDBlue(true);
-		double PosX_pre = PosX;
-		double PosY_pre = PosY;
-		double PosZ_pre = PosZ;
 		
-		m1 = robot.moveAsync(positionHold(springRobot, -2, TimeUnit.SECONDS));
-
+		
 		boolean condition = false;
 		while (condition != true) {
-			update();
-			Vector3D v1 = new Vector3D((PosX_pre-PosX), (PosY_pre-PosY), (PosZ_pre-PosZ));
-			if (v1.length() > 30 && v1.getZ() < 0) {
+			Vector3D currentPos = frameToVector();
+			Vector3D v1 = currentPos.subtract(fixPos);
+			if (v1.length() > 30 && v1.getX() > 0) {
 				mF.setLEDBlue(true);
+				ThreadUtil.milliSleep(200);
 				gripper2F1.open();
-				logger.info("yaaaaayyyyyyyyyyyy :)");
 				mF.setLEDBlue(false);
+				ThreadUtil.milliSleep(200);
 				condition = true;
-				m1.cancel();
 			} 
 		}
 		
-		robot.move(lin(getApplicationData().getFrame("/HAND_OVER")).setJointVelocityRel(0.4));
-		m1 = robot.moveAsync(positionHold(springRobot, -2, TimeUnit.SECONDS));
-		logger.info("smak me to grab :)");
-		condition = false;
-		while (condition != true) {
-			update();
-			Vector3D v1 = new Vector3D((PosX_pre-PosX), (PosY_pre-PosY), (PosZ_pre-PosZ));
-			if (v1.length() > 20) {
+		
+		logger.info("slap me to take back the object");
+		
+		Timer timer = new Timer();
+		timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                System.out.println("Time's up! Going back.");
+                keepRunning = false;
+            }
+        }, 10*1000); // ten seconds timeout
+		
+		
+		Vector3D currentPos = frameToVector();
+		Vector3D v2 = currentPos.subtract(fixPos);
+		
+		while (v2.length() <= 10 || keepRunning) {
+			v2 = currentPos.subtract(fixPos);
+			if (v2.length() > 10) {
 				mF.setLEDBlue(true);
+				ThreadUtil.milliSleep(400);
+				gripper2F1.setSpeed(100);
 				gripper2F1.close();
-				logger.info("yaaaaayyyyyyyyyyyy :)");
 				mF.setLEDBlue(false);
-				condition = true;
-				m1.cancel();
+				
+				ThreadUtil.milliSleep(3000);
+				
+				robot.move(ptp(getApplicationData().getFrame("/pickUp")).setJointVelocityRel(0.4));//frame1
+				robot.move(ptp(getApplicationData().getFrame("/object")).setJointVelocityRel(0.4));//frame1
+				gripper2F1.open();
 			}
 		} 
-	
 		
-		
-		ThreadUtil.milliSleep(5000);
-		honkCapability.honk();
-			
-		robot.move(ptp(getApplicationData().getFrame("/PART_1/p1_transition")).setJointVelocityRel(0.4));//frame1
-		robot.move(ptp(getApplicationData().getFrame("/PART_1")).setJointVelocityRel(0.4));//frame1
-		gripper2F1.open();
+		//moving back
+		robot.move(ptp(getApplicationData().getFrame("/DrivePos")).setJointVelocityRel(0.4));
 	}
 }

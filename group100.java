@@ -5,10 +5,8 @@ import javax.inject.Named;
 import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.*;
 
-import com.kuka.roboticsAPI.capabilities.honk.IHonkCapability;
 import com.kuka.roboticsAPI.conditionModel.ForceCondition;
 import com.kuka.roboticsAPI.deviceModel.LBR;
-import com.kuka.roboticsAPI.deviceModel.kmp.SunriseOmniMoveMobilePlatform;
 import com.kuka.roboticsAPI.geometricModel.Tool;
 import com.kuka.roboticsAPI.geometricModel.World;
 import com.kuka.task.ITaskLogger;
@@ -33,7 +31,7 @@ import com.kuka.generated.ioAccess.MediaFlangeIOGroup;
  * @see #run()
  * @see #dispose()
  */
-public class Matrix_Pick extends RoboticsAPIApplication {
+public class RobotPickandPlace extends RoboticsAPIApplication {
 	@Inject
 	private LBR robot;
 
@@ -50,9 +48,6 @@ public class Matrix_Pick extends RoboticsAPIApplication {
 	@Inject
 	private ITaskLogger logger;
 	
-	@Inject 
-	private SunriseOmniMoveMobilePlatform kmp;
-	
 	@Override
 	public void initialize() {
 		gripper.attachTo(robot.getFlange());
@@ -63,33 +58,26 @@ public class Matrix_Pick extends RoboticsAPIApplication {
 		ThreadUtil.milliSleep(200);
 		mF.setLEDBlue(false);
 		ThreadUtil.milliSleep(200);
-		 
 		
+		//FORCE CONDITIONS EXAMPLE
+		ForceCondition touch10 = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"),10 );
+		ForceCondition touch15 = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"),15 );
+		//USAGE, will move to next line when triggered
+		//LOOK at pipecutting.java for examples on analysing the break condition. 
+		//gripper.move(linRel(0, 0, -30, World.Current.getRootFrame()).setCartVelocity(50).breakWhen(touch10)); 
 	}
 
 	@Override
 	public void run() {
-		IHonkCapability honkCapability = kmp.getCapability(IHonkCapability.class);
-		honkCapability.honk();
+		
+		gripper.move(lin(getApplicationData().getFrame("/P1")).setCartVelocity(499));//frame1
+		//gripper.move(linRel(0, 0, 0, World.Current.getRootFrame()).setCartVelocity(50));//going down
+		
+		gripper.move(lin(getApplicationData().getFrame("/P2")).setCartVelocity(499));//frame1
 		gripper2F1.close();
-		mF.setLEDBlue(true);
-		ThreadUtil.milliSleep(200);
+		gripper.move(lin(getApplicationData().getFrame("/P1")).setCartVelocity(499));//frame1
+		gripper.move(lin(getApplicationData().getFrame("/P3")).setCartVelocity(499));//frame1
 		gripper2F1.open();
-
-		mF.setLEDBlue(false);
-		ThreadUtil.milliSleep(200);
-
-		
-		gripper.move(ptp(getApplicationData().getFrame("/Pick_job/P1")).setJointVelocityRel(0.3));//frame1
-		gripper.move(ptp(getApplicationData().getFrame("/Pick_job")).setJointVelocityRel(0.3));//frame1
-		gripper2F1.close();
-		mF.setLEDBlue(true);
-		gripper.move(ptp(getApplicationData().getFrame("/Pick_job/P1")).setJointVelocityRel(0.3));
-		gripper.move(ptp(getApplicationData().getFrame("/Base/P1")).setJointVelocityRel(0.3));
-		gripper.move(ptp(getApplicationData().getFrame("/Base")).setJointVelocityRel(0.3));
-		gripper2F1.open();
-		
-	    robot.move(ptp(getApplicationData().getFrame("/DrivePos")).setJointVelocityRel(0.3));
-		
+		gripper.move(lin(getApplicationData().getFrame("/P1")).setCartVelocity(499));//frame1
 	}
 }

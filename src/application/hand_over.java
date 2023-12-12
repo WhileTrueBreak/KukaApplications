@@ -124,48 +124,56 @@ public class hand_over extends RoboticsAPIApplication {
 		
 		gripper2F1.close();
 		robot.move(ptp(getApplicationData().getFrame("/DrivePos")).setJointVelocityRel(0.4));
-		robot.move(linRel(0, 0, -200, World.Current.getRootFrame()).setCartVelocity(50).breakWhen(detectObject));
-		robot.move(linRel(0, 0, 10, World.Current.getRootFrame()).setCartVelocity(50));
+		ICallbackAction action = new ICallbackAction() {
+			@Override
+			public void onTriggerFired(IFiredTriggerInfo triggerInformation) {
+				robot.move(linRel(0, 0, 10, World.Current.getRootFrame()).setCartVelocity(50));
+				
+				gripper2F1.open();
+				
+				robot.move(linRel(0, 0, -40, World.Current.getRootFrame()).setCartVelocity(50));
+				gripper2F1.close();
+				
+				ThreadUtil.milliSleep(2000);
+				
+				if (gripper2F1.readObjectDetection() == 2){
+					logger.info("Object detected");
+					mF.setLEDBlue(true);
+					ThreadUtil.milliSleep(200);
+				} else if (gripper2F1.readObjectDetection() == 3) {
+					logger.info("No objects detected");
+					mF.setLEDBlue(true);
+					ThreadUtil.milliSleep(200);
+					mF.setLEDBlue(false);
+					ThreadUtil.milliSleep(200);
+				}
+			 };
+		};
+		robot.move(linRel(0, 0, -200, World.Current.getRootFrame()).setCartVelocity(50).triggerWhen(detectObject, action).breakWhen(detectObject));
 		object = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"));
 		
-		gripper2F1.open();
-		robot.move(linRel(0, 0, -40, World.Current.getRootFrame()).setCartVelocity(50).breakWhen(detectObject));
-		gripper2F1.close();
-		
-		ThreadUtil.milliSleep(2000);
-		
-		if (gripper2F1.readObjectDetection() == 2){
-			logger.info("Object detected");
-			mF.setLEDBlue(true);
-			ThreadUtil.milliSleep(200);
-		} else if (gripper2F1.readObjectDetection() == 3) {
-			logger.info("No objects detected");
-			mF.setLEDBlue(true);
-			ThreadUtil.milliSleep(200);
-			mF.setLEDBlue(false);
-			ThreadUtil.milliSleep(200);
-			mF.setLEDBlue(true);
-			ThreadUtil.milliSleep(200);
-		}
+	
 		
 		robot.move(ptp(getApplicationData().getFrame("/DrivePos")).setJointVelocityRel(0.4));
 		robot.move(lin(getApplicationData().getFrame("/HAND_OVER")).setJointVelocityRel(0.4));
 		
 		mF.setLEDBlue(true);
 		ThreadUtil.milliSleep(200);
+		mF.setLEDBlue(false);
 		
 		robot.moveAsync(positionHold(springRobot, -1, TimeUnit.SECONDS));
 		Vector3D fixPos = frameToVector();
 		
 		logger.info("Please, Take the thing :)");
 		mF.setLEDBlue(true);
-		
+		ThreadUtil.milliSleep(200);
+		mF.setLEDBlue(false);
 		
 		boolean condition = false;
 		while (condition != true) {
 			Vector3D currentPos = frameToVector();
 			Vector3D v1 = currentPos.subtract(fixPos);
-			if (v1.length() > 30 && v1.getX() > 0) {
+			if (v1.length() > 30 && v1.getY() > 0) {
 				mF.setLEDBlue(true);
 				ThreadUtil.milliSleep(200);
 				gripper2F1.open();
@@ -185,14 +193,15 @@ public class hand_over extends RoboticsAPIApplication {
                 System.out.println("Time's up! Going back.");
                 keepRunning = false;
             }
-        }, 120*1000); // ten seconds timeout
+        }, 120*1000); // 2 mins timeout
 		
 		
-		Vector3D currentPos = frameToVector();
-		Vector3D v2 = currentPos.subtract(fixPos);
 		
-		while (v2.length() <= 10 || keepRunning) {
-			v2 = currentPos.subtract(fixPos);
+		
+		while (keepRunning) {
+			Vector3D currentPos = frameToVector();
+			Vector3D v2 = currentPos.subtract(fixPos);
+			System.out.println("waiting time is 2mins...");
 			if (v2.length() > 10) {
 				mF.setLEDBlue(true);
 				ThreadUtil.milliSleep(400);
@@ -200,11 +209,13 @@ public class hand_over extends RoboticsAPIApplication {
 				gripper2F1.close();
 				mF.setLEDBlue(false);
 				
-				ThreadUtil.milliSleep(3000);
+				ThreadUtil.milliSleep(1000);
 				
 				robot.move(ptp(getApplicationData().getFrame("/DrivePos")).setJointVelocityRel(0.4));//frame1
 				robot.move(ptp(getApplicationData().getFrame("/object")).setJointVelocityRel(0.4));//frame1
 				gripper2F1.open();
+				
+				break;
 			}
 		} 
 		

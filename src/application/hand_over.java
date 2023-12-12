@@ -56,7 +56,7 @@ import static com.kuka.roboticsAPI.motionModel.HRCMotions.*;
 * @see #run()
 * @see #dispose()
 */
-public class hand_over2 extends RoboticsAPIApplication {
+public class hand_over extends RoboticsAPIApplication {
 	@Inject
 	private LBR robot;
  

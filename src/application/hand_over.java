@@ -198,9 +198,6 @@ public class hand_over extends RoboticsAPIApplication {
         }, 120*1000); // 2 mins timeout
 		
 		
-		
-		
-		
 		System.out.println("waiting time is 2mins...");
 		Vector3D fixPos2 = frameToVector();
 		while (keepRunning) {

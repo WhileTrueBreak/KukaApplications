@@ -174,7 +174,7 @@ public class hand_over extends RoboticsAPIApplication {
 		while (condition != true) {
 			Vector3D currentPos = frameToVector();
 			Vector3D v1 = currentPos.subtract(fixPos);
-			if (v1.length() > 30 && v1.getY() > 0) {
+			if (v1.length() > 30 && v1.getZ() < 0) {
 				mF.setLEDBlue(true);
 				ThreadUtil.milliSleep(200);
 				gripper2F1.open();
@@ -202,10 +202,10 @@ public class hand_over extends RoboticsAPIApplication {
 		
 		
 		System.out.println("waiting time is 2mins...");
-		
+		Vector3D fixPos2 = frameToVector();
 		while (keepRunning) {
 			Vector3D currentPos = frameToVector();
-			Vector3D v2 = currentPos.subtract(fixPos);
+			Vector3D v2 = currentPos.subtract(fixPos2);
 			if (v2.length() > 10) {
 				mF.setLEDBlue(true);
 				ThreadUtil.milliSleep(400);

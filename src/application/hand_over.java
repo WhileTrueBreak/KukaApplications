@@ -124,7 +124,7 @@ public class hand_over extends RoboticsAPIApplication {
 		
 		gripper2F1.close();
 		robot.move(ptp(getApplicationData().getFrame("/DrivePos")).setJointVelocityRel(0.4));
-		robot.move(linRel(0, 0, -100, World.Current.getRootFrame()).setCartVelocity(50).breakWhen(detectObject));
+		robot.move(linRel(0, 0, -200, World.Current.getRootFrame()).setCartVelocity(50).breakWhen(detectObject));
 		robot.move(linRel(0, 0, 10, World.Current.getRootFrame()).setCartVelocity(50));
 		object = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"));
 		

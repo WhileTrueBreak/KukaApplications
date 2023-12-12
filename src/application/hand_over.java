@@ -150,6 +150,7 @@ public class hand_over extends RoboticsAPIApplication {
 			 };
 		};
 		robot.move(linRel(0, 0, -200, World.Current.getRootFrame()).setCartVelocity(50).triggerWhen(detectObject, action).breakWhen(detectObject));
+		ThreadUtil.milliSleep(5000);
 		object = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"));
 		
 	

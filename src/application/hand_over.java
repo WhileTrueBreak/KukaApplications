@@ -120,11 +120,11 @@ public class hand_over extends RoboticsAPIApplication {
 		ThreadUtil.milliSleep(180);
 		
 		Frame object = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"));
-		ForceCondition detectObject = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"),10 );
+		ForceCondition detectObject = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"),5 );
 		
 		gripper2F1.close();
-		robot.move(ptp(getApplicationData().getFrame("/pickUp")).setJointVelocityRel(0.4));
-		robot.move(linRel(0, 0, -110, World.Current.getRootFrame()).setCartVelocity(50).breakWhen(detectObject));
+		robot.move(ptp(getApplicationData().getFrame("/DrivePos")).setJointVelocityRel(0.4));
+		robot.move(linRel(0, 0, -300, World.Current.getRootFrame()).setCartVelocity(50).breakWhen(detectObject));
 		robot.move(linRel(0, 0, 10, World.Current.getRootFrame()).setCartVelocity(50));
 		object = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"));
 		

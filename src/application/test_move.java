@@ -20,9 +20,11 @@ import static com.kuka.roboticsAPI.motionModel.BasicMotions.*;
 import com.kuka.roboticsAPI.capabilities.honk.IHonkCapability;
 import com.kuka.roboticsAPI.conditionModel.ForceCondition;
 import com.kuka.roboticsAPI.deviceModel.LBR;
+import com.kuka.roboticsAPI.deviceModel.kmp.KmpOmniMove;
 import com.kuka.roboticsAPI.deviceModel.kmp.SunriseOmniMoveMobilePlatform;
 import com.kuka.roboticsAPI.geometricModel.Tool;
 import com.kuka.roboticsAPI.geometricModel.World;
+import com.kuka.roboticsAPI.motionModel.kmp.MobilePlatformRelativeMotion;
 import com.kuka.task.ITaskLogger;
 import com.kuka.common.ThreadUtil;
 import com.kuka.generated.ioAccess.MediaFlangeIOGroup;
@@ -53,6 +55,9 @@ public class test_move extends RoboticsAPIApplication {
 	
 	@Inject 
 	private SunriseOmniMoveMobilePlatform kmp;
+	
+	@Inject
+	private KmpOmniMove base;
 	
 	@Inject
 	private MobileRobotManager robotManager;
@@ -94,9 +99,10 @@ public class test_move extends RoboticsAPIApplication {
 		//Collections<MobileRobot> robots = robotManager.getRobots(MobileRobot.class);
 
 		//Collection<Location> locations = locationData.getAll();
-		
-
-		IHonkCapability honkCapability = kmp.getCapability(IHonkCapability.class);
-		honkCapability.honk();
+		double x = 20;
+		double y = 30;
+		double tita = 0.1;
+		MobilePlatformRelativeMotion motion = new MobilePlatformRelativeMotion(x, y, tita);
+		base.move(motion);
 	}
 }

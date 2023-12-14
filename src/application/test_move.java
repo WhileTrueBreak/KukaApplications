@@ -50,7 +50,6 @@ import com.kuka.generated.ioAccess.MediaFlangeIOGroup;
 
 public class test_move extends RoboticsAPIApplication {
 	@Inject
-	@Named("lBR_iiwa_14_R820_1")
 	private LBR robot;
 	
 	@Inject 

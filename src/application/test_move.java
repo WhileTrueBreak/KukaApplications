@@ -103,6 +103,6 @@ public class test_move extends RoboticsAPIApplication {
 		double y = 30;
 		double tita = 0.1;
 		MobilePlatformRelativeMotion motion = new MobilePlatformRelativeMotion(x, y, tita);
-		base.move(motion);
+		base.move(motion.setVelocity(10, 10));
 	}
 }

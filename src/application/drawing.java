@@ -164,6 +164,25 @@ public class drawing extends RoboticsAPIApplication{
 		gripper.move(path.setMode(springRobot).setCartVelocity(vel));
 	}
 	
+	private int maxMove(Vector3D dir) {
+		Vector3D normDir = dir.normalize();
+		int stepDist = 1;
+		int moveDist = 1000;
+		int totalDist = 0;
+		Vector3D moveVector = normDir.multiply(moveDist);
+		while(true) {
+			if(moveDist >= 0) break;
+			try {
+				moveVector = normDir.multiply(moveDist);
+				gripper.move(linRel(moveVector.getY(), moveVector.getZ(), moveVector.getX()).setCartVelocity(100));
+				totalDist += moveDist;
+			} catch (Exception e) {
+				moveDist -= stepDist;
+			}
+		}
+		return totalDist;
+	}
+	
 	IMotionContainer m1;
 	@Override
 	public void run() {
@@ -198,21 +217,20 @@ public class drawing extends RoboticsAPIApplication{
 		logger.info(String.format("Canvas X, Y: (%s), (%s)", canvas.getA().toString(), canvas.getB().toString()));
 
 		// check upper right bound
-		double diag_size = 25;
 		gripper.move(ptp(getApplicationData().getFrame("/bottom_left")).setJointVelocityRel(0.2));
-		Vector3D diag = canvas.getA().add(canvas.getB()).multiply(diag_size);
+		Vector3D diag = canvas.getA().add(canvas.getB());
 		logger.info("Diagonal vector: " + diag.toString());
 		logger.info("Moving to top right");
-		for(int i =0;i<10;i++){
-			gripper.move(linRel(diag.getY(), diag.getZ(), diag.getX()).setCartVelocity(100));
-		}
+		int dist = maxMove(diag);
 		logger.info(String.format("Found max at top right: %s", diag.toString()));
 
 		// gets top right frame
 		Vector3D top_right = frameToVector(robot.getCurrentCartesianPosition(gripper.getFrame("/TCP")));
 		double diag_mag = top_right.subtract(origin).length();
-		double size = diag_mag/diag.length()*diag_size;
-		logger.info(String.format("Canvas size: %f", size));
+		double size = diag_mag/Math.sqrt(2);
+		logger.info(String.format("Canvas size from frame: %f", size));
+		size = Math.sqrt(dist*dist/2);
+		logger.info(String.format("Canvas size from move: %f", size));
 		mF.setLEDBlue(false);
 		logger.info("Calibration completed.");
 		
@@ -224,7 +242,7 @@ public class drawing extends RoboticsAPIApplication{
 		}
 		List<List<Vector2D>> paths = getPathsFromString(file.get(0));
 		Spline[] splines = new Spline[paths.size()];
-
+		
 		logger.info("Creating Spline");
 		Vector3D v = Vector3D.of(0,0,20);
 		for (int i=0;i<paths.size();i++){

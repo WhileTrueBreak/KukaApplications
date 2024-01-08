@@ -34,7 +34,7 @@ import com.kuka.roboticsAPI.motionModel.Spline;
 import com.kuka.roboticsAPI.motionModel.controlModeModel.CartesianImpedanceControlMode;
 import com.kuka.task.ITaskLogger;
 
-public class drawing extends RoboticsAPIApplication{
+public class Drawerer extends RoboticsAPIApplication{
 	@Inject
 	private LBR robot;
 

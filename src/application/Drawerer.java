@@ -57,7 +57,7 @@ public class Drawerer extends RoboticsAPIApplication{
 	@Override
 	public void initialize() {
 		
-		touch = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 5);
+		touch = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 10);
 		
 		// Initializes the boing boing
 		springRobot = new CartesianImpedanceControlMode(); 

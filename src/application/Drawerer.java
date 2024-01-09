@@ -26,6 +26,7 @@ import com.kuka.roboticsAPI.geometricModel.Frame;
 import com.kuka.roboticsAPI.geometricModel.Tool;
 import com.kuka.roboticsAPI.geometricModel.World;
 import com.kuka.roboticsAPI.motionModel.IMotionContainer;
+import com.kuka.roboticsAPI.motionModel.RobotMotion;
 import com.kuka.roboticsAPI.motionModel.SPL;
 import com.kuka.roboticsAPI.motionModel.Spline;
 import com.kuka.roboticsAPI.motionModel.controlModeModel.CartesianImpedanceControlMode;
@@ -49,6 +50,8 @@ public class Drawerer extends RoboticsAPIApplication{
 	private ITaskLogger logger;
 	
 	private CartesianImpedanceControlMode springRobot;
+
+	private ForceCondition touch = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 5);
 	
 	
 	@Override
@@ -111,13 +114,11 @@ public class Drawerer extends RoboticsAPIApplication{
 	
 	private void penDown(){
 		logger.info("Moving Pen Down");
-		ForceCondition touch = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 10);
-		gripper.move(linRel(0, 0, 150).setMode(springRobot).setCartVelocity(20).breakWhen(touch));
+		gripper.move(linRel(0, 0, 150).setMode(springRobot).setCartVelocity(10).breakWhen(touch));
 	}
 	
 	private Frame calibrateFrame(Tool grip){
-		ForceCondition touch = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 10);
-		IMotionContainer motion1 = gripper.move(linRel(0, 0, 150, gripper.getFrame("/TCP")).setCartVelocity(20).breakWhen(touch));
+		IMotionContainer motion1 = gripper.move(linRel(0, 0, 150, gripper.getFrame("/TCP")).setCartVelocity(10).breakWhen(touch));
 		if (motion1.getFiredBreakConditionInfo() == null){
 			logger.info("No Collision Detected");
 			return null;
@@ -173,7 +174,7 @@ public class Drawerer extends RoboticsAPIApplication{
 			if(moveDist <= moveThresh) break;
 			try {
 				moveVector = normDir.multiply(moveDist);
-				gripper.move(linRel(moveVector.getY(), moveVector.getZ(), moveVector.getX()).setCartVelocity(100));
+				safeMove(linRel(moveVector.getY(), moveVector.getZ(), moveVector.getX()).setCartVelocity(100));
 				totalDist += moveDist;
 			} catch (Exception e) {
 				moveDist /= 2;
@@ -183,13 +184,21 @@ public class Drawerer extends RoboticsAPIApplication{
 		return totalDist;
 	}
 	
+	private void safeMove(RobotMotion<?> motion) {
+		IMotionContainer motionContainer = gripper.move(motion.setJointVelocityRel(0.2).breakWhen(touch));
+		if(motionContainer != null) {
+			logger.error("Touched something on safe move");
+			while(true);
+		}
+	}
+	
 	IMotionContainer m1;
 	@Override
 	public void run() throws Exception {
 		// Calibration sequence
 		mF.setLEDBlue(true);
 		logger.info("Moving to bottom left");
-		gripper.move(ptp(getApplicationData().getFrame("/bottom_left")).setJointVelocityRel(0.2));
+		safeMove(ptp(getApplicationData().getFrame("/bottom_left")).setJointVelocityRel(0.2));
 		logger.info("Calibrating point 1");
 		Frame originFrame = calibrateFrame(gripper);
 		penUp();
@@ -198,14 +207,14 @@ public class Drawerer extends RoboticsAPIApplication{
 		logger.info(String.format("Origin: %s", origin.toString()));
 
 		logger.info("Moving to bottom left");
-		gripper.move(lin(getApplicationData().getFrame("/bottom_left")).setJointVelocityRel(0.2));
+		safeMove(lin(getApplicationData().getFrame("/bottom_left")).setJointVelocityRel(0.2));
 		gripper.move(linRel(0, 40, 0).setJointVelocityRel(0.2));
 		logger.info("Calibrating point 2");
 		Vector3D up = frameToVector(calibrateFrame(gripper));
 		logger.info(String.format("Up: %s", up.toString()));
 
 		logger.info("Moving to bottom left");
-		gripper.move(lin(getApplicationData().getFrame("/bottom_left")).setJointVelocityRel(0.2));
+		safeMove(lin(getApplicationData().getFrame("/bottom_left")).setJointVelocityRel(0.2));
 		gripper.move(linRel(-40, 0,0).setJointVelocityRel(0.2));
 		logger.info("Calibrating point 3");
 		Vector3D right = frameToVector(calibrateFrame(gripper));
@@ -261,10 +270,10 @@ public class Drawerer extends RoboticsAPIApplication{
 		while(splineIterator.hasNext()){
 			int index = splineIterator.nextIndex();
 			logger.info("Start path "+index);
-			gripper.move(lin(originUpFrame).setCartVelocity(300));
+			safeMove(lin(originUpFrame).setCartVelocity(300));
 			Vector3D first = canvasToWorld(paths.get(index).get(0), canvas, size).add(origin);
 			logger.info("Moving to first frame");
-			gripper.move(lin(vectorToFrame(first, originFrame)).setCartVelocity(300));
+			safeMove(lin(vectorToFrame(first, originFrame)).setCartVelocity(300));
 			penDown();
 			logger.info("Start spline path");
 			springyMove(splineIterator.next());

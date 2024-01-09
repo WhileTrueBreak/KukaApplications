@@ -173,9 +173,11 @@ public class Drawerer extends RoboticsAPIApplication{
 			if(moveDist <= 0) break;
 			try {
 				moveVector = normDir.multiply(moveDist);
+				logger.info(moveVector.toString());
 				gripper.move(linRel(moveVector.getY(), moveVector.getZ(), moveVector.getX()).setCartVelocity(100));
 				totalDist += moveDist;
 			} catch (Exception e) {
+				logger.error("Reducing move dist");
 				moveDist -= stepDist;
 			}
 		}

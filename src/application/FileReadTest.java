@@ -21,7 +21,7 @@ public class FileReadTest extends RoboticsAPIApplication {
 		for (File file : filesList) {
 			logger.info(file.getName());
 		}
-		String path = FileReader.findUniqueFolder("application");
+		String path = FileReader.findUniqueFolder("res", "..");
 		logger.info(path);
 //		List<String> file = FileReader.readFile("res/words.txt");
 //		for(String line:file) {

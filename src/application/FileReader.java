@@ -25,8 +25,8 @@ public class FileReader{
 	    }
 	}
     
-    public static String findUniqueFolder(String folder) throws IOException {
-    	File dir = new File(".");
+    public static String findUniqueFolder(String folder, String from) throws IOException {
+    	File dir = new File(from);
     	List<String> path = findUniqueFolderRecursive(folder, dir);
     	if(path == null) return null;
     	String pathString = "";

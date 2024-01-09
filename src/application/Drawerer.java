@@ -185,7 +185,7 @@ public class Drawerer extends RoboticsAPIApplication{
 	
 	IMotionContainer m1;
 	@Override
-	public void run() {
+	public void run() throws Exception {
 		// Calibration sequence
 		mF.setLEDBlue(true);
 		logger.info("Moving to bottom left");

@@ -6,8 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import io.grpc.binarylog.GrpcLogEntry.Logger;
+
 public class FileReader{
-    public static List<String> readFile(String filename) {
+    public static List<String> readFile(String filename) throws FileNotFoundException {
 		try {
 			List<String> output = new ArrayList<String>();
 			File file = new File(filename);
@@ -17,8 +19,7 @@ public class FileReader{
 			reader.close();
 			return output;
 	    } catch (FileNotFoundException e) {
-	    	System.out.println("Failed to read file: "+filename);
-	    	return null;
+	    	throw e;
 	    }
 	}
 }

@@ -52,14 +52,16 @@ public class Drawerer extends RoboticsAPIApplication{
 	
 	private CartesianImpedanceControlMode springRobot;
 
-	private ForceCondition touch;
+	private ForceCondition touch10;
+	private ForceCondition touch15;
 	
 	
 	@Override
 	public void initialize() {
 		
 		//init force touch condition
-		touch = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 10);
+		touch10 = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 10);
+		touch15 = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 15);
 		
 		// Initializes the boing boing
 		springRobot = new CartesianImpedanceControlMode(); 
@@ -118,11 +120,11 @@ public class Drawerer extends RoboticsAPIApplication{
 	
 	private void penDown(){
 		logger.info("Moving Pen Down");
-		gripper.move(linRel(0, 0, 150).setMode(springRobot).setCartVelocity(10).breakWhen(touch));
+		gripper.move(linRel(0, 0, 150).setMode(springRobot).setCartVelocity(10).breakWhen(touch10));
 	}
 	
 	private Frame calibrateFrame(Tool grip){
-		IMotionContainer motion1 = gripper.move(linRel(0, 0, 150, gripper.getFrame("/TCP")).setCartVelocity(10).breakWhen(touch));
+		IMotionContainer motion1 = gripper.move(linRel(0, 0, 150, gripper.getFrame("/TCP")).setCartVelocity(10).breakWhen(touch10));
 		if (motion1.getFiredBreakConditionInfo() == null){
 			logger.info("No Collision Detected");
 			return null;
@@ -188,12 +190,12 @@ public class Drawerer extends RoboticsAPIApplication{
 		return totalDist;
 	}
 	
-	private void safeMove(RobotMotion<?> motion) throws InterruptedException {
-		IMotionContainer motionContainer = gripper.move(motion.breakWhen(touch));
+	private void safeMove(RobotMotion<?> motion) throws Exception {
+		IMotionContainer motionContainer = gripper.move(motion.breakWhen(touch15));
 		if(motionContainer.getFiredBreakConditionInfo() != null) {
 			logger.error("Touched something on safe move");
 			logger.error(motionContainer.getFiredBreakConditionInfo().toString());
-			TimeUnit.SECONDS.sleep(5);
+			throw new Exception("Safe move tiggered");
 		}
 	}
 	

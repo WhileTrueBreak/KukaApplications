@@ -40,7 +40,6 @@ public class FileReader{
 		for (File file : filesList) {
 			if(!file.isDirectory()) continue;
 			if(file.getName().equals(folder)) {
-				System.out.println(file.getAbsolutePath());
 				List<String> path = new ArrayList<String>();
 				path.add(file.getName());
 				path.add(dir.getName());

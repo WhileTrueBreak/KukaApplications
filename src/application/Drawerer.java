@@ -170,7 +170,7 @@ public class Drawerer extends RoboticsAPIApplication{
 		int totalDist = 0;
 		Vector3D moveVector = normDir.multiply(moveDist);
 		while(true) {
-			if(moveDist >= 0) break;
+			if(moveDist <= 0) break;
 			try {
 				moveVector = normDir.multiply(moveDist);
 				gripper.move(linRel(moveVector.getY(), moveVector.getZ(), moveVector.getX()).setCartVelocity(100));
@@ -235,7 +235,7 @@ public class Drawerer extends RoboticsAPIApplication{
 		
 		logger.info("Reading Path File");
 		String resPath = FileReader.findUniqueFolder("res", "..");
-		List<String> file = FileReader.readFile(resPath+"/malogo.txt");
+		List<String> file = FileReader.readFile(resPath+"/malogo_c.txt");
 		if(file == null || file.size() != 1) {
 			logger.info("File is invalid");
 			return;

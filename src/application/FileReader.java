@@ -4,11 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-
-import io.grpc.binarylog.GrpcLogEntry.Logger;
 
 public class FileReader{
     public static List<String> readFile(String filename) throws FileNotFoundException {

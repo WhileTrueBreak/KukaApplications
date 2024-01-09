@@ -2,7 +2,6 @@ package application;
 
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.lin;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.linRel;
-import static com.kuka.roboticsAPI.motionModel.BasicMotions.positionHold;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.ptp;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.spl;
 
@@ -10,20 +9,18 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+
 import com.kuka.common.Pair;
 import com.kuka.common.ThreadUtil;
-import com.kuka.core.geometry.Vector;
 import com.kuka.generated.ioAccess.MediaFlangeIOGroup;
 import com.kuka.math.geometry.Vector3D;
 import com.kuka.nav.geometry.Vector2D;
 import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
 import com.kuka.roboticsAPI.conditionModel.ForceCondition;
 import com.kuka.roboticsAPI.deviceModel.LBR;
-import com.kuka.roboticsAPI.geometricModel.AbstractFrame;
 import com.kuka.roboticsAPI.geometricModel.CartDOF;
 import com.kuka.roboticsAPI.geometricModel.Frame;
 import com.kuka.roboticsAPI.geometricModel.Tool;
@@ -111,6 +108,8 @@ public class Drawerer extends RoboticsAPIApplication{
 		gripper.move(linRel(0,0, -20).setJointVelocityRel(0.2));
 		logger.info("Moving Pen Up");
 	}
+	
+	@SuppressWarnings("unused")
 	private void penDown(){
 		gripper.move(linRel(0,0, 20).setMode(springRobot).setJointVelocityRel(0.2));
 		logger.info("Moving Pen Down");
@@ -235,7 +234,8 @@ public class Drawerer extends RoboticsAPIApplication{
 		logger.info("Calibration completed.");
 		
 		logger.info("Reading Path File");
-		List<String> file = FileReader.readFile("res/malogo.txt");
+		String resPath = FileReader.findUniqueFolder("res", "..");
+		List<String> file = FileReader.readFile(resPath+"/malogo.txt");
 		if(file == null || file.size() != 1) {
 			logger.info("File is invalid");
 			return;

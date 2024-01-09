@@ -216,6 +216,7 @@ public class Drawerer extends RoboticsAPIApplication{
 		gripper.move(linRel(0, 40, 0).setJointVelocityRel(0.2));
 		logger.info("Calibrating point 2");
 		Vector3D up = frameToVector(calibrateFrame(gripper));
+		penUp();
 		logger.info(String.format("Up: %s", up.toString()));
 
 		logger.info("Moving to bottom left");
@@ -223,6 +224,7 @@ public class Drawerer extends RoboticsAPIApplication{
 		gripper.move(linRel(-40, 0,0).setJointVelocityRel(0.2));
 		logger.info("Calibrating point 3");
 		Vector3D right = frameToVector(calibrateFrame(gripper));
+		penUp();
 		logger.info(String.format("Right: %s", right.toString()));
 		
 

@@ -163,11 +163,10 @@ public class Drawerer extends RoboticsAPIApplication{
 		gripper.move(path.setMode(springRobot).setCartVelocity(vel));
 	}
 	
-	private int maxMove(Vector3D dir) {
+	private double maxMove(Vector3D dir) {
 		Vector3D normDir = dir.normalize();
-		int stepDist = 1;
-		int moveDist = 1000;
-		int totalDist = 0;
+		double moveDist = 1000;
+		double totalDist = 0;
 		Vector3D moveVector = normDir.multiply(moveDist);
 		while(true) {
 			if(moveDist <= 0) break;
@@ -178,7 +177,7 @@ public class Drawerer extends RoboticsAPIApplication{
 				totalDist += moveDist;
 			} catch (Exception e) {
 				logger.error("Reducing move dist");
-				moveDist -= stepDist;
+				moveDist /= 2;
 			}
 		}
 		return totalDist;
@@ -222,7 +221,7 @@ public class Drawerer extends RoboticsAPIApplication{
 		Vector3D diag = canvas.getA().add(canvas.getB());
 		logger.info("Diagonal vector: " + diag.toString());
 		logger.info("Moving to top right");
-		int dist = maxMove(diag);
+		double dist = maxMove(diag);
 		logger.info(String.format("Found max at top right: %s", diag.toString()));
 
 		// gets top right frame

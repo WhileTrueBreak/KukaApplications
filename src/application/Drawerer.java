@@ -105,14 +105,14 @@ public class Drawerer extends RoboticsAPIApplication{
 	}
 
 	private void penUp(){
-		gripper.move(linRel(0,0, -20).setJointVelocityRel(0.2));
 		logger.info("Moving Pen Up");
+		gripper.move(linRel(0,0, -20).setJointVelocityRel(0.2));
 	}
 	
-	@SuppressWarnings("unused")
 	private void penDown(){
-		gripper.move(linRel(0,0, 20).setMode(springRobot).setJointVelocityRel(0.2));
 		logger.info("Moving Pen Down");
+		ForceCondition touch = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 10);
+		gripper.move(linRel(0, 0, 150).setMode(springRobot).setCartVelocity(20).breakWhen(touch));
 	}
 	
 	private Frame calibrateFrame(Tool grip){
@@ -249,19 +249,14 @@ public class Drawerer extends RoboticsAPIApplication{
 		for (int i=0;i<paths.size();i++){
 			Frame[] tempFrames = new Frame[paths.get(i).size()];
 			for (int j=0;j<paths.get(i).size();j++) {
-				logger.info(i + "-" + j + " : " + paths.get(i).get(j).toString());
 				Vector3D path3D = canvasToWorld(paths.get(i).get(j), canvas, size).add(origin).add(v);
 				tempFrames[j] = vectorToFrame(path3D, originFrame);
-				logger.info(i + "-" + j + " : " + path3D.toString());
 			}
 
 			splines[i] = framesToSpline(tempFrames);
-			// Frame[] frames = (Frame[])Arrays.asList(path).stream().map(x->vectorToFrame(canvasToWorld(x, canvas, origin), originFrame)).collect(Collectors.toList()).toArray();
-			// Spline spline = framesToSpline(frames);
 		}
 
 		logger.info("Start Drawing");
-		// Spline[] splines = (Spline[])Arrays.asList(paths).stream().map(y-> framesToSpline((Frame[])Arrays.asList(y).stream().map(x->vectorToFrame(canvasToWorld(x, canvas, origin), originFrame)).collect(Collectors.toList()).toArray())).collect(Collectors.toList()).toArray();
 		ListIterator<Spline> splineIterator = Arrays.asList(splines).listIterator();
 		while(splineIterator.hasNext()){
 			int index = splineIterator.nextIndex();
@@ -270,6 +265,7 @@ public class Drawerer extends RoboticsAPIApplication{
 			Vector3D first = canvasToWorld(paths.get(index).get(0), canvas, size);
 			logger.info("Moving to first frame");
 			gripper.move(linRel(first.getY(), first.getZ(), first.getX()).setCartVelocity(100));
+			penDown();
 			logger.info("Start spline path");
 			springyMove(splineIterator.next());
 			logger.info("Finished path");

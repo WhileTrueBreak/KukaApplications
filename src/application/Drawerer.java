@@ -190,8 +190,9 @@ public class Drawerer extends RoboticsAPIApplication{
 	
 	private void safeMove(RobotMotion<?> motion) throws InterruptedException {
 		IMotionContainer motionContainer = gripper.move(motion.breakWhen(touch));
-		if(motionContainer != null) {
+		if(motionContainer.getFiredBreakConditionInfo() != null) {
 			logger.error("Touched something on safe move");
+			logger.error(motionContainer.getFiredBreakConditionInfo().toString());
 			TimeUnit.SECONDS.sleep(5);
 		}
 	}

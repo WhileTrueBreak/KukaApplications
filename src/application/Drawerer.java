@@ -108,6 +108,7 @@ public class Drawerer extends RoboticsAPIApplication{
 				Vector2D coord = new Vector2D(Float.parseFloat(c[0]), Float.parseFloat(c[1]));
 				path.add(coord);
 			}
+			path.add(path.get(0));
 			paths.add(path);
 		}
 		return paths;
@@ -156,10 +157,10 @@ public class Drawerer extends RoboticsAPIApplication{
 	}
 
 	private Spline framesToSpline(Frame[] frames){
-		SPL[] splines = new SPL[frames.length*2];
+		SPL[] splines = new SPL[frames.length];
 		for (int i=0;i<frames.length;i++){
-			splines[i*2] = spl(frames[i]);
-			splines[i*2+1] = spl(frames[i]);
+			splines[i] = spl(frames[i]);
+//			splines[i*2+1] = spl(frames[i]);
 		}
 
 		return new Spline(splines);

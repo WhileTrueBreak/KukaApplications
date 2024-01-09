@@ -16,7 +16,12 @@ public class FileReadTest extends RoboticsAPIApplication {
 	
 	@Override
 	public void run() throws Exception {
-		String path = FileReader.findUniqueFolder("res");
+		File dir = new File(".");
+		File[] filesList = dir.listFiles();
+		for (File file : filesList) {
+			logger.info(file.getName());
+		}
+		String path = FileReader.findUniqueFolder("application");
 		logger.info(path);
 //		List<String> file = FileReader.readFile("res/words.txt");
 //		for(String line:file) {

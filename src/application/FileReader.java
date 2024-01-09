@@ -28,6 +28,7 @@ public class FileReader{
     public static String findUniqueFolder(String folder) throws IOException {
     	File dir = new File(".");
     	List<String> path = findUniqueFolderRecursive(folder, dir);
+    	if(path == null) return null;
     	String pathString = "";
     	for(int i = path.size()-1;i >= 0;i--) {
     		pathString += path.get(i);

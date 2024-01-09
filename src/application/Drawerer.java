@@ -261,7 +261,7 @@ public class Drawerer extends RoboticsAPIApplication{
 		
 		logger.info("Reading Path File");
 		String resPath = FileReader.findUniqueFolder("res", "..");
-		List<String> file = FileReader.readFile(resPath+"/frieren_c.txt");
+		List<String> file = FileReader.readFile(resPath+"/malogo_mirror.txt");
 		if(file == null || file.size() != 1) {
 			logger.info("File is invalid");
 			return;

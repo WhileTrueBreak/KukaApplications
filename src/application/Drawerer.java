@@ -195,6 +195,8 @@ public class Drawerer extends RoboticsAPIApplication{
 		if(motionContainer.getFiredBreakConditionInfo() != null) {
 			logger.error("Touched something on safe move");
 			logger.error(motionContainer.getFiredBreakConditionInfo().toString());
+			logger.error(motionContainer.getErrorMessage());
+
 			throw new Exception("Safe move tiggered");
 		}
 	}

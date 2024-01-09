@@ -165,21 +165,21 @@ public class Drawerer extends RoboticsAPIApplication{
 	
 	private double maxMove(Vector3D dir) {
 		Vector3D normDir = dir.normalize();
+		double moveThresh = 10;
 		double moveDist = 1000;
 		double totalDist = 0;
 		Vector3D moveVector = normDir.multiply(moveDist);
 		while(true) {
-			if(moveDist <= 0) break;
+			if(moveDist <= moveThresh) break;
 			try {
 				moveVector = normDir.multiply(moveDist);
-				logger.info(moveVector.toString());
 				gripper.move(linRel(moveVector.getY(), moveVector.getZ(), moveVector.getX()).setCartVelocity(100));
 				totalDist += moveDist;
 			} catch (Exception e) {
-				logger.error("Reducing move dist");
 				moveDist /= 2;
 			}
 		}
+		logger.info("Moved: " + totalDist + "mm");
 		return totalDist;
 	}
 	

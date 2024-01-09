@@ -212,7 +212,7 @@ public class Drawerer extends RoboticsAPIApplication{
 		try {
 			gripper.move(lin(getApplicationData().getFrame("/bottom_left")).setJointVelocityRel(0.2));
 		} catch (Exception e) {
-			safeMove(ptp(getApplicationData().getFrame("/bottom_left")).setJointVelocityRel(0.2));
+			gripper.move(ptp(getApplicationData().getFrame("/bottom_left")).setJointVelocityRel(0.2));
 		}
 		logger.info("Calibrating point 1");
 		Frame originFrame = calibrateFrame(gripper);
@@ -222,7 +222,7 @@ public class Drawerer extends RoboticsAPIApplication{
 		logger.info(String.format("Origin: %s", origin.toString()));
 
 		logger.info("Moving to bottom left");
-		safeMove(lin(getApplicationData().getFrame("/bottom_left")).setJointVelocityRel(0.2));
+		safeMove(lin(originUpFrame).setJointVelocityRel(0.2));
 		gripper.move(linRel(0, 40, 0).setJointVelocityRel(0.2));
 		logger.info("Calibrating point 2");
 		Vector3D up = frameToVector(calibrateFrame(gripper));
@@ -230,7 +230,7 @@ public class Drawerer extends RoboticsAPIApplication{
 		logger.info(String.format("Up: %s", up.toString()));
 
 		logger.info("Moving to bottom left");
-		safeMove(lin(getApplicationData().getFrame("/bottom_left")).setJointVelocityRel(0.2));
+		safeMove(lin(originUpFrame).setJointVelocityRel(0.2));
 		gripper.move(linRel(-40, 0,0).setJointVelocityRel(0.2));
 		logger.info("Calibrating point 3");
 		Vector3D right = frameToVector(calibrateFrame(gripper));
@@ -271,7 +271,7 @@ public class Drawerer extends RoboticsAPIApplication{
 		Spline[] splines = new Spline[paths.size()];
 		
 		logger.info("Creating Spline");
-		Vector3D v = Vector3D.of(0,0,20);
+		Vector3D v = Vector3D.of(0,0,25);
 		for (int i=0;i<paths.size();i++){
 			Frame[] tempFrames = new Frame[paths.get(i).size()];
 			for (int j=0;j<paths.get(i).size();j++) {
@@ -299,7 +299,7 @@ public class Drawerer extends RoboticsAPIApplication{
 		}
 		
 		logger.info("Moving to base");
-		gripper.move(lin(getApplicationData().getFrame("/bottom_left")).setJointVelocityRel(0.2));
+		gripper.move(lin(originUpFrame).setJointVelocityRel(0.2));
 		mF.setLEDBlue(true);
 	}
 }

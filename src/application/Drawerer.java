@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -57,6 +58,7 @@ public class Drawerer extends RoboticsAPIApplication{
 	@Override
 	public void initialize() {
 		
+		//init force touch condition
 		touch = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 10);
 		
 		// Initializes the boing boing
@@ -186,11 +188,11 @@ public class Drawerer extends RoboticsAPIApplication{
 		return totalDist;
 	}
 	
-	private void safeMove(RobotMotion<?> motion) {
-		IMotionContainer motionContainer = gripper.move(motion.setJointVelocityRel(0.2).breakWhen(touch));
+	private void safeMove(RobotMotion<?> motion) throws InterruptedException {
+		IMotionContainer motionContainer = gripper.move(motion.breakWhen(touch));
 		if(motionContainer != null) {
 			logger.error("Touched something on safe move");
-			while(true);
+			TimeUnit.SECONDS.sleep(5);
 		}
 	}
 	

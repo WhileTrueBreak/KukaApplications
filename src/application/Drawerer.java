@@ -208,7 +208,7 @@ public class Drawerer extends RoboticsAPIApplication{
 		mF.setLEDBlue(true);
 		logger.info("Moving to bottom left");
 		try {
-			safeMove(lin(getApplicationData().getFrame("/bottom_left")).setJointVelocityRel(0.2));
+			gripper.move(lin(getApplicationData().getFrame("/bottom_left")).setJointVelocityRel(0.2));
 		} catch (Exception e) {
 			safeMove(ptp(getApplicationData().getFrame("/bottom_left")).setJointVelocityRel(0.2));
 		}
@@ -289,7 +289,7 @@ public class Drawerer extends RoboticsAPIApplication{
 			Vector3D first = canvasToWorld(paths.get(index).get(0), canvas, size).add(origin);
 			logger.info("Moving to first frame");
 			gripper.move(lin(vectorToFrame(first, originFrame)).setCartVelocity(300));
-			penDown();
+//			penDown();
 			logger.info("Start spline path");
 			springyMove(splineIterator.next());
 			logger.info("Finished path");

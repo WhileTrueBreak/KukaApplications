@@ -180,7 +180,7 @@ public class Drawerer extends RoboticsAPIApplication{
 			if(moveDist <= moveThresh) break;
 			try {
 				moveVector = normDir.multiply(moveDist);
-				safeMove(linRel(moveVector.getY(), moveVector.getZ(), moveVector.getX()).setCartVelocity(100));
+				gripper.move(linRel(moveVector.getY(), moveVector.getZ(), moveVector.getX()).setCartVelocity(100));
 				totalDist += moveDist;
 			} catch (Exception e) {
 				moveDist /= 2;
@@ -207,7 +207,11 @@ public class Drawerer extends RoboticsAPIApplication{
 		// Calibration sequence
 		mF.setLEDBlue(true);
 		logger.info("Moving to bottom left");
-		safeMove(ptp(getApplicationData().getFrame("/bottom_left")).setJointVelocityRel(0.2));
+		try {
+			safeMove(lin(getApplicationData().getFrame("/bottom_left")).setJointVelocityRel(0.2));
+		} catch (Exception e) {
+			safeMove(ptp(getApplicationData().getFrame("/bottom_left")).setJointVelocityRel(0.2));
+		}
 		logger.info("Calibrating point 1");
 		Frame originFrame = calibrateFrame(gripper);
 		penUp();
@@ -281,10 +285,10 @@ public class Drawerer extends RoboticsAPIApplication{
 		while(splineIterator.hasNext()){
 			int index = splineIterator.nextIndex();
 			logger.info("Start path "+index);
-			safeMove(lin(originUpFrame).setCartVelocity(300));
+			gripper.move(lin(originUpFrame).setCartVelocity(300));
 			Vector3D first = canvasToWorld(paths.get(index).get(0), canvas, size).add(origin);
 			logger.info("Moving to first frame");
-			safeMove(lin(vectorToFrame(first, originFrame)).setCartVelocity(300));
+			gripper.move(lin(vectorToFrame(first, originFrame)).setCartVelocity(300));
 			penDown();
 			logger.info("Start spline path");
 			springyMove(splineIterator.next());

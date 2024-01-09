@@ -1,16 +1,13 @@
 package application;
 
 import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class test {
 
-	public static void main(String[] args) throws InterruptedException, FileNotFoundException {
-		File dir = new File(".");
-		File[] filesList = dir.listFiles();
-		for (File file : filesList) {
-			System.out.println(file.getName());
-		}
+	public static void main(String[] args) throws InterruptedException, IOException {
+		String path = FileReader.findUniqueFolder("res");
+		System.out.println(path);
 	}
 
 }

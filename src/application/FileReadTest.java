@@ -1,5 +1,6 @@
 package application;
 
+import java.io.File;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -15,11 +16,16 @@ public class FileReadTest extends RoboticsAPIApplication {
 	
 	@Override
 	public void run() throws Exception {
-		List<String> file = FileReader.readFile("res/words.txt");
-		for(String line:file) {
-			logger.info(line);
-			TimeUnit.MILLISECONDS.sleep(100);
+		File dir = new File(".");
+		File[] filesList = dir.listFiles();
+		for (File file : filesList) {
+			logger.info(file.getName());
 		}
+//		List<String> file = FileReader.readFile("res/words.txt");
+//		for(String line:file) {
+//			logger.info(line);
+//			TimeUnit.MILLISECONDS.sleep(100);
+//		}
 	}
 
 }

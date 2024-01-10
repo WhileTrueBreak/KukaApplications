@@ -67,7 +67,7 @@ public class Drawerer extends RoboticsAPIApplication{
 		// Set stiffness
 
 		// TODO: Stiff in every direction except plane perpendicular to flange
-		springRobot.parametrize(CartDOF.X).setStiffness(1500);
+		springRobot.parametrize(CartDOF.X).setStiffness(1000);
 		springRobot.parametrize(CartDOF.Y).setStiffness(5000);
 		springRobot.parametrize(CartDOF.Z).setStiffness(5000);
 
@@ -119,7 +119,7 @@ public class Drawerer extends RoboticsAPIApplication{
 	
 	private void penDown(){
 		logger.info("Moving Pen Down");
-		gripper.move(linRel(0, 0, 25).setMode(springRobot).setCartVelocity(50));
+		gripper.move(linRel(0, 0, 15).setMode(springRobot).setCartVelocity(20));
 	}
 	
 	private Frame calibrateFrame(Tool grip){
@@ -256,7 +256,7 @@ public class Drawerer extends RoboticsAPIApplication{
 		
 		logger.info("Reading Path File");
 		String resPath = FileReader.findUniqueFolder("res", "..");
-		List<String> file = FileReader.readFile(resPath+"/bound.txt");
+		List<String> file = FileReader.readFile(resPath+"/mai_c.txt");
 		if(file == null || file.size() != 1) {
 			logger.info("File is invalid");
 			return;

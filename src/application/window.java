@@ -152,7 +152,7 @@ public class window extends RoboticsAPIApplication{
 		//check direction
 		gripper.move(linRel(0, 0, -20).setJointVelocityRel(0.2));
 		gripper.move(lin(getApplicationData().getFrame("/Window_Main/lockUp")).setJointVelocityRel(0.2));
-		gripper.move(linRel(0, 0, -30).setJointVelocityRel(0.2));
+		gripper.move(linRel(0, 0, 60).setJointVelocityRel(0.2));
 
 //		
 //		//opening the gripper

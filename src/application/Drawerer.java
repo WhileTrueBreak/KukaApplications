@@ -1,9 +1,9 @@
 package application;
 
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.lin;
-import static com.kuka.roboticsAPI.motionModel.BasicMotions.spl;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.linRel;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.ptp;
+import static com.kuka.roboticsAPI.motionModel.BasicMotions.spl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,7 +12,6 @@ import java.util.ListIterator;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.sound.midi.MidiDevice.Info;
 
 import com.kuka.common.Pair;
 import com.kuka.common.ThreadUtil;
@@ -32,8 +31,6 @@ import com.kuka.roboticsAPI.motionModel.Spline;
 import com.kuka.roboticsAPI.motionModel.SplineMotionCP;
 import com.kuka.roboticsAPI.motionModel.controlModeModel.CartesianImpedanceControlMode;
 import com.kuka.task.ITaskLogger;
-
-import io.grpc.binarylog.GrpcLogEntry.Logger;
 
 public class Drawerer extends RoboticsAPIApplication{
 	@Inject
@@ -71,7 +68,7 @@ public class Drawerer extends RoboticsAPIApplication{
 		// Set stiffness
 
 		// TODO: Stiff in every direction except plane perpendicular to flange
-		springRobot.parametrize(CartDOF.X).setStiffness(500);
+		springRobot.parametrize(CartDOF.X).setStiffness(750);
 		springRobot.parametrize(CartDOF.Y).setStiffness(5000);
 		springRobot.parametrize(CartDOF.Z).setStiffness(5000);
 
@@ -277,7 +274,7 @@ public class Drawerer extends RoboticsAPIApplication{
 		
 		logger.info("Reading Path File");
 		String resPath = FileReader.findUniqueFolder("res", "..");
-		List<String> file = FileReader.readFile(resPath+"/newyears_mirror.txt");
+		List<String> file = FileReader.readFile(resPath+"/frieren_c.txt");
 		if(file == null || file.size() != 1) {
 			logger.info("File is invalid");
 			return;

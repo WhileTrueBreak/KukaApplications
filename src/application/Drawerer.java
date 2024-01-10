@@ -50,6 +50,7 @@ public class Drawerer extends RoboticsAPIApplication{
 	
 	private CartesianImpedanceControlMode springRobot;
 
+	private ForceCondition breakNow;
 	private ForceCondition touch10;
 	private ForceCondition touch15;
 	
@@ -58,6 +59,7 @@ public class Drawerer extends RoboticsAPIApplication{
 	public void initialize() {
 		
 		//init force touch condition
+		breakNow = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), -1);
 		touch10 = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 10);
 		touch15 = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 15);
 		
@@ -189,6 +191,30 @@ public class Drawerer extends RoboticsAPIApplication{
 		return totalDist;
 	}
 	
+	private double moveUntilAble(Vector3D dir, RobotMotion<?> motion) {
+		Vector3D normDir = dir.normalize();
+		double moveDist = 10;
+		Vector3D moveVector = normDir.multiply(moveDist);
+		double totalDist = 0;
+		while(true) {
+			logger.info(moveVector.toString());
+			try {
+				gripper.move(motion.breakWhen(breakNow));
+				break;
+			} catch (Exception e) {
+				logger.info("unable to move, moving to next");
+				try {
+					gripper.move(linRel(moveVector.getY(), moveVector.getZ(), moveVector.getX()).setCartVelocity(100));
+					totalDist += moveDist;
+				} catch (Exception e2) {
+					logger.info("error no valid motion");
+					return -1;
+				}
+			}
+		}
+		return totalDist;
+	}
+	
 	private void safeMove(RobotMotion<?> motion) throws Exception {
 		IMotionContainer motionContainer = gripper.move(motion.breakWhen(touch15));
 		if(motionContainer.getFiredBreakConditionInfo() != null) {
@@ -245,14 +271,15 @@ public class Drawerer extends RoboticsAPIApplication{
 		logger.info("Moving to top right");
 		double dist = maxMove(diag);
 		logger.info(String.format("Found max at top right: %s", diag.toString()));
-
+		
+		double backDist = moveUntilAble(diag.multiply(-1), linRel(0,0,30));
+		dist -= backDist;
+		
 		// gets top right frame
 		Vector3D top_right = frameToVector(robot.getCurrentCartesianPosition(gripper.getFrame("/TCP")));
 		double diag_mag = top_right.subtract(origin).length();
-		double size = diag_mag/Math.sqrt(2);
-		logger.info(String.format("Canvas size from frame: %f", size));
-		size = Math.sqrt(dist*dist/2);
-		logger.info(String.format("Canvas size from move: %f", size));
+		double size = Math.min(diag_mag/Math.sqrt(2), Math.sqrt(dist*dist/2));
+		logger.info(String.format("Canvas size: %f", size));
 		mF.setLEDBlue(false);
 		logger.info("Calibration completed.");
 		

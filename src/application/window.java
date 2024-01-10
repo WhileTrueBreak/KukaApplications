@@ -87,8 +87,8 @@ public class window extends RoboticsAPIApplication{
 	}
 	
 	private Frame calibrateFrame(Tool grip){
-		ForceCondition touch = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 25);
-		IMotionContainer motion1 = gripper.move(linRel(0, 0, 150, gripper.getFrame("/TCP")).setCartVelocity(20).breakWhen(touch));
+		ForceCondition touch = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 20);
+		IMotionContainer motion1 = gripper.move(linRel(0, 0, 150, gripper.getFrame("/TCP")).setCartVelocity(40).breakWhen(touch));
 		if (motion1.getFiredBreakConditionInfo() == null){
 			logger.info("No Collision Detected");
 			return null;
@@ -131,7 +131,7 @@ public class window extends RoboticsAPIApplication{
 ////		Frame Window_Main = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"));
 //		logger.info("getting frame window");
 		getApplicationData().getFrame("/Window_Main").staticTransformationTo(robot.getCurrentCartesianPosition(gripper.getFrame("/TCP")));
-		ThreadUtil.milliSleep(5000);
+		ThreadUtil.milliSleep(1000);
 				
 		gripper.move(lin(getApplicationData().getFrame("/Window_Main/vectorMain")).setJointVelocityRel(0.5));
 		logger.info("Calibrating vector point 1");
@@ -151,12 +151,12 @@ public class window extends RoboticsAPIApplication{
 		
 		//check direction
 		gripper.move(linRel(0, 0, -20).setJointVelocityRel(0.2));
-		gripper.move(lin(getApplicationData().getFrame("/window_Main/lockUp")).setJointVelocityRel(0.2));
+		gripper.move(lin(getApplicationData().getFrame("/Window_Main/lockUp")).setJointVelocityRel(0.2));
 		gripper.move(linRel(0, 0, -30).setJointVelocityRel(0.2));
 
 //		
 //		//opening the gripper
-		gripper.move(circ(getApplicationData().getFrame("/window_Main/lockUp"),getApplicationData().getFrame("/window_Main/lockDown")).setJointVelocityRel(0.2));
+		gripper.move(circ(getApplicationData().getFrame("/Window_Main/lockUp"),getApplicationData().getFrame("/window_Main/lockDown")).setJointVelocityRel(0.2));
 //		
 //		//
 //		gripper2F1.open();

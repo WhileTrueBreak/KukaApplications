@@ -50,7 +50,6 @@ public class Drawerer extends RoboticsAPIApplication{
 	
 	private CartesianImpedanceControlMode springRobot;
 
-	private ForceCondition breakNow;
 	private ForceCondition touch10;
 	private ForceCondition touch15;
 	
@@ -59,7 +58,6 @@ public class Drawerer extends RoboticsAPIApplication{
 	public void initialize() {
 		
 		//init force touch condition
-		breakNow = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), -1);
 		touch10 = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 10);
 		touch15 = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 15);
 		
@@ -199,7 +197,8 @@ public class Drawerer extends RoboticsAPIApplication{
 		while(true) {
 			logger.info(moveVector.toString());
 			try {
-				gripper.move(motion.breakWhen(breakNow));
+				IMotionContainer m1 = gripper.moveAsync(motion);
+				m1.cancel();
 				break;
 			} catch (Exception e) {
 				logger.info("unable to move, moving to next");

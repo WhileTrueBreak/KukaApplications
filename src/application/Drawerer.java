@@ -132,7 +132,7 @@ public class Drawerer extends RoboticsAPIApplication{
 	
 	private void penDown(){
 		logger.info("Moving Pen Down");
-		gripper.move(linRel(0, 0, 15).setMode(springRobot).setCartVelocity(20));
+		gripper.move(linRel(0, 0, 30).setMode(springRobot).setCartVelocity(20));
 	}
 	
 	private Frame calibrateFrame(Tool grip){
@@ -277,7 +277,7 @@ public class Drawerer extends RoboticsAPIApplication{
 		
 		logger.info("Reading Path File");
 		String resPath = FileReader.findUniqueFolder("res", "..");
-		List<String> file = FileReader.readFile(resPath+"/malogo_c.txt");
+		List<String> file = FileReader.readFile(resPath+"/mai_c.txt");
 		if(file == null || file.size() != 1) {
 			logger.info("File is invalid");
 			return;

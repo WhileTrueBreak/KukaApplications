@@ -113,7 +113,7 @@ public class window extends RoboticsAPIApplication{
 		// Calibration sequence
 		mF.setLEDBlue(true);
 		logger.info("Moving to window coner for calibration");
-		gripper.move(lin(getApplicationData().getFrame("/Window_Main")).setJointVelocityRel(0.2));
+//		gripper.move(lin(getApplicationData().getFrame("/Window_Main")).setJointVelocityRel(0.2));
 		
 //		ForceCondition touch = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 25);
 //		gripper.move(linRel(0, 0, 150, gripper.getFrame("/TCP")).setCartVelocity(20).breakWhen(touch));
@@ -130,8 +130,8 @@ public class window extends RoboticsAPIApplication{
 ////		ThreadUtil.milliSleep(5000);
 ////		Frame Window_Main = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"));
 //		logger.info("getting frame window");
-//		getApplicationData().getFrame("/Window_Main").staticTransformationTo(robot.getCurrentCartesianPosition(gripper.getFrame("/TCP")));
-//		ThreadUtil.milliSleep(5000);
+		getApplicationData().getFrame("/Window_Main").staticTransformationTo(robot.getCurrentCartesianPosition(gripper.getFrame("/TCP")));
+		ThreadUtil.milliSleep(5000);
 				
 		gripper.move(lin(getApplicationData().getFrame("/Window_Main/vectorMain")).setJointVelocityRel(0.5));
 		logger.info("Calibrating vector point 1");

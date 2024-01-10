@@ -159,9 +159,14 @@ public class Drawerer extends RoboticsAPIApplication{
 		SplineMotionCP<?>[] motions = new SplineMotionCP[frames.length];
 		Vector3D lastPos = null;
 		for (int i=0;i<frames.length;i++){
+			if(lastPos == null) {
+				motions[i] = lin(frames[i]);
+				continue;
+			}
 			Vector3D pos = frameToVector(frames[i]);
 			double dist = pos.subtract(lastPos).length();
 			motions[i] = dist < 5 ? spl(frames[i]) : lin(frames[i]);
+			lastPos = pos;
 		}
 
 		return new Spline(motions);

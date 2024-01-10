@@ -103,7 +103,7 @@ public class Drawerer extends RoboticsAPIApplication{
 			for(String coordString:e) {
 				if(coordString.length() == 0) continue;
 				String[] c = coordString.split(",");
-				Vector2D coord = new Vector2D(Float.parseFloat(c[0]), Float.parseFloat(c[1]));
+				Vector2D coord = new Vector2D(MathHelper.clamp(Double.parseDouble(c[0]),0,1), MathHelper.clamp(Double.parseDouble(c[1]),0,1));
 				path.add(coord);
 			}
 			path.add(path.get(0));
@@ -258,7 +258,7 @@ public class Drawerer extends RoboticsAPIApplication{
 		
 		logger.info("Reading Path File");
 		String resPath = FileReader.findUniqueFolder("res", "..");
-		List<String> file = FileReader.readFile(resPath+"/mai_c.txt");
+		List<String> file = FileReader.readFile(resPath+"/bound.txt");
 		if(file == null || file.size() != 1) {
 			logger.info("File is invalid");
 			return;

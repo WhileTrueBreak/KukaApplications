@@ -148,7 +148,7 @@ public class window extends RoboticsAPIApplication{
 		
 		Vector3D openLine = openvector.multiply(100);
 	
-		gripper.move(linRel(openLine.getX(), openLine.getY(), openLine.getZ()).setCartVelocity(10));
+		gripper.move(linRel(openLine.getY(), openLine.getZ(), openLine.getX()).setCartVelocity(10));
 
 		
 		

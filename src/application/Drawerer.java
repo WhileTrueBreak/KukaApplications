@@ -195,9 +195,10 @@ public class Drawerer extends RoboticsAPIApplication{
 		Vector3D moveVector = normDir.multiply(moveDist);
 		double totalDist = 0;
 		while(true) {
-			logger.info(moveVector.toString());
 			try {
+				logger.info("trying motion");
 				IMotionContainer m1 = gripper.moveAsync(motion);
+				logger.info("able to do motion");
 				m1.cancel();
 				break;
 			} catch (Exception e) {
@@ -271,7 +272,7 @@ public class Drawerer extends RoboticsAPIApplication{
 		double dist = maxMove(diag);
 		logger.info(String.format("Found max at top right: %s", diag.toString()));
 		
-		double backDist = moveUntilAble(diag.multiply(-1), linRel(0,0,30));
+		double backDist = moveUntilAble(diag.multiply(-1), linRel(0,0,40).setCartVelocity(10));
 		dist -= backDist;
 		
 		// gets top right frame

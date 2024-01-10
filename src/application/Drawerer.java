@@ -1,6 +1,7 @@
 package application;
 
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.lin;
+import static com.kuka.roboticsAPI.motionModel.BasicMotions.spl;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.linRel;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.ptp;
 
@@ -156,8 +157,11 @@ public class Drawerer extends RoboticsAPIApplication{
 
 	private Spline framesToSpline(Frame[] frames){
 		SplineMotionCP<?>[] motions = new SplineMotionCP[frames.length];
+		Vector3D lastPos = null;
 		for (int i=0;i<frames.length;i++){
-			motions[i] = lin(frames[i]);
+			Vector3D pos = frameToVector(frames[i]);
+			double dist = pos.subtract(lastPos).length();
+			motions[i] = dist < 5 ? spl(frames[i]) : lin(frames[i]);
 		}
 
 		return new Spline(motions);
@@ -165,7 +169,7 @@ public class Drawerer extends RoboticsAPIApplication{
 	}
 
 	private void springyMove(Spline path){
-		int vel = 40;
+		int vel = 80;
 		gripper.move(path.setMode(springRobot).setCartVelocity(vel));
 	}
 	

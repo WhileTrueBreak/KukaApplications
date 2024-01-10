@@ -221,7 +221,7 @@ public class Drawerer extends RoboticsAPIApplication{
 		Vector3D origin = frameToVector(originFrame);
 		logger.info(String.format("Origin: %s", origin.toString()));
 
-		logger.info("Moving to bottom left");
+		logger.info("Moving to Origin up");
 		safeMove(lin(originUpFrame).setJointVelocityRel(0.2));
 		gripper.move(linRel(0, 40, 0).setJointVelocityRel(0.2));
 		logger.info("Calibrating point 2");
@@ -229,7 +229,7 @@ public class Drawerer extends RoboticsAPIApplication{
 		penUp();
 		logger.info(String.format("Up: %s", up.toString()));
 
-		logger.info("Moving to bottom left");
+		logger.info("Moving to Origin up");
 		safeMove(lin(originUpFrame).setJointVelocityRel(0.2));
 		gripper.move(linRel(-40, 0,0).setJointVelocityRel(0.2));
 		logger.info("Calibrating point 3");
@@ -243,7 +243,7 @@ public class Drawerer extends RoboticsAPIApplication{
 		logger.info(String.format("Canvas X, Y: (%s), (%s)", canvas.getA().toString(), canvas.getB().toString()));
 
 		// check upper right bound
-		gripper.move(ptp(getApplicationData().getFrame("/bottom_left")).setJointVelocityRel(0.2));
+		gripper.move(lin(originUpFrame).setJointVelocityRel(0.2));
 		Vector3D diag = canvas.getA().add(canvas.getB());
 		logger.info("Diagonal vector: " + diag.toString());
 		logger.info("Moving to top right");
@@ -271,7 +271,7 @@ public class Drawerer extends RoboticsAPIApplication{
 		Spline[] splines = new Spline[paths.size()];
 		
 		logger.info("Creating Spline");
-		Vector3D v = Vector3D.of(0,0,25);
+		Vector3D v = Vector3D.of(0,0,40);
 		for (int i=0;i<paths.size();i++){
 			Frame[] tempFrames = new Frame[paths.get(i).size()];
 			for (int j=0;j<paths.get(i).size();j++) {

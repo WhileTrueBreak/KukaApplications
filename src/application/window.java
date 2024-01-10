@@ -113,13 +113,13 @@ public class window extends RoboticsAPIApplication{
 //		gripper.move(ptp(getApplicationData().getFrame("/Window_Main")).setJointVelocityRel(0.2));
 //		
 //		
-		gripper.move(lin(getApplicationData().getFrame("/Window_Main/vectorMain")).setJointVelocityRel(0.2));
+		gripper.move(lin(getApplicationData().getFrame("/Window_Main/vectorMain")).setJointVelocityRel(0.5));
 		logger.info("Calibrating vector point 1");
 		Vector3D origin = frameToVector(calibrateFrame(gripper));
 		logger.info(String.format("Origin: %s", origin.toString()));
 
 		logger.info("Moving to left");
-		gripper.move(ptp(getApplicationData().getFrame("/Window_Main/vectorX")).setJointVelocityRel(0.2));
+		gripper.move(ptp(getApplicationData().getFrame("/Window_Main/vectorX")).setJointVelocityRel(0.5));
 		logger.info("Calibrating vector point 2");
 		Vector3D right = frameToVector(calibrateFrame(gripper));
 		logger.info(String.format("Right: %s", right.toString()));
@@ -148,7 +148,7 @@ public class window extends RoboticsAPIApplication{
 		
 		Vector3D openLine = openvector.multiply(100);
 		gripper.move(linRel(0, 0, -10).setJointVelocityRel(0.2));
-		gripper.move(linRel(openLine.getZ(), openLine.getX(), openLine.getY()).setCartVelocity(10));
+		gripper.move(linRel(openLine.getZ(), openLine.getX(), openLine.getY()).setCartVelocity(30));
 
 		
 		

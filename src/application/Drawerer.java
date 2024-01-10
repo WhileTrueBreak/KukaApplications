@@ -3,13 +3,11 @@ package application;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.lin;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.linRel;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.ptp;
-import static com.kuka.roboticsAPI.motionModel.BasicMotions.spl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -26,10 +24,8 @@ import com.kuka.roboticsAPI.geometricModel.CartDOF;
 import com.kuka.roboticsAPI.geometricModel.Frame;
 import com.kuka.roboticsAPI.geometricModel.Tool;
 import com.kuka.roboticsAPI.geometricModel.World;
-import com.kuka.roboticsAPI.motionModel.BasicMotions;
 import com.kuka.roboticsAPI.motionModel.IMotionContainer;
 import com.kuka.roboticsAPI.motionModel.RobotMotion;
-import com.kuka.roboticsAPI.motionModel.SPL;
 import com.kuka.roboticsAPI.motionModel.Spline;
 import com.kuka.roboticsAPI.motionModel.SplineMotionCP;
 import com.kuka.roboticsAPI.motionModel.controlModeModel.CartesianImpedanceControlMode;
@@ -123,7 +119,7 @@ public class Drawerer extends RoboticsAPIApplication{
 	
 	private void penDown(){
 		logger.info("Moving Pen Down");
-		gripper.move(linRel(0, 0, 150).setMode(springRobot).setCartVelocity(10).breakWhen(touch10));
+		gripper.move(linRel(0, 0, 25).setMode(springRobot).setCartVelocity(50));
 	}
 	
 	private Frame calibrateFrame(Tool grip){
@@ -262,7 +258,7 @@ public class Drawerer extends RoboticsAPIApplication{
 		
 		logger.info("Reading Path File");
 		String resPath = FileReader.findUniqueFolder("res", "..");
-		List<String> file = FileReader.readFile(resPath+"/malogo_mirror.txt");
+		List<String> file = FileReader.readFile(resPath+"/mai_c.txt");
 		if(file == null || file.size() != 1) {
 			logger.info("File is invalid");
 			return;

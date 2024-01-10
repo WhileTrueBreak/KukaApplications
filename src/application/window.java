@@ -26,12 +26,15 @@ import com.kuka.roboticsAPI.deviceModel.LBR;
 import com.kuka.roboticsAPI.geometricModel.AbstractFrame;
 import com.kuka.roboticsAPI.geometricModel.CartDOF;
 import com.kuka.roboticsAPI.geometricModel.Frame;
+import com.kuka.roboticsAPI.geometricModel.ITransformationProvider;
 import com.kuka.roboticsAPI.geometricModel.Tool;
 import com.kuka.roboticsAPI.geometricModel.World;
 import com.kuka.roboticsAPI.motionModel.IMotionContainer;
 import com.kuka.roboticsAPI.motionModel.SPL;
 import com.kuka.roboticsAPI.motionModel.Spline;
 import com.kuka.roboticsAPI.motionModel.controlModeModel.CartesianImpedanceControlMode;
+import com.kuka.roboticsAPI.persistenceModel.IPersistenceEngine;
+import com.kuka.roboticsAPI.persistenceModel.XmlApplicationDataSource;
 import com.kuka.task.ITaskLogger;
 
 public class window extends RoboticsAPIApplication{
@@ -108,11 +111,24 @@ public class window extends RoboticsAPIApplication{
 	
 	public void run() {
 		// Calibration sequence
-//		mF.setLEDBlue(true);
-//		logger.info("Moving to window coner for calibration");
-//		gripper.move(ptp(getApplicationData().getFrame("/Window_Main")).setJointVelocityRel(0.2));
+		mF.setLEDBlue(true);
+		logger.info("Moving to window coner for calibration");
+		gripper.move(ptp(getApplicationData().getFrame("/Window_Main")).setJointVelocityRel(0.2));
+		
+		ForceCondition touch = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 25);
+		gripper.move(linRel(0, 0, 150, gripper.getFrame("/TCP")).setCartVelocity(20).breakWhen(touch));
+		gripper.move(linRel(0, 0, -5, gripper.getFrame("/TCP")).setCartVelocity(20).breakWhen(touch));
+		
+		gripper.move(linRel(0, 150,0, gripper.getFrame("/TCP")).setCartVelocity(20).breakWhen(touch));
+		gripper.move(linRel(0, -5,0, gripper.getFrame("/TCP")).setCartVelocity(20).breakWhen(touch));
+		
+		gripper.move(linRel(150,0, 0, gripper.getFrame("/TCP")).setCartVelocity(20).breakWhen(touch));
+		gripper.move(linRel(-5,0, 0, gripper.getFrame("/TCP")).setCartVelocity(20).breakWhen(touch));
 //		
-//		
+//		Frame Window_Main = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"));
+		getApplicationData().getFrame("/Window_Main").staticTransformationTo(robot.getCurrentCartesianPosition(gripper.getFrame("/TCP")));
+		
+				
 		gripper.move(lin(getApplicationData().getFrame("/Window_Main/vectorMain")).setJointVelocityRel(0.5));
 		logger.info("Calibrating vector point 1");
 		Vector3D origin = frameToVector(calibrateFrame(gripper));

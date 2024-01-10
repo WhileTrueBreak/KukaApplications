@@ -101,11 +101,14 @@ public class Drawerer extends RoboticsAPIApplication{
 		List<List<Vector2D>> paths = new ArrayList<List<Vector2D>>();
 		for(String[] e:coordStrings) {
 			List<Vector2D> path = new ArrayList<Vector2D>();
+			Vector2D lastCoord = null;
 			for(String coordString:e) {
 				if(coordString.length() == 0) continue;
 				String[] c = coordString.split(",");
 				Vector2D coord = new Vector2D(MathHelper.clamp(Double.parseDouble(c[0]),0,1), MathHelper.clamp(Double.parseDouble(c[1]),0,1));
+				if(lastCoord != null && coord.subtract(lastCoord).length() < 1) continue;
 				path.add(coord);
+				lastCoord = coord;
 			}
 			path.add(path.get(0));
 			paths.add(path);
@@ -265,12 +268,13 @@ public class Drawerer extends RoboticsAPIApplication{
 		
 		logger.info("Reading Path File");
 		String resPath = FileReader.findUniqueFolder("res", "..");
-		List<String> file = FileReader.readFile(resPath+"/mai_c.txt");
+		List<String> file = FileReader.readFile(resPath+"/malogo_c.txt");
 		if(file == null || file.size() != 1) {
 			logger.info("File is invalid");
 			return;
 		}
 		List<List<Vector2D>> paths = getPathsFromString(file.get(0));
+		logger.info(String.format("Paths: %d", paths.size()));
 		Spline[] splines = new Spline[paths.size()];
 		
 		logger.info("Creating Spline");

@@ -26,10 +26,12 @@ import com.kuka.roboticsAPI.geometricModel.CartDOF;
 import com.kuka.roboticsAPI.geometricModel.Frame;
 import com.kuka.roboticsAPI.geometricModel.Tool;
 import com.kuka.roboticsAPI.geometricModel.World;
+import com.kuka.roboticsAPI.motionModel.BasicMotions;
 import com.kuka.roboticsAPI.motionModel.IMotionContainer;
 import com.kuka.roboticsAPI.motionModel.RobotMotion;
 import com.kuka.roboticsAPI.motionModel.SPL;
 import com.kuka.roboticsAPI.motionModel.Spline;
+import com.kuka.roboticsAPI.motionModel.SplineMotionCP;
 import com.kuka.roboticsAPI.motionModel.controlModeModel.CartesianImpedanceControlMode;
 import com.kuka.task.ITaskLogger;
 
@@ -157,12 +159,12 @@ public class Drawerer extends RoboticsAPIApplication{
 	}
 
 	private Spline framesToSpline(Frame[] frames){
-		SPL[] splines = new SPL[frames.length];
+		SplineMotionCP<?>[] motions = new SplineMotionCP[frames.length];
 		for (int i=0;i<frames.length;i++){
-			splines[i] = spl(frames[i]);
+			motions[i] = lin(frames[i]);
 		}
 
-		return new Spline(splines).setBlendingCart(0).setBlendingOri(0).setBlendingRel(0);
+		return new Spline(motions).setBlendingCart(0);
 		// return new Spline((SPL[])Arrays.asList(frames).stream().map(x->spl(x)).collect(Collectors.toList()).toArray());
 	}
 

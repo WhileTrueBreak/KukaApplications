@@ -160,7 +160,7 @@ public class Drawerer extends RoboticsAPIApplication{
 			motions[i] = lin(frames[i]);
 		}
 
-		return new Spline(motions).setBlendingCart(0);
+		return new Spline(motions);
 		// return new Spline((SPL[])Arrays.asList(frames).stream().map(x->spl(x)).collect(Collectors.toList()).toArray());
 	}
 

@@ -12,6 +12,7 @@ import java.util.ListIterator;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.sound.midi.MidiDevice.Info;
 
 import com.kuka.common.Pair;
 import com.kuka.common.ThreadUtil;
@@ -31,6 +32,8 @@ import com.kuka.roboticsAPI.motionModel.Spline;
 import com.kuka.roboticsAPI.motionModel.SplineMotionCP;
 import com.kuka.roboticsAPI.motionModel.controlModeModel.CartesianImpedanceControlMode;
 import com.kuka.task.ITaskLogger;
+
+import io.grpc.binarylog.GrpcLogEntry.Logger;
 
 public class Drawerer extends RoboticsAPIApplication{
 	@Inject
@@ -68,7 +71,7 @@ public class Drawerer extends RoboticsAPIApplication{
 		// Set stiffness
 
 		// TODO: Stiff in every direction except plane perpendicular to flange
-		springRobot.parametrize(CartDOF.X).setStiffness(1000);
+		springRobot.parametrize(CartDOF.X).setStiffness(500);
 		springRobot.parametrize(CartDOF.Y).setStiffness(5000);
 		springRobot.parametrize(CartDOF.Z).setStiffness(5000);
 
@@ -91,7 +94,7 @@ public class Drawerer extends RoboticsAPIApplication{
 		ThreadUtil.milliSleep(200);
 	}
 
-	public static List<List<Vector2D>> getPathsFromString(String pathString){
+	public List<List<Vector2D>> getPathsFromString(String pathString, double canvasSize){
 		String[] pathStrings = pathString.split("\\|");
 		List<String[]> coordStrings = new ArrayList<String[]>();
 		for(String string:pathStrings) {
@@ -106,7 +109,13 @@ public class Drawerer extends RoboticsAPIApplication{
 				if(coordString.length() == 0) continue;
 				String[] c = coordString.split(",");
 				Vector2D coord = new Vector2D(MathHelper.clamp(Double.parseDouble(c[0]),0,1), MathHelper.clamp(Double.parseDouble(c[1]),0,1));
-				if(lastCoord != null && coord.subtract(lastCoord).length() < 1) continue;
+				if(lastCoord == null) {
+					path.add(coord);
+					lastCoord = coord;
+				}
+				double dist = coord.subtract(lastCoord).length();
+				if(dist < 1/canvasSize) continue;
+
 				path.add(coord);
 				lastCoord = coord;
 			}
@@ -273,7 +282,7 @@ public class Drawerer extends RoboticsAPIApplication{
 			logger.info("File is invalid");
 			return;
 		}
-		List<List<Vector2D>> paths = getPathsFromString(file.get(0));
+		List<List<Vector2D>> paths = getPathsFromString(file.get(0), size);
 		logger.info(String.format("Paths: %d", paths.size()));
 		Spline[] splines = new Spline[paths.size()];
 		

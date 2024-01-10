@@ -110,16 +110,16 @@ public class window extends RoboticsAPIApplication{
 		// Calibration sequence
 		mF.setLEDBlue(true);
 		logger.info("Moving to window coner for calibration");
-		gripper.move(lin(getApplicationData().getFrame("/window_Main")).setJointVelocityRel(0.2));
+		gripper.move(lin(getApplicationData().getFrame("/Window_Main")).setJointVelocityRel(0.2));
 		
 		
-		gripper.move(lin(getApplicationData().getFrame("/window_Main/vectorMain")).setJointVelocityRel(0.2));
+		gripper.move(lin(getApplicationData().getFrame("/Window_Main/vectorMain")).setJointVelocityRel(0.2));
 		logger.info("Calibrating vector point 1");
 		Vector3D origin = frameToVector(calibrateFrame(gripper));
 		logger.info(String.format("Origin: %s", origin.toString()));
 
 		logger.info("Moving to left");
-		gripper.move(ptp(getApplicationData().getFrame("/window_Main/vectorX")).setJointVelocityRel(0.2));
+		gripper.move(ptp(getApplicationData().getFrame("/Window_Main/vectorX")).setJointVelocityRel(0.2));
 		logger.info("Calibrating vector point 2");
 		Vector3D right = frameToVector(calibrateFrame(gripper));
 		logger.info(String.format("Right: %s", right.toString()));

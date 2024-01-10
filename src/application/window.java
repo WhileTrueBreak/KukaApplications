@@ -150,14 +150,13 @@ public class window extends RoboticsAPIApplication{
 		
 		
 		//check direction
-//		gripper.move(linRel(0, 0, 20).setJointVelocityRel(0.2));
-//		gripper.move(ptp(getApplicationData().getFrame("/window_Main/lockTopFrame")).setJointVelocityRel(0.2));
-//		gripper2F1.open();
-//		gripper.move(linRel(0, 0, -10).setJointVelocityRel(0.2));
-//		gripper2F1.close();
+		gripper.move(linRel(0, 0, -20).setJointVelocityRel(0.2));
+		gripper.move(lin(getApplicationData().getFrame("/window_Main/lockUp")).setJointVelocityRel(0.2));
+		gripper.move(linRel(0, 0, -30).setJointVelocityRel(0.2));
+
 //		
 //		//opening the gripper
-//		gripper.move(circ(getApplicationData().getFrame("/window_Main/lockTopFrame"),getApplicationData().getFrame("/window_Main/lockBottomFrame")).setJointVelocityRel(0.2));
+		gripper.move(circ(getApplicationData().getFrame("/window_Main/lockUp"),getApplicationData().getFrame("/window_Main/lockDown")).setJointVelocityRel(0.2));
 //		
 //		//
 //		gripper2F1.open();

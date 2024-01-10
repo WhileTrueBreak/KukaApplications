@@ -111,7 +111,7 @@ public class Drawerer extends RoboticsAPIApplication{
 					lastCoord = coord;
 				}
 				double dist = coord.subtract(lastCoord).length();
-				if(dist < 1/canvasSize) continue;
+				if(dist < 2/canvasSize) continue;
 
 				path.add(coord);
 				lastCoord = coord;
@@ -123,12 +123,10 @@ public class Drawerer extends RoboticsAPIApplication{
 	}
 
 	private void penUp(){
-		logger.info("Moving Pen Up");
 		gripper.move(linRel(0,0, -20).setJointVelocityRel(0.2));
 	}
 	
 	private void penDown(){
-		logger.info("Moving Pen Down");
 		gripper.move(linRel(0, 0, 30).setMode(springRobot).setCartVelocity(20));
 	}
 	
@@ -174,7 +172,7 @@ public class Drawerer extends RoboticsAPIApplication{
 			}
 			Vector3D pos = frameToVector(frames[i]);
 			double dist = pos.subtract(lastPos).length();
-			motions[i] = dist < 5 ? spl(frames[i]) : lin(frames[i]);
+			motions[i] = dist < 10 ? spl(frames[i]) : lin(frames[i]);
 			lastPos = pos;
 		}
 
@@ -274,7 +272,7 @@ public class Drawerer extends RoboticsAPIApplication{
 		
 		logger.info("Reading Path File");
 		String resPath = FileReader.findUniqueFolder("res", "..");
-		List<String> file = FileReader.readFile(resPath+"/frieren_c.txt");
+		List<String> file = FileReader.readFile(resPath+"/mai_c.txt");
 		if(file == null || file.size() != 1) {
 			logger.info("File is invalid");
 			return;
@@ -301,6 +299,7 @@ public class Drawerer extends RoboticsAPIApplication{
 		while(splineIterator.hasNext()){
 			int index = splineIterator.nextIndex();
 			logger.info("Start path "+index);
+			logger.info("Path nodes: "+paths.get(index).size());
 			Vector3D first = canvasToWorld(paths.get(index).get(0), canvas, size).add(origin);
 			logger.info("Moving to first frame");
 			gripper.move(lin(vectorToFrame(first, originFrame)).setCartVelocity(300));

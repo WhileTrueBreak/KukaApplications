@@ -53,10 +53,11 @@ public class RobotController {
 			Vector3D pos = frameToVector(frames[i]);
 			double dist = pos.subtract(lastPos).length();
 			motions[i] = dist < 10 ? spl(frames[i]) : lin(frames[i]);
+			if(i != 0 || i != frames.length-1) motions[i].setOrientationType(SplineOrientationType.Ignore);
 			lastPos = pos;
 		}
 
-		return new Spline(motions).setOrientationType(SplineOrientationType.Ignore);
+		return new Spline(motions);
 		// return new Spline((SPL[])Arrays.asList(frames).stream().map(x->spl(x)).collect(Collectors.toList()).toArray());
 	}
 	
@@ -99,9 +100,10 @@ public class RobotController {
 			Node node = path.getPath().get(i);
 			Frame nFrame = vectorToFrame(canvas.toWorld(node.getPos()), rotFrame);
 			motions[i] = lin(nFrame);
-			if(node.isBlend())motions[i].setBlendingRel(1);
+			if(node.isBlend()) motions[i].setBlendingRel(1);
+			if(i != 0 || i != path.getPath().size()-1) motions[i].setOrientationType(SplineOrientationType.Ignore);
 		}
-		return new Spline(motions).setOrientationType(SplineOrientationType.Ignore);
+		return new Spline(motions);
 	}
 
 }

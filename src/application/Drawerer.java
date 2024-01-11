@@ -23,8 +23,9 @@ import com.kuka.roboticsAPI.geometricModel.Tool;
 import com.kuka.roboticsAPI.geometricModel.World;
 import com.kuka.roboticsAPI.motionModel.IMotionContainer;
 import com.kuka.roboticsAPI.motionModel.LIN;
+import com.kuka.roboticsAPI.motionModel.SPL;
 import com.kuka.roboticsAPI.motionModel.Spline;
-import com.kuka.roboticsAPI.motionModel.SplineOrientationType;
+import com.kuka.roboticsAPI.motionModel.SplineMotionCP;
 import com.kuka.roboticsAPI.motionModel.controlModeModel.CartesianImpedanceControlMode;
 import com.kuka.task.ITaskLogger;
 
@@ -234,7 +235,6 @@ public class Drawerer extends RoboticsAPIApplication{
 						new LIN(RobotController.vectorToFrame(
 								p3.add(RobotController.frameToVector(originUpFrame)), originUpFrame))
 						.setCartVelocity(100));
-		
 		m1.await();
 		m2.await();
 
@@ -255,11 +255,11 @@ public class Drawerer extends RoboticsAPIApplication{
 		m1.await();
 		m2.await();
 
-		logger.info("blend 1 | cancel 1");
+		logger.info("blend 1 spl");
 		gripper.move(new LIN(RobotController.vectorToFrame(p1.add(RobotController.frameToVector(originUpFrame)), originUpFrame)).setCartVelocity(100));
 		
 		m1 = gripper.moveAsync(
-						new LIN(RobotController.vectorToFrame(
+						new SPL(RobotController.vectorToFrame(
 								p2.add(RobotController.frameToVector(originUpFrame)), originUpFrame))
 						.setCartVelocity(100)
 						.setBlendingRel(1));
@@ -269,25 +269,22 @@ public class Drawerer extends RoboticsAPIApplication{
 								p3.add(RobotController.frameToVector(originUpFrame)), originUpFrame))
 						.setCartVelocity(100));
 		
-		m1.cancel();
+		m1.await();
 		m2.await();
 		
-		logger.info("blend both | cancel 1");
-		gripper.move(new LIN(RobotController.vectorToFrame(p1.add(RobotController.frameToVector(originUpFrame)), originUpFrame)).setCartVelocity(100));
+		logger.info("blend spline");
+		SplineMotionCP<?> spl1 = new LIN(RobotController.vectorToFrame(p1.add(RobotController.frameToVector(originUpFrame)), originUpFrame));
+		SplineMotionCP<?> spl2 = new SPL(RobotController.vectorToFrame(p2.add(RobotController.frameToVector(originUpFrame)), originUpFrame));
+		Spline spline = new Spline(spl1, spl2).setBlendingOri(1).setCartVelocity(100);
 		
-		m1 = gripper.moveAsync(
-						new LIN(RobotController.vectorToFrame(
-								p2.add(RobotController.frameToVector(originUpFrame)), originUpFrame))
-						.setCartVelocity(100)
-						.setBlendingRel(1));
-		
+		m1	= gripper.moveAsync(spline);
 		m2	= gripper.moveAsync(
 						new LIN(RobotController.vectorToFrame(
 								p3.add(RobotController.frameToVector(originUpFrame)), originUpFrame))
 						.setCartVelocity(100)
 						.setBlendingRel(1));
 		
-		m1.cancel();
+		m1.await();
 		m2.await();
 		
 		gripper.move(new LIN(RobotController.vectorToFrame(p1.add(RobotController.frameToVector(originUpFrame)), originUpFrame)).setCartVelocity(100));

@@ -236,11 +236,16 @@ public class Drawerer extends RoboticsAPIApplication{
 			motions.get(motions.size()-1).setOrientationType(SplineOrientationType.Ignore);
 		}
 		motions.add(new LIN(RobotController.vectorToFrame(p3, originUpFrame)).setCartVelocity(100));
-		SplineMotionCP<?>[] tmp = new SplineMotionCP<?>[motions.size()];
-		for(int i = 0;i < tmp.length;i++) tmp[i]= motions.get(i); 
-		Spline spline = new Spline(tmp);
+
+		IMotionContainer prevMotion = gripper.moveAsync(motions.get(0).setBlendingRel(1));
+		for(int i = 1;i < motions.size()-1;i++) {
+			IMotionContainer currentMotion = gripper.moveAsync(motions.get(i).setBlendingRel(1));
+			prevMotion.await();
+			prevMotion = currentMotion;
+		}
 		
-		gripper.move(spline.setCartVelocity(100));
+		IMotionContainer m = gripper.moveAsync(motions.get(motions.size()-1).setBlendingRel(1));
+		m.await();
 		
 		logger.info("Moving to base");
 		gripper.move(lin(originUpFrame).setJointVelocityRel(0.2));

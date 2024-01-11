@@ -4,8 +4,6 @@ import static com.kuka.roboticsAPI.motionModel.BasicMotions.lin;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.linRel;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.ptp;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -23,13 +21,13 @@ import com.kuka.roboticsAPI.geometricModel.CartDOF;
 import com.kuka.roboticsAPI.geometricModel.Frame;
 import com.kuka.roboticsAPI.geometricModel.Tool;
 import com.kuka.roboticsAPI.geometricModel.World;
+import com.kuka.roboticsAPI.motionModel.IMotionContainer;
+import com.kuka.roboticsAPI.motionModel.LIN;
 import com.kuka.roboticsAPI.motionModel.Spline;
+import com.kuka.roboticsAPI.motionModel.SplineOrientationType;
 import com.kuka.roboticsAPI.motionModel.controlModeModel.CartesianImpedanceControlMode;
 import com.kuka.task.ITaskLogger;
 
-import application.parser.FileReader;
-import application.parser.PathParser;
-import application.path.Path;
 import application.robotControl.Canvas;
 import application.robotControl.RobotController;
 import application.utils.Handler;
@@ -177,33 +175,33 @@ public class Drawerer extends RoboticsAPIApplication{
 		logger.info("Calibration completed.");
 		mF.setLEDBlue(false);
 		
-		logger.info("Reading Path File");
-		String resPath = FileReader.findUniqueFolder("res", "..");
-		
-		List<String> file = FileReader.readFile(resPath+"/linie_c.txt");
-		if(file == null || file.size() != 1) {
-			logger.info("File is invalid");
-			return;
-		}
-		List<List<Vector2D>> paths = PathParser.parsePathV1(file.get(0), size);
-		logger.info(String.format("Paths: %d", paths.size()));
-		List<Spline> splines = new ArrayList<Spline>();
-		List<Vector2D> startLocs = new ArrayList<Vector2D>();
-		
-		logger.info("Creating Spline");
-		Vector3D v = Vector3D.of(10,0,0);
-		for (int i=0;i<paths.size();i++){
-			Frame[] tempFrames = new Frame[paths.get(i).size()];
-			for (int j=0;j<paths.get(i).size();j++) {
-				Vector3D path3D = canvas.toWorld(paths.get(i).get(j)).add(origin).add(v);
-				tempFrames[j] = RobotController.vectorToFrame(path3D, originFrame);
-			}
-			startLocs.add(paths.get(i).get(0));
-			splines.add(RobotController.framesToSpline(tempFrames));
-		}
-
-		gripper.move(lin(originUpFrame).setCartVelocity(300));
-		drawSplines(splines, startLocs, canvas, originFrame);
+//		logger.info("Reading Path File");
+//		String resPath = FileReader.findUniqueFolder("res", "..");
+//		
+//		List<String> file = FileReader.readFile(resPath+"/linie_c.txt");
+//		if(file == null || file.size() != 1) {
+//			logger.info("File is invalid");
+//			return;
+//		}
+//		List<List<Vector2D>> paths = PathParser.parsePathV1(file.get(0), size);
+//		logger.info(String.format("Paths: %d", paths.size()));
+//		List<Spline> splines = new ArrayList<Spline>();
+//		List<Vector2D> startLocs = new ArrayList<Vector2D>();
+//		
+//		logger.info("Creating Spline");
+//		Vector3D v = Vector3D.of(10,0,0);
+//		for (int i=0;i<paths.size();i++){
+//			Frame[] tempFrames = new Frame[paths.get(i).size()];
+//			for (int j=0;j<paths.get(i).size();j++) {
+//				Vector3D path3D = canvas.toWorld(paths.get(i).get(j)).add(origin).add(v);
+//				tempFrames[j] = RobotController.vectorToFrame(path3D, originFrame);
+//			}
+//			startLocs.add(paths.get(i).get(0));
+//			splines.add(RobotController.framesToSpline(tempFrames));
+//		}
+//
+//		gripper.move(lin(originUpFrame).setCartVelocity(200));
+//		drawSplines(splines, startLocs, canvas, originFrame);
 		
 //		List<Path> paths = PathParser.parsePathV2(resPath+"/font.txt");
 //		ArrayList<Spline> splines = new ArrayList<Spline>();
@@ -214,6 +212,26 @@ public class Drawerer extends RoboticsAPIApplication{
 //		}
 //		
 //		drawSplines(splines, startLocs, canvas, originFrame);
+		
+		//hard coded spline?
+		Vector3D p1 = canvas.toWorld(new Vector2D(0, 0));
+		Vector3D p2 = canvas.toWorld(new Vector2D(0, 1));
+		Vector3D p3 = canvas.toWorld(new Vector2D(1, 1));
+		gripper.move(new LIN(RobotController.vectorToFrame(p1.add(RobotController.frameToVector(originUpFrame)), originUpFrame)));
+
+		IMotionContainer m1 = 
+				gripper.move(new LIN(RobotController.vectorToFrame(p1.add(RobotController.frameToVector(originUpFrame)), originUpFrame)));
+		IMotionContainer m2	= 
+				gripper.moveAsync(new LIN(RobotController.vectorToFrame(p2.add(RobotController.frameToVector(originUpFrame)), originUpFrame))
+						.setBlendingRel(1));
+		IMotionContainer m3	= 
+				gripper.moveAsync(new LIN(RobotController.vectorToFrame(p3.add(RobotController.frameToVector(originUpFrame)), originUpFrame)));
+		
+		m2.await();
+		m3.await();
+		
+		
+		
 		
 		logger.info("Moving to base");
 		gripper.move(lin(originUpFrame).setJointVelocityRel(0.2));

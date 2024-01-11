@@ -4,9 +4,7 @@ import static com.kuka.roboticsAPI.motionModel.BasicMotions.lin;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.linRel;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.spl;
 
-import com.kuka.common.Pair;
 import com.kuka.math.geometry.Vector3D;
-import com.kuka.nav.geometry.Vector2D;
 import com.kuka.roboticsAPI.conditionModel.ForceCondition;
 import com.kuka.roboticsAPI.geometricModel.Frame;
 import com.kuka.roboticsAPI.geometricModel.Tool;
@@ -14,6 +12,7 @@ import com.kuka.roboticsAPI.motionModel.IMotionContainer;
 import com.kuka.roboticsAPI.motionModel.RobotMotion;
 import com.kuka.roboticsAPI.motionModel.Spline;
 import com.kuka.roboticsAPI.motionModel.SplineMotionCP;
+import com.kuka.roboticsAPI.motionModel.SplineOrientationType;
 
 import application.path.Node;
 import application.path.Path;
@@ -57,7 +56,7 @@ public class RobotController {
 			lastPos = pos;
 		}
 
-		return new Spline(motions);
+		return new Spline(motions).setOrientationType(SplineOrientationType.Ignore);
 		// return new Spline((SPL[])Arrays.asList(frames).stream().map(x->spl(x)).collect(Collectors.toList()).toArray());
 	}
 	
@@ -102,7 +101,7 @@ public class RobotController {
 			motions[i] = lin(nFrame);
 			if(node.isBlend())motions[i].setBlendingRel(1);
 		}
-		return new Spline(motions);
+		return new Spline(motions).setOrientationType(SplineOrientationType.Ignore);
 	}
 
 }

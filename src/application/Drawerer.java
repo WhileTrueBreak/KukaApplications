@@ -28,6 +28,7 @@ import com.kuka.roboticsAPI.motionModel.LIN;
 import com.kuka.roboticsAPI.motionModel.SPL;
 import com.kuka.roboticsAPI.motionModel.Spline;
 import com.kuka.roboticsAPI.motionModel.SplineMotionCP;
+import com.kuka.roboticsAPI.motionModel.SplineOrientationType;
 import com.kuka.roboticsAPI.motionModel.controlModeModel.CartesianImpedanceControlMode;
 import com.kuka.task.ITaskLogger;
 
@@ -224,17 +225,20 @@ public class Drawerer extends RoboticsAPIApplication{
 
 		gripper.move(new LIN(RobotController.vectorToFrame(p1, originUpFrame)).setCartVelocity(100));
 		
-		List<IMotionContainer> motions = new ArrayList<IMotionContainer>();
+		List<SplineMotionCP<?>> motions = new ArrayList<SplineMotionCP<?>>();
 		for(double t = 0;t < 1;t+=0.01) {
 			Vector3D tmp = Vector3D.of(
 					MathHelper.qerp(p1.getX(), p2.getX(), p3.getX(), t), 
 					MathHelper.qerp(p1.getY(), p2.getY(), p3.getY(), t), 
 					MathHelper.qerp(p1.getZ(), p2.getZ(), p3.getZ(), t));
-			motions.add(gripper.moveAsync(new LIN(RobotController.vectorToFrame(tmp, originUpFrame)).setCartVelocity(100)));
+			motions.add(new LIN(RobotController.vectorToFrame(tmp, originUpFrame)).setCartVelocity(100));
+			if(t == 0) continue;
+			motions.get(motions.size()-1).setOrientationType(SplineOrientationType.Ignore);
 		}
-		motions.add(gripper.moveAsync(new LIN(RobotController.vectorToFrame(p3, originUpFrame)).setCartVelocity(100)));
+		motions.add(new LIN(RobotController.vectorToFrame(p3, originUpFrame)).setCartVelocity(100));
+		Spline spline = new Spline((SplineMotionCP<?>[]) motions.toArray());
 		
-		for(IMotionContainer m:motions) m.await();
+		gripper.move(spline.setCartVelocity(100));
 		
 		logger.info("Moving to base");
 		gripper.move(lin(originUpFrame).setJointVelocityRel(0.2));

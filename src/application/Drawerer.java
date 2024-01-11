@@ -62,6 +62,13 @@ public class Drawerer extends RoboticsAPIApplication{
 		Handler.setTool(gripper);
 		Handler.setLogger(logger);
 
+
+		logger.info(logger.toString());
+		logger.info(robot.toString());
+		logger.info(gripper2F1.toString());
+		logger.info(mF.toString());
+		logger.info(gripper.toString());
+		logger.info(Handler.getLogger().toString());
 		Handler.getLogger().info(Handler.getRobot().toString());
 		Handler.getLogger().info(Handler.getGripper().toString());
 		Handler.getLogger().info(Handler.getMediaFlangeIO().toString());

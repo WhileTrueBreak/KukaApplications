@@ -18,7 +18,7 @@ public class Handler {
 	private static Controller controller = null;
 	
 	public static void setLogger(ITaskLogger logger) {
-		if(Handler.logger != null) Handler.logger = logger;
+		if(Handler.logger == null) Handler.logger = logger;
 	}
 	
 	public static ITaskLogger getLogger() {
@@ -30,7 +30,7 @@ public class Handler {
 	}
 
 	public static void setTool(Tool tool) {
-		if(Handler.tool != null) Handler.tool = tool;
+		if(Handler.tool == null) Handler.tool = tool;
 	}
 
 	public static LBR getRobot() {
@@ -38,7 +38,7 @@ public class Handler {
 	}
 
 	public static void setRobot(LBR robot) {
-		if(Handler.robot != null) Handler.robot = robot;
+		if(Handler.robot == null) Handler.robot = robot;
 	}
 
 	public static Gripper2F getGripper() {
@@ -46,7 +46,7 @@ public class Handler {
 	}
 
 	public static void setGripper(Gripper2F gripper) {
-		if(Handler.gripper != null) Handler.gripper = gripper;
+		if(Handler.gripper == null) Handler.gripper = gripper;
 	}
 
 	public static MediaFlangeIOGroup getMediaFlangeIO() {
@@ -54,7 +54,7 @@ public class Handler {
 	}
 
 	public static void setMediaFlangeIO(MediaFlangeIOGroup mediaFlange) {
-		if(Handler.mediaFlangeIO != null) Handler.mediaFlangeIO = mediaFlange;
+		if(Handler.mediaFlangeIO == null) Handler.mediaFlangeIO = mediaFlange;
 	}
 
 	public static Controller getController() {
@@ -62,6 +62,6 @@ public class Handler {
 	}
 
 	public static void setController(Controller controller) {
-		if(Handler.controller != null) Handler.controller = controller;
+		if(Handler.controller == null) Handler.controller = controller;
 	}
 }

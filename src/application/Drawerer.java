@@ -14,6 +14,7 @@ import com.kuka.common.Pair;
 import com.kuka.common.ThreadUtil;
 import com.kuka.generated.ioAccess.MediaFlangeIOGroup;
 import com.kuka.math.geometry.Vector3D;
+import com.kuka.nav.command.MotionContainer;
 import com.kuka.nav.geometry.Vector2D;
 import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
 import com.kuka.roboticsAPI.deviceModel.LBR;
@@ -221,64 +222,14 @@ public class Drawerer extends RoboticsAPIApplication{
 
 		double bcd = p1.subtract(p2).length();
 		gripper.move(new LIN(RobotController.vectorToFrame(p1.add(RobotController.frameToVector(originUpFrame)), originUpFrame)).setCartVelocity(100));
-
-		logger.info("blend 1 cart");
-		IMotionContainer m1	= 
-				gripper.moveAsync(
-						new LIN(RobotController.vectorToFrame(
-								p2.add(RobotController.frameToVector(originUpFrame)), originUpFrame))
-						.setCartVelocity(100)
-						.setBlendingCart(bcd));
-		
-		IMotionContainer m2	= 
-				gripper.moveAsync(
-						new LIN(RobotController.vectorToFrame(
-								p3.add(RobotController.frameToVector(originUpFrame)), originUpFrame))
-						.setCartVelocity(100));
-		m1.await();
-		m2.await();
-
-		logger.info("blend 1");
-		gripper.move(new LIN(RobotController.vectorToFrame(p1.add(RobotController.frameToVector(originUpFrame)), originUpFrame)).setCartVelocity(100));
-		
-		m1 = gripper.moveAsync(
-						new LIN(RobotController.vectorToFrame(
-								p2.add(RobotController.frameToVector(originUpFrame)), originUpFrame))
-						.setCartVelocity(100)
-						.setBlendingRel(1));
-		
-		m2	= gripper.moveAsync(
-						new LIN(RobotController.vectorToFrame(
-								p3.add(RobotController.frameToVector(originUpFrame)), originUpFrame))
-						.setCartVelocity(100));
-		
-		m1.await();
-		m2.await();
-
-		logger.info("blend 1 spl");
-		gripper.move(new LIN(RobotController.vectorToFrame(p1.add(RobotController.frameToVector(originUpFrame)), originUpFrame)).setCartVelocity(100));
-		
-		m1 = gripper.moveAsync(
-						new SPL(RobotController.vectorToFrame(
-								p2.add(RobotController.frameToVector(originUpFrame)), originUpFrame))
-						.setCartVelocity(100)
-						.setBlendingRel(1));
-		
-		m2	= gripper.moveAsync(
-						new LIN(RobotController.vectorToFrame(
-								p3.add(RobotController.frameToVector(originUpFrame)), originUpFrame))
-						.setCartVelocity(100));
-		
-		m1.await();
-		m2.await();
 		
 		logger.info("blend spline");
 		SplineMotionCP<?> spl1 = new LIN(RobotController.vectorToFrame(p1.add(RobotController.frameToVector(originUpFrame)), originUpFrame));
 		SplineMotionCP<?> spl2 = new LIN(RobotController.vectorToFrame(p2.add(RobotController.frameToVector(originUpFrame)), originUpFrame));
 		Spline spline = new Spline(spl1, spl1, spl2).setBlendingOri(1).setCartVelocity(100);
 		
-		m1	= gripper.moveAsync(spline);
-		m2	= gripper.moveAsync(
+		IMotionContainer m1	= gripper.moveAsync(spline);
+		IMotionContainer m2	= gripper.moveAsync(
 						new LIN(RobotController.vectorToFrame(
 								p3.add(RobotController.frameToVector(originUpFrame)), originUpFrame))
 						.setCartVelocity(100)

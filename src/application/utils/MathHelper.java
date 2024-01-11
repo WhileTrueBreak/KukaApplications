@@ -1,4 +1,4 @@
-package application;
+package application.utils;
 
 public class MathHelper {
 	

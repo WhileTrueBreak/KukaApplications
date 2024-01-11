@@ -274,8 +274,8 @@ public class Drawerer extends RoboticsAPIApplication{
 		
 		logger.info("blend spline");
 		SplineMotionCP<?> spl1 = new LIN(RobotController.vectorToFrame(p1.add(RobotController.frameToVector(originUpFrame)), originUpFrame));
-		SplineMotionCP<?> spl2 = new SPL(RobotController.vectorToFrame(p2.add(RobotController.frameToVector(originUpFrame)), originUpFrame));
-		Spline spline = new Spline(spl1, spl2).setBlendingOri(1).setCartVelocity(100);
+		SplineMotionCP<?> spl2 = new LIN(RobotController.vectorToFrame(p2.add(RobotController.frameToVector(originUpFrame)), originUpFrame));
+		Spline spline = new Spline(spl1, spl1, spl2).setBlendingOri(1).setCartVelocity(100);
 		
 		m1	= gripper.moveAsync(spline);
 		m2	= gripper.moveAsync(

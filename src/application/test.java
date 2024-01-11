@@ -1,21 +1,19 @@
 package application;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
-import application.parser.PathParser;
-import application.path.Node;
-import application.path.Path;
+import application.utils.MathHelper;
 
 public class test {
 
 	public static void main(String[] args) throws InterruptedException, IOException {
-		List<Path> paths = PathParser.parsePathV2("res/font.txt");
-		for(Path path:paths) {
-			System.out.println(path.getBounds().toString());
-			for(Node node:path.getPath()) {
-				System.out.println(node.getPos().toString() + " | blend: " + node.isBlend());
-			}
+		Double[] numbers = {0d,30d,-30d,0d};
+		List<Double> points = Arrays.asList(numbers);
+		for(double t = 0;t <= 1;t += 0.05) {
+			double x = MathHelper.bezier(t, points);
+			System.out.println(x);
 		}
 	}
 

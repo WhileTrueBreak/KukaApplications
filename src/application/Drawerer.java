@@ -232,8 +232,6 @@ public class Drawerer extends RoboticsAPIApplication{
 					MathHelper.qerp(p1.getY(), p2.getY(), p3.getY(), t), 
 					MathHelper.qerp(p1.getZ(), p2.getZ(), p3.getZ(), t));
 			motions.add(new LIN(RobotController.vectorToFrame(tmp, originUpFrame)).setCartVelocity(100));
-			if(t == 0) continue;
-			motions.get(motions.size()-1).setOrientationType(SplineOrientationType.Ignore);
 		}
 		motions.add(new LIN(RobotController.vectorToFrame(p3, originUpFrame)).setCartVelocity(100));
 

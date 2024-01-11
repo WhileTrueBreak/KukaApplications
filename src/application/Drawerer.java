@@ -15,7 +15,6 @@ import com.kuka.common.Pair;
 import com.kuka.common.ThreadUtil;
 import com.kuka.generated.ioAccess.MediaFlangeIOGroup;
 import com.kuka.math.geometry.Vector3D;
-import com.kuka.nav.command.MotionContainer;
 import com.kuka.nav.geometry.Vector2D;
 import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
 import com.kuka.roboticsAPI.deviceModel.LBR;
@@ -25,10 +24,10 @@ import com.kuka.roboticsAPI.geometricModel.Tool;
 import com.kuka.roboticsAPI.geometricModel.World;
 import com.kuka.roboticsAPI.motionModel.IMotionContainer;
 import com.kuka.roboticsAPI.motionModel.LIN;
-import com.kuka.roboticsAPI.motionModel.SPL;
+import com.kuka.roboticsAPI.motionModel.MotionBatch;
+import com.kuka.roboticsAPI.motionModel.RobotMotion;
 import com.kuka.roboticsAPI.motionModel.Spline;
 import com.kuka.roboticsAPI.motionModel.SplineMotionCP;
-import com.kuka.roboticsAPI.motionModel.SplineOrientationType;
 import com.kuka.roboticsAPI.motionModel.controlModeModel.CartesianImpedanceControlMode;
 import com.kuka.task.ITaskLogger;
 
@@ -225,7 +224,7 @@ public class Drawerer extends RoboticsAPIApplication{
 
 		gripper.move(new LIN(RobotController.vectorToFrame(p1, originUpFrame)).setCartVelocity(100));
 		
-		List<SplineMotionCP<?>> motions = new ArrayList<SplineMotionCP<?>>();
+		List<RobotMotion<?>> motions = new ArrayList<RobotMotion<?>>();
 		for(double t = 0;t < 1;t+=0.01) {
 			Vector3D tmp = Vector3D.of(
 					MathHelper.qerp(p1.getX(), p2.getX(), p3.getX(), t), 
@@ -234,16 +233,10 @@ public class Drawerer extends RoboticsAPIApplication{
 			motions.add(new LIN(RobotController.vectorToFrame(tmp, originUpFrame)).setCartVelocity(100));
 		}
 		motions.add(new LIN(RobotController.vectorToFrame(p3, originUpFrame)).setCartVelocity(100));
-
-		IMotionContainer prevMotion = gripper.moveAsync(motions.get(0).setBlendingRel(1));
-		for(int i = 1;i < motions.size()-1;i++) {
-			IMotionContainer currentMotion = gripper.moveAsync(motions.get(i).setBlendingRel(1));
-			prevMotion.await();
-			prevMotion = currentMotion;
-		}
+		MotionBatch motionBatch = new MotionBatch(motions.toArray(new RobotMotion<?>[motions.size()]));
+		IMotionContainer motionContainer = gripper.moveAsync(motionBatch);
+		motionContainer.await();
 		
-		IMotionContainer m = gripper.moveAsync(motions.get(motions.size()-1).setBlendingRel(1));
-		m.await();
 		
 		logger.info("Moving to base");
 		gripper.move(lin(originUpFrame).setJointVelocityRel(0.2));

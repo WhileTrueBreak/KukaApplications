@@ -217,26 +217,80 @@ public class Drawerer extends RoboticsAPIApplication{
 		Vector3D p1 = canvas.toWorld(new Vector2D(0, 0));
 		Vector3D p2 = canvas.toWorld(new Vector2D(0, 1));
 		Vector3D p3 = canvas.toWorld(new Vector2D(1, 1));
-		gripper.move(new LIN(RobotController.vectorToFrame(p1.add(RobotController.frameToVector(originUpFrame)), originUpFrame)));
 
 		double bcd = p1.subtract(p2).length();
 		gripper.move(new LIN(RobotController.vectorToFrame(p1.add(RobotController.frameToVector(originUpFrame)), originUpFrame)).setCartVelocity(100));
-		
-		IMotionContainer m2	= 
+
+		logger.info("blend 1 cart");
+		IMotionContainer m1	= 
 				gripper.moveAsync(
 						new LIN(RobotController.vectorToFrame(
 								p2.add(RobotController.frameToVector(originUpFrame)), originUpFrame))
 						.setCartVelocity(100)
 						.setBlendingCart(bcd));
 		
-		IMotionContainer m3	= 
+		IMotionContainer m2	= 
 				gripper.moveAsync(
 						new LIN(RobotController.vectorToFrame(
 								p3.add(RobotController.frameToVector(originUpFrame)), originUpFrame))
 						.setCartVelocity(100));
 		
+		m1.await();
 		m2.await();
-		m3.await();
+
+		logger.info("blend 1");
+		gripper.move(new LIN(RobotController.vectorToFrame(p1.add(RobotController.frameToVector(originUpFrame)), originUpFrame)).setCartVelocity(100));
+		
+		m1 = gripper.moveAsync(
+						new LIN(RobotController.vectorToFrame(
+								p2.add(RobotController.frameToVector(originUpFrame)), originUpFrame))
+						.setCartVelocity(100)
+						.setBlendingRel(1));
+		
+		m2	= gripper.moveAsync(
+						new LIN(RobotController.vectorToFrame(
+								p3.add(RobotController.frameToVector(originUpFrame)), originUpFrame))
+						.setCartVelocity(100));
+		
+		m1.await();
+		m2.await();
+
+		logger.info("blend 1 | cancel 1");
+		gripper.move(new LIN(RobotController.vectorToFrame(p1.add(RobotController.frameToVector(originUpFrame)), originUpFrame)).setCartVelocity(100));
+		
+		m1 = gripper.moveAsync(
+						new LIN(RobotController.vectorToFrame(
+								p2.add(RobotController.frameToVector(originUpFrame)), originUpFrame))
+						.setCartVelocity(100)
+						.setBlendingRel(1));
+		
+		m2	= gripper.moveAsync(
+						new LIN(RobotController.vectorToFrame(
+								p3.add(RobotController.frameToVector(originUpFrame)), originUpFrame))
+						.setCartVelocity(100));
+		
+		m1.cancel();
+		m2.await();
+		
+		logger.info("blend both | cancel 1");
+		gripper.move(new LIN(RobotController.vectorToFrame(p1.add(RobotController.frameToVector(originUpFrame)), originUpFrame)).setCartVelocity(100));
+		
+		m1 = gripper.moveAsync(
+						new LIN(RobotController.vectorToFrame(
+								p2.add(RobotController.frameToVector(originUpFrame)), originUpFrame))
+						.setCartVelocity(100)
+						.setBlendingRel(1));
+		
+		m2	= gripper.moveAsync(
+						new LIN(RobotController.vectorToFrame(
+								p3.add(RobotController.frameToVector(originUpFrame)), originUpFrame))
+						.setCartVelocity(100)
+						.setBlendingRel(1));
+		
+		m1.cancel();
+		m2.await();
+		
+		gripper.move(new LIN(RobotController.vectorToFrame(p1.add(RobotController.frameToVector(originUpFrame)), originUpFrame)).setCartVelocity(100));
 		
 		
 		

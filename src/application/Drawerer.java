@@ -61,6 +61,11 @@ public class Drawerer extends RoboticsAPIApplication{
 		Handler.setMediaFlangeIO(mF);
 		Handler.setTool(gripper);
 		Handler.setLogger(logger);
+
+		Handler.getLogger().info(Handler.getRobot().toString());
+		Handler.getLogger().info(Handler.getGripper().toString());
+		Handler.getLogger().info(Handler.getMediaFlangeIO().toString());
+		Handler.getLogger().info(Handler.getTool().toString());
 		
 		// Initializes the boing boing
 		springRobot = new CartesianImpedanceControlMode(); 

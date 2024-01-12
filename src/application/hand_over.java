@@ -96,7 +96,6 @@ public class hand_over extends RoboticsAPIApplication {
 		
 		springRobot = new CartesianImpedanceControlMode(); 
 		
-		
 		springRobot.parametrize(CartDOF.X).setStiffness(180);
 		springRobot.parametrize(CartDOF.Y).setStiffness(180);
 		springRobot.parametrize(CartDOF.Z).setStiffness(1000);
@@ -153,7 +152,6 @@ public class hand_over extends RoboticsAPIApplication {
 			robot.move(ptp(getApplicationData().getFrame("/PART_1")).setJointVelocityRel(0.4));//frame1
 			gripper2F1.close();
 		}
-		
 		logger.info("Object detected");
 		mF.setLEDBlue(true);
 		ThreadUtil.milliSleep(200);
@@ -177,7 +175,7 @@ public class hand_over extends RoboticsAPIApplication {
 		while (condition != true) {
 			update();
 			Vector3D v1 = new Vector3D((PosX_pre-PosX), (PosY_pre-PosY), (PosZ_pre-PosZ));
-			if (v1.length() > 30 && v1.getZ() < 0) {
+			if (v1.length() > 30 && v1.getX() < 0) {
 				mF.setLEDBlue(true);
 				gripper2F1.open();
 				logger.info("yaaaaayyyyyyyyyyyy :)");
@@ -202,9 +200,7 @@ public class hand_over extends RoboticsAPIApplication {
 				condition = true;
 				m1.cancel();
 			}
-		} 
-	
-		
+		}
 		
 		ThreadUtil.milliSleep(5000);
 		honkCapability.honk();

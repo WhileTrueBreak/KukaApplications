@@ -15,6 +15,11 @@
 			<arguments>
 			</arguments>
 		</buildCommand>
+		<buildCommand>
+			<name>com.kuka.appframework.swb.build.BlmBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
 	</buildSpec>
 	<natures>
 		<nature>com.kuka.roboticsAPI.eclipseBase.sunriseProjectNature</nature>

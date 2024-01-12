@@ -20,6 +20,7 @@ import com.kuka.core.geometry.Vector;
 import com.kuka.generated.ioAccess.MediaFlangeIOGroup;
 import com.kuka.math.geometry.Vector3D;
 import com.kuka.nav.geometry.Vector2D;
+import com.kuka.roboticsAPI.applicationModel.IApplicationData;
 import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
 import com.kuka.roboticsAPI.conditionModel.ForceCondition;
 import com.kuka.roboticsAPI.deviceModel.LBR;
@@ -27,8 +28,10 @@ import com.kuka.roboticsAPI.geometricModel.AbstractFrame;
 import com.kuka.roboticsAPI.geometricModel.CartDOF;
 import com.kuka.roboticsAPI.geometricModel.Frame;
 import com.kuka.roboticsAPI.geometricModel.ITransformationProvider;
+import com.kuka.roboticsAPI.geometricModel.ObjectFrame;
 import com.kuka.roboticsAPI.geometricModel.Tool;
 import com.kuka.roboticsAPI.geometricModel.World;
+import com.kuka.roboticsAPI.geometricModel.math.ITransformation;
 import com.kuka.roboticsAPI.motionModel.IMotionContainer;
 import com.kuka.roboticsAPI.motionModel.SPL;
 import com.kuka.roboticsAPI.motionModel.Spline;
@@ -50,17 +53,15 @@ public class window extends RoboticsAPIApplication{
 	@Inject
 	@Named("RobotiqGripper")
 	private Tool gripper;
-
+	
 	@Inject
 	private ITaskLogger logger;
 	
 	private CartesianImpedanceControlMode springRobot;
 	
-	
 	@Override
 	public void initialize() {
-		
-		// Initializes the boing boing
+		// Initialize
 		springRobot = new CartesianImpedanceControlMode(); 
 		
 		// Set stiffness
@@ -80,14 +81,15 @@ public class window extends RoboticsAPIApplication{
 		// Inits the Robot
 		gripper.attachTo(robot.getFlange());
 		gripper2F1.initalise();
-		gripper2F1.setSpeed(189);
+		gripper2F1.setSpeed(150);
+		gripper2F1.setForce(50);
 		mF.setLEDBlue(false);
 		gripper2F1.close();
 		ThreadUtil.milliSleep(200);
 	}
 	
 	private Frame calibrateFrame(Tool grip){
-		ForceCondition touch = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 32);
+		ForceCondition touch = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 30);
 		IMotionContainer motion1 = gripper.move(linRel(0, 0, 150, gripper.getFrame("/TCP")).setCartVelocity(40).breakWhen(touch));
 		if (motion1.getFiredBreakConditionInfo() == null){
 			logger.info("No Collision Detected");
@@ -113,26 +115,28 @@ public class window extends RoboticsAPIApplication{
 		// Calibration sequence
 		mF.setLEDBlue(true);
 		logger.info("Moving to window coner for calibration");
-//		gripper.move(lin(getApplicationData().getFrame("/Window_Main")).setJointVelocityRel(0.2));
 		
-//		ForceCondition touch = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 25);
-//		gripper.move(linRel(0, 0, 150, gripper.getFrame("/TCP")).setCartVelocity(20).breakWhen(touch));
-//		ThreadUtil.milliSleep(5000);
-//		gripper.move(linRel(0, 0, -5, gripper.getFrame("/TCP")).setCartVelocity(20).breakWhen(touch));
-//		ThreadUtil.milliSleep(5000);
-//		gripper.move(linRel(0, 150,0, gripper.getFrame("/TCP")).setCartVelocity(20).breakWhen(touch));
-//		ThreadUtil.milliSleep(5000);
-//		gripper.move(linRel(0, -5,0, gripper.getFrame("/TCP")).setCartVelocity(20).breakWhen(touch));
-//		ThreadUtil.milliSleep(5000);
-//		gripper.move(linRel(150,0, 0, gripper.getFrame("/TCP")).setCartVelocity(20).breakWhen(touch));
-//		ThreadUtil.milliSleep(5000);
-//		gripper.move(linRel(-5,0, 0, gripper.getFrame("/TCP")).setCartVelocity(20).breakWhen(touch));
-////		ThreadUtil.milliSleep(5000);
-////		Frame Window_Main = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"));
-//		logger.info("getting frame window");
-		getApplicationData().getFrame("/Window_Main").staticTransformationTo(robot.getCurrentCartesianPosition(gripper.getFrame("/TCP")));
-		ThreadUtil.milliSleep(1000);
-				
+		ForceCondition touch = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 25);
+		gripper.move(linRel(0, 0, 150, gripper.getFrame("/TCP")).setCartVelocity(20).breakWhen(touch));
+		ThreadUtil.milliSleep(2000);
+		gripper.move(linRel(0, 0, -5, gripper.getFrame("/TCP")).setCartVelocity(20).breakWhen(touch));
+		ThreadUtil.milliSleep(2000);
+		gripper.move(linRel(0, 150,0, gripper.getFrame("/TCP")).setCartVelocity(20).breakWhen(touch));
+		ThreadUtil.milliSleep(2000);
+		gripper.move(linRel(0, -5,0, gripper.getFrame("/TCP")).setCartVelocity(20).breakWhen(touch));
+		ThreadUtil.milliSleep(2000);
+		gripper.move(linRel(150,0, 0, gripper.getFrame("/TCP")).setCartVelocity(20).breakWhen(touch));
+		ThreadUtil.milliSleep(2000);
+		gripper.move(linRel(-5,0, 0, gripper.getFrame("/TCP")).setCartVelocity(20).breakWhen(touch));
+		ThreadUtil.milliSleep(2000);
+		
+		IPersistenceEngine engine = this.getContext().getEngine(IPersistenceEngine.class);  // RoboticsAPIApplication should be 'this' if you use it in your RoboticsAPIApplication class.
+		XmlApplicationDataSource defaultDataSource = (XmlApplicationDataSource) engine.getDefaultDataSource();
+		Frame newMain = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"));
+		ITransformation transform = newMain.getTransformationFromParent();
+		defaultDataSource.changeFrameTransformation(getApplicationData().getFrame("/Window_Main"), transform);
+		
+		//getting the vector
 		gripper.move(lin(getApplicationData().getFrame("/Window_Main/vectorMain")).setJointVelocityRel(0.5));
 		logger.info("Calibrating vector point 1");
 		Vector3D origin = frameToVector(calibrateFrame(gripper));
@@ -148,30 +152,25 @@ public class window extends RoboticsAPIApplication{
 		Vector3D openvector = getCanvasPlane(origin, right);
 		logger.info(String.format("Canvas X: (%s)", openvector.toString()));
 		
-		
-		//check direction
-		//gripper.move(linRel(0, 0, -20).setJointVelocityRel(0.2));
+		//opening the lock
+		gripper.move(linRel(0, 0, -50).setJointVelocityRel(0.2));
 		gripper.move(lin(getApplicationData().getFrame("/Window_Main/lockUp")).setJointVelocityRel(0.2));
-		//gripper.move(linRel(0, 0, 60).setJointVelocityRel(0.2));
-
-//		
-//		//opening the gripper
-		gripper.move(lin(getApplicationData().getFrame("/Window_Main/lockDown")).setJointVelocityRel(0.2));
-//		
-//		//
-//		gripper2F1.open();
-//		gripper.move(linRel(0, 0, 20).setJointVelocityRel(0.2));
-//		gripper.move(ptp(getApplicationData().getFrame("/windowMainFrame/handle")).setJointVelocityRel(0.2));
-//		gripper.move(linRel(0, 0, -10).setJointVelocityRel(0.2));
-//		gripper2F1.close();
+		gripper.move(linRel(0, 0, 100).setJointVelocityRel(0.2).breakWhen(touch));
+		gripper.move(spl(getApplicationData().getFrame("/Window_Main/lockDown")).setJointVelocityRel(0.2));
 		
-		Vector3D openLine = openvector.multiply(100);
+		
+		
+		gripper.move(linRel(0, 0, -50).setJointVelocityRel(0.2));
+		gripper.move(ptp(getApplicationData().getFrame("/windowMainFrame/handle")).setJointVelocityRel(0.2));
+		gripper2F1.setPos(100);
+		gripper.move(linRel(0, 0, 100).setJointVelocityRel(0.2).breakWhen(touch));
+		
+		//linear movement
+		Vector3D openLine = openvector.multiply(500);
+		ForceCondition force = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 60);
 		gripper.move(linRel(0, 0, -30).setJointVelocityRel(0.2));
 		logger.info("moving on a line");
-		gripper.move(linRel(openLine.getZ(), openLine.getX(), openLine.getY()).setCartVelocity(30));
-
-		
-		
+		gripper.move(linRel(openLine.getZ(), openLine.getX(), openLine.getY()).setCartVelocity(30).setCartAcceleration(10).breakWhen(force));
 	}
 }
 

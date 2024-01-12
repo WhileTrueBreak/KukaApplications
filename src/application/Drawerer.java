@@ -204,7 +204,7 @@ public class Drawerer extends RoboticsAPIApplication{
 				Frame frame = RobotController.vectorToFrame(path3D, originFrame);
 				Vector3D currPos = RobotController.frameToVector(frame);
 				if(prevPos != null) {
-					Vector3D currDir = currPos.subtract(prevDir);
+					Vector3D currDir = currPos.subtract(prevPos);
 					if(prevDir != null) {
 						double angle = currDir.angleRad(prevDir);
 						double blend = MathHelper.lerp(0, 0.5, MathHelper.clamp(angle/(Math.PI/2), 0, 1));

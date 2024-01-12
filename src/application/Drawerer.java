@@ -192,7 +192,8 @@ public class Drawerer extends RoboticsAPIApplication{
 		List<Path> paths = PathParser.parsePathV2(file);
 
 		Vector3D v = Vector3D.of(10,0,0);
-		for(Path path:paths) {
+		for(int n=0;n<paths.size();n++) {
+			Path path = paths.get(n);
 			Rectangle2D bounds = path.getBounds();
 			List<RobotMotion<?>> pathMotions = new ArrayList<RobotMotion<?>>();
 			List<Vector3D> points = new ArrayList<Vector3D>();
@@ -236,6 +237,9 @@ public class Drawerer extends RoboticsAPIApplication{
 				
 				pathMotions.add(new LIN(frame).setCartVelocity(100).setBlendingRel(0).setCartAcceleration(100));
 			}
+			MotionBatch motionBatch = new MotionBatch(pathMotions.toArray(new RobotMotion<?>[pathMotions.size()]));
+			motions.add(motionBatch);
+			startLocs.add(paths.get(n).getPath().get(0).getPos());
 		}
 		
 //		List<String> file = FileReader.readFile(resPath+"/newyears_mirror.txt");
@@ -279,7 +283,8 @@ public class Drawerer extends RoboticsAPIApplication{
 //		}
 
 		gripper.move(lin(originUpFrame).setCartVelocity(100));
-		
+
+		logger.info("Paths: " + motions.size());
 		logger.info("Start Drawing");
 		for(int i = 0;i < startLocs.size();i++) {
 			logger.info("Start path "+i);

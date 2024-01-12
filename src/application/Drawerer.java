@@ -235,7 +235,7 @@ public class Drawerer extends RoboticsAPIApplication{
 				e1val.setE1(0);
 				frame.setRedundancyInformation(robot, e1val);
 				
-				pathMotions.add(new LIN(frame).setCartVelocity(100).setBlendingRel(0).setCartAcceleration(100));
+				pathMotions.add(new LIN(frame).setCartVelocity(100).setCartAcceleration(100));
 			}
 			MotionBatch motionBatch = new MotionBatch(pathMotions.toArray(new RobotMotion<?>[pathMotions.size()]));
 			motions.add(motionBatch);

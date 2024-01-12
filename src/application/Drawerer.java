@@ -193,7 +193,8 @@ public class Drawerer extends RoboticsAPIApplication{
 		logger.info(String.format("Paths: %d", paths.size()));
 		List<MotionBatch> motions = new ArrayList<MotionBatch>();
 		List<Vector2D> startLocs = new ArrayList<Vector2D>();
-		
+
+		logger.info("Calculating paths");
 		Vector3D v = Vector3D.of(10,0,0);
 		for (int i=0;i<paths.size();i++){
 			RobotMotion<?>[] pathMotions = new RobotMotion<?>[paths.get(i).size()];

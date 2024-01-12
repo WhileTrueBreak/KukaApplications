@@ -36,6 +36,7 @@ import application.parser.PathParser;
 import application.robotControl.Canvas;
 import application.robotControl.RobotController;
 import application.utils.Handler;
+import application.utils.MathHelper;
 
 public class Drawerer extends RoboticsAPIApplication{
 	@Inject
@@ -196,15 +197,28 @@ public class Drawerer extends RoboticsAPIApplication{
 		Vector3D v = Vector3D.of(10,0,0);
 		for (int i=0;i<paths.size();i++){
 			RobotMotion<?>[] pathMotions = new RobotMotion<?>[paths.get(i).size()];
+			Vector3D prevDir = null;
+			Vector3D prevPos = null;
 			for (int j=0;j<paths.get(i).size();j++) {
 				Vector3D path3D = canvas.toWorld(paths.get(i).get(j)).add(origin).add(v);
-				AbstractFrame frame = RobotController.vectorToFrame(path3D, originFrame);
-				
+				Frame frame = RobotController.vectorToFrame(path3D, originFrame);
+				Vector3D currPos = RobotController.frameToVector(frame);
+				if(prevPos != null) {
+					Vector3D currDir = prevPos.subtract(currPos);
+					if(prevDir != null) {
+						double angle = currDir.angleRad(prevDir);
+						double blend = MathHelper.clamp(angle/(2*Math.PI/3), 1, 0);
+						pathMotions[j-1].setBlendingRel(blend);
+					}
+					prevDir = currDir;
+				}
+				prevPos = currPos;
 				LBRE1Redundancy e1val = new LBRE1Redundancy();
 				e1val.setE1(0);
 				frame.setRedundancyInformation(robot, e1val);
 				
-				pathMotions[j] = new LIN(frame).setCartVelocity(100).setBlendingCart(1).setCartAcceleration(100);
+				
+				pathMotions[j] = new LIN(frame).setCartVelocity(100).setBlendingRel(0).setCartAcceleration(100);
 			}
 			MotionBatch motionBatch = new MotionBatch(pathMotions);
 			motions.add(motionBatch);

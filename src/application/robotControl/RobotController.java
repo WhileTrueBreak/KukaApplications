@@ -7,8 +7,6 @@ import static com.kuka.roboticsAPI.motionModel.BasicMotions.spl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.collections.functors.IfClosure;
-
 import com.kuka.math.geometry.Vector3D;
 import com.kuka.roboticsAPI.conditionModel.ForceCondition;
 import com.kuka.roboticsAPI.geometricModel.Frame;

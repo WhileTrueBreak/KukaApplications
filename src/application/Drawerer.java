@@ -135,7 +135,7 @@ public class Drawerer extends RoboticsAPIApplication{
 			logger.info("File is invalid");
 			return null;
 		}
-		List<List<Vector2D>> paths = PathParser.parsePathV1(file.get(0), canvas.getSize());
+		List<List<Vector2D>> paths = PathParser.parsePathV1(file.get(0));
 		logger.info(String.format("Paths: %d", paths.size()));
 
 		logger.info("Calculating paths");

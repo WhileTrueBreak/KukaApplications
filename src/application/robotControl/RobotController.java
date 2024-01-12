@@ -4,6 +4,11 @@ import static com.kuka.roboticsAPI.motionModel.BasicMotions.lin;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.linRel;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.spl;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.collections.functors.IfClosure;
+
 import com.kuka.math.geometry.Vector3D;
 import com.kuka.roboticsAPI.conditionModel.ForceCondition;
 import com.kuka.roboticsAPI.geometricModel.Frame;
@@ -17,6 +22,7 @@ import com.kuka.roboticsAPI.motionModel.SplineOrientationType;
 import application.path.Node;
 import application.path.Path;
 import application.utils.Handler;
+import application.utils.MathHelper;
 
 public class RobotController {
 	
@@ -106,4 +112,22 @@ public class RobotController {
 		return new Spline(motions);
 	}
 
+	public static List<Vector3D> bezierToVectors(List<Vector3D> controlPoints, int resolution){
+		List<Vector3D> points = new ArrayList<Vector3D>();
+		List<Double> xs = new ArrayList<Double>();
+		List<Double> ys = new ArrayList<Double>();
+		List<Double> zs = new ArrayList<Double>();
+		for(Vector3D p:controlPoints) {
+			xs.add(p.getX());
+			ys.add(p.getY());
+			zs.add(p.getZ());
+		}
+		for(double t = 0;t < 1;t+=0.01) {
+			Vector3D tmp = Vector3D.of(
+					MathHelper.bezier(xs, t), 
+					MathHelper.bezier(ys, t), 
+					MathHelper.bezier(zs, t));
+		}
+		return points;
+	}
 }

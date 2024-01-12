@@ -18,11 +18,12 @@ public class MathHelper {
 		return t*(sec-fir)+fir;
 	}
 	
-	public static double bezier(double t, List<Double> points) {
-		if(points.size() < 2) return 0;
+	public static double bezier(List<Double> points, double t) {
+		if(points.size() < 1) return 0;
+		if(points.size() == 1) return points.get(0);
 		if(points.size() == 2) return lerp(points.get(0), points.get(1), t);
-		double fir = bezier(t, points.subList(0, points.size()-1));
-		double sec = bezier(t, points.subList(1, points.size()));
+		double fir = bezier(points.subList(0, points.size()-1), t);
+		double sec = bezier(points.subList(1, points.size()), t);
 		return t*(sec-fir)+fir;
 	}
 	

@@ -4,6 +4,7 @@ import static com.kuka.roboticsAPI.motionModel.BasicMotions.lin;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.linRel;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.ptp;
 
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
@@ -33,6 +34,7 @@ import com.kuka.task.ITaskLogger;
 
 import application.parser.FileReader;
 import application.parser.PathParser;
+import application.path.Path;
 import application.robotControl.Canvas;
 import application.robotControl.RobotController;
 import application.utils.Handler;
@@ -183,16 +185,55 @@ public class Drawerer extends RoboticsAPIApplication{
 		
 		logger.info("Reading Path File");
 		String resPath = FileReader.findUniqueFolder("res", "..");
+
+		List<MotionBatch> motions = new ArrayList<MotionBatch>();
+		List<Vector2D> startLocs = new ArrayList<Vector2D>();
 		
-		List<String> file = FileReader.readFile(resPath+"/malogo_mirror.txt");
+		{
+//		List<String> file = FileReader.readFile(resPath+"/font.txt");
+//		List<Path> paths = PathParser.parsePathV2(file);
+//		
+//		for(Path path:paths) {
+//			Rectangle2D bounds = path.getBounds();
+//			List<RobotMotion<?>> pathMotions = new ArrayList<RobotMotion<?>>();
+//			List<Vector3D> controlPoints = new ArrayList<Vector3D>();
+//			Vector3D prevDir = null;
+//			Vector3D prevPos = null;
+//			for(int i = 0;i < path.getPath().size();i++) {
+//				Vector3D currPos = canvas.toWorld(path.getPath().get(i).getPos());if(prevPos != null) {
+//				if(prevPos == null) {
+//					Vector3D currDir = currPos.subtract(prevPos);
+//					if(prevDir != null) {
+//						double angle = currDir.angleRad(prevDir);
+//						double blend = MathHelper.qerp(0,0,1,MathHelper.clamp(angle/(Math.PI),0,1))*10;
+//						pathMotions.get(pathMotions.size()-1).setBlendingCart(blend);
+//					}
+//					prevDir = currDir;
+//				}
+//				if(path.getPath().get(i).isBlend() || controlPoints.isEmpty()) {
+//					controlPoints.add(currPos);
+//					continue;
+//				}
+//				if(controlPoints.size() == 1) {
+//					Frame frame = RobotController.vectorToFrame(currPos, originFrame);
+//					LBRE1Redundancy e1val = new LBRE1Redundancy();
+//					e1val.setE1(0);
+//					frame.setRedundancyInformation(robot, e1val);
+//					pathMotions.add(new LIN(frame).setCartVelocity(100).setBlendingRel(0).setCartAcceleration(100));
+//				}
+//				controlPoints.add(currPos);
+//			}
+//		}
+		}
+		
+		{
+		List<String> file = FileReader.readFile(resPath+"/newyears_mirror.txt");
 		if(file == null || file.size() != 1) {
 			logger.info("File is invalid");
 			return;
 		}
 		List<List<Vector2D>> paths = PathParser.parsePathV1(file.get(0), size);
 		logger.info(String.format("Paths: %d", paths.size()));
-		List<MotionBatch> motions = new ArrayList<MotionBatch>();
-		List<Vector2D> startLocs = new ArrayList<Vector2D>();
 
 		logger.info("Calculating paths");
 		Vector3D v = Vector3D.of(10,0,0);
@@ -224,6 +265,7 @@ public class Drawerer extends RoboticsAPIApplication{
 			MotionBatch motionBatch = new MotionBatch(pathMotions);
 			motions.add(motionBatch);
 			startLocs.add(paths.get(i).get(0));
+		}
 		}
 
 		gripper.move(lin(originUpFrame).setCartVelocity(100));

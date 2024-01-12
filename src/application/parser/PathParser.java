@@ -45,15 +45,7 @@ public class PathParser {
 		return paths;
 	}
 	
-	public static List<Path> parsePathV2(String filename) {
-		List<String> file = null;
-		try {
-			file = FileReader.readFile(filename);
-		} catch (FileNotFoundException e) {
-			Handler.getLogger().info("Could not read file: "+filename);
-			System.out.println("Could not read file: "+filename);
-			return null;
-		}
+	public static List<Path> parsePathV2(List<String> file) {
 		if(file == null) return null;
 		Rectangle2D bounds = parseBounds(file.get(0));
 		List<Path>paths = new ArrayList<Path>();

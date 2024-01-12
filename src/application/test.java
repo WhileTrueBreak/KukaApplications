@@ -1,20 +1,19 @@
 package application;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
+
+import com.kuka.math.geometry.Vector3D;
 
 import application.utils.MathHelper;
 
 public class test {
 
 	public static void main(String[] args) throws InterruptedException, IOException {
-		Double[] numbers = {0d,30d,-30d,0d};
-		List<Double> points = Arrays.asList(numbers);
-		for(double t = 0;t <= 1;t += 0.05) {
-			double x = MathHelper.bezier(t, points);
-			System.out.println(x);
-		}
+		Vector3D a = Vector3D.of(0, 1, 0);
+		Vector3D b = Vector3D.of(1, 0, 0);
+		double angle = a.angleRad(b);
+		System.out.println(MathHelper.clamp(angle/(Math.PI),0,1));
+		System.out.println(MathHelper.qerp(0,0,0.5,MathHelper.clamp(angle/(Math.PI),0,1)));
 	}
 
 }

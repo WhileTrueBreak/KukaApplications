@@ -71,7 +71,7 @@ public class RobotController {
 			if(moveDist <= moveThresh) break;
 			try {
 				moveVector = normDir.multiply(moveDist);
-				Handler.getTool().move(linRel(moveVector.getY(), moveVector.getZ(), moveVector.getX()).setJointVelocityRel(0.2));
+				Handler.getTool().move(linRel(moveVector.getY(), moveVector.getZ(), moveVector.getX()).setCartVelocity(100));
 				totalDist += moveDist;
 			} catch (Exception e) {
 				moveDist /= 2;

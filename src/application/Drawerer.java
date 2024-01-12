@@ -188,100 +188,99 @@ public class Drawerer extends RoboticsAPIApplication{
 		List<MotionBatch> motions = new ArrayList<MotionBatch>();
 		List<Vector2D> startLocs = new ArrayList<Vector2D>();
 		
-		List<String> file = FileReader.readFile(resPath+"/font.txt");
-		List<Path> paths = PathParser.parsePathV2(file);
+		List<String> file = FileReader.readFile(resPath+"/malogo_mirror.txt");
+		
+//		List<Path> paths = PathParser.parsePathV2(file);
+//		Vector3D v = Vector3D.of(10,0,0);
+//		for(int n=0;n<paths.size();n++) {
+//			Path path = paths.get(n);
+//			Rectangle2D bounds = path.getBounds();
+//			List<RobotMotion<?>> pathMotions = new ArrayList<RobotMotion<?>>();
+//			List<Vector3D> points = new ArrayList<Vector3D>();
+//			List<Vector3D> controlPoints = new ArrayList<Vector3D>();
+//			for(int i = 0;i < path.getPath().size();i++) {
+//				Vector3D currPos = canvas.toWorld(path.getPath().get(i).getPos()).add(canvas.getOrigin()).add(v);
+//				
+//				if(path.getPath().get(i).isBlend() || controlPoints.isEmpty()) {
+//					controlPoints.add(currPos);
+//					continue;
+//				}
+//				if(controlPoints.size() == 1) {
+//					points.add(currPos);
+//					controlPoints.clear();
+//					controlPoints.add(currPos);
+//					continue;
+//				}
+//				controlPoints.add(currPos);
+//				points.addAll(RobotController.bezierToVectors(controlPoints, 100));
+//				controlPoints.clear();
+//				controlPoints.add(currPos);
+//			}
+//			Vector3D prevDir = null;
+//			Vector3D prevPos = null;
+//			for(Vector3D currPos:points) {
+//				if(prevPos != null) {
+//					Vector3D currDir = currPos.subtract(prevPos);
+//					if(prevDir != null) {
+//						double angle = currDir.angleRad(prevDir);
+//						double blend = MathHelper.qerp(1,0.8,0,MathHelper.clamp(angle/(Math.PI/2),0,1));
+////						if(angle > Math.PI/4) continue;
+//						pathMotions.get(pathMotions.size()-1).setBlendingRel(blend);
+//					}
+//					prevDir = currDir;
+//				}
+//				prevPos = currPos;
+//				
+//				Frame frame = RobotController.vectorToFrame(currPos, originFrame);
+//				LBRE1Redundancy e1val = new LBRE1Redundancy();
+//				e1val.setE1(0);
+//				frame.setRedundancyInformation(robot, e1val);
+//				
+//				pathMotions.add(new LIN(frame).setCartVelocity(100).setBlendingRel(0).setCartAcceleration(100));
+//			}
+//			MotionBatch motionBatch = new MotionBatch(pathMotions.toArray(new RobotMotion<?>[pathMotions.size()]));
+//			motions.add(motionBatch);
+//			startLocs.add(paths.get(n).getPath().get(0).getPos());
+//		}
+		
+		if(file == null || file.size() != 1) {
+			logger.info("File is invalid");
+			return;
+		}
+		List<List<Vector2D>> paths = PathParser.parsePathV1(file.get(0), size);
+		logger.info(String.format("Paths: %d", paths.size()));
 
+		logger.info("Calculating paths");
 		Vector3D v = Vector3D.of(10,0,0);
-		for(int n=0;n<paths.size();n++) {
-			Path path = paths.get(n);
-			Rectangle2D bounds = path.getBounds();
-			List<RobotMotion<?>> pathMotions = new ArrayList<RobotMotion<?>>();
-			List<Vector3D> points = new ArrayList<Vector3D>();
-			List<Vector3D> controlPoints = new ArrayList<Vector3D>();
-			for(int i = 0;i < path.getPath().size();i++) {
-				Vector3D currPos = canvas.toWorld(path.getPath().get(i).getPos()).add(canvas.getOrigin()).add(v);
-				
-				if(path.getPath().get(i).isBlend() || controlPoints.isEmpty()) {
-					controlPoints.add(currPos);
-					continue;
-				}
-				if(controlPoints.size() == 1) {
-					points.add(currPos);
-					controlPoints.clear();
-					controlPoints.add(currPos);
-					continue;
-				}
-				controlPoints.add(currPos);
-				points.addAll(RobotController.bezierToVectors(controlPoints, 100));
-				controlPoints.clear();
-				controlPoints.add(currPos);
-			}
+		for (int i=0;i<paths.size();i++){
+			RobotMotion<?>[] pathMotions = new RobotMotion<?>[paths.get(i).size()];
 			Vector3D prevDir = null;
 			Vector3D prevPos = null;
-			for(Vector3D currPos:points) {
+			for (int j=0;j<paths.get(i).size();j++) {
+				Vector3D path3D = canvas.toWorld(paths.get(i).get(j)).add(origin).add(v);
+				Frame frame = RobotController.vectorToFrame(path3D, originFrame);
+				Vector3D currPos = RobotController.frameToVector(frame);
 				if(prevPos != null) {
 					Vector3D currDir = currPos.subtract(prevPos);
 					if(prevDir != null) {
 						double angle = currDir.angleRad(prevDir);
 						double blend = MathHelper.qerp(1,0.8,0,MathHelper.clamp(angle/(Math.PI/2),0,1));
-//						if(angle > Math.PI/4) continue;
-						pathMotions.get(pathMotions.size()-1).setBlendingRel(blend);
+						pathMotions[j-1].setBlendingRel(blend);
 					}
 					prevDir = currDir;
 				}
 				prevPos = currPos;
-				
-				Frame frame = RobotController.vectorToFrame(currPos, originFrame);
 				LBRE1Redundancy e1val = new LBRE1Redundancy();
 				e1val.setE1(0);
 				frame.setRedundancyInformation(robot, e1val);
 				
-				pathMotions.add(new LIN(frame).setCartVelocity(100).setBlendingRel(0).setCartAcceleration(100));
+				
+				pathMotions[j] = new LIN(frame).setCartVelocity(100).setBlendingRel(0).setCartAcceleration(100);
 			}
-			MotionBatch motionBatch = new MotionBatch(pathMotions.toArray(new RobotMotion<?>[pathMotions.size()]));
+			MotionBatch motionBatch = new MotionBatch(pathMotions);
 			motions.add(motionBatch);
-			startLocs.add(paths.get(n).getPath().get(0).getPos());
+			startLocs.add(paths.get(i).get(0));
 		}
-		
-//		List<String> file = FileReader.readFile(resPath+"/newyears_mirror.txt");
-//		if(file == null || file.size() != 1) {
-//			logger.info("File is invalid");
-//			return;
-//		}
-//		List<List<Vector2D>> paths = PathParser.parsePathV1(file.get(0), size);
-//		logger.info(String.format("Paths: %d", paths.size()));
-//
-//		logger.info("Calculating paths");
-//		Vector3D v = Vector3D.of(10,0,0);
-//		for (int i=0;i<paths.size();i++){
-//			RobotMotion<?>[] pathMotions = new RobotMotion<?>[paths.get(i).size()];
-//			Vector3D prevDir = null;
-//			Vector3D prevPos = null;
-//			for (int j=0;j<paths.get(i).size();j++) {
-//				Vector3D path3D = canvas.toWorld(paths.get(i).get(j)).add(origin).add(v);
-//				Frame frame = RobotController.vectorToFrame(path3D, originFrame);
-//				Vector3D currPos = RobotController.frameToVector(frame);
-//				if(prevPos != null) {
-//					Vector3D currDir = currPos.subtract(prevPos);
-//					if(prevDir != null) {
-//						double angle = currDir.angleRad(prevDir);
-//						double blend = MathHelper.qerp(0,0,1,MathHelper.clamp(angle/(Math.PI),0,1))*30;
-//						pathMotions[j-1].setBlendingCart(blend);
-//					}
-//					prevDir = currDir;
-//				}
-//				prevPos = currPos;
-//				LBRE1Redundancy e1val = new LBRE1Redundancy();
-//				e1val.setE1(0);
-//				frame.setRedundancyInformation(robot, e1val);
-//				
-//				
-//				pathMotions[j] = new LIN(frame).setCartVelocity(100).setBlendingRel(0).setCartAcceleration(100);
-//			}
-//			MotionBatch motionBatch = new MotionBatch(pathMotions);
-//			motions.add(motionBatch);
-//			startLocs.add(paths.get(i).get(0));
-//		}
 
 		gripper.move(lin(originUpFrame).setCartVelocity(100));
 

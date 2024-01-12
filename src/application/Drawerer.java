@@ -199,7 +199,7 @@ public class Drawerer extends RoboticsAPIApplication{
 			List<Vector3D> points = new ArrayList<Vector3D>();
 			List<Vector3D> controlPoints = new ArrayList<Vector3D>();
 			for(int i = 0;i < path.getPath().size();i++) {
-				Vector3D currPos = canvas.toWorld(path.getPath().get(i).getPos()).add(v);
+				Vector3D currPos = canvas.toWorld(path.getPath().get(i).getPos()).add(canvas.getOrigin()).add(v);
 				
 				if(path.getPath().get(i).isBlend() || controlPoints.isEmpty()) {
 					controlPoints.add(currPos);
@@ -288,7 +288,7 @@ public class Drawerer extends RoboticsAPIApplication{
 		logger.info("Start Drawing");
 		for(int i = 0;i < startLocs.size();i++) {
 			logger.info("Start path "+i);
-			Vector3D first = canvas.toWorld(startLocs.get(i)).add(RobotController.frameToVector(originFrame)).add(Vector3D.of(-20, 0, 0));
+			Vector3D first = canvas.toWorld(startLocs.get(i)).add(RobotController.frameToVector(originUpFrame));
 			logger.info("Moving to first frame");
 			gripper.move(lin(RobotController.vectorToFrame(first, originFrame)).setCartVelocity(300));
 			penDown();

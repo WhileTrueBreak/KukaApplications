@@ -63,7 +63,7 @@ public class RobotController {
 	
 	public static double maxMove(Vector3D dir) {
 		Vector3D normDir = dir.normalize();
-		double moveThresh = 10;
+		double moveThresh = 1;
 		double moveDist = 1000;
 		double totalDist = 0;
 		Vector3D moveVector = normDir.multiply(moveDist);

@@ -106,6 +106,7 @@ public class Drawerer extends RoboticsAPIApplication{
 		gripper.move(motion.setMode(springRobot));
 	}
 
+	@SuppressWarnings("unused")
 	private void drawSplines(List<Spline> splines, List<Vector2D> startLocs, Canvas canvas, Frame originFrame) {
 		logger.info("Start Drawing");
 		ListIterator<Spline> splineIterator = splines.listIterator();
@@ -182,7 +183,7 @@ public class Drawerer extends RoboticsAPIApplication{
 		logger.info("Reading Path File");
 		String resPath = FileReader.findUniqueFolder("res", "..");
 		
-		List<String> file = FileReader.readFile(resPath+"/linie_c.txt");
+		List<String> file = FileReader.readFile(resPath+"/malogo_mirror.txt");
 		if(file == null || file.size() != 1) {
 			logger.info("File is invalid");
 			return;
@@ -203,7 +204,7 @@ public class Drawerer extends RoboticsAPIApplication{
 				e1val.setE1(0);
 				frame.setRedundancyInformation(robot, e1val);
 				
-				pathMotions[j] = new LIN(frame).setCartVelocity(100).setBlendingRel(1).setCartAcceleration(100);
+				pathMotions[j] = new LIN(frame).setCartVelocity(100).setBlendingCart(1).setCartAcceleration(100);
 			}
 			MotionBatch motionBatch = new MotionBatch(pathMotions);
 			motions.add(motionBatch);

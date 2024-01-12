@@ -18,6 +18,8 @@ import com.kuka.math.geometry.Vector3D;
 import com.kuka.nav.geometry.Vector2D;
 import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
 import com.kuka.roboticsAPI.deviceModel.LBR;
+import com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy;
+import com.kuka.roboticsAPI.geometricModel.AbstractFrame;
 import com.kuka.roboticsAPI.geometricModel.CartDOF;
 import com.kuka.roboticsAPI.geometricModel.Frame;
 import com.kuka.roboticsAPI.geometricModel.Tool;
@@ -230,12 +232,16 @@ public class Drawerer extends RoboticsAPIApplication{
 					MathHelper.qerp(p1.getX(), p2.getX(), p3.getX(), t), 
 					MathHelper.qerp(p1.getY(), p2.getY(), p3.getY(), t), 
 					MathHelper.qerp(p1.getZ(), p2.getZ(), p3.getZ(), t));
-			motions.add(new LIN(RobotController.vectorToFrame(tmp, originUpFrame)).setCartVelocity(100));
+			AbstractFrame frame = RobotController.vectorToFrame(tmp, originUpFrame);
+			LBRE1Redundancy e1val = new LBRE1Redundancy();
+			e1val.setE1(0);
+			frame.setRedundancyInformation(robot, e1val);
+			motions.add(new LIN(frame).setCartVelocity(100).setBlendingRel(1).setCartAcceleration(100));
 		}
-		motions.add(new LIN(RobotController.vectorToFrame(p3, originUpFrame)).setCartVelocity(100));
 		MotionBatch motionBatch = new MotionBatch(motions.toArray(new RobotMotion<?>[motions.size()]));
 		IMotionContainer motionContainer = gripper.moveAsync(motionBatch);
 		motionContainer.await();
+		gripper.move(new LIN(RobotController.vectorToFrame(p3, originUpFrame)).setCartVelocity(100));
 		
 		
 		logger.info("Moving to base");

@@ -107,7 +107,7 @@ public class window extends RoboticsAPIApplication{
 		mF.setLEDBlue(true);
 		logger.info("Moving to window coner for calibration");
 //		
-		gripper.move(lin(getApplicationData().getFrame("/dropPoint")).setJointVelocityRel(0.5));
+		gripper.move(ptp(getApplicationData().getFrame("/dropPoint")).setJointVelocityRel(0.5));
 //		ForceCondition touch = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 25);
 //		gripper.move(linRel(0, 0, 150, gripper.getFrame("/TCP")).setCartVelocity(20).breakWhen(touch));
 //		ThreadUtil.milliSleep(2000);

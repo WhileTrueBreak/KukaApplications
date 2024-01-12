@@ -127,7 +127,9 @@ public class RobotController {
 					MathHelper.bezier(xs, t), 
 					MathHelper.bezier(ys, t), 
 					MathHelper.bezier(zs, t));
+			points.add(tmp);
 		}
 		return points;
 	}
+	
 }

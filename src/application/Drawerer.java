@@ -223,7 +223,8 @@ public class Drawerer extends RoboticsAPIApplication{
 					Vector3D currDir = currPos.subtract(prevPos);
 					if(prevDir != null) {
 						double angle = currDir.angleRad(prevDir);
-						double blend = MathHelper.lerp(0,1,MathHelper.clamp(angle/(Math.PI),0,1));
+						double blend = MathHelper.qerp(1,0.8,0,MathHelper.clamp(angle/(Math.PI/2),0,1));
+//						if(angle > Math.PI/4) continue;
 						pathMotions.get(pathMotions.size()-1).setBlendingRel(blend);
 					}
 					prevDir = currDir;
@@ -235,7 +236,7 @@ public class Drawerer extends RoboticsAPIApplication{
 				e1val.setE1(0);
 				frame.setRedundancyInformation(robot, e1val);
 				
-				pathMotions.add(new LIN(frame).setCartVelocity(100).setCartAcceleration(100));
+				pathMotions.add(new LIN(frame).setCartVelocity(100).setBlendingRel(0).setCartAcceleration(100));
 			}
 			MotionBatch motionBatch = new MotionBatch(pathMotions.toArray(new RobotMotion<?>[pathMotions.size()]));
 			motions.add(motionBatch);

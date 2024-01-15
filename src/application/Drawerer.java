@@ -210,7 +210,7 @@ public class Drawerer extends RoboticsAPIApplication{
 					continue;
 				}
 				if(controlPoints.size() == 1) {
-					points.add(currPos);
+					points.add(controlPoints.get(0));
 					controlPoints.clear();
 					controlPoints.add(currPos);
 					continue;

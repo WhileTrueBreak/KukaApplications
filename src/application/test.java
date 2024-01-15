@@ -17,30 +17,7 @@ public class test {
 		List<String> file = FileReader.readFile("res/font/0.txt");
 		List<Path> paths = PathParser.parsePathV2(file);
 		
-		for(int n=0;n<paths.size();n++) {
-			Path path = paths.get(n);
-			path.updateBounds();
-		}
-		
-		Rectangle2D bound = paths.get(0).getBounds();
-		
-		double maxDim = Math.max(bound.getWidth(), bound.getHeight());
-		Vector2D offset = Vector2D.of(-bound.getX(), -bound.getY());
-
-		System.out.println(bound);
-		System.out.println(offset);
-		
-		for(int n=0;n<paths.size();n++) {
-			Path path = paths.get(n);
-			for(int i = 0;i < path.getPath().size();i++) {
-				Node node = path.getPath().get(i);
-				node.setPos(node.getPos().add(offset));
-				node.setPos(node.getPos().multiply(1/maxDim));
-			}
-			path.updateBounds();
-		}
-		
-		System.out.println(paths.get(0).getBounds());
+		for(int i = 0;i < 10;i++) System.out.println(i);
 	}
 
 }

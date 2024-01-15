@@ -180,20 +180,6 @@ public class Drawerer extends RoboticsAPIApplication{
 		List<Vector2D> startLocs = new ArrayList<Vector2D>();
 		
 		List<Path> paths = PathParser.parsePathV2(file);
-		for(int n=0;n<paths.size();n++) paths.get(n).updateBounds();
-		Rectangle2D bound = paths.get(0).getBounds();
-		double maxDim = Math.max(bound.getWidth(), bound.getHeight());
-		Vector2D offset = Vector2D.of(-bound.getX(), -bound.getY());
-		
-		for(int n=0;n<paths.size();n++) {
-			Path path = paths.get(n);
-			for(int i = 0;i < path.getPath().size();i++) {
-				Node node = path.getPath().get(i);
-				node.setPos(node.getPos().add(offset));
-				node.setPos(node.getPos().multiply(1/maxDim));
-			}
-			path.updateBounds();
-		}
 		
 		Vector3D v = Vector3D.of(Drawerer.PEN_DOWN_DIST,0,0);
 		for(int n=0;n<paths.size();n++) {
@@ -216,7 +202,7 @@ public class Drawerer extends RoboticsAPIApplication{
 					continue;
 				}
 				controlPoints.add(currPos);
-				points.addAll(RobotController.bezierToVectors(controlPoints, 100));
+				points.addAll(RobotController.bezierToVectors(controlPoints, 50));
 				controlPoints.clear();
 				controlPoints.add(currPos);
 			}
@@ -325,7 +311,7 @@ public class Drawerer extends RoboticsAPIApplication{
 		
 		logger.info("Reading Path File");
 		String resPath = FileReader.findUniqueFolder("res", "..");
-		List<String> file = FileReader.readFile(resPath+"/font.txt");
+		List<String> file = FileReader.readFile(resPath+"/font/f.txt");
 
 //		PathPlan plan = createPathPlanV1(file, originFrame, canvas);
 		PathPlan plan = createPathPlanV2(file, originFrame, canvas);

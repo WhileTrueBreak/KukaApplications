@@ -227,9 +227,9 @@ public class Drawerer extends RoboticsAPIApplication{
 					Vector3D currDir = currPos.subtract(prevPos);
 					if(prevDir != null) {
 						double angle = currDir.angleRad(prevDir);
-						double blend = MathHelper.qerp(1,0.8,0,MathHelper.clamp(angle/(4*Math.PI/5),0,1));
+						double blend = MathHelper.qerp(1,0.8,0,MathHelper.clamp(angle/(Math.PI/4),0,1))*20;
 //						if(angle > Math.PI/4) continue;
-						pathMotions.get(pathMotions.size()-1).setBlendingRel(blend);
+						pathMotions.get(pathMotions.size()-1).setBlendingCart(blend);
 					}
 					prevDir = currDir;
 				}
@@ -324,7 +324,7 @@ public class Drawerer extends RoboticsAPIApplication{
 		
 		logger.info("Reading Path File");
 		String resPath = FileReader.findUniqueFolder("res", "..");
-		List<String> file = FileReader.readFile(resPath+"/font/B.txt");
+		List<String> file = FileReader.readFile(resPath+"/font.txt");
 
 //		PathPlan plan = createPathPlanV1(file, originFrame, canvas);
 		PathPlan plan = createPathPlanV2(file, originFrame, canvas);

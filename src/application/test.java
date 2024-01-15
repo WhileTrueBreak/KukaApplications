@@ -14,10 +14,10 @@ import application.path.Path;
 public class test {
 
 	public static void main(String[] args) throws InterruptedException, IOException {
-		List<String> file = FileReader.readFile("res/font/0.txt");
+		List<String> file = FileReader.readFile("res/font/B.txt");
 		List<Path> paths = PathParser.parsePathV2(file);
 		
-		for(int i = 0;i < 10;i++) System.out.println(i);
+		System.out.println(paths.get(0).getBounds());
 	}
 
 }

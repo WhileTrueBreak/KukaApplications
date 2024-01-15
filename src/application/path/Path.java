@@ -21,4 +21,18 @@ public class Path {
 		return bounds;
 	}
 	
+	public void updateBounds() {
+		double minx = this.path.get(0).getPos().getX();
+		double miny = this.path.get(0).getPos().getY();
+		double maxx = this.path.get(0).getPos().getX();
+		double maxy = this.path.get(0).getPos().getY();
+		for(Node node:path) {
+			if(node.getPos().getX() > maxx) maxx = node.getPos().getX();
+			if(node.getPos().getY() > maxy) maxy = node.getPos().getY();
+			if(node.getPos().getX() < minx) minx = node.getPos().getX();
+			if(node.getPos().getY() < miny) miny = node.getPos().getY();
+		}
+		this.bounds = new Rectangle2D.Double(minx, miny, maxx-minx, maxy-miny);
+	}
+	
 }

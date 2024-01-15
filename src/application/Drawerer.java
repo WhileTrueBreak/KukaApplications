@@ -175,12 +175,12 @@ public class Drawerer extends RoboticsAPIApplication{
 		return new PathPlan(motions, startLocs);
 	}
 	
-	@SuppressWarnings("unused")
 	private PathPlan createPathPlanV2(List<String> file, Frame originFrame, Canvas canvas) {
 		List<MotionBatch> motions = new ArrayList<MotionBatch>();
 		List<Vector2D> startLocs = new ArrayList<Vector2D>();
 		
 		List<Path> paths = PathParser.parsePathV2(file);
+		for(int n=0;n<paths.size();n++) paths.get(n).updateBounds();
 		Rectangle2D bound = paths.get(0).getBounds();
 		double maxDim = Math.max(bound.getWidth(), bound.getHeight());
 		Vector2D offset = Vector2D.of(-bound.getX(), -bound.getY());
@@ -192,6 +192,7 @@ public class Drawerer extends RoboticsAPIApplication{
 				node.setPos(node.getPos().add(offset));
 				node.setPos(node.getPos().multiply(1/maxDim));
 			}
+			path.updateBounds();
 		}
 		
 		Vector3D v = Vector3D.of(Drawerer.PEN_DOWN_DIST,0,0);
@@ -325,8 +326,8 @@ public class Drawerer extends RoboticsAPIApplication{
 		String resPath = FileReader.findUniqueFolder("res", "..");
 		List<String> file = FileReader.readFile(resPath+"/font/B.txt");
 
-		PathPlan plan = createPathPlanV1(file, originFrame, canvas);
-//		PathPlan plan = createPathPlanV2(file, originFrame, canvas);
+//		PathPlan plan = createPathPlanV1(file, originFrame, canvas);
+		PathPlan plan = createPathPlanV2(file, originFrame, canvas);
 
 		drawPathPlan(plan, originFrame, canvas);
 		

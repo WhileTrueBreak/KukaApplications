@@ -4,9 +4,6 @@ import static com.kuka.roboticsAPI.motionModel.BasicMotions.lin;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.linRel;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.spl;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.kuka.math.geometry.Vector3D;
 import com.kuka.roboticsAPI.conditionModel.ForceCondition;
 import com.kuka.roboticsAPI.geometricModel.Frame;
@@ -20,7 +17,6 @@ import com.kuka.roboticsAPI.motionModel.SplineOrientationType;
 import application.path.Node;
 import application.path.Path;
 import application.utils.Handler;
-import application.utils.MathHelper;
 
 public class RobotController {
 	

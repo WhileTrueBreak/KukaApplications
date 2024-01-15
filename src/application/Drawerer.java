@@ -329,7 +329,10 @@ public class Drawerer extends RoboticsAPIApplication{
 
 //		PathPlan plan = createPathPlanV1(file, originFrame, canvas);
 		PathPlan plan = createPathPlanV2(file, originFrame, canvas);
+		
 
+		gripper.move(lin(originUpFrame).setJointVelocityRel(0.2));
+		
 		drawPathPlan(plan, originFrame, canvas);
 		
 		logger.info("Moving to base");

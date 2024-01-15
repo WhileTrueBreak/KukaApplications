@@ -12,6 +12,8 @@ import java.util.ListIterator;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.omg.CORBA.Bounds;
+
 import com.kuka.common.Pair;
 import com.kuka.common.ThreadUtil;
 import com.kuka.generated.ioAccess.MediaFlangeIOGroup;
@@ -33,6 +35,7 @@ import com.kuka.task.ITaskLogger;
 
 import application.parser.FileReader;
 import application.parser.PathParser;
+import application.path.Node;
 import application.path.Path;
 import application.path.PathPlan;
 import application.robotControl.Canvas;
@@ -178,6 +181,19 @@ public class Drawerer extends RoboticsAPIApplication{
 		List<Vector2D> startLocs = new ArrayList<Vector2D>();
 		
 		List<Path> paths = PathParser.parsePathV2(file);
+		Rectangle2D bound = paths.get(0).getBounds();
+		double maxDim = Math.max(bound.getWidth(), bound.getHeight());
+		Vector2D offset = Vector2D.of(-bound.getX(), -bound.getY());
+		
+		for(int n=0;n<paths.size();n++) {
+			Path path = paths.get(n);
+			for(int i = 0;i < path.getPath().size();i++) {
+				Node node = path.getPath().get(i);
+				node.setPos(node.getPos().add(offset));
+				node.setPos(node.getPos().multiply(1/maxDim));
+			}
+		}
+		
 		Vector3D v = Vector3D.of(Drawerer.PEN_DOWN_DIST,0,0);
 		for(int n=0;n<paths.size();n++) {
 			Path path = paths.get(n);
@@ -307,7 +323,7 @@ public class Drawerer extends RoboticsAPIApplication{
 		
 		logger.info("Reading Path File");
 		String resPath = FileReader.findUniqueFolder("res", "..");
-		List<String> file = FileReader.readFile(resPath+"/newyears_mirror.txt");
+		List<String> file = FileReader.readFile(resPath+"/font/B.txt");
 
 		PathPlan plan = createPathPlanV1(file, originFrame, canvas);
 //		PathPlan plan = createPathPlanV2(file, originFrame, canvas);

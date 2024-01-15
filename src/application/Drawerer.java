@@ -220,6 +220,7 @@ public class Drawerer extends RoboticsAPIApplication{
 				controlPoints.clear();
 				controlPoints.add(currPos);
 			}
+			points.add(canvas.toWorld(path.getPath().get(path.getPath().size()-1).getPos()).add(canvas.getOrigin()).add(v));
 			Vector3D prevDir = null;
 			Vector3D prevPos = null;
 			for(Vector3D currPos:points) {

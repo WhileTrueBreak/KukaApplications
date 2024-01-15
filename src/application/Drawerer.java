@@ -40,6 +40,7 @@ import application.path.Path;
 import application.path.PathPlan;
 import application.robotControl.Canvas;
 import application.robotControl.RobotController;
+import application.utils.Bezier;
 import application.utils.Handler;
 import application.utils.MathHelper;
 
@@ -201,8 +202,8 @@ public class Drawerer extends RoboticsAPIApplication{
 					controlPoints.add(currPos);
 					continue;
 				}
-				controlPoints.add(currPos);
-				points.addAll(RobotController.bezierToVectors(controlPoints, 50));
+				controlPoints.add(currPos);	
+				points.addAll(Bezier.bezierToVectors(controlPoints, (int) Math.ceil(Bezier.approxBezierLength(controlPoints, 100))));
 				controlPoints.clear();
 				controlPoints.add(currPos);
 			}

@@ -109,25 +109,5 @@ public class RobotController {
 		}
 		return new Spline(motions);
 	}
-
-	public static List<Vector3D> bezierToVectors(List<Vector3D> controlPoints, int resolution){
-		List<Vector3D> points = new ArrayList<Vector3D>();
-		List<Double> xs = new ArrayList<Double>();
-		List<Double> ys = new ArrayList<Double>();
-		List<Double> zs = new ArrayList<Double>();
-		for(Vector3D p:controlPoints) {
-			xs.add(p.getX());
-			ys.add(p.getY());
-			zs.add(p.getZ());
-		}
-		for(double t = 0;t < 1;t+=0.01) {
-			Vector3D tmp = Vector3D.of(
-					MathHelper.bezier(xs, t), 
-					MathHelper.bezier(ys, t), 
-					MathHelper.bezier(zs, t));
-			points.add(tmp);
-		}
-		return points;
-	}
 	
 }

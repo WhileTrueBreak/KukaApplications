@@ -20,8 +20,8 @@ public class test {
 		controlPoints.add(v2);
 		controlPoints.add(v3);
 		
-		double length = Bezier.approxBezierLength(controlPoints, 100);
-		System.out.println(length);
+		List<Vector3D> points = Bezier.bezierToVectors(controlPoints, 99);
+		for(Vector3D e:points) System.out.println(e);
 		
 	}
 

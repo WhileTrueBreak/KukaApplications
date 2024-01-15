@@ -17,7 +17,8 @@ public class Bezier {
 			ys.add(p.getY());
 			zs.add(p.getZ());
 		}
-		for(double t = 0;t < 1;t+=1/(double)resolution) {
+		for(int i = 0;i < resolution;i++) {
+			Double t = (double)i/(double)resolution;
 			Vector3D tmp = Vector3D.of(
 					MathHelper.bezier(xs, t), 
 					MathHelper.bezier(ys, t), 

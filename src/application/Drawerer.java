@@ -12,8 +12,6 @@ import java.util.ListIterator;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.omg.CORBA.Bounds;
-
 import com.kuka.common.Pair;
 import com.kuka.common.ThreadUtil;
 import com.kuka.generated.ioAccess.MediaFlangeIOGroup;
@@ -35,12 +33,12 @@ import com.kuka.task.ITaskLogger;
 
 import application.parser.FileReader;
 import application.parser.PathParser;
-import application.path.Node;
 import application.path.Path;
 import application.path.PathPlan;
 import application.path.PointPath;
 import application.robotControl.Canvas;
 import application.robotControl.RobotController;
+import application.text.TextManager;
 import application.utils.Bezier;
 import application.utils.Handler;
 import application.utils.MathHelper;
@@ -175,39 +173,6 @@ public class Drawerer extends RoboticsAPIApplication{
 			startLocs.add(paths.get(i).get(0));
 		}
 		return new PathPlan(motions, startLocs);
-	}
-	
-	private PointPath convPointsV2(List<String> file, Canvas canvas) {
-		List<Path> paths = PathParser.parsePathV2(file);
-		List<List<Vector2D>> pointPaths = new ArrayList<List<Vector2D>>();
-		
-		for(int n=0;n<paths.size();n++) {
-			Path path = paths.get(n);
-			Rectangle2D bounds = path.getBounds();
-			List<RobotMotion<?>> pathMotions = new ArrayList<RobotMotion<?>>();
-			List<Vector2D> points = new ArrayList<Vector2D>();
-			List<Vector2D> controlPoints = new ArrayList<Vector2D>();
-			for(int i = 0;i < path.getPath().size();i++) {
-				Vector2D currPos = path.getPath().get(i).getPos();
-				if(path.getPath().get(i).isBlend() || controlPoints.isEmpty()) {
-					controlPoints.add(currPos);
-					continue;
-				}
-				if(controlPoints.size() == 1) {
-					points.add(controlPoints.get(0));
-					controlPoints.clear();
-					controlPoints.add(currPos);
-					continue;
-				}
-				controlPoints.add(currPos);	
-				points.addAll(Bezier.bezierToVector2Ds(controlPoints, (int) Math.ceil(Bezier.approxBezierLength2D(controlPoints, 100)*canvas.getSize()/5)));
-				controlPoints.clear();
-				controlPoints.add(currPos);
-			}
-			points.add(path.getPath().get(path.getPath().size()-1).getPos());
-			pointPaths.add(points);
-		}
-		return new PointPath(pointPaths);
 	}
 	
 	private PathPlan createPathPlanV2(List<String> file, Frame originFrame, Canvas canvas) {
@@ -345,23 +310,40 @@ public class Drawerer extends RoboticsAPIApplication{
 		
 		logger.info("Reading Path File");
 		String resPath = FileReader.findUniqueFolder("res", "..");
-		List<String> file = FileReader.readFile(resPath+"/font/66.txt");
-
-//		PathPlan plan = createPathPlanV1(file, originFrame, canvas);
-		PointPath pointPath1 = convPointsV2(file, canvas);
-		pointPath1.scalePaths(0.5);
-		PointPath pointPath2 = convPointsV2(file, canvas);
-		pointPath2.scalePaths(0.5);
-		pointPath2.offsetPaths(0.5, 0.5);
-//		PathPlan plan = createPathPlanV2(file, originFrame, canvas);
-		PathPlan plan1 = pointPath1.toPathPlan(originFrame, canvas);
-		PathPlan plan2 = pointPath2.toPathPlan(originFrame, canvas);
+		TextManager.setFontPath(resPath+"/font");
 		
-
+		String chars = "abcdefghijklmnopqrstuvwxyz";
+		for(int i = 0;i < chars.length();i++) {
+			TextManager.loadChar(chars.charAt(i), canvas);
+		}
+		
 		gripper.move(lin(originUpFrame).setJointVelocityRel(0.2));
-
-		drawPathPlan(plan1, originFrame, canvas);
-		drawPathPlan(plan2, originFrame, canvas);
+		
+		double scale = 0.1;
+		double charHeight = 0.1;
+		double spacing = 0.01;
+		double currentX = 0;
+		double currentY = 1 - charHeight;
+		
+		Rectangle2D drawArea = new Rectangle2D.Double(0, 0, 1, 1);
+		
+		for(int i = 0;i < chars.length();i++) {
+			char c = chars.charAt(i);
+			PointPath pointPath = TextManager.getCharPath(c);
+			pointPath.scalePaths(scale);
+			pointPath.offsetPaths(-pointPath.getBounds().getX(), 0);
+			pointPath.offsetPaths(currentX, currentY);
+			if(!drawArea.contains(pointPath.getBounds())) {
+				pointPath.offsetPaths(-currentX, -currentY);
+				currentX = 0;
+				currentY -= charHeight;
+				pointPath.offsetPaths(currentX, currentY);
+				if(!drawArea.contains(pointPath.getBounds())) break;
+			}
+			PathPlan pathPlan = pointPath.toPathPlan(originFrame, canvas);
+			currentX += pointPath.getBounds().getWidth()+spacing;
+			drawPathPlan(pathPlan, originFrame, canvas);
+		}
 		
 		logger.info("Moving to base");
 		gripper.move(lin(originUpFrame).setJointVelocityRel(0.2));

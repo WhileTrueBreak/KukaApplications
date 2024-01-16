@@ -1,5 +1,6 @@
 package application.path;
 
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,17 +13,37 @@ import com.kuka.roboticsAPI.motionModel.MotionBatch;
 import com.kuka.roboticsAPI.motionModel.RobotMotion;
 
 import application.Drawerer;
+import application.parser.PathParser;
 import application.robotControl.Canvas;
 import application.robotControl.RobotController;
+import application.utils.Bezier;
 import application.utils.Handler;
 import application.utils.MathHelper;
 
 public class PointPath {
 
 	private List<List<Vector2D>> pointPaths;
+	private Rectangle2D bounds;
 	
 	public PointPath(List<List<Vector2D>> pointPaths) {
 		this.pointPaths = pointPaths;
+		this.updateBounds();
+	}
+
+	private void updateBounds() {
+		double minx = this.pointPaths.get(0).get(0).getX();
+		double miny = this.pointPaths.get(0).get(0).getY();
+		double maxx = this.pointPaths.get(0).get(0).getX();
+		double maxy = this.pointPaths.get(0).get(0).getY();
+		for(List<Vector2D> path: this.pointPaths) {
+			for(Vector2D point: path) {
+				if(point.getX() > maxx) maxx = point.getX();
+				if(point.getY() > maxy) maxy = point.getY();
+				if(point.getX() < minx) minx = point.getX();
+				if(point.getY() < miny) miny = point.getY();
+			}
+		}
+		this.bounds = new Rectangle2D.Double(minx, miny, maxx-minx, maxy-miny);
 	}
 
 	public void offsetPaths(double xoff, double yoff) {
@@ -35,6 +56,7 @@ public class PointPath {
 			newPointPaths.add(newPath);
 		}
 		this.pointPaths = newPointPaths;
+		this.updateBounds();
 	}
 	
 	public void scalePaths(double scale) {
@@ -47,12 +69,9 @@ public class PointPath {
 			newPointPaths.add(newPath);
 		}
 		this.pointPaths = newPointPaths;
+		this.updateBounds();
 	}
 
-	public List<List<Vector2D>> getPointPaths() {
-		return pointPaths;
-	}
-	
 	public PathPlan toPathPlan(Frame originFrame, Canvas canvas) {
 		List<MotionBatch> motions = new ArrayList<MotionBatch>();
 		List<Vector2D> startLocs = new ArrayList<Vector2D>();
@@ -87,6 +106,44 @@ public class PointPath {
 			startLocs.add(points.get(0));
 		}
 		return new PathPlan(motions, startLocs);
+	}
+
+	
+	public Rectangle2D getBounds() {
+		return bounds;
+	}
+
+	public static PointPath createPointPathsV2(List<String> file, Canvas canvas) {
+		List<Path> paths = PathParser.parsePathV2(file);
+		List<List<Vector2D>> pointPaths = new ArrayList<List<Vector2D>>();
+		
+		for(int n=0;n<paths.size();n++) {
+			Path path = paths.get(n);
+			Rectangle2D bounds = path.getBounds();
+			List<RobotMotion<?>> pathMotions = new ArrayList<RobotMotion<?>>();
+			List<Vector2D> points = new ArrayList<Vector2D>();
+			List<Vector2D> controlPoints = new ArrayList<Vector2D>();
+			for(int i = 0;i < path.getPath().size();i++) {
+				Vector2D currPos = path.getPath().get(i).getPos();
+				if(path.getPath().get(i).isBlend() || controlPoints.isEmpty()) {
+					controlPoints.add(currPos);
+					continue;
+				}
+				if(controlPoints.size() == 1) {
+					points.add(controlPoints.get(0));
+					controlPoints.clear();
+					controlPoints.add(currPos);
+					continue;
+				}
+				controlPoints.add(currPos);	
+				points.addAll(Bezier.bezierToVector2Ds(controlPoints, (int) Math.ceil(Bezier.approxBezierLength2D(controlPoints, 100)*canvas.getSize()/5)));
+				controlPoints.clear();
+				controlPoints.add(currPos);
+			}
+			points.add(path.getPath().get(path.getPath().size()-1).getPos());
+			pointPaths.add(points);
+		}
+		return new PointPath(pointPaths);
 	}
 	
 }

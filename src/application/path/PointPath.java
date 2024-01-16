@@ -27,6 +27,28 @@ public class PointPath {
 	
 	public PointPath(List<List<Vector2D>> pointPaths) {
 		this.pointPaths = pointPaths;
+		this.removeDup();
+		this.updateBounds();
+	}
+	
+	private void removeDup() {
+		List<List<Vector2D>> newPointPaths = new ArrayList<List<Vector2D>>();
+		for(List<Vector2D> path: this.pointPaths) {
+			List<Vector2D> newPath = new ArrayList<Vector2D>();
+			Vector2D prev = null;
+			for(Vector2D point: path) {
+				if(prev == null) {
+					newPath.add(point);
+					prev = point;
+					continue;
+				}
+				if(prev.subtract(point).length() < 0.00001) continue;
+				newPath.add(point);
+				prev = point;
+			}
+			newPointPaths.add(newPath);
+		}
+		this.pointPaths = newPointPaths;
 		this.updateBounds();
 	}
 
@@ -108,7 +130,6 @@ public class PointPath {
 		return new PathPlan(motions, startLocs);
 	}
 
-	
 	public Rectangle2D getBounds() {
 		return bounds;
 	}

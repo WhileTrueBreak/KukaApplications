@@ -14,6 +14,7 @@ public class TextManager {
 
 	private static Map<Integer, PointPath> charTable = new HashMap<Integer, PointPath>();
 	private static String fontPath = null;
+	private static double baseScale = 1;
 	
 	public static void setFontPath(String path) {
 		TextManager.fontPath = path;
@@ -29,12 +30,16 @@ public class TextManager {
 			System.out.println("Failed to load char: \"" + c + "\"");
 		}
 		if(file == null) return;
-		charTable.put((int) c, PointPath.createPointPathsV2(file, canvas));
+		charTable.put((int) c, PointPath.createPointPathsV2(file, canvas, baseScale));
 	}
 	
 	public static PointPath getCharPath(char c) {
 		if(!charTable.containsKey((int) c)) return null;
 		return charTable.get((int) c);
+	}
+	
+	public static void setBaseScale(double scale) {
+		baseScale = scale;
 	}
 	
 }

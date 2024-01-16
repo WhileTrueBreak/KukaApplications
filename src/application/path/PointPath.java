@@ -113,14 +113,12 @@ public class PointPath {
 		return bounds;
 	}
 
-	public static PointPath createPointPathsV2(List<String> file, Canvas canvas) {
+	public static PointPath createPointPathsV2(List<String> file, Canvas canvas, double scale) {
 		List<Path> paths = PathParser.parsePathV2(file);
 		List<List<Vector2D>> pointPaths = new ArrayList<List<Vector2D>>();
 		
 		for(int n=0;n<paths.size();n++) {
 			Path path = paths.get(n);
-			Rectangle2D bounds = path.getBounds();
-			List<RobotMotion<?>> pathMotions = new ArrayList<RobotMotion<?>>();
 			List<Vector2D> points = new ArrayList<Vector2D>();
 			List<Vector2D> controlPoints = new ArrayList<Vector2D>();
 			for(int i = 0;i < path.getPath().size();i++) {
@@ -136,7 +134,7 @@ public class PointPath {
 					continue;
 				}
 				controlPoints.add(currPos);	
-				points.addAll(Bezier.bezierToVector2Ds(controlPoints, (int) Math.ceil(Bezier.approxBezierLength2D(controlPoints, 100)*canvas.getSize()/5)));
+				points.addAll(Bezier.bezierToVector2Ds(controlPoints, (int) Math.ceil(Bezier.approxBezierLength2D(controlPoints, 100)*canvas.getSize()*scale/5)));
 				controlPoints.clear();
 				controlPoints.add(currPos);
 			}

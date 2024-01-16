@@ -308,12 +308,12 @@ public class Drawerer extends RoboticsAPIApplication{
 		logger.info("Calibration completed.");
 		mF.setLEDBlue(false);
 		
-		logger.info("Reading Path File");
 		String resPath = FileReader.findUniqueFolder("res", "..");
 		TextManager.setFontPath(resPath+"/font");
 		
 		String chars = "abcdefghijklmnopqrstuvwxyz";
 		for(int i = 0;i < chars.length();i++) {
+			logger.info("Loading char: " + chars.charAt(i));
 			TextManager.loadChar(chars.charAt(i), canvas);
 		}
 		

@@ -114,7 +114,6 @@ public class window extends RoboticsAPIApplication{
 	public void run() {
 		// Calibration sequence
 		mF.setLEDBlue(true);
-		logger.info("Moving to window coner for calibration");
 
 		
 //		/getting the vector

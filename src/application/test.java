@@ -12,10 +12,7 @@ import application.utils.Bezier;
 public class test {
 
 	public static void main(String[] args) throws InterruptedException, IOException {
-		List<String> file = FileReader.readFile("res/font/B.txt");
-		for(String s:file) {
-			System.out.println(s);
-		}
+		
 		
 	}
 

@@ -309,7 +309,7 @@ public class Drawerer extends RoboticsAPIApplication{
 		mF.setLEDBlue(false);
 		
 		double buffer = 0.01;
-		double scale = 0.2;
+		double scale = 0.15;
 		double charHeight = scale;
 		double spacing = scale/10;
 		double currentX = buffer;
@@ -320,7 +320,7 @@ public class Drawerer extends RoboticsAPIApplication{
 		TextManager.setFontPath(resPath+"/font");
 		TextManager.setBaseScale(scale);
 		
-		String chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+		String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 		for(int i = 0;i < chars.length();i++) {
 			logger.info("Loading char: " + chars.charAt(i));
 			TextManager.loadChar(chars.charAt(i), canvas);
@@ -336,6 +336,8 @@ public class Drawerer extends RoboticsAPIApplication{
 			pointPath.scalePaths(scale);
 			pointPath.offsetPaths(-pointPath.getBounds().getX(), 0);
 			pointPath.offsetPaths(currentX, currentY);
+			logger.info(c + ": " + pointPath.getBounds().toString());
+			logger.info(c + ": " + Vector2D.of(pointPath.getBounds().getMaxX(), pointPath.getBounds().getMaxY()));
 			if(!drawArea.contains(pointPath.getBounds())) {
 				pointPath.offsetPaths(-currentX, -currentY);
 				currentX = buffer;

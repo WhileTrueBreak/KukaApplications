@@ -87,7 +87,7 @@ public class PointPath {
 					Vector3D currDir = currPos.subtract(prevPos);
 					if(prevDir != null) {
 						double angle = currDir.angleRad(prevDir);
-						double blend = MathHelper.qerp(1,0.8,0,MathHelper.clamp(angle/(Math.PI/4),0,1))*20;
+						double blend = MathHelper.qerp(1,0.8,0,MathHelper.clamp(angle/(4*Math.PI/5),0,1))*20;
 						pathMotions.get(pathMotions.size()-1).setBlendingCart(blend);
 					}
 					prevDir = currDir;
@@ -134,7 +134,7 @@ public class PointPath {
 					continue;
 				}
 				controlPoints.add(currPos);	
-				points.addAll(Bezier.bezierToVector2Ds(controlPoints, (int) Math.ceil(Bezier.approxBezierLength2D(controlPoints, 100)*canvas.getSize()*scale/5)));
+				points.addAll(Bezier.bezierToVector2Ds(controlPoints, (int) Math.ceil(Bezier.approxBezierLength2D(controlPoints, 100)*canvas.getSize()*scale/3)));
 				controlPoints.clear();
 				controlPoints.add(currPos);
 			}

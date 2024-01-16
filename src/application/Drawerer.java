@@ -308,47 +308,51 @@ public class Drawerer extends RoboticsAPIApplication{
 		logger.info("Calibration completed.");
 		mF.setLEDBlue(false);
 		
-		double buffer = 0.01;
-		double scale = 0.15;
-		double charHeight = scale;
-		double spacing = scale/10;
-		double currentX = buffer;
-		double currentY = 1 - charHeight - buffer;
-		
 		String resPath = FileReader.findUniqueFolder("res", "..");
+		List<String> file = FileReader.readFile(resPath+"/MonashLogo.txt");
+		PointPath pointPath = PointPath.createPointPathsV2(file, canvas, size);
+		PathPlan pathPlan = pointPath.toPathPlan(robot, originFrame, canvas);
+		drawPathPlan(pathPlan, originFrame, canvas);
 		
-		TextManager.setFontPath(resPath+"/font");
-		TextManager.setBaseScale(scale);
-		
-		String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-		for(int i = 0;i < chars.length();i++) {
-			logger.info("Loading char: " + chars.charAt(i));
-			TextManager.loadChar(chars.charAt(i), canvas);
-		}
-		
-		gripper.move(lin(originUpFrame).setJointVelocityRel(0.2));
-		
-		Rectangle2D drawArea = new Rectangle2D.Double(0, 0, 1, 1);
-		
-		for(int i = 0;i < chars.length();i++) {
-			char c = chars.charAt(i);
-			PointPath pointPath = TextManager.getCharPath(c);
-			pointPath.scalePaths(scale);
-			pointPath.offsetPaths(-pointPath.getBounds().getX(), 0);
-			pointPath.offsetPaths(currentX, currentY);
-			logger.info(c + ": " + pointPath.getBounds().toString());
-			logger.info(c + ": " + Vector2D.of(pointPath.getBounds().getMaxX(), pointPath.getBounds().getMaxY()));
-			if(!drawArea.contains(pointPath.getBounds())) {
-				pointPath.offsetPaths(-currentX, -currentY);
-				currentX = buffer;
-				currentY -= charHeight;
-				pointPath.offsetPaths(currentX, currentY);
-				if(!drawArea.contains(pointPath.getBounds())) break;
-			}
-			PathPlan pathPlan = pointPath.toPathPlan(robot, originFrame, canvas);
-			currentX += pointPath.getBounds().getWidth()+spacing;
-			drawPathPlan(pathPlan, originFrame, canvas);
-		}
+//		double buffer = 0.01;
+//		double scale = 0.15;
+//		double charHeight = scale;
+//		double spacing = scale/10;
+//		double currentX = buffer;
+//		double currentY = 1 - charHeight - buffer;
+//		
+//		TextManager.setFontPath(resPath+"/font");
+//		TextManager.setBaseScale(scale);
+//		
+//		String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+//		for(int i = 0;i < chars.length();i++) {
+//			logger.info("Loading char: " + chars.charAt(i));
+//			TextManager.loadChar(chars.charAt(i), canvas);
+//		}
+//		
+//		gripper.move(lin(originUpFrame).setJointVelocityRel(0.2));
+//		
+//		Rectangle2D drawArea = new Rectangle2D.Double(0, 0, 1, 1);
+//		
+//		for(int i = 0;i < chars.length();i++) {
+//			char c = chars.charAt(i);
+//			PointPath pointPath = TextManager.getCharPath(c);
+//			pointPath.scalePaths(scale);
+//			pointPath.offsetPaths(-pointPath.getBounds().getX(), 0);
+//			pointPath.offsetPaths(currentX, currentY);
+//			logger.info(c + ": " + pointPath.getBounds().toString());
+//			logger.info(c + ": " + Vector2D.of(pointPath.getBounds().getMaxX(), pointPath.getBounds().getMaxY()));
+//			if(!drawArea.contains(pointPath.getBounds())) {
+//				pointPath.offsetPaths(-currentX, -currentY);
+//				currentX = buffer;
+//				currentY -= charHeight;
+//				pointPath.offsetPaths(currentX, currentY);
+//				if(!drawArea.contains(pointPath.getBounds())) break;
+//			}
+//			PathPlan pathPlan = pointPath.toPathPlan(robot, originFrame, canvas);
+//			currentX += pointPath.getBounds().getWidth()+spacing;
+//			drawPathPlan(pathPlan, originFrame, canvas);
+//		}
 		
 		logger.info("Moving to base");
 		gripper.move(lin(originUpFrame).setJointVelocityRel(0.2));

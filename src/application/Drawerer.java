@@ -308,8 +308,16 @@ public class Drawerer extends RoboticsAPIApplication{
 		logger.info("Calibration completed.");
 		mF.setLEDBlue(false);
 		
+		double scale = 0.1;
+		double charHeight = scale;
+		double spacing = scale/10;
+		double currentX = 0;
+		double currentY = 1 - charHeight;
+		
 		String resPath = FileReader.findUniqueFolder("res", "..");
+		
 		TextManager.setFontPath(resPath+"/font");
+		TextManager.setBaseScale(scale);
 		
 		String chars = "abcdefghijklmnopqrstuvwxyz";
 		for(int i = 0;i < chars.length();i++) {
@@ -318,12 +326,6 @@ public class Drawerer extends RoboticsAPIApplication{
 		}
 		
 		gripper.move(lin(originUpFrame).setJointVelocityRel(0.2));
-		
-		double scale = 0.1;
-		double charHeight = 0.1;
-		double spacing = 0.01;
-		double currentX = 0;
-		double currentY = 1 - charHeight;
 		
 		Rectangle2D drawArea = new Rectangle2D.Double(0, 0, 1, 1);
 		

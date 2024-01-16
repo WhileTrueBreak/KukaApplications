@@ -1,17 +1,17 @@
 package application;
- 
+
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.circ;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.lin;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.linRel;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.positionHold;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.ptp;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.spl;
- 
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.concurrent.TimeUnit;
- 
+
 import javax.inject.Inject;
 import javax.inject.Named;
 import com.kuka.common.Pair;
@@ -39,40 +39,45 @@ import com.kuka.roboticsAPI.motionModel.controlModeModel.CartesianImpedanceContr
 import com.kuka.roboticsAPI.persistenceModel.IPersistenceEngine;
 import com.kuka.roboticsAPI.persistenceModel.XmlApplicationDataSource;
 import com.kuka.task.ITaskLogger;
- 
+
 public class window extends RoboticsAPIApplication{
 	@Inject
 	private LBR robot;
- 
+
 	@Inject 
 	private Gripper2F gripper2F1;
- 
+
 	@Inject
 	private MediaFlangeIOGroup mF;
- 
+
 	@Inject
 	@Named("RobotiqGripper")
 	private Tool gripper;
+	
 	@Inject
 	private ITaskLogger logger;
+	
 	private CartesianImpedanceControlMode springRobot;
+	
 	@Override
 	public void initialize() {
 		// Initialize
 		springRobot = new CartesianImpedanceControlMode(); 
+		
 		// Set stiffness
- 
+
 		// TODO: Stiff in every direction except plane perpendicular to flange
 		springRobot.parametrize(CartDOF.X).setStiffness(1750);
 		springRobot.parametrize(CartDOF.Y).setStiffness(5000);
 		springRobot.parametrize(CartDOF.Z).setStiffness(5000);
- 
+
 		// Stiff rotation
 		springRobot.parametrize(CartDOF.C).setStiffness(300);
 		springRobot.parametrize(CartDOF.B).setStiffness(300);
 		springRobot.parametrize(CartDOF.A).setStiffness(300);
 		springRobot.setReferenceSystem(World.Current.getRootFrame());
 		springRobot.parametrize(CartDOF.ALL).setDamping(0.4);
+		
 		// Inits the Robot
 		gripper.attachTo(robot.getFlange());
 		gripper2F1.initalise();
@@ -82,6 +87,7 @@ public class window extends RoboticsAPIApplication{
 		gripper2F1.close();
 		ThreadUtil.milliSleep(200);
 	}
+	
 	private Frame calibrateFrame(Tool grip){
 		ForceCondition touch = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 30);
 		IMotionContainer motion1 = gripper.move(linRel(0, 0, 150, gripper.getFrame("/TCP")).setCartVelocity(40).breakWhen(touch));
@@ -93,40 +99,25 @@ public class window extends RoboticsAPIApplication{
 			logger.info("Collision Detected");
 			return robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"));
 		}
- 
+
 	}
+	
 	private Vector3D getCanvasPlane(Vector3D origin, Vector3D right){
 		Vector3D hor = right.subtract(origin).normalize();
 		return hor;
 	}
+	
 	private Vector3D frameToVector(Frame frame){
 		return Vector3D.of(frame.getX(), frame.getY(), frame.getZ());
 	}
+	
 	public void run() {
 		// Calibration sequence
 		mF.setLEDBlue(true);
 		logger.info("Moving to window coner for calibration");
-//		
-		gripper.move(ptp(getApplicationData().getFrame("/dropPoint")).setJointVelocityRel(0.5));
-//		ForceCondition touch = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 25);
-//		gripper.move(linRel(0, 0, 150, gripper.getFrame("/TCP")).setCartVelocity(20).breakWhen(touch));
-//		ThreadUtil.milliSleep(2000);
-//		gripper.move(linRel(0, 0, -5, gripper.getFrame("/TCP")).setCartVelocity(20).breakWhen(touch));
-//		ThreadUtil.milliSleep(2000);
-//		gripper.move(linRel(0, 150,0, gripper.getFrame("/TCP")).setCartVelocity(20).breakWhen(touch));
-//		ThreadUtil.milliSleep(2000);
-//		gripper.move(linRel(0, -5,0, gripper.getFrame("/TCP")).setCartVelocity(20).breakWhen(touch));
-//		ThreadUtil.milliSleep(2000);
-//		gripper.move(linRel(150,0, 0, gripper.getFrame("/TCP")).setCartVelocity(20).breakWhen(touch));
-//		ThreadUtil.milliSleep(2000);
-//		gripper.move(linRel(-5,0, 0, gripper.getFrame("/TCP")).setCartVelocity(20).breakWhen(touch));
-		ThreadUtil.milliSleep(2000);
-		IPersistenceEngine engine = this.getContext().getEngine(IPersistenceEngine.class);  // RoboticsAPIApplication should be 'this' if you use it in your RoboticsAPIApplication class.
-		XmlApplicationDataSource defaultDataSource = (XmlApplicationDataSource) engine.getDefaultDataSource();
-		Frame newMain = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"));
-		ITransformation transform = newMain.getTransformationFromParent();
-		defaultDataSource.changeFrameTransformation(getApplicationData().getFrame("/handOver"), transform);
-//		//getting the vector
+
+		
+//		/getting the vector
 //		gripper.move(lin(getApplicationData().getFrame("/Window_Main/vectorMain")).setJointVelocityRel(0.5));
 //		logger.info("Calibrating vector point 1");
 //		Vector3D origin = frameToVector(calibrateFrame(gripper));
@@ -163,4 +154,4 @@ public class window extends RoboticsAPIApplication{
 //		gripper.move(linRel(openLine.getZ(), openLine.getX(), openLine.getY()).setCartVelocity(30).setCartAcceleration(10).breakWhen(force));
 	}
 }
- 
+

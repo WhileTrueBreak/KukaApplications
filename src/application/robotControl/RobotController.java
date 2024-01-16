@@ -6,6 +6,7 @@ import static com.kuka.roboticsAPI.motionModel.BasicMotions.spl;
 
 import com.kuka.math.geometry.Vector3D;
 import com.kuka.roboticsAPI.conditionModel.ForceCondition;
+import com.kuka.roboticsAPI.deviceModel.LBR;
 import com.kuka.roboticsAPI.geometricModel.Frame;
 import com.kuka.roboticsAPI.geometricModel.Tool;
 import com.kuka.roboticsAPI.motionModel.IMotionContainer;
@@ -20,7 +21,7 @@ import application.utils.Handler;
 
 public class RobotController {
 	
-	public static Frame calibrateFrame(Tool tool, int distance){
+	public static Frame calibrateFrame(LBR robot, Tool tool, int distance){
 		ForceCondition touch10 = ForceCondition.createSpatialForceCondition(tool.getFrame("/TCP"), 10);
 		IMotionContainer motion1 = tool.move(linRel(0, 0, distance, tool.getFrame("/TCP")).setCartVelocity(10).breakWhen(touch10));
 		if (motion1.getFiredBreakConditionInfo() == null){
@@ -29,7 +30,7 @@ public class RobotController {
 		}
 		else{
 			Handler.getLogger().info("Collision Detected");
-			return Handler.getRobot().getCurrentCartesianPosition(tool.getFrame("/TCP"));
+			return robot.getCurrentCartesianPosition(tool.getFrame("/TCP"));
 		}
 
 	}
@@ -61,7 +62,7 @@ public class RobotController {
 		// return new Spline((SPL[])Arrays.asList(frames).stream().map(x->spl(x)).collect(Collectors.toList()).toArray());
 	}
 	
-	public static double maxMove(Vector3D dir) {
+	public static double maxMove(Tool tool, Vector3D dir) {
 		Vector3D normDir = dir.normalize();
 		double moveThresh = 1;
 		double moveDist = 1000;
@@ -71,7 +72,7 @@ public class RobotController {
 			if(moveDist <= moveThresh) break;
 			try {
 				moveVector = normDir.multiply(moveDist);
-				Handler.getTool().move(linRel(moveVector.getY(), moveVector.getZ(), moveVector.getX()).setCartVelocity(100));
+				tool.move(linRel(moveVector.getY(), moveVector.getZ(), moveVector.getX()).setCartVelocity(100));
 				totalDist += moveDist;
 			} catch (Exception e) {
 				moveDist /= 2;
@@ -81,9 +82,9 @@ public class RobotController {
 		return totalDist;
 	}
 	
-	public static void safeMove(RobotMotion<?> motion) throws Exception {
-		ForceCondition touch15 = ForceCondition.createSpatialForceCondition(Handler.getTool().getFrame("/TCP"), 15);
-		IMotionContainer motionContainer = Handler.getTool().move(motion.breakWhen(touch15));
+	public static void safeMove(Tool tool, RobotMotion<?> motion) throws Exception {
+		ForceCondition touch15 = ForceCondition.createSpatialForceCondition(tool.getFrame("/TCP"), 15);
+		IMotionContainer motionContainer = tool.move(motion.breakWhen(touch15));
 		if(motionContainer.getFiredBreakConditionInfo() != null) {
 			Handler.getLogger().error("Touched something on safe move");
 			Handler.getLogger().error(motionContainer.getFiredBreakConditionInfo().toString());

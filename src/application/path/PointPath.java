@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.kuka.math.geometry.Vector3D;
 import com.kuka.nav.geometry.Vector2D;
+import com.kuka.roboticsAPI.deviceModel.LBR;
 import com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy;
 import com.kuka.roboticsAPI.geometricModel.Frame;
 import com.kuka.roboticsAPI.motionModel.LIN;
@@ -17,7 +18,6 @@ import application.parser.PathParser;
 import application.robotControl.Canvas;
 import application.robotControl.RobotController;
 import application.utils.Bezier;
-import application.utils.Handler;
 import application.utils.MathHelper;
 
 public class PointPath {
@@ -72,7 +72,7 @@ public class PointPath {
 		this.updateBounds();
 	}
 
-	public PathPlan toPathPlan(Frame originFrame, Canvas canvas) {
+	public PathPlan toPathPlan(LBR robot, Frame originFrame, Canvas canvas) {
 		List<MotionBatch> motions = new ArrayList<MotionBatch>();
 		List<Vector2D> startLocs = new ArrayList<Vector2D>();
 		
@@ -97,7 +97,7 @@ public class PointPath {
 				Frame frame = RobotController.vectorToFrame(currPos, originFrame);
 				LBRE1Redundancy e1val = new LBRE1Redundancy();
 				e1val.setE1(0);
-				frame.setRedundancyInformation(Handler.getRobot(), e1val);
+				frame.setRedundancyInformation(robot, e1val);
 				
 				pathMotions.add(new LIN(frame).setCartVelocity(100).setCartAcceleration(100));
 			}

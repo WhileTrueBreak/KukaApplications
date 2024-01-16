@@ -25,41 +25,41 @@ public class Handler {
 		return Handler.logger;
 	}
 
-	public static Tool getTool() {
-		return tool;
-	}
+//	public static Tool getTool() {
+//		return tool;
+//	}
 
 	public static void setTool(Tool tool) {
 		if(Handler.tool == null) Handler.tool = tool;
 	}
 
-	public static LBR getRobot() {
-		return robot;
-	}
+//	public static LBR getRobot() {
+//		return robot;
+//	}
 
 	public static void setRobot(LBR robot) {
 		if(Handler.robot == null) Handler.robot = robot;
 	}
 
-	public static Gripper2F getGripper() {
-		return gripper;
-	}
+//	public static Gripper2F getGripper() {
+//		return gripper;
+//	}
 
 	public static void setGripper(Gripper2F gripper) {
 		if(Handler.gripper == null) Handler.gripper = gripper;
 	}
 
-	public static MediaFlangeIOGroup getMediaFlangeIO() {
-		return mediaFlangeIO;
-	}
+//	public static MediaFlangeIOGroup getMediaFlangeIO() {
+//		return mediaFlangeIO;
+//	}
 
 	public static void setMediaFlangeIO(MediaFlangeIOGroup mediaFlange) {
 		if(Handler.mediaFlangeIO == null) Handler.mediaFlangeIO = mediaFlange;
 	}
 
-	public static Controller getController() {
-		return controller;
-	}
+//	public static Controller getController() {
+//		return controller;
+//	}
 
 	public static void setController(Controller controller) {
 		if(Handler.controller == null) Handler.controller = controller;

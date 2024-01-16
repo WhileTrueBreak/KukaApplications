@@ -20,16 +20,16 @@ import application.utils.Handler;
 
 public class RobotController {
 	
-	public static Frame calibrateFrame(Tool grip, int distance){
-		ForceCondition touch10 = ForceCondition.createSpatialForceCondition(Handler.getTool().getFrame("/TCP"), 10);
-		IMotionContainer motion1 = Handler.getTool().move(linRel(0, 0, distance, Handler.getTool().getFrame("/TCP")).setCartVelocity(10).breakWhen(touch10));
+	public static Frame calibrateFrame(Tool tool, int distance){
+		ForceCondition touch10 = ForceCondition.createSpatialForceCondition(tool.getFrame("/TCP"), 10);
+		IMotionContainer motion1 = tool.move(linRel(0, 0, distance, tool.getFrame("/TCP")).setCartVelocity(10).breakWhen(touch10));
 		if (motion1.getFiredBreakConditionInfo() == null){
 			Handler.getLogger().info("No Collision Detected");
 			return null;
 		}
 		else{
 			Handler.getLogger().info("Collision Detected");
-			return Handler.getRobot().getCurrentCartesianPosition(Handler.getTool().getFrame("/TCP"));
+			return Handler.getRobot().getCurrentCartesianPosition(tool.getFrame("/TCP"));
 		}
 
 	}

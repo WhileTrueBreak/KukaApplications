@@ -58,7 +58,7 @@ public class Drawerer extends RoboticsAPIApplication{
 	
 	private CartesianImpedanceControlMode springRobot;
 
-	public static final double PEN_UP_DIST = 20;
+	public static final double PEN_UP_DIST = 5;
 	public static final double PEN_DOWN_DIST = 10;
 	
 	@Override
@@ -308,18 +308,19 @@ public class Drawerer extends RoboticsAPIApplication{
 		logger.info("Calibration completed.");
 		mF.setLEDBlue(false);
 		
-		double scale = 0.1;
+		double buffer = 0.01;
+		double scale = 0.2;
 		double charHeight = scale;
 		double spacing = scale/10;
-		double currentX = 0;
-		double currentY = 1 - charHeight;
+		double currentX = buffer;
+		double currentY = 1 - charHeight - buffer;
 		
 		String resPath = FileReader.findUniqueFolder("res", "..");
 		
 		TextManager.setFontPath(resPath+"/font");
 		TextManager.setBaseScale(scale);
 		
-		String chars = "abcdefghijklmnopqrstuvwxyz";
+		String chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 		for(int i = 0;i < chars.length();i++) {
 			logger.info("Loading char: " + chars.charAt(i));
 			TextManager.loadChar(chars.charAt(i), canvas);
@@ -337,7 +338,7 @@ public class Drawerer extends RoboticsAPIApplication{
 			pointPath.offsetPaths(currentX, currentY);
 			if(!drawArea.contains(pointPath.getBounds())) {
 				pointPath.offsetPaths(-currentX, -currentY);
-				currentX = 0;
+				currentX = buffer;
 				currentY -= charHeight;
 				pointPath.offsetPaths(currentX, currentY);
 				if(!drawArea.contains(pointPath.getBounds())) break;

@@ -97,6 +97,9 @@ public class PointPath {
 	public PathPlan toPathPlan(LBR robot, Frame originFrame, Canvas canvas) {
 		List<MotionBatch> motions = new ArrayList<MotionBatch>();
 		List<Vector2D> startLocs = new ArrayList<Vector2D>();
+
+		LBRE1Redundancy e1val = new LBRE1Redundancy();
+		e1val.setE1(0);
 		
 		Vector3D v = Vector3D.of(Drawerer.PEN_DOWN_DIST,0,0);
 		for(List<Vector2D> points:this.pointPaths) {
@@ -117,8 +120,6 @@ public class PointPath {
 				prevPos = currPos;
 				
 				Frame frame = RobotController.vectorToFrame(currPos, originFrame);
-				LBRE1Redundancy e1val = new LBRE1Redundancy();
-				e1val.setE1(0);
 				frame.setRedundancyInformation(robot, e1val);
 				
 				pathMotions.add(new LIN(frame).setCartVelocity(100).setCartAcceleration(100));

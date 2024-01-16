@@ -307,11 +307,15 @@ public class Drawerer extends RoboticsAPIApplication{
 		logger.info(String.format("Canvas size: %f", size));
 		logger.info("Calibration completed.");
 		mF.setLEDBlue(false);
-		
+
+		logger.info("Reading file");
 		String resPath = FileReader.findUniqueFolder("res", "..");
 		List<String> file = FileReader.readFile(resPath+"/MonashLogo.txt");
+		logger.info("Creating point path");
 		PointPath pointPath = PointPath.createPointPathsV2(file, canvas, size);
+		logger.info("Creating path plan");
 		PathPlan pathPlan = pointPath.toPathPlan(robot, originFrame, canvas);
+		logger.info("Drawing path plan");
 		drawPathPlan(pathPlan, originFrame, canvas);
 		
 //		double buffer = 0.01;

@@ -204,6 +204,7 @@ public class Drawerer extends RoboticsAPIApplication{
 			if(l1.charAt(i) == ' ') {
 				lineLength += spacing;
 				xpos += spacing + spacing;
+				continue;
 			}
 			PointPath pointPath = TextManager.getCharPath(l1.charAt(i));
 			pointPath.scalePaths(scale);
@@ -219,12 +220,14 @@ public class Drawerer extends RoboticsAPIApplication{
 		
 		String l2 = "New Year";
 		List<PointPath> l2PointPaths = new ArrayList<PointPath>();
+		currentY -= charHeight;
 		lineLength = spacing*(l2.length()-1);
 		xpos = 0;
 		for(int i = 0;i < l2.length();i++) {
 			if(l2.charAt(i) == ' ') {
 				lineLength += spacing;
 				xpos += spacing + spacing;
+				continue;
 			}
 			PointPath pointPath = TextManager.getCharPath(l2.charAt(i));
 			pointPath.scalePaths(scale);

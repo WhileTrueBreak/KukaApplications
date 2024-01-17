@@ -1,7 +1,6 @@
 package application.parser;
 
 import java.awt.geom.Rectangle2D;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +8,6 @@ import com.kuka.nav.geometry.Vector2D;
 
 import application.path.Node;
 import application.path.Path;
-import application.utils.Handler;
 import application.utils.MathHelper;
 
 public class PathParser {

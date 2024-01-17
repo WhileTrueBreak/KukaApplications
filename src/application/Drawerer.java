@@ -4,10 +4,8 @@ import static com.kuka.roboticsAPI.motionModel.BasicMotions.lin;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.linRel;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.ptp;
 
-import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -16,32 +14,24 @@ import com.kuka.common.Pair;
 import com.kuka.common.ThreadUtil;
 import com.kuka.generated.ioAccess.MediaFlangeIOGroup;
 import com.kuka.math.geometry.Vector3D;
-import com.kuka.nav.geometry.Vector2D;
 import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
 import com.kuka.roboticsAPI.deviceModel.LBR;
-import com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy;
 import com.kuka.roboticsAPI.geometricModel.CartDOF;
 import com.kuka.roboticsAPI.geometricModel.Frame;
 import com.kuka.roboticsAPI.geometricModel.Tool;
 import com.kuka.roboticsAPI.geometricModel.World;
-import com.kuka.roboticsAPI.motionModel.LIN;
-import com.kuka.roboticsAPI.motionModel.MotionBatch;
 import com.kuka.roboticsAPI.motionModel.RobotMotion;
-import com.kuka.roboticsAPI.motionModel.Spline;
 import com.kuka.roboticsAPI.motionModel.controlModeModel.CartesianImpedanceControlMode;
 import com.kuka.task.ITaskLogger;
+import com.vividsolutions.jts.awt.PointShapeFactory.X;
 
 import application.parser.FileReader;
-import application.parser.PathParser;
-import application.path.Path;
 import application.path.PathPlan;
 import application.path.PointPath;
 import application.robotControl.Canvas;
 import application.robotControl.RobotController;
 import application.text.TextManager;
-import application.utils.Bezier;
 import application.utils.Handler;
-import application.utils.MathHelper;
 
 public class Drawerer extends RoboticsAPIApplication{
 	@Inject
@@ -111,130 +101,6 @@ public class Drawerer extends RoboticsAPIApplication{
 		gripper.move(motion.setMode(springRobot));
 	}
 
-	@SuppressWarnings("unused")
-	private void drawSplines(List<Spline> splines, List<Vector2D> startLocs, Canvas canvas, Frame originFrame) {
-		logger.info("Start Drawing");
-		ListIterator<Spline> splineIterator = splines.listIterator();
-		while(splineIterator.hasNext()){
-			int index = splineIterator.nextIndex();
-			logger.info("Start path "+index);
-			Vector3D first = canvas.toWorld(startLocs.get(index)).add(RobotController.frameToVector(originFrame)).add(Vector3D.of(-Drawerer.PEN_UP_DIST, 0, 0));
-			logger.info("Moving to first frame");
-			gripper.move(lin(RobotController.vectorToFrame(first, originFrame)).setCartVelocity(300));
-			penDown();
-			logger.info("Start spline path");
-			springyMove(splineIterator.next());
-			logger.info("Finished path");
-			penUp();
-		}
-	}
-	
-	private PathPlan createPathPlanV1(List<String> file, Frame originFrame, Canvas canvas) {
-
-		List<MotionBatch> motions = new ArrayList<MotionBatch>();
-		List<Vector2D> startLocs = new ArrayList<Vector2D>();
-		
-		if(file == null || file.size() != 1) {
-			logger.info("File is invalid");
-			return null;
-		}
-		List<List<Vector2D>> paths = PathParser.parsePathV1(file.get(0), 3);
-		logger.info(String.format("Paths: %d", paths.size()));
-
-		logger.info("Calculating paths");
-		Vector3D v = Vector3D.of(Drawerer.PEN_DOWN_DIST,0,0);
-		for (int i=0;i<paths.size();i++){
-			RobotMotion<?>[] pathMotions = new RobotMotion<?>[paths.get(i).size()];
-			Vector3D prevDir = null;
-			Vector3D prevPos = null;
-			for (int j=0;j<paths.get(i).size();j++) {
-				Vector3D path3D = canvas.toWorld(paths.get(i).get(j)).add(RobotController.frameToVector(originFrame)).add(v);
-				Frame frame = RobotController.vectorToFrame(path3D, originFrame);
-				Vector3D currPos = RobotController.frameToVector(frame);
-				if(prevPos != null) {
-					Vector3D currDir = currPos.subtract(prevPos);
-					if(prevDir != null) {
-						double angle = currDir.angleRad(prevDir);
-						double blend = MathHelper.qerp(1,0.8,0,MathHelper.clamp(angle/(Math.PI/4),0,1));
-						pathMotions[j-1].setBlendingRel(blend);
-					}
-					prevDir = currDir;
-				}
-				prevPos = currPos;
-				LBRE1Redundancy e1val = new LBRE1Redundancy();
-				e1val.setE1(0);
-				frame.setRedundancyInformation(robot, e1val);
-				
-				
-				pathMotions[j] = new LIN(frame).setCartVelocity(100).setBlendingRel(0).setCartAcceleration(100);
-			}
-			MotionBatch motionBatch = new MotionBatch(pathMotions);
-			motions.add(motionBatch);
-			startLocs.add(paths.get(i).get(0));
-		}
-		return new PathPlan(motions, startLocs);
-	}
-	
-	private PathPlan createPathPlanV2(List<String> file, Frame originFrame, Canvas canvas) {
-		List<MotionBatch> motions = new ArrayList<MotionBatch>();
-		List<Vector2D> startLocs = new ArrayList<Vector2D>();
-		
-		List<Path> paths = PathParser.parsePathV2(file);
-		
-		Vector3D v = Vector3D.of(Drawerer.PEN_DOWN_DIST,0,0);
-		for(int n=0;n<paths.size();n++) {
-			Path path = paths.get(n);
-			Rectangle2D bounds = path.getBounds();
-			List<RobotMotion<?>> pathMotions = new ArrayList<RobotMotion<?>>();
-			List<Vector3D> points = new ArrayList<Vector3D>();
-			List<Vector3D> controlPoints = new ArrayList<Vector3D>();
-			for(int i = 0;i < path.getPath().size();i++) {
-				Vector3D currPos = canvas.toWorld(path.getPath().get(i).getPos()).add(canvas.getOrigin()).add(v);
-				
-				if(path.getPath().get(i).isBlend() || controlPoints.isEmpty()) {
-					controlPoints.add(currPos);
-					continue;
-				}
-				if(controlPoints.size() == 1) {
-					points.add(controlPoints.get(0));
-					controlPoints.clear();
-					controlPoints.add(currPos);
-					continue;
-				}
-				controlPoints.add(currPos);	
-				points.addAll(Bezier.bezierToVector3Ds(controlPoints, (int) Math.ceil(Bezier.approxBezierLength3D(controlPoints, 100)/5)));
-				controlPoints.clear();
-				controlPoints.add(currPos);
-			}
-			points.add(canvas.toWorld(path.getPath().get(path.getPath().size()-1).getPos()).add(canvas.getOrigin()).add(v));
-			Vector3D prevDir = null;
-			Vector3D prevPos = null;
-			for(Vector3D currPos:points) {
-				if(prevPos != null) {
-					Vector3D currDir = currPos.subtract(prevPos);
-					if(prevDir != null) {
-						double angle = currDir.angleRad(prevDir);
-						double blend = MathHelper.qerp(1,0.8,0,MathHelper.clamp(angle/(Math.PI/4),0,1))*20;
-						pathMotions.get(pathMotions.size()-1).setBlendingCart(blend);
-					}
-					prevDir = currDir;
-				}
-				prevPos = currPos;
-				
-				Frame frame = RobotController.vectorToFrame(currPos, originFrame);
-				LBRE1Redundancy e1val = new LBRE1Redundancy();
-				e1val.setE1(0);
-				frame.setRedundancyInformation(robot, e1val);
-				
-				pathMotions.add(new LIN(frame).setCartVelocity(100).setCartAcceleration(100));
-			}
-			MotionBatch motionBatch = new MotionBatch(pathMotions.toArray(new RobotMotion<?>[pathMotions.size()]));
-			motions.add(motionBatch);
-			startLocs.add(paths.get(n).getPath().get(0).getPos());
-		}
-		return new PathPlan(motions, startLocs);
-	}
-	
 	private void drawPathPlan(PathPlan plan, Frame originFrame, Canvas canvas) {
 		logger.info("Paths: " + plan.getMotions().size());
 		logger.info("Start Drawing");
@@ -243,7 +109,7 @@ public class Drawerer extends RoboticsAPIApplication{
 			logger.info("Start path "+i);
 			Vector3D first = canvas.toWorld(plan.getStartLocs().get(i)).add(RobotController.frameToVector(originFrame)).add(v);
 			logger.info("Moving to first frame");
-			gripper.move(lin(RobotController.vectorToFrame(first, originFrame)).setCartVelocity(300));
+			gripper.move(lin(RobotController.vectorToFrame(first, originFrame)).setCartVelocity(200));
 			penDown();
 			logger.info("Start path");
 			springyMove(plan.getMotions().get(i));
@@ -310,51 +176,76 @@ public class Drawerer extends RoboticsAPIApplication{
 
 		logger.info("Reading file");
 		String resPath = FileReader.findUniqueFolder("res", "..");
-		List<String> file = FileReader.readFile(resPath+"/sparkle.txt");
 		
-		PointPath pointPath = PointPath.createPointPathsV2(file, canvas, 1);
-		PathPlan pathPlan = pointPath.toPathPlan(robot, originFrame, canvas);
-		drawPathPlan(pathPlan, originFrame, canvas);
+//		List<String> file = FileReader.readFile(resPath+"/sparkle.txt");
+//		PointPath pointPath = PointPath.createPointPathsV2(file, canvas, 1);
+//		PathPlan pathPlan = pointPath.toPathPlan(robot, originFrame, canvas, 200);
+//		drawPathPlan(pathPlan, originFrame, canvas);
 		
-//		double buffer = 0.01;
-//		double scale = 0.15;
-//		double charHeight = scale;
-//		double spacing = scale/10;
-//		double currentX = buffer;
-//		double currentY = 1 - charHeight - buffer;
-//		
-//		TextManager.setFontPath(resPath+"/font");
-//		TextManager.setBaseScale(scale);
-//		
-//		String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-//		for(int i = 0;i < chars.length();i++) {
-//			logger.info("Loading char: " + chars.charAt(i));
-//			TextManager.loadChar(chars.charAt(i), canvas);
-//		}
-//		
-//		gripper.move(lin(originUpFrame).setJointVelocityRel(0.2));
-//		
-//		Rectangle2D drawArea = new Rectangle2D.Double(0, 0, 1, 1);
-//		
-//		for(int i = 0;i < chars.length();i++) {
-//			char c = chars.charAt(i);
-//			PointPath pointPath = TextManager.getCharPath(c);
-//			pointPath.scalePaths(scale);
-//			pointPath.offsetPaths(-pointPath.getBounds().getX(), 0);
-//			pointPath.offsetPaths(currentX, currentY);
-//			logger.info(c + ": " + pointPath.getBounds().toString());
-//			logger.info(c + ": " + Vector2D.of(pointPath.getBounds().getMaxX(), pointPath.getBounds().getMaxY()));
-//			if(!drawArea.contains(pointPath.getBounds())) {
-//				pointPath.offsetPaths(-currentX, -currentY);
-//				currentX = buffer;
-//				currentY -= charHeight;
-//				pointPath.offsetPaths(currentX, currentY);
-//				if(!drawArea.contains(pointPath.getBounds())) break;
-//			}
-//			PathPlan pathPlan = pointPath.toPathPlan(robot, originFrame, canvas);
-//			currentX += pointPath.getBounds().getWidth()+spacing;
-//			drawPathPlan(pathPlan, originFrame, canvas);
-//		}
+		double buffer = 0.01;
+		double scale = 0.15;
+		double charHeight = scale;
+		double spacing = scale/10;
+		double currentY = 0.5-charHeight-buffer;
+		
+		TextManager.setFontPath(resPath+"/font");
+		TextManager.setBaseScale(scale);
+		
+		String chars = "Happy New Year";
+		for(int i = 0;i < chars.length();i++) {
+			logger.info("Loading char: " + chars.charAt(i));
+			TextManager.loadChar(chars.charAt(i), canvas);
+		}
+		String l1 = "Happy";
+		List<PointPath> l1PointPaths = new ArrayList<PointPath>();
+		double lineLength = spacing*(l1.length()-1);
+		double xpos = 0;
+		for(int i = 0;i < l1.length();i++) {
+			if(l1.charAt(i) == ' ') {
+				lineLength += spacing;
+				xpos += spacing + spacing;
+			}
+			PointPath pointPath = TextManager.getCharPath(l1.charAt(i));
+			pointPath.scalePaths(scale);
+			pointPath.offsetPaths(-pointPath.getBounds().getX(), 0);
+			pointPath.offsetPaths(xpos, currentY);
+			lineLength += pointPath.getBounds().getWidth();
+			xpos += pointPath.getBounds().getWidth() + spacing;
+			l1PointPaths.add(pointPath);
+		}
+		for(PointPath pointPath:l1PointPaths) {
+			pointPath.offsetPaths((1-lineLength)/2, 0);
+		}
+		
+		String l2 = "New Year";
+		List<PointPath> l2PointPaths = new ArrayList<PointPath>();
+		lineLength = spacing*(l2.length()-1);
+		xpos = 0;
+		for(int i = 0;i < l2.length();i++) {
+			if(l2.charAt(i) == ' ') {
+				lineLength += spacing;
+				xpos += spacing + spacing;
+			}
+			PointPath pointPath = TextManager.getCharPath(l2.charAt(i));
+			pointPath.scalePaths(scale);
+			pointPath.offsetPaths(-pointPath.getBounds().getX(), 0);
+			pointPath.offsetPaths(xpos, currentY);
+			lineLength += pointPath.getBounds().getWidth();
+			xpos += pointPath.getBounds().getWidth() + spacing;
+			l2PointPaths.add(pointPath);
+		}
+		for(PointPath pointPath:l2PointPaths) {
+			pointPath.offsetPaths((1-lineLength)/2, 0);
+		}
+
+		for(PointPath pointPath:l1PointPaths) {
+			drawPathPlan(pointPath.toPathPlan(robot, originFrame, canvas, 200), originFrame, canvas);
+		}
+		for(PointPath pointPath:l2PointPaths) {
+			drawPathPlan(pointPath.toPathPlan(robot, originFrame, canvas, 200), originFrame, canvas);
+		}
+		
+		
 		
 		logger.info("Moving to base");
 		gripper.move(lin(originUpFrame).setJointVelocityRel(0.2));

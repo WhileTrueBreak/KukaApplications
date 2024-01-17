@@ -95,7 +95,7 @@ public class PointPath {
 		this.updateBounds();
 	}
 
-	public PathPlan toPathPlan(LBR robot, Frame originFrame, Canvas canvas) {
+	public PathPlan toPathPlan(LBR robot, Frame originFrame, Canvas canvas, double speed) {
 		Handler.getLogger().info("Creating path plan");
 		List<MotionBatch> motions = new ArrayList<MotionBatch>();
 		List<Vector2D> startLocs = new ArrayList<Vector2D>();
@@ -124,7 +124,7 @@ public class PointPath {
 				Frame frame = RobotController.vectorToFrame(currPos, originFrame);
 				frame.setRedundancyInformation(robot, e1val);
 				
-				pathMotions.add(new LIN(frame).setCartVelocity(100).setCartAcceleration(100));
+				pathMotions.add(new LIN(frame).setCartVelocity(speed));
 			}
 			MotionBatch motionBatch = new MotionBatch(pathMotions.toArray(new RobotMotion<?>[pathMotions.size()]));
 			motions.add(motionBatch);

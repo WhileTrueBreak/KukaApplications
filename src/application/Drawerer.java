@@ -191,7 +191,7 @@ public class Drawerer extends RoboticsAPIApplication{
 		TextManager.setFontPath(resPath+"/font");
 		TextManager.setBaseScale(scale);
 		
-		String chars = "Happy New Year";
+		String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 		for(int i = 0;i < chars.length();i++) {
 			logger.info("Loading char: " + chars.charAt(i));
 			TextManager.loadChar(chars.charAt(i), canvas);

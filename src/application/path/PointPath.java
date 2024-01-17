@@ -137,6 +137,18 @@ public class PointPath {
 		return bounds;
 	}
 	
+	public PointPath clone() {
+		List<List<Vector2D>> newPointPaths = new ArrayList<List<Vector2D>>();
+		for(List<Vector2D> path: this.pointPaths) {
+			List<Vector2D> newPath = new ArrayList<Vector2D>();
+			for(Vector2D point: path) {
+				newPath.add(Vector2D.of(point.getX(), point.getY()));
+			}
+			newPointPaths.add(newPath);
+		}
+		return new PointPath(newPointPaths);
+	}
+	
 	public static PointPath createPointPathsV1(List<String> file, Canvas canvas, double scale) {
 		if(file == null || file.size() != 1) {
 			Handler.getLogger().info("File is invalid");

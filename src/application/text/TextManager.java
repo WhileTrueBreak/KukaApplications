@@ -35,7 +35,7 @@ public class TextManager {
 	
 	public static PointPath getCharPath(char c) {
 		if(!charTable.containsKey((int) c)) return null;
-		return charTable.get((int) c);
+		return charTable.get((int) c).clone();
 	}
 	
 	public static void setBaseScale(double scale) {

@@ -138,7 +138,7 @@ public class Drawerer extends RoboticsAPIApplication{
 			logger.info("File is invalid");
 			return null;
 		}
-		List<List<Vector2D>> paths = PathParser.parsePathV1(file.get(0));
+		List<List<Vector2D>> paths = PathParser.parsePathV1(file.get(0), 3);
 		logger.info(String.format("Paths: %d", paths.size()));
 
 		logger.info("Calculating paths");
@@ -310,12 +310,11 @@ public class Drawerer extends RoboticsAPIApplication{
 
 		logger.info("Reading file");
 		String resPath = FileReader.findUniqueFolder("res", "..");
-		List<String> file = FileReader.readFile(resPath+"/MonashLogo.txt");
-		logger.info("Creating point path");
-		PointPath pointPath = PointPath.createPointPathsV2(file, canvas, 1);
-		logger.info("Creating path plan");
+		List<String> file = FileReader.readFile(resPath+"/frieren_c.txt");
+		
+		PointPath pointPath = PointPath.createPointPathsV1(file, canvas, 1);
+		
 		PathPlan pathPlan = pointPath.toPathPlan(robot, originFrame, canvas);
-		logger.info("Drawing path plan");
 		drawPathPlan(pathPlan, originFrame, canvas);
 		
 //		double buffer = 0.01;

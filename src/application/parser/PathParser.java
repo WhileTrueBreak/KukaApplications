@@ -14,7 +14,7 @@ import application.utils.MathHelper;
 
 public class PathParser {
 	
-	public static List<List<Vector2D>> parsePathV1(String pathString) {
+	public static List<List<Vector2D>> parsePathV1(String pathString, double minDist) {
 		String[] pathStrings = pathString.split("\\|");
 		List<String[]> coordStrings = new ArrayList<String[]>();
 		for(String string:pathStrings) {
@@ -39,7 +39,7 @@ public class PathParser {
 				path.add(coord);
 				lastCoord = coord;
 			}
-			if(path.get(0).subtract(path.get(path.size()-1)).length() != 0) path.add(path.get(0));
+			if(path.get(0).subtract(path.get(path.size()-1)).length() >= minDist) path.add(path.get(0));
 			paths.add(path);
 		}
 		return paths;

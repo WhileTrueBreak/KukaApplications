@@ -18,6 +18,7 @@ import application.parser.PathParser;
 import application.robotControl.Canvas;
 import application.robotControl.RobotController;
 import application.utils.Bezier;
+import application.utils.Handler;
 import application.utils.MathHelper;
 
 public class PointPath {
@@ -95,6 +96,7 @@ public class PointPath {
 	}
 
 	public PathPlan toPathPlan(LBR robot, Frame originFrame, Canvas canvas) {
+		Handler.getLogger().info("Creating path plan");
 		List<MotionBatch> motions = new ArrayList<MotionBatch>();
 		List<Vector2D> startLocs = new ArrayList<Vector2D>();
 
@@ -133,6 +135,16 @@ public class PointPath {
 
 	public Rectangle2D getBounds() {
 		return bounds;
+	}
+	
+	public static PointPath createPointPathsV1(List<String> file, Canvas canvas, double scale) {
+		if(file == null || file.size() != 1) {
+			Handler.getLogger().info("File is invalid");
+			return null;
+		}
+		List<List<Vector2D>> paths = PathParser.parsePathV1(file.get(0), scale/3);
+		
+		return new PointPath(paths);
 	}
 
 	public static PointPath createPointPathsV2(List<String> file, Canvas canvas, double scale) {

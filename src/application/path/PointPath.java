@@ -124,7 +124,7 @@ public class PointPath {
 				Frame frame = RobotController.vectorToFrame(currPos, originFrame);
 				frame.setRedundancyInformation(robot, e1val);
 				
-				pathMotions.add(new LIN(frame).setCartVelocity(speed));
+				pathMotions.add(new LIN(frame).setCartVelocity(speed).setCartAcceleration(100));
 			}
 			MotionBatch motionBatch = new MotionBatch(pathMotions.toArray(new RobotMotion<?>[pathMotions.size()]));
 			motions.add(motionBatch);

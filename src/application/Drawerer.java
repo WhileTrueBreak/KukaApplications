@@ -198,11 +198,9 @@ public class Drawerer extends RoboticsAPIApplication{
 		}
 		String l1 = "Happy";
 		List<PointPath> l1PointPaths = new ArrayList<PointPath>();
-		double lineLength = spacing*(l1.length()-1);
 		double xpos = 0;
 		for(int i = 0;i < l1.length();i++) {
 			if(l1.charAt(i) == ' ') {
-				lineLength += spacing;
 				xpos += spacing + spacing;
 				continue;
 			}
@@ -210,22 +208,23 @@ public class Drawerer extends RoboticsAPIApplication{
 			pointPath.scalePaths(scale);
 			pointPath.offsetPaths(-pointPath.getBounds().getX(), 0);
 			pointPath.offsetPaths(xpos, currentY);
-			lineLength += pointPath.getBounds().getWidth();
 			xpos += pointPath.getBounds().getWidth() + spacing;
 			l1PointPaths.add(pointPath);
 		}
 		for(PointPath pointPath:l1PointPaths) {
-			pointPath.offsetPaths((1-lineLength)/2, 0);
+			pointPath.offsetPaths((1-(xpos-spacing))/2, 0);
+		}
+
+		for(PointPath pointPath:l1PointPaths) {
+			drawPathPlan(pointPath.toPathPlan(robot, originFrame, canvas, 100), originFrame, canvas);
 		}
 		
 		String l2 = "New Year";
 		List<PointPath> l2PointPaths = new ArrayList<PointPath>();
 		currentY -= charHeight;
-		lineLength = spacing*(l2.length()-1);
 		xpos = 0;
 		for(int i = 0;i < l2.length();i++) {
 			if(l2.charAt(i) == ' ') {
-				lineLength += spacing;
 				xpos += spacing + spacing;
 				continue;
 			}
@@ -233,19 +232,15 @@ public class Drawerer extends RoboticsAPIApplication{
 			pointPath.scalePaths(scale);
 			pointPath.offsetPaths(-pointPath.getBounds().getX(), 0);
 			pointPath.offsetPaths(xpos, currentY);
-			lineLength += pointPath.getBounds().getWidth();
 			xpos += pointPath.getBounds().getWidth() + spacing;
 			l2PointPaths.add(pointPath);
 		}
 		for(PointPath pointPath:l2PointPaths) {
-			pointPath.offsetPaths((1-lineLength)/2, 0);
+			pointPath.offsetPaths((1-(xpos-spacing))/2, 0);
 		}
-
-		for(PointPath pointPath:l1PointPaths) {
-			drawPathPlan(pointPath.toPathPlan(robot, originFrame, canvas, 200), originFrame, canvas);
-		}
+		
 		for(PointPath pointPath:l2PointPaths) {
-			drawPathPlan(pointPath.toPathPlan(robot, originFrame, canvas, 200), originFrame, canvas);
+			drawPathPlan(pointPath.toPathPlan(robot, originFrame, canvas, 100), originFrame, canvas);
 		}
 		
 		

@@ -90,7 +90,7 @@ public class window extends RoboticsAPIApplication{
 	
 	private Frame calibrateFrame(Tool grip){
 		ForceCondition touch = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 35);
-		IMotionContainer motion1 = gripper.move(linRel(0, 0, 150, gripper.getFrame("/TCP")).setCartVelocity(40).breakWhen(touch));
+		IMotionContainer motion1 = gripper.move(linRel(0, 0, 150, gripper.getFrame("/TCP")).setCartVelocity(30).breakWhen(touch));
 		if (motion1.getFiredBreakConditionInfo() == null){
 			logger.info("No Collision Detected");
 			return null;
@@ -148,6 +148,7 @@ public class window extends RoboticsAPIApplication{
 		logger.info("Moving to left");
 		robot.move(ptp(getApplicationData().getFrame("/windowHandle/P2")).setJointVelocityRel(0.5));
 		logger.info("Calibrating vector point 2");
+		ThreadUtil.milliSleep(200);
 		Vector3D right = frameToVector(calibrateFrame(gripper));
 		logger.info(String.format("Right: %s", right.toString()));
 				

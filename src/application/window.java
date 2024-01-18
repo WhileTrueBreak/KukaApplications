@@ -165,10 +165,11 @@ public class window extends RoboticsAPIApplication{
 		
 		//ForceCondition force = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 500);
 		
-		Vector3D openLine = openvector.multiply(300);
+		Vector3D openLine = openvector.multiply(50);
 		logger.info("moving on a line");
 		robot.move(linRel(openLine.getX(), openLine.getY(), openLine.getZ()).setCartVelocity(20).setCartAcceleration(10));
-		logger.info("force detected");
+		robot.move(linRel(openLine.getX(), openLine.getY(), openLine.getZ()).setCartVelocity(20).setCartAcceleration(10));
+		robot.move(linRel(openLine.getX(), openLine.getY(), openLine.getZ()).setCartVelocity(20).setCartAcceleration(10));
 	}
 }
 

@@ -140,7 +140,7 @@ public class window extends RoboticsAPIApplication{
 		robot.move(ptp(getApplicationData().getFrame("/P1")).setJointVelocityRel(0.2));
 		
 		//getting the vector
-		robot.move(lin(getApplicationData().getFrame("/windowHandle/P1")).setJointVelocityRel(0.5));
+		robot.move(ptp(getApplicationData().getFrame("/windowHandle/P1")).setJointVelocityRel(0.5));
 		logger.info("Calibrating vector point 1");
 		Vector3D origin = frameToVector(calibrateFrame(gripper));
 		logger.info(String.format("Origin: %s", origin.toString()));

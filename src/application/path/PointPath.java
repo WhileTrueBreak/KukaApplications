@@ -69,6 +69,19 @@ public class PointPath {
 		this.bounds = new Rectangle2D.Double(minx, miny, maxx-minx, maxy-miny);
 	}
 
+	public void mirrorPaths() {
+		List<List<Vector2D>> newPointPaths = new ArrayList<List<Vector2D>>();
+		for(List<Vector2D> path: this.pointPaths) {
+			List<Vector2D> newPath = new ArrayList<Vector2D>();
+			for(Vector2D point: path) {
+				newPath.add(Vector2D.of(bounds.getWidth()-(point.getX()-bounds.getX())+bounds.getX(), point.getY()));
+			}
+			newPointPaths.add(newPath);
+		}
+		this.pointPaths = newPointPaths;
+		this.updateBounds();
+	}
+	
 	public void offsetPaths(double xoff, double yoff) {
 		List<List<Vector2D>> newPointPaths = new ArrayList<List<Vector2D>>();
 		for(List<Vector2D> path: this.pointPaths) {

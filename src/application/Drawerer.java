@@ -181,6 +181,7 @@ public class Drawerer extends RoboticsAPIApplication{
 		
 //		List<String> file = FileReader.readFile(resPath+"/MonashLogo.txt");
 //		PointPath pointPath = PointPath.createPointPathsV2(file, canvas, 1);
+//		pointPath.mirrorPaths();
 //		PathPlan pathPlan = pointPath.toPathPlan(robot, originFrame, canvas, 200);
 //		drawPathPlan(pathPlan, originFrame, canvas);
 		
@@ -190,7 +191,7 @@ public class Drawerer extends RoboticsAPIApplication{
 		double spacing = scale/10;
 		double currentY = 0.5-charHeight-buffer;
 		
-		TextManager.setFontPath(resPath+"/font");
+		TextManager.setFontPath(resPath+"/font/arialnarrow");
 		TextManager.setBaseScale(scale);
 		
 		String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -198,54 +199,34 @@ public class Drawerer extends RoboticsAPIApplication{
 			logger.info("Loading char: " + chars.charAt(i));
 			TextManager.loadChar(chars.charAt(i), canvas);
 		}
-		String l1 = "Happy";
-		List<PointPath> l1PointPaths = new ArrayList<PointPath>();
-		double xpos = 0;
-		for(int i = 0;i < l1.length();i++) {
-			if(l1.charAt(i) == ' ') {
-				xpos += spacing + spacing;
-				continue;
+		
+		List<String> text = new ArrayList<String>();
+		text.add("Monash");
+		text.add("Innovation");
+		text.add("Labs");
+		for(String line:text) {
+			List<PointPath> PointPaths = new ArrayList<PointPath>();
+			double xpos = 0;
+			for(int i = 0;i < line.length();i++) {
+				if(line.charAt(i) == ' ') {
+					xpos += spacing + spacing;
+					continue;
+				}
+				PointPath pointPath = TextManager.getCharPath(line.charAt(i));
+				pointPath.scalePaths(scale);
+				pointPath.offsetPaths(-pointPath.getBounds().getX(), 0);
+				pointPath.offsetPaths(xpos, currentY);
+				xpos += pointPath.getBounds().getWidth() + spacing;
+				PointPaths.add(pointPath);
 			}
-			PointPath pointPath = TextManager.getCharPath(l1.charAt(i));
-			pointPath.scalePaths(scale);
-			pointPath.offsetPaths(-pointPath.getBounds().getX(), 0);
-			pointPath.offsetPaths(xpos, currentY);
-			xpos += pointPath.getBounds().getWidth() + spacing;
-			l1PointPaths.add(pointPath);
-		}
-		for(PointPath pointPath:l1PointPaths) {
-			pointPath.offsetPaths((1-(xpos-spacing))/2, 0);
-		}
-
-		for(PointPath pointPath:l1PointPaths) {
-			drawPathPlan(pointPath.toPathPlan(robot, originFrame, canvas, 100), originFrame, canvas);
-		}
-		
-		String l2 = "New Year";
-		List<PointPath> l2PointPaths = new ArrayList<PointPath>();
-		currentY -= charHeight + buffer;
-		xpos = 0;
-		for(int i = 0;i < l2.length();i++) {
-			if(l2.charAt(i) == ' ') {
-				xpos += spacing + spacing;
-				continue;
+			for(PointPath pointPath:PointPaths) {
+				pointPath.offsetPaths((1-(xpos-spacing))/2, 0);
 			}
-			PointPath pointPath = TextManager.getCharPath(l2.charAt(i));
-			pointPath.scalePaths(scale);
-			pointPath.offsetPaths(-pointPath.getBounds().getX(), 0);
-			pointPath.offsetPaths(xpos, currentY);
-			xpos += pointPath.getBounds().getWidth() + spacing;
-			l2PointPaths.add(pointPath);
+	
+			for(PointPath pointPath:PointPaths) {
+				drawPathPlan(pointPath.toPathPlan(robot, originFrame, canvas, 100), originFrame, canvas);
+			}
 		}
-		for(PointPath pointPath:l2PointPaths) {
-			pointPath.offsetPaths((1-(xpos-spacing))/2, 0);
-		}
-		
-		for(PointPath pointPath:l2PointPaths) {
-			drawPathPlan(pointPath.toPathPlan(robot, originFrame, canvas, 100), originFrame, canvas);
-		}
-		
-		
 		
 		logger.info("Moving to base");
 		gripper.move(lin(originUpFrame).setJointVelocityRel(0.2));

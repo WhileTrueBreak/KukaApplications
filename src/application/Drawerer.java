@@ -4,7 +4,6 @@ import static com.kuka.roboticsAPI.motionModel.BasicMotions.lin;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.linRel;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.ptp;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -23,14 +22,12 @@ import com.kuka.roboticsAPI.geometricModel.World;
 import com.kuka.roboticsAPI.motionModel.RobotMotion;
 import com.kuka.roboticsAPI.motionModel.controlModeModel.CartesianImpedanceControlMode;
 import com.kuka.task.ITaskLogger;
-import com.vividsolutions.jts.awt.PointShapeFactory.X;
 
 import application.parser.FileReader;
 import application.path.PathPlan;
 import application.path.PointPath;
 import application.robotControl.Canvas;
 import application.robotControl.RobotController;
-import application.text.TextManager;
 import application.utils.Handler;
 
 public class Drawerer extends RoboticsAPIApplication{
@@ -131,7 +128,7 @@ public class Drawerer extends RoboticsAPIApplication{
 		
 		logger.info("Calibrating point 1");
 		Frame originFrame = RobotController.calibrateFrame(robot, gripper, 150);
-		penUp();
+		gripper.move(linRel(0,0, -Drawerer.PEN_UP_DIST*2).setJointVelocityRel(0.2));
 		Frame originUpFrame = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"));
 		Vector3D origin = RobotController.frameToVector(originFrame);
 		logger.info(String.format("Origin: %s", origin.toString()));
@@ -177,8 +174,8 @@ public class Drawerer extends RoboticsAPIApplication{
 		logger.info("Reading file");
 		String resPath = FileReader.findUniqueFolder("res", "..");
 		
-		List<String> file = FileReader.readFile(resPath+"/face_c.txt");
-		PointPath pointPath = PointPath.createPointPathsV1(file, canvas, 1);
+		List<String> file = FileReader.readFile(resPath+"/frieren.txt");
+		PointPath pointPath = PointPath.createPointPathsV2(file, canvas, 1);
 		PathPlan pathPlan = pointPath.toPathPlan(robot, originFrame, canvas, 200);
 		drawPathPlan(pathPlan, originFrame, canvas);
 		

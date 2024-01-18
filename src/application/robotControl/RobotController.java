@@ -64,7 +64,7 @@ public class RobotController {
 	
 	public static double maxMove(Tool tool, Vector3D dir) {
 		Vector3D normDir = dir.normalize();
-		double moveThresh = 1;
+		double moveThresh = 5;
 		double moveDist = 1000;
 		double totalDist = 0;
 		Vector3D moveVector = normDir.multiply(moveDist);
@@ -72,7 +72,7 @@ public class RobotController {
 			if(moveDist <= moveThresh) break;
 			try {
 				moveVector = normDir.multiply(moveDist);
-				tool.move(linRel(moveVector.getY(), moveVector.getZ(), moveVector.getX()).setCartVelocity(100));
+				tool.move(linRel(moveVector.getY(), moveVector.getZ(), moveVector.getX()).setJointVelocityRel(0.3));
 				totalDist += moveDist;
 			} catch (Exception e) {
 				moveDist /= 2;

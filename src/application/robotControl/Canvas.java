@@ -9,7 +9,8 @@ public class Canvas {
 	public static Pair<Vector3D, Vector3D> getCanvasPlane(Vector3D origin, Vector3D up, Vector3D right){
 		Vector3D ver = up.subtract(origin).normalize();
 		Vector3D hor = right.subtract(origin).normalize();
-
+		hor = ver.crossProduct(hor.crossProduct(ver)).normalize();
+		
 		return new Pair<Vector3D, Vector3D>(hor, ver);
 	}
 	

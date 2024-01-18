@@ -127,7 +127,7 @@ public class PointPath {
 					Vector3D currDir = currPos.subtract(prevPos);
 					if(prevDir != null) {
 						double angle = currDir.angleRad(prevDir);
-						double blend = MathHelper.qerp(1,0.8,0,MathHelper.clamp(angle/(4*Math.PI/5),0,1))*20;
+						double blend = MathHelper.qerp(1,0.2,0,MathHelper.clamp(angle/(3*Math.PI/4),0,1))*10;
 						pathMotions.get(pathMotions.size()-1).setBlendingCart(blend);
 					}
 					prevDir = currDir;

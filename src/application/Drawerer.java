@@ -190,7 +190,7 @@ public class Drawerer extends RoboticsAPIApplication{
 		double charHeight = scale;
 		double spacing = scale/10;
 		double currentY = 0.8-charHeight-buffer;
-		double currentX = buffer;
+		double currentX = 1-buffer;
 		
 		TextManager.setFontPath(resPath+"/font/arialnarrow");
 		TextManager.setBaseScale(scale);
@@ -213,17 +213,13 @@ public class Drawerer extends RoboticsAPIApplication{
 					continue;
 				}
 				PointPath pointPath = TextManager.getCharPath(line.charAt(i));
+				pointPath.mirrorPaths();
 				pointPath.scalePaths(scale);
 				pointPath.offsetPaths(-pointPath.getBounds().getX(), 0);
-				pointPath.offsetPaths(currentX, currentY);
-				currentX += pointPath.getBounds().getWidth() + spacing;
+				pointPath.offsetPaths(currentX-pointPath.getBounds().getWidth(), currentY);
+				currentX -= pointPath.getBounds().getWidth() + spacing;
 				PointPaths.add(pointPath);
 			}
-			
-//			for(PointPath pointPath:PointPaths) {
-//				pointPath.offsetPaths((1-(currentX-spacing))/2, 0);
-//			}
-	
 			for(PointPath pointPath:PointPaths) {
 				drawPathPlan(pointPath.toPathPlan(robot, originFrame, canvas, 100), originFrame, canvas);
 			}

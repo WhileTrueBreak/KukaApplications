@@ -161,7 +161,7 @@ public class window extends RoboticsAPIApplication{
 		
 		robot.move(linRel(0, 0, -10).setJointVelocityRel(0.2));
 		logger.info("moving on a line");
-		robot.move(linRel(openLine.getY(), openLine.getZ(), openLine.getX()).setCartVelocity(30).setCartAcceleration(10).breakWhen(force));
+		robot.move(linRel(openLine.getZ(), openLine.getX(), openLine.getY()).setCartVelocity(30).setCartAcceleration(10).breakWhen(force));
 		
 		
 	}

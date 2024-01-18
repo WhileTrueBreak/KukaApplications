@@ -88,8 +88,8 @@ public class window extends RoboticsAPIApplication{
 		ThreadUtil.milliSleep(200);
 	}
 	
-	private Frame calibrateFrame(Tool grip){
-		ForceCondition touch = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 35);
+	private Frame calibrateFrame(Tool grip, double force){
+		ForceCondition touch = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), force);
 		IMotionContainer motion1 = gripper.move(linRel(0, 0, 150, gripper.getFrame("/TCP")).setCartVelocity(30).breakWhen(touch));
 		if (motion1.getFiredBreakConditionInfo() == null){
 			logger.info("No Collision Detected");
@@ -142,14 +142,14 @@ public class window extends RoboticsAPIApplication{
 		//getting the vector
 		robot.move(ptp(getApplicationData().getFrame("/windowHandle/P1")).setJointVelocityRel(0.5));
 		logger.info("Calibrating vector point 1");
-		Vector3D origin = frameToVector(calibrateFrame(gripper));
+		Vector3D origin = frameToVector(calibrateFrame(gripper,30));
 		logger.info(String.format("Origin: %s", origin.toString()));
 
 		logger.info("Moving to left");
 		robot.move(ptp(getApplicationData().getFrame("/windowHandle/P2")).setJointVelocityRel(0.3));
 		logger.info("Calibrating vector point 2");
 		ThreadUtil.milliSleep(1000);
-		Vector3D right = frameToVector(calibrateFrame(gripper));
+		Vector3D right = frameToVector(calibrateFrame(gripper,40));
 		logger.info(String.format("Right: %s", right.toString()));
 				
 		// get world unit vectors

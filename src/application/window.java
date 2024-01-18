@@ -137,7 +137,7 @@ public class window extends RoboticsAPIApplication{
 //		gripper.move(linRel(0, 0, -30).setJointVelocityRel(0.2));
 //		logger.info("moving on a line");
 //		gripper.move(linRel(openLine.getZ(), openLine.getX(), openLine.getY()).setCartVelocity(30).setCartAcceleration(10).breakWhen(force));
-		robot.move(ptp(getApplicationData().getFrame("/P1")).setJointVelocityRel(0.2));
+		robot.move(ptp(getApplicationData().getFrame("/P1")).setJointVelocityRel(0.5));
 		
 		//getting the vector
 		robot.move(ptp(getApplicationData().getFrame("/windowHandle/P1")).setJointVelocityRel(0.5));
@@ -149,7 +149,7 @@ public class window extends RoboticsAPIApplication{
 		robot.move(ptp(getApplicationData().getFrame("/windowHandle/P2")).setJointVelocityRel(0.3));
 		logger.info("Calibrating vector point 2");
 		ThreadUtil.milliSleep(1000);
-		Vector3D right = frameToVector(calibrateFrame(gripper,50));
+		Vector3D right = frameToVector(calibrateFrame(gripper,100));
 		logger.info(String.format("Right: %s", right.toString()));
 				
 		// get world unit vectors

@@ -163,7 +163,7 @@ public class window extends RoboticsAPIApplication{
 		robot.move(ptp(getApplicationData().getFrame("/windowHandle")).setJointVelocityRel(0.5));
 		robot.move(linRel(0, 0, 30).setJointVelocityRel(0.3));
 		
-		ForceCondition force = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 200);
+		ForceCondition force = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 500);
 	
 		logger.info("moving on a line");
 		robot.move(linRel(openLine.getX(), openLine.getY(), openLine.getZ()).setCartVelocity(5).setCartAcceleration(10).breakWhen(force));

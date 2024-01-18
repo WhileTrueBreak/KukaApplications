@@ -146,9 +146,9 @@ public class window extends RoboticsAPIApplication{
 		logger.info(String.format("Origin: %s", origin.toString()));
 
 		logger.info("Moving to left");
-		robot.move(ptp(getApplicationData().getFrame("/windowHandle/P2")).setJointVelocityRel(0.5));
+		robot.move(ptp(getApplicationData().getFrame("/windowHandle/P2")).setJointVelocityRel(0.3));
 		logger.info("Calibrating vector point 2");
-		ThreadUtil.milliSleep(200);
+		ThreadUtil.milliSleep(1000);
 		Vector3D right = frameToVector(calibrateFrame(gripper));
 		logger.info(String.format("Right: %s", right.toString()));
 				

@@ -137,30 +137,30 @@ public class window extends RoboticsAPIApplication{
 //		gripper.move(linRel(0, 0, -30).setJointVelocityRel(0.2));
 //		logger.info("moving on a line");
 //		gripper.move(linRel(openLine.getZ(), openLine.getX(), openLine.getY()).setCartVelocity(30).setCartAcceleration(10).breakWhen(force));
-		robot.move(ptp(getApplicationData().getFrame("/P1")).setJointVelocityRel(0.5));
-		
-		//getting the vector
-		robot.move(ptp(getApplicationData().getFrame("/windowHandle/P1")).setJointVelocityRel(0.5));
-		logger.info("Calibrating vector point 1");
-		Vector3D origin = frameToVector(calibrateFrame(gripper,30));
-		logger.info(String.format("Origin: %s", origin.toString()));
+//		robot.move(ptp(getApplicationData().getFrame("/P1")).setJointVelocityRel(0.5));
+//		
+//		//getting the vector
+//		robot.move(ptp(getApplicationData().getFrame("/windowHandle/P1")).setJointVelocityRel(0.5));
+//		logger.info("Calibrating vector point 1");
+//		Vector3D origin = frameToVector(calibrateFrame(gripper,30));
+//		logger.info(String.format("Origin: %s", origin.toString()));
 
 		logger.info("Moving to left");
-		robot.move(ptp(getApplicationData().getFrame("/windowHandle/P2")).setJointVelocityRel(0.3));
+		robot.move(ptp(getApplicationData().getFrame("/windowHandle/P2")).setJointVelocityRel(0.5));
 		logger.info("Calibrating vector point 2");
 		ThreadUtil.milliSleep(1000);
-		Vector3D right = frameToVector(calibrateFrame(gripper,100));
+		Vector3D right = frameToVector(calibrateFrame(gripper,500));
 		logger.info(String.format("Right: %s", right.toString()));
 				
 		// get world unit vectors
-		Vector3D openvector = getCanvasPlane(origin, right);
-		logger.info(String.format("Canvas X: (%s)", openvector.toString()));
-		Vector3D openLine = openvector.multiply(500);
-		ForceCondition force = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 30);
-
-		logger.info("moving on a line");
-		robot.move(linRel(openLine.getZ(), openLine.getX(), openLine.getY()).setCartVelocity(30).setCartAcceleration(10).breakWhen(force));
-		
+//		Vector3D openvector = getCanvasPlane(origin, right);
+//		logger.info(String.format("Canvas X: (%s)", openvector.toString()));
+//		Vector3D openLine = openvector.multiply(500);
+//		ForceCondition force = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 30);
+//
+//		logger.info("moving on a line");
+//		robot.move(linRel(openLine.getZ(), openLine.getX(), openLine.getY()).setCartVelocity(30).setCartAcceleration(10).breakWhen(force));
+//		
 		
 	}
 }

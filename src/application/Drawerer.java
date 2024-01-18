@@ -4,6 +4,7 @@ import static com.kuka.roboticsAPI.motionModel.BasicMotions.lin;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.linRel;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.ptp;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -15,7 +16,6 @@ import com.kuka.generated.ioAccess.MediaFlangeIOGroup;
 import com.kuka.math.geometry.Vector3D;
 import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
 import com.kuka.roboticsAPI.deviceModel.LBR;
-import com.kuka.roboticsAPI.deviceModel.kmp.KmpOmniMove;
 import com.kuka.roboticsAPI.deviceModel.kmp.SunriseOmniMoveMobilePlatform;
 import com.kuka.roboticsAPI.geometricModel.CartDOF;
 import com.kuka.roboticsAPI.geometricModel.Frame;
@@ -30,6 +30,7 @@ import application.path.PathPlan;
 import application.path.PointPath;
 import application.robotControl.Canvas;
 import application.robotControl.RobotController;
+import application.text.TextManager;
 import application.utils.Handler;
 
 public class Drawerer extends RoboticsAPIApplication{
@@ -178,71 +179,71 @@ public class Drawerer extends RoboticsAPIApplication{
 		logger.info("Reading file");
 		String resPath = FileReader.findUniqueFolder("res", "..");
 		
-		List<String> file = FileReader.readFile(resPath+"/sparkle.txt");
-		PointPath pointPath = PointPath.createPointPathsV2(file, canvas, 1);
-		PathPlan pathPlan = pointPath.toPathPlan(robot, originFrame, canvas, 200);
-		drawPathPlan(pathPlan, originFrame, canvas);
+//		List<String> file = FileReader.readFile(resPath+"/MonashLogo.txt");
+//		PointPath pointPath = PointPath.createPointPathsV2(file, canvas, 1);
+//		PathPlan pathPlan = pointPath.toPathPlan(robot, originFrame, canvas, 200);
+//		drawPathPlan(pathPlan, originFrame, canvas);
 		
-//		double buffer = 0.01;
-//		double scale = 0.15;
-//		double charHeight = scale;
-//		double spacing = scale/10;
-//		double currentY = 0.5-charHeight-buffer;
-//		
-//		TextManager.setFontPath(resPath+"/font");
-//		TextManager.setBaseScale(scale);
-//		
-//		String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-//		for(int i = 0;i < chars.length();i++) {
-//			logger.info("Loading char: " + chars.charAt(i));
-//			TextManager.loadChar(chars.charAt(i), canvas);
-//		}
-//		String l1 = "Happy";
-//		List<PointPath> l1PointPaths = new ArrayList<PointPath>();
-//		double xpos = 0;
-//		for(int i = 0;i < l1.length();i++) {
-//			if(l1.charAt(i) == ' ') {
-//				xpos += spacing + spacing;
-//				continue;
-//			}
-//			PointPath pointPath = TextManager.getCharPath(l1.charAt(i));
-//			pointPath.scalePaths(scale);
-//			pointPath.offsetPaths(-pointPath.getBounds().getX(), 0);
-//			pointPath.offsetPaths(xpos, currentY);
-//			xpos += pointPath.getBounds().getWidth() + spacing;
-//			l1PointPaths.add(pointPath);
-//		}
-//		for(PointPath pointPath:l1PointPaths) {
-//			pointPath.offsetPaths((1-(xpos-spacing))/2, 0);
-//		}
-//
-//		for(PointPath pointPath:l1PointPaths) {
-//			drawPathPlan(pointPath.toPathPlan(robot, originFrame, canvas, 100), originFrame, canvas);
-//		}
-//		
-//		String l2 = "New Year";
-//		List<PointPath> l2PointPaths = new ArrayList<PointPath>();
-//		currentY -= charHeight;
-//		xpos = 0;
-//		for(int i = 0;i < l2.length();i++) {
-//			if(l2.charAt(i) == ' ') {
-//				xpos += spacing + spacing;
-//				continue;
-//			}
-//			PointPath pointPath = TextManager.getCharPath(l2.charAt(i));
-//			pointPath.scalePaths(scale);
-//			pointPath.offsetPaths(-pointPath.getBounds().getX(), 0);
-//			pointPath.offsetPaths(xpos, currentY);
-//			xpos += pointPath.getBounds().getWidth() + spacing;
-//			l2PointPaths.add(pointPath);
-//		}
-//		for(PointPath pointPath:l2PointPaths) {
-//			pointPath.offsetPaths((1-(xpos-spacing))/2, 0);
-//		}
-//		
-//		for(PointPath pointPath:l2PointPaths) {
-//			drawPathPlan(pointPath.toPathPlan(robot, originFrame, canvas, 100), originFrame, canvas);
-//		}
+		double buffer = 0.01;
+		double scale = 0.15;
+		double charHeight = scale;
+		double spacing = scale/10;
+		double currentY = 0.5-charHeight-buffer;
+		
+		TextManager.setFontPath(resPath+"/font");
+		TextManager.setBaseScale(scale);
+		
+		String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+		for(int i = 0;i < chars.length();i++) {
+			logger.info("Loading char: " + chars.charAt(i));
+			TextManager.loadChar(chars.charAt(i), canvas);
+		}
+		String l1 = "Happy";
+		List<PointPath> l1PointPaths = new ArrayList<PointPath>();
+		double xpos = 0;
+		for(int i = 0;i < l1.length();i++) {
+			if(l1.charAt(i) == ' ') {
+				xpos += spacing + spacing;
+				continue;
+			}
+			PointPath pointPath = TextManager.getCharPath(l1.charAt(i));
+			pointPath.scalePaths(scale);
+			pointPath.offsetPaths(-pointPath.getBounds().getX(), 0);
+			pointPath.offsetPaths(xpos, currentY);
+			xpos += pointPath.getBounds().getWidth() + spacing;
+			l1PointPaths.add(pointPath);
+		}
+		for(PointPath pointPath:l1PointPaths) {
+			pointPath.offsetPaths((1-(xpos-spacing))/2, 0);
+		}
+
+		for(PointPath pointPath:l1PointPaths) {
+			drawPathPlan(pointPath.toPathPlan(robot, originFrame, canvas, 100), originFrame, canvas);
+		}
+		
+		String l2 = "New Year";
+		List<PointPath> l2PointPaths = new ArrayList<PointPath>();
+		currentY -= charHeight + buffer;
+		xpos = 0;
+		for(int i = 0;i < l2.length();i++) {
+			if(l2.charAt(i) == ' ') {
+				xpos += spacing + spacing;
+				continue;
+			}
+			PointPath pointPath = TextManager.getCharPath(l2.charAt(i));
+			pointPath.scalePaths(scale);
+			pointPath.offsetPaths(-pointPath.getBounds().getX(), 0);
+			pointPath.offsetPaths(xpos, currentY);
+			xpos += pointPath.getBounds().getWidth() + spacing;
+			l2PointPaths.add(pointPath);
+		}
+		for(PointPath pointPath:l2PointPaths) {
+			pointPath.offsetPaths((1-(xpos-spacing))/2, 0);
+		}
+		
+		for(PointPath pointPath:l2PointPaths) {
+			drawPathPlan(pointPath.toPathPlan(robot, originFrame, canvas, 100), originFrame, canvas);
+		}
 		
 		
 		

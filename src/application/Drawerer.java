@@ -227,7 +227,7 @@ public class Drawerer extends RoboticsAPIApplication{
 			for(PointPath pointPath:PointPaths) {
 				drawPathPlan(pointPath.toPathPlan(robot, originFrame, canvas, 100), originFrame, canvas);
 			}
-			currentY += charHeight + buffer;
+			currentY -= charHeight + buffer;
 			currentX = buffer;
 		}
 		

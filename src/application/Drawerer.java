@@ -185,11 +185,12 @@ public class Drawerer extends RoboticsAPIApplication{
 //		PathPlan pathPlan = pointPath.toPathPlan(robot, originFrame, canvas, 200);
 //		drawPathPlan(pathPlan, originFrame, canvas);
 		
-		double buffer = 0.01;
+		double buffer = 0.05;
 		double scale = 0.15;
 		double charHeight = scale;
 		double spacing = scale/10;
-		double currentY = 0.5-charHeight-buffer;
+		double currentY = 0.8-charHeight-buffer;
+		double currentX = buffer;
 		
 		TextManager.setFontPath(resPath+"/font/arialnarrow");
 		TextManager.setBaseScale(scale);
@@ -206,26 +207,28 @@ public class Drawerer extends RoboticsAPIApplication{
 		text.add("Labs");
 		for(String line:text) {
 			List<PointPath> PointPaths = new ArrayList<PointPath>();
-			double xpos = 0;
 			for(int i = 0;i < line.length();i++) {
 				if(line.charAt(i) == ' ') {
-					xpos += spacing + spacing;
+					currentX += spacing + spacing;
 					continue;
 				}
 				PointPath pointPath = TextManager.getCharPath(line.charAt(i));
 				pointPath.scalePaths(scale);
 				pointPath.offsetPaths(-pointPath.getBounds().getX(), 0);
-				pointPath.offsetPaths(xpos, currentY);
-				xpos += pointPath.getBounds().getWidth() + spacing;
+				pointPath.offsetPaths(currentX, currentY);
+				currentX += pointPath.getBounds().getWidth() + spacing;
 				PointPaths.add(pointPath);
 			}
-			for(PointPath pointPath:PointPaths) {
-				pointPath.offsetPaths((1-(xpos-spacing))/2, 0);
-			}
+			
+//			for(PointPath pointPath:PointPaths) {
+//				pointPath.offsetPaths((1-(currentX-spacing))/2, 0);
+//			}
 	
 			for(PointPath pointPath:PointPaths) {
 				drawPathPlan(pointPath.toPathPlan(robot, originFrame, canvas, 100), originFrame, canvas);
 			}
+			currentY += charHeight + buffer;
+			currentX = buffer;
 		}
 		
 		logger.info("Moving to base");

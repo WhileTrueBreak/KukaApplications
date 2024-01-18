@@ -149,7 +149,7 @@ public class window extends RoboticsAPIApplication{
 		robot.move(ptp(getApplicationData().getFrame("/windowHandle/P2")).setJointVelocityRel(0.5));
 		logger.info("Calibrating vector point 2");
 		ThreadUtil.milliSleep(1000);
-		Vector3D right = frameToVector(calibrateFrame(gripper,500));
+		Vector3D right = frameToVector(calibrateFrame(gripper,35));
 		logger.info(String.format("Right: %s", right.toString()));
 				
 		// get world unit vectors

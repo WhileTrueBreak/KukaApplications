@@ -137,16 +137,16 @@ public class window extends RoboticsAPIApplication{
 //		gripper.move(linRel(0, 0, -30).setJointVelocityRel(0.2));
 //		logger.info("moving on a line");
 //		gripper.move(linRel(openLine.getZ(), openLine.getX(), openLine.getY()).setCartVelocity(30).setCartAcceleration(10).breakWhen(force));
-		gripper.move(ptp(getApplicationData().getFrame("/P1")).setJointVelocityRel(0.2));
+		robot.move(ptp(getApplicationData().getFrame("/P1")).setJointVelocityRel(0.2));
 		
 		//getting the vector
-		gripper.move(lin(getApplicationData().getFrame("/Window_Main/P1")).setJointVelocityRel(0.5));
+		robot.move(lin(getApplicationData().getFrame("/Window_Main/P1")).setJointVelocityRel(0.5));
 		logger.info("Calibrating vector point 1");
 		Vector3D origin = frameToVector(calibrateFrame(gripper));
 		logger.info(String.format("Origin: %s", origin.toString()));
 
 		logger.info("Moving to left");
-		gripper.move(ptp(getApplicationData().getFrame("/Window_Main/P2")).setJointVelocityRel(0.5));
+		robot.move(ptp(getApplicationData().getFrame("/Window_Main/P2")).setJointVelocityRel(0.5));
 		logger.info("Calibrating vector point 2");
 		Vector3D right = frameToVector(calibrateFrame(gripper));
 		logger.info(String.format("Right: %s", right.toString()));
@@ -158,7 +158,7 @@ public class window extends RoboticsAPIApplication{
 		ForceCondition force = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 30);
 
 		logger.info("moving on a line");
-		gripper.move(linRel(openLine.getZ(), openLine.getX(), openLine.getY()).setCartVelocity(30).setCartAcceleration(10).breakWhen(force));
+		robot.move(linRel(openLine.getZ(), openLine.getX(), openLine.getY()).setCartVelocity(30).setCartAcceleration(10).breakWhen(force));
 		
 		
 	}

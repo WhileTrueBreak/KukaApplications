@@ -156,7 +156,7 @@ public class window extends RoboticsAPIApplication{
 		// get world unit vectors
 		Vector3D openvector = getCanvasPlane(origin, right);
 		logger.info(String.format("Canvas X: (%s)", openvector.toString()));
-		Vector3D openLine = openvector.multiply(500);
+		Vector3D openLine = openvector.multiply(50);
 		ForceCondition force = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 30);
 		
 		robot.move(linRel(0, 0, -10).setJointVelocityRel(0.2));

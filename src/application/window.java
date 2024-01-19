@@ -168,7 +168,6 @@ public class window extends RoboticsAPIApplication{
 		Vector3D openLine = openvector.multiply(50);
 		logger.info("moving on a line");
 		robot.move(linRel(openLine.getX(), openLine.getY(), openLine.getZ()).setCartVelocity(25).setCartAcceleration(10));
-		robot.move(linRel(20, 0, 30).setJointVelocityRel(0.2));
 		robot.move(linRel(openLine.getX(), openLine.getY(), openLine.getZ()).setCartVelocity(25).setCartAcceleration(10));
 		robot.move(linRel(openLine.getX(), openLine.getY(), openLine.getZ()).setCartVelocity(25).setCartAcceleration(10));
 	}

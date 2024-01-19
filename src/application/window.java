@@ -142,13 +142,13 @@ public class window extends RoboticsAPIApplication{
 //		robot.move(ptp(getApplicationData().getFrame("/windowHandle")).setJointVelocityRel(0.5));
 		ForceSensorData data = robot.getExternalForceTorque(robot.getFlange());
 		Vector vForce = data.getForce();
-		double forceInX = vForce.getX();
+		double forceInX = vForce.getZ();
 		
-		while (forceInX < 10)
+		while (forceInX < 5)
 			robot.move(linRel(0, 0, 2).setJointVelocityRel(0.3));
 			ForceSensorData data1 = robot.getExternalForceTorque(robot.getFlange());
 			Vector vForce1 = data1.getForce();
-			forceInX = vForce1.getX();
+			forceInX = vForce1.getZ();
 		
 //		robot.move(linRel(0, 0, -2).setJointVelocityRel(0.3));
 //		Vector3D openLine = openvector.multiply(50);

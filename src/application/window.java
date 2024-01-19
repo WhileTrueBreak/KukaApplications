@@ -147,12 +147,12 @@ public class window extends RoboticsAPIApplication{
 //		logger.info(String.format("Canvas X, Y: (%s), (%s)", openLine.getA().toString(), openLine.getB().toString()));
 
 		Spline mySpline = new Spline(
-				spl(getApplicationData().getFrame("/lockUp")),
-				spl(getApplicationData().getFrame("/P5")),
-				spl(getApplicationData().getFrame("/P6")),
-				spl(getApplicationData().getFrame("/P7")));
+				spl(getApplicationData().getFrame("/windowHandle/lockUp")),
+				spl(getApplicationData().getFrame("/windowHandle/P5")),
+				spl(getApplicationData().getFrame("/windowHandle/P6")),
+				spl(getApplicationData().getFrame("/windowHandle/P7")));
 				// ...
-		robot.move(ptp(getApplicationData().getFrame("/lockUp")));
+		robot.move(ptp(getApplicationData().getFrame("/windowHandle/lockUp")));
 		robot.move(mySpline);			
 				
 //				

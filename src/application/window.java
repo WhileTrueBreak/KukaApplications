@@ -150,7 +150,8 @@ public class window extends RoboticsAPIApplication{
 				spl(getApplicationData().getFrame("/windowHandle/lockUp")),
 				spl(getApplicationData().getFrame("/windowHandle/P5")),
 				spl(getApplicationData().getFrame("/windowHandle/P6")),
-				spl(getApplicationData().getFrame("/windowHandle/P7")));
+				spl(getApplicationData().getFrame("/windowHandle/P7")),
+				spl(getApplicationData().getFrame("/windowHandle/lockDown")));
 				// ...
 		robot.move(ptp(getApplicationData().getFrame("/windowHandle/lockUp")));
 		robot.move(mySpline);			

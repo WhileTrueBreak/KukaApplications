@@ -140,16 +140,17 @@ public class window extends RoboticsAPIApplication{
 //		
 //		robot.move(ptp(getApplicationData().getFrame("/P1")).setJointVelocityRel(0.5));
 //		robot.move(ptp(getApplicationData().getFrame("/windowHandle")).setJointVelocityRel(0.5));
-		ForceSensorData data = robot.getExternalForceTorque(robot.getFlange());
-		Vector vForce = data.getForce();
-		double forceInX = vForce.getZ();
-		
-		while (forceInX < 5)
-			robot.move(linRel(0, 0, 2).setJointVelocityRel(0.3));
-			ForceSensorData data1 = robot.getExternalForceTorque(robot.getFlange());
-			Vector vForce1 = data1.getForce();
-			forceInX = vForce1.getZ();
-		
+		Boolean con1 = true;
+		while (con1) {
+			ForceSensorData data = robot.getExternalForceTorque(robot.getFlange());
+			Vector vForce = data.getForce();
+			double forceInZ = vForce.getZ();
+			if (forceInZ < 10){
+				robot.move(linRel(0, 0, 2).setJointVelocityRel(0.3));
+			} else {
+				break;
+			}
+		}
 //		robot.move(linRel(0, 0, -2).setJointVelocityRel(0.3));
 //		Vector3D openLine = openvector.multiply(50);
 //		logger.info("moving on a line");

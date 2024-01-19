@@ -142,16 +142,17 @@ public class window extends RoboticsAPIApplication{
 //		robot.move(ptp(getApplicationData().getFrame("/windowHandle")).setJointVelocityRel(0.5));
 		Boolean con1 = true;
 		while (con1) {
-			ForceSensorData data = robot.getExternalForceTorque(robot.getFlange());
+			ForceSensorData data = robot.getExternalForceTorque(robot.getFlange(),World.Current.getRootFrame());
 			Vector vForce = data.getForce();
 			double forceInZ = vForce.getZ();
-			if (forceInZ < 10){
+			if (forceInZ < 1){
 				robot.move(linRel(0, 0, 2).setJointVelocityRel(0.3));
 			} else {
+				con1 = false;
 				break;
 			}
 		}
-//		robot.move(linRel(0, 0, -2).setJointVelocityRel(0.3));
+		robot.move(linRel(0, 0, -2).setJointVelocityRel(0.3));
 //		Vector3D openLine = openvector.multiply(50);
 //		logger.info("moving on a line");
 //		robot.move(linRel(openLine.getX(), openLine.getY(), openLine.getZ()).setCartVelocity(50).setCartAcceleration(5));

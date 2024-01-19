@@ -169,8 +169,8 @@ public class window extends RoboticsAPIApplication{
 		
 		Vector3D diag = openLine.getA().multiply(-20);
 		logger.info("moving on a line");
-		gripper.move(linRel(diag.getY(), diag.getZ(), diag.getX()).setCartVelocity(50).setCartAcceleration(5));
-		gripper.move(linRel(diag.getY(), diag.getZ(), diag.getX()).setCartVelocity(50).setCartAcceleration(5));
+		gripper.move(linRel(diag.getX(), diag.getY(), diag.getZ()).setCartVelocity(50).setCartAcceleration(5));
+		gripper.move(linRel(diag.getX(), diag.getY(), diag.getZ()).setCartVelocity(50).setCartAcceleration(5));
 	}
 }
 

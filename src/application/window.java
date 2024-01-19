@@ -178,9 +178,9 @@ public class window extends RoboticsAPIApplication{
 		ThreadUtil.milliSleep(100);
 		gripper2F1.close();
 		
-		springRobot.parametrize(CartDOF.X).setStiffness(1800);
-		springRobot.parametrize(CartDOF.Y).setStiffness(1800);
-		springRobot.parametrize(CartDOF.Z).setStiffness(1800);
+		springRobot.parametrize(CartDOF.X).setStiffness(2500);
+		springRobot.parametrize(CartDOF.Y).setStiffness(2500);
+		springRobot.parametrize(CartDOF.Z).setStiffness(2500);
 
 		// Stiff rotation
 		springRobot.parametrize(CartDOF.C).setStiffness(200);
@@ -191,7 +191,7 @@ public class window extends RoboticsAPIApplication{
 		
 		Vector3D diag = openLine.getA().multiply(200);
 		logger.info("moving on a line");
-		double acc = 20;
+		double acc = 10;
 		robot.move(linRel(diag.getZ(), diag.getX(), diag.getY()).setCartVelocity(20).setCartAcceleration(acc));
 		robot.move(linRel(diag.getZ(), diag.getX(), diag.getY()).setCartVelocity(20).setCartAcceleration(acc));
 		robot.move(linRel(diag.getZ(), diag.getX(), diag.getY()).setCartVelocity(20).setCartAcceleration(acc));

@@ -143,14 +143,14 @@ public class window extends RoboticsAPIApplication{
 		//getting the vector
 		robot.move(ptp(getApplicationData().getFrame("/windowHandle/P1")).setJointVelocityRel(0.5));
 		logger.info("Calibrating vector point 1");
-		Vector3D origin = frameToVector(calibrateFrame(gripper,25));
+		Vector3D origin = frameToVector(calibrateFrame(gripper,20));
 		logger.info(String.format("Origin: %s", origin.toString()));
 
 		logger.info("Moving to left");
 		robot.move(ptp(getApplicationData().getFrame("/windowHandle/P2")).setJointVelocityRel(0.5));
 		logger.info("Calibrating vector point 2");
 		ThreadUtil.milliSleep(1000);
-		Vector3D right = frameToVector(calibrateFrame(gripper,30));
+		Vector3D right = frameToVector(calibrateFrame(gripper,25));
 		logger.info(String.format("Right: %s", right.toString()));
 			
 		robot.move(linRel(0, 0, -20).setJointVelocityRel(0.2));
@@ -165,11 +165,11 @@ public class window extends RoboticsAPIApplication{
 		
 		//ForceCondition force = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 500);
 		
-		Vector3D openLine = openvector.multiply(50);
+		Vector3D openLine = openvector.multiply(70);
 		logger.info("moving on a line");
-		robot.move(linRel(openLine.getX(), openLine.getY(), openLine.getZ()).setCartVelocity(25).setCartAcceleration(10));
-		robot.move(linRel(openLine.getX(), openLine.getY(), openLine.getZ()).setCartVelocity(25).setCartAcceleration(10));
-		robot.move(linRel(openLine.getX(), openLine.getY(), openLine.getZ()).setCartVelocity(25).setCartAcceleration(10));
+		robot.move(linRel(openLine.getX(), openLine.getY(), openLine.getZ()).setCartVelocity(50).setCartAcceleration(5));
+		robot.move(linRel(openLine.getX(), openLine.getY(), openLine.getZ()).setCartVelocity(50).setCartAcceleration(5));
+		robot.move(linRel(openLine.getX(), openLine.getY(), openLine.getZ()).setCartVelocity(50).setCartAcceleration(5));
 	}
 }
 

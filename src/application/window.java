@@ -167,14 +167,14 @@ public class window extends RoboticsAPIApplication{
 //		robot.move(linRel(0, 0, 15).setJointVelocityRel(0.3));
 //		gripper2F1.close();
 		
-		Vector3D diag = openLine.getA().multiply(-20);
+		Vector3D diag = openLine.getA().multiply(-30);
 		logger.info("moving on a line");
-		gripper.move(linRel(diag.getX(), diag.getY(), diag.getZ()).setCartVelocity(50).setCartAcceleration(5));
-		gripper.move(linRel(diag.getX(), diag.getY(), diag.getZ()).setCartVelocity(50).setCartAcceleration(5));
+		gripper.move(linRel(diag.getX(), diag.getZ(), diag.getY()).setCartVelocity(50).setCartAcceleration(5));
+		gripper.move(linRel(diag.getX(), diag.getZ(), diag.getY()).setCartVelocity(50).setCartAcceleration(5));
 
-		gripper.move(linRel(diag.getX(), diag.getY(), diag.getZ()).setCartVelocity(50).setCartAcceleration(5));
+		gripper.move(linRel(diag.getX(), diag.getZ(), diag.getY()).setCartVelocity(50).setCartAcceleration(5));
 
-		gripper.move(linRel(diag.getX(), diag.getY(), diag.getZ()).setCartVelocity(50).setCartAcceleration(5));
+		gripper.move(linRel(diag.getX(), diag.getZ(), diag.getY()).setCartVelocity(50).setCartAcceleration(5));
 	}
 }
 

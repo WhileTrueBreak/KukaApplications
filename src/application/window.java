@@ -154,7 +154,7 @@ public class window extends RoboticsAPIApplication{
 				spl(getApplicationData().getFrame("/windowHandle/lockDown")));
 				// ...
 		robot.move(ptp(getApplicationData().getFrame("/windowHandle/lockUp")));
-		robot.move(mySpline);			
+		robot.move(mySpline.setJointVelocityRel(0.4));			
 				
 //				
 //		robot.move(ptp(getApplicationData().getFrame("/P1")).setJointVelocityRel(0.5));

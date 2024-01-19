@@ -77,7 +77,7 @@ public class Drawerer extends RoboticsAPIApplication{
 		springRobot.parametrize(CartDOF.B).setStiffness(300);
 		springRobot.parametrize(CartDOF.A).setStiffness(300);
 		springRobot.setReferenceSystem(World.Current.getRootFrame());
-		springRobot.parametrize(CartDOF.ALL).setDamping(1);
+		springRobot.parametrize(CartDOF.ALL).setDamping(0.4);
 		
 		// Inits the Robot
 		gripper.attachTo(robot.getFlange());

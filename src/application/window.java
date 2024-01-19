@@ -162,9 +162,10 @@ public class window extends RoboticsAPIApplication{
 				break;
 			}
 		}
-		robot.move(linRel(0, 0, -5).setJointVelocityRel(0.3));
-		gripper2F1.setPos(1);
-		robot.move(linRel(0, 0, 15).setJointVelocityRel(0.3));
+		robot.move(linRel(0, 0, -10).setJointVelocityRel(0.3));
+		gripper2F1.setPos(20);
+		ThreadUtil.milliSleep(1000);
+		robot.move(linRel(0, 0, 20).setJointVelocityRel(0.3));
 		gripper2F1.close();
 		
 		springRobot.parametrize(CartDOF.X).setStiffness(200);
@@ -180,15 +181,15 @@ public class window extends RoboticsAPIApplication{
 		
 		Vector3D diag = openLine.getA().multiply(50);
 		logger.info("moving on a line");
-		gripper.move(linRel(diag.getX(), diag.getZ(), diag.getY()).setCartVelocity(50).setCartAcceleration(5));
-		gripper.move(linRel(diag.getX(), diag.getZ(), diag.getY()).setCartVelocity(50).setCartAcceleration(5));
+		robot.move(linRel(diag.getX(), diag.getZ(), diag.getY()).setCartVelocity(50).setCartAcceleration(5));
+		robot.move(linRel(diag.getX(), diag.getZ(), diag.getY()).setCartVelocity(50).setCartAcceleration(5));
 
-		gripper.move(linRel(diag.getX(), diag.getZ(), diag.getY()).setCartVelocity(50).setCartAcceleration(5));
+		robot.move(linRel(diag.getX(), diag.getZ(), diag.getY()).setCartVelocity(50).setCartAcceleration(5));
 
-		gripper.move(linRel(diag.getX(), diag.getZ(), diag.getY()).setCartVelocity(50).setCartAcceleration(5));
-		gripper.move(linRel(diag.getX(), diag.getZ(), diag.getY()).setCartVelocity(50).setCartAcceleration(5));
-		gripper.move(linRel(diag.getX(), diag.getZ(), diag.getY()).setCartVelocity(50).setCartAcceleration(5));
-		gripper.move(linRel(diag.getX(), diag.getZ(), diag.getY()).setCartVelocity(50).setCartAcceleration(5));
+		robot.move(linRel(diag.getX(), diag.getZ(), diag.getY()).setCartVelocity(50).setCartAcceleration(5));
+		robot.move(linRel(diag.getX(), diag.getZ(), diag.getY()).setCartVelocity(50).setCartAcceleration(5));
+		robot.move(linRel(diag.getX(), diag.getZ(), diag.getY()).setCartVelocity(50).setCartAcceleration(5));
+		robot.move(linRel(diag.getX(), diag.getZ(), diag.getY()).setCartVelocity(50).setCartAcceleration(5));
 	}
 }
 

@@ -139,7 +139,7 @@ public class window extends RoboticsAPIApplication{
 		
 		
 		robot.move(ptp(getApplicationData().getFrame("/P1")).setJointVelocityRel(0.5));
-		robot.move(ptp(getApplicationData().getFrame("/windowHandle")).setJointVelocityRel(0.5));
+		robot.move(ptp(getApplicationData().getFrame("/windowHandle/P3")).setJointVelocityRel(0.5));
 		Boolean con1 = true;
 		while (con1) {
 			ForceSensorData data = robot.getExternalForceTorque(robot.getFlange(),World.Current.getRootFrame());

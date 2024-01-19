@@ -83,7 +83,7 @@ public class window extends RoboticsAPIApplication{
 		// Inits the Robot
 		gripper.attachTo(robot.getFlange());
 		gripper2F1.initalise();
-		gripper2F1.setSpeed(100);
+		gripper2F1.setSpeed(110);
 		gripper2F1.setForce(10);
 		mF.setLEDBlue(false);
 		gripper2F1.close();
@@ -176,7 +176,7 @@ public class window extends RoboticsAPIApplication{
 		springRobot.parametrize(CartDOF.B).setStiffness(50);
 		springRobot.parametrize(CartDOF.A).setStiffness(50);
 		springRobot.setReferenceSystem(World.Current.getRootFrame());
-		springRobot.parametrize(CartDOF.ALL).setDamping(0.8);
+		springRobot.parametrize(CartDOF.ALL).setDamping(1);
 		
 		Vector3D diag = openLine.getA().multiply(50);
 		logger.info("moving on a line");

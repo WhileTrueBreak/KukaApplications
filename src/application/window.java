@@ -83,7 +83,7 @@ public class window extends RoboticsAPIApplication{
 		// Inits the Robot
 		gripper.attachTo(robot.getFlange());
 		gripper2F1.initalise();
-		gripper2F1.setSpeed(110);
+		gripper2F1.setSpeed(120);
 		gripper2F1.setForce(10);
 		mF.setLEDBlue(false);
 		gripper2F1.close();
@@ -165,16 +165,17 @@ public class window extends RoboticsAPIApplication{
 		robot.move(linRel(0, 0, -10).setJointVelocityRel(0.3));
 		gripper2F1.setPos(20);
 		robot.move(linRel(0, 0, 20).setJointVelocityRel(0.3));
+		ThreadUtil.milliSleep(100);
 		gripper2F1.close();
 		
-		springRobot.parametrize(CartDOF.X).setStiffness(100);
-		springRobot.parametrize(CartDOF.Y).setStiffness(100);
-		springRobot.parametrize(CartDOF.Z).setStiffness(100);
+		springRobot.parametrize(CartDOF.X).setStiffness(500);
+		springRobot.parametrize(CartDOF.Y).setStiffness(500);
+		springRobot.parametrize(CartDOF.Z).setStiffness(500);
 
 		// Stiff rotation
-		springRobot.parametrize(CartDOF.C).setStiffness(50);
-		springRobot.parametrize(CartDOF.B).setStiffness(50);
-		springRobot.parametrize(CartDOF.A).setStiffness(50);
+		springRobot.parametrize(CartDOF.C).setStiffness(100);
+		springRobot.parametrize(CartDOF.B).setStiffness(100);
+		springRobot.parametrize(CartDOF.A).setStiffness(100);
 		springRobot.setReferenceSystem(World.Current.getRootFrame());
 		springRobot.parametrize(CartDOF.ALL).setDamping(1);
 		

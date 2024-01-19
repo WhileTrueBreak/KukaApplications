@@ -161,7 +161,7 @@ public class window extends RoboticsAPIApplication{
 		
 		robot.move(ptp(getApplicationData().getFrame("/P1")).setJointVelocityRel(0.5));
 		robot.move(ptp(getApplicationData().getFrame("/windowHandle")).setJointVelocityRel(0.5));
-		ForceCondition force = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 50);
+		ForceCondition force = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 60);
 		robot.move(linRel(0, 0, 30).setJointVelocityRel(0.3).breakWhen(force));
 		robot.move(linRel(0, 0, -2).setJointVelocityRel(0.3).breakWhen(force));
 		Vector3D openLine = openvector.multiply(50);

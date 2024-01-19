@@ -143,14 +143,14 @@ public class window extends RoboticsAPIApplication{
 		//getting the vector
 		robot.move(ptp(getApplicationData().getFrame("/windowHandle/P1")).setJointVelocityRel(0.5));
 		logger.info("Calibrating vector point 1");
-		Vector3D origin = frameToVector(calibrateFrame(gripper,18));
+		Vector3D origin = frameToVector(calibrateFrame(gripper,19));
 		logger.info(String.format("Origin: %s", origin.toString()));
 
 		logger.info("Moving to left");
 		robot.move(ptp(getApplicationData().getFrame("/windowHandle/P2")).setJointVelocityRel(0.5));
 		logger.info("Calibrating vector point 2");
 		ThreadUtil.milliSleep(1000);
-		Vector3D right = frameToVector(calibrateFrame(gripper,23));
+		Vector3D right = frameToVector(calibrateFrame(gripper,24));
 		logger.info(String.format("Right: %s", right.toString()));
 			
 		robot.move(linRel(0, 0, -20).setJointVelocityRel(0.2));

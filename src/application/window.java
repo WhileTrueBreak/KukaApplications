@@ -155,7 +155,7 @@ public class window extends RoboticsAPIApplication{
 		}
 		robot.move(linRel(0, 0, -0.5).setJointVelocityRel(0.3));
 		gripper2F1.open();
-		robot.move(linRel(0, 0, 2).setJointVelocityRel(0.3));
+		robot.move(linRel(0, 0, 10).setJointVelocityRel(0.3));
 		gripper2F1.close();
 		
 		Vector3D openLine = openvector.multiply(50);

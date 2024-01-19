@@ -190,7 +190,7 @@ public class Drawerer extends RoboticsAPIApplication{
 		double charHeight = scale;
 		double spacing = scale/10;
 		double currentY = 0.8-charHeight-buffer;
-		double currentX = 1-buffer;
+		double currentX;
 		
 		TextManager.setFontPath(resPath+"/font/arialnarrow");
 		TextManager.setBaseScale(scale);
@@ -206,6 +206,7 @@ public class Drawerer extends RoboticsAPIApplication{
 		text.add("Innovation");
 		text.add("Labs");
 		for(String line:text) {
+			currentX = 1-buffer;
 			List<PointPath> PointPaths = new ArrayList<PointPath>();
 			for(int i = 0;i < line.length();i++) {
 				if(line.charAt(i) == ' ') {
@@ -224,7 +225,6 @@ public class Drawerer extends RoboticsAPIApplication{
 				drawPathPlan(pointPath.toPathPlan(robot, originFrame, canvas, 100), originFrame, canvas);
 			}
 			currentY -= charHeight + buffer;
-			currentX = buffer;
 		}
 		
 		logger.info("Moving to base");

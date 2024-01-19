@@ -16,13 +16,13 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import com.kuka.common.Pair;
 import com.kuka.common.ThreadUtil;
-import com.kuka.core.geometry.Vector;
 import com.kuka.generated.ioAccess.MediaFlangeIOGroup;
 import com.kuka.math.geometry.Vector3D;
 import com.kuka.nav.geometry.Vector2D;
 import com.kuka.roboticsAPI.applicationModel.IApplicationData;
 import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
 import com.kuka.roboticsAPI.conditionModel.ForceCondition;
+import com.kuka.roboticsAPI.conditionModel.ICondition;
 import com.kuka.roboticsAPI.deviceModel.LBR;
 import com.kuka.roboticsAPI.geometricModel.AbstractFrame;
 import com.kuka.roboticsAPI.geometricModel.CartDOF;
@@ -32,12 +32,14 @@ import com.kuka.roboticsAPI.geometricModel.ObjectFrame;
 import com.kuka.roboticsAPI.geometricModel.Tool;
 import com.kuka.roboticsAPI.geometricModel.World;
 import com.kuka.roboticsAPI.geometricModel.math.ITransformation;
+import com.kuka.roboticsAPI.geometricModel.math.Vector;
 import com.kuka.roboticsAPI.motionModel.IMotionContainer;
 import com.kuka.roboticsAPI.motionModel.SPL;
 import com.kuka.roboticsAPI.motionModel.Spline;
 import com.kuka.roboticsAPI.motionModel.controlModeModel.CartesianImpedanceControlMode;
 import com.kuka.roboticsAPI.persistenceModel.IPersistenceEngine;
 import com.kuka.roboticsAPI.persistenceModel.XmlApplicationDataSource;
+import com.kuka.roboticsAPI.sensorModel.ForceSensorData;
 import com.kuka.task.ITaskLogger;
 
 public class window extends RoboticsAPIApplication{
@@ -114,61 +116,46 @@ public class window extends RoboticsAPIApplication{
 	public void run() {
 		// Calibration sequence
 		mF.setLEDBlue(true);
-
 		
-
+//		robot.move(ptp(getApplicationData().getFrame("/P1")).setJointVelocityRel(0.5));
 //		
-//		//opening the lock
-//		gripper.move(linRel(0, 0, -50).setJointVelocityRel(0.2));
-//		gripper.move(lin(getApplicationData().getFrame("/Window_Main/lockUp")).setJointVelocityRel(0.2));
-//		gripper.move(linRel(0, 0, 100).setJointVelocityRel(0.2).breakWhen(touch));
-//		gripper.move(spl(getApplicationData().getFrame("/Window_Main/lockDown")).setJointVelocityRel(0.2));
+//		//getting the vector
+//		robot.move(ptp(getApplicationData().getFrame("/windowHandle/P1")).setJointVelocityRel(0.5));
+//		logger.info("Calibrating vector point 1");
+//		Vector3D origin = frameToVector(calibrateFrame(gripper,19));
+//		logger.info(String.format("Origin: %s", origin.toString()));
+//
+//		logger.info("Moving to left");
+//		robot.move(ptp(getApplicationData().getFrame("/windowHandle/P2")).setJointVelocityRel(0.5));
+//		logger.info("Calibrating vector point 2");
+//		ThreadUtil.milliSleep(1000);
+//		Vector3D right = frameToVector(calibrateFrame(gripper,24));
+//		logger.info(String.format("Right: %s", right.toString()));
+//			
+//		robot.move(linRel(0, 0, -20).setJointVelocityRel(0.2));
+//		// get world unit vectors
+//		Vector3D openvector = getCanvasPlane(origin, right);
+//		logger.info(String.format("Canvas X: (%s)", openvector.toString()));
 //		
 //		
-//		
-//		gripper.move(linRel(0, 0, -50).setJointVelocityRel(0.2));
-//		gripper.move(ptp(getApplicationData().getFrame("/windowMainFrame/handle")).setJointVelocityRel(0.2));
-//		gripper2F1.setPos(100);
-//		gripper.move(linRel(0, 0, 100).setJointVelocityRel(0.2).breakWhen(touch));
-//		
-//		//linear movement
-//		Vector3D openLine = openvector.multiply(500);
-////		ForceCondition force = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 60);
-//		gripper.move(linRel(0, 0, -30).setJointVelocityRel(0.2));
+//		robot.move(ptp(getApplicationData().getFrame("/P1")).setJointVelocityRel(0.5));
+//		robot.move(ptp(getApplicationData().getFrame("/windowHandle")).setJointVelocityRel(0.5));
+		ForceSensorData data = robot.getExternalForceTorque(robot.getFlange());
+		Vector vForce = data.getForce();
+		double forceInX = vForce.getX();
+		
+		while (forceInX < 10)
+			robot.move(linRel(0, 0, 2).setJointVelocityRel(0.3));
+			ForceSensorData data1 = robot.getExternalForceTorque(robot.getFlange());
+			Vector vForce1 = data1.getForce();
+			forceInX = vForce1.getX();
+		
+//		robot.move(linRel(0, 0, -2).setJointVelocityRel(0.3));
+//		Vector3D openLine = openvector.multiply(50);
 //		logger.info("moving on a line");
-//		gripper.move(linRel(openLine.getZ(), openLine.getX(), openLine.getY()).setCartVelocity(30).setCartAcceleration(10).breakWhen(force));
-//		
-		robot.move(ptp(getApplicationData().getFrame("/P1")).setJointVelocityRel(0.5));
-		
-		//getting the vector
-		robot.move(ptp(getApplicationData().getFrame("/windowHandle/P1")).setJointVelocityRel(0.5));
-		logger.info("Calibrating vector point 1");
-		Vector3D origin = frameToVector(calibrateFrame(gripper,19));
-		logger.info(String.format("Origin: %s", origin.toString()));
-
-		logger.info("Moving to left");
-		robot.move(ptp(getApplicationData().getFrame("/windowHandle/P2")).setJointVelocityRel(0.5));
-		logger.info("Calibrating vector point 2");
-		ThreadUtil.milliSleep(1000);
-		Vector3D right = frameToVector(calibrateFrame(gripper,24));
-		logger.info(String.format("Right: %s", right.toString()));
-			
-		robot.move(linRel(0, 0, -20).setJointVelocityRel(0.2));
-		// get world unit vectors
-		Vector3D openvector = getCanvasPlane(origin, right);
-		logger.info(String.format("Canvas X: (%s)", openvector.toString()));
-		
-		
-		robot.move(ptp(getApplicationData().getFrame("/P1")).setJointVelocityRel(0.5));
-		robot.move(ptp(getApplicationData().getFrame("/windowHandle")).setJointVelocityRel(0.5));
-		ForceCondition force = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 60);
-		robot.move(linRel(0, 0, 30).setJointVelocityRel(0.3).breakWhen(force));
-		robot.move(linRel(0, 0, -2).setJointVelocityRel(0.3).breakWhen(force));
-		Vector3D openLine = openvector.multiply(50);
-		logger.info("moving on a line");
-		robot.move(linRel(openLine.getX(), openLine.getY(), openLine.getZ()).setCartVelocity(50).setCartAcceleration(5));
-		robot.move(linRel(openLine.getX(), openLine.getY(), openLine.getZ()).setCartVelocity(50).setCartAcceleration(5));
-		robot.move(linRel(openLine.getX(), openLine.getY(), openLine.getZ()).setCartVelocity(50).setCartAcceleration(5));
+//		robot.move(linRel(openLine.getX(), openLine.getY(), openLine.getZ()).setCartVelocity(50).setCartAcceleration(5));
+//		robot.move(linRel(openLine.getX(), openLine.getY(), openLine.getZ()).setCartVelocity(50).setCartAcceleration(5));
+//		robot.move(linRel(openLine.getX(), openLine.getY(), openLine.getZ()).setCartVelocity(50).setCartAcceleration(5));
 	}
 }
 

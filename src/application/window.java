@@ -70,15 +70,15 @@ public class window extends RoboticsAPIApplication{
 
 		// TODO: Stiff in every direction except plane perpendicular to flange
 		springRobot.parametrize(CartDOF.X).setStiffness(1750);
-		springRobot.parametrize(CartDOF.Y).setStiffness(5000);
-		springRobot.parametrize(CartDOF.Z).setStiffness(5000);
+		springRobot.parametrize(CartDOF.Y).setStiffness(1750);
+		springRobot.parametrize(CartDOF.Z).setStiffness(1750);
 
 		// Stiff rotation
-		springRobot.parametrize(CartDOF.C).setStiffness(300);
-		springRobot.parametrize(CartDOF.B).setStiffness(300);
-		springRobot.parametrize(CartDOF.A).setStiffness(300);
+		springRobot.parametrize(CartDOF.C).setStiffness(200);
+		springRobot.parametrize(CartDOF.B).setStiffness(200);
+		springRobot.parametrize(CartDOF.A).setStiffness(200);
 		springRobot.setReferenceSystem(World.Current.getRootFrame());
-		springRobot.parametrize(CartDOF.ALL).setDamping(0.4);
+		springRobot.parametrize(CartDOF.ALL).setDamping(0.6);
 		
 		// Inits the Robot
 		gripper.attachTo(robot.getFlange());
@@ -139,7 +139,7 @@ public class window extends RoboticsAPIApplication{
 		
 		
 		robot.move(ptp(getApplicationData().getFrame("/P1")).setJointVelocityRel(0.5));
-		robot.move(ptp(getApplicationData().getFrame("/windowHandle/P3")).setJointVelocityRel(0.5));
+		robot.move(ptp(getApplicationData().getFrame("/windowHandle")).setJointVelocityRel(0.5));
 		Boolean con1 = true;
 		while (con1) {
 			ForceSensorData data = robot.getExternalForceTorque(robot.getFlange(),World.Current.getRootFrame());
@@ -154,7 +154,7 @@ public class window extends RoboticsAPIApplication{
 			}
 		}
 		robot.move(linRel(0, 0, -0.5).setJointVelocityRel(0.3));
-		gripper2F1.open();
+		gripper2F1.setPos(50);
 		robot.move(linRel(0, 0, 10).setJointVelocityRel(0.3));
 		gripper2F1.close();
 		

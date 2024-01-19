@@ -154,7 +154,7 @@ public class window extends RoboticsAPIApplication{
 			}
 		}
 		robot.move(linRel(0, 0, -5).setJointVelocityRel(0.3));
-		gripper2F1.setPos(20);
+		gripper2F1.setPos(10);
 		robot.move(linRel(0, 0, 15).setJointVelocityRel(0.3));
 		gripper2F1.close();
 		

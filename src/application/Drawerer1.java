@@ -33,7 +33,11 @@ import application.robotControl.RobotController;
 import application.text.TextManager;
 import application.utils.Handler;
 
-public class Drawerer extends RoboticsAPIApplication{
+/*
+ * Writes monash innovation labs mirrored
+ */
+
+public class Drawerer1 extends RoboticsAPIApplication{
 	@Inject
 	private SunriseOmniMoveMobilePlatform kmp;
 	@Inject
@@ -92,11 +96,11 @@ public class Drawerer extends RoboticsAPIApplication{
 	}
 
 	private void penUp(){
-		gripper.move(linRel(0,0, -Drawerer.PEN_UP_DIST).setJointVelocityRel(0.2));
+		gripper.move(linRel(0,0, -Drawerer1.PEN_UP_DIST).setJointVelocityRel(0.2));
 	}
 	
 	private void penDown(){
-		gripper.move(linRel(0, 0, Drawerer.PEN_DOWN_DIST+Drawerer.PEN_UP_DIST).setMode(springRobot).setCartVelocity(20));
+		gripper.move(linRel(0, 0, Drawerer1.PEN_DOWN_DIST+Drawerer1.PEN_UP_DIST).setMode(springRobot).setCartVelocity(20));
 	}
 	
 	private void springyMove(RobotMotion<?> motion){
@@ -106,7 +110,7 @@ public class Drawerer extends RoboticsAPIApplication{
 	private void drawPathPlan(PathPlan plan, Frame originFrame, Canvas canvas) {
 		logger.info("Paths: " + plan.getMotions().size());
 		logger.info("Start Drawing");
-		Vector3D v = Vector3D.of(-Drawerer.PEN_UP_DIST,0,0);
+		Vector3D v = Vector3D.of(-Drawerer1.PEN_UP_DIST,0,0);
 		for(int i = 0;i < plan.getStartLocs().size();i++) {
 			logger.info("Start path "+i);
 			Vector3D first = canvas.toWorld(plan.getStartLocs().get(i)).add(RobotController.frameToVector(originFrame)).add(v);
@@ -133,7 +137,7 @@ public class Drawerer extends RoboticsAPIApplication{
 		
 		logger.info("Calibrating point 1");
 		Frame originFrame = RobotController.calibrateFrame(robot, gripper, 150);
-		gripper.move(linRel(0,0, -Drawerer.PEN_UP_DIST*2).setJointVelocityRel(0.2));
+		gripper.move(linRel(0,0, -Drawerer1.PEN_UP_DIST*2).setJointVelocityRel(0.2));
 		Frame originUpFrame = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"));
 		Vector3D origin = RobotController.frameToVector(originFrame);
 		logger.info(String.format("Origin: %s", origin.toString()));
@@ -224,7 +228,7 @@ public class Drawerer extends RoboticsAPIApplication{
 			for(PointPath pointPath:PointPaths) {
 				drawPathPlan(pointPath.toPathPlan(robot, originFrame, canvas, 100), originFrame, canvas);
 			}
-			currentY -= charHeight + buffer;
+			currentY -= charHeight + buffer; 
 		}
 		
 		logger.info("Moving to base");

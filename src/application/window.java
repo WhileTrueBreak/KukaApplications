@@ -83,8 +83,8 @@ public class window extends RoboticsAPIApplication{
 		// Inits the Robot
 		gripper.attachTo(robot.getFlange());
 		gripper2F1.initalise();
-		gripper2F1.setSpeed(50);
-		gripper2F1.setForce(20);
+		gripper2F1.setSpeed(100);
+		gripper2F1.setForce(10);
 		mF.setLEDBlue(false);
 		gripper2F1.close();
 		ThreadUtil.milliSleep(200);
@@ -164,7 +164,6 @@ public class window extends RoboticsAPIApplication{
 		}
 		robot.move(linRel(0, 0, -10).setJointVelocityRel(0.3));
 		gripper2F1.setPos(20);
-		ThreadUtil.milliSleep(1000);
 		robot.move(linRel(0, 0, 20).setJointVelocityRel(0.3));
 		gripper2F1.close();
 		

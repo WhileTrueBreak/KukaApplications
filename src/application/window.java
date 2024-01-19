@@ -146,14 +146,14 @@ public class window extends RoboticsAPIApplication{
 			Vector vForce = data.getForce();
 			double forceInY = vForce.getY();
 			forceInY = Math.abs(forceInY);
-			if (forceInY < 15){
-				robot.move(linRel(0, 0, 2).setJointVelocityRel(0.3));
+			if (forceInY < 20){
+				robot.move(linRel(0, 0, 1).setJointVelocityRel(0.3));
 			} else {
 				con1 = false;
 				break;
 			}
 		}
-		robot.move(linRel(0, 0, -2).setJointVelocityRel(0.3));
+		robot.move(linRel(0, 0, -1).setJointVelocityRel(0.3));
 		Vector3D openLine = openvector.multiply(50);
 		logger.info("moving on a line");
 		robot.move(linRel(openLine.getX(), openLine.getY(), openLine.getZ()).setCartVelocity(50).setCartAcceleration(5));

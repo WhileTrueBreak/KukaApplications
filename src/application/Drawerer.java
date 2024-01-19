@@ -51,7 +51,7 @@ public class Drawerer extends RoboticsAPIApplication{
 	private CartesianImpedanceControlMode springRobot;
 
 	public static final double PEN_UP_DIST = 5;
-	public static final double PEN_DOWN_DIST = 10;
+	public static final double PEN_DOWN_DIST = 5;
 	
 	@Override
 	public void initialize() {
@@ -68,7 +68,7 @@ public class Drawerer extends RoboticsAPIApplication{
 		// Set stiffness
 
 		// TODO: Stiff in every direction except plane perpendicular to flange
-		springRobot.parametrize(CartDOF.X).setStiffness(750);
+		springRobot.parametrize(CartDOF.X).setStiffness(500);
 		springRobot.parametrize(CartDOF.Y).setStiffness(5000);
 		springRobot.parametrize(CartDOF.Z).setStiffness(5000);
 
@@ -77,7 +77,7 @@ public class Drawerer extends RoboticsAPIApplication{
 		springRobot.parametrize(CartDOF.B).setStiffness(300);
 		springRobot.parametrize(CartDOF.A).setStiffness(300);
 		springRobot.setReferenceSystem(World.Current.getRootFrame());
-		springRobot.parametrize(CartDOF.ALL).setDamping(0.4);
+		springRobot.parametrize(CartDOF.ALL).setDamping(1);
 		
 		// Inits the Robot
 		gripper.attachTo(robot.getFlange());

@@ -180,15 +180,13 @@ public class window extends RoboticsAPIApplication{
 		
 		Vector3D diag = openLine.getA().multiply(50);
 		logger.info("moving on a line");
-		robot.move(linRel(diag.getY(), diag.getZ(), diag.getX()).setCartVelocity(50).setCartAcceleration(5));
-		robot.move(linRel(diag.getY(), diag.getZ(), diag.getX()).setCartVelocity(50).setCartAcceleration(5));
-
-		robot.move(linRel(diag.getY(), diag.getZ(), diag.getX()).setCartVelocity(50).setCartAcceleration(5));
-
-		robot.move(linRel(diag.getY(), diag.getZ(), diag.getX()).setCartVelocity(50).setCartAcceleration(5));
-		robot.move(linRel(diag.getY(), diag.getZ(), diag.getX()).setCartVelocity(50).setCartAcceleration(5));
-		robot.move(linRel(diag.getY(), diag.getZ(), diag.getX()).setCartVelocity(50).setCartAcceleration(5));
-		robot.move(linRel(diag.getY(), diag.getZ(), diag.getX()).setCartVelocity(50).setCartAcceleration(5));
+		robot.move(linRel(diag.getZ(), diag.getX(), diag.getY()).setCartVelocity(50).setCartAcceleration(5));
+		robot.move(linRel(diag.getZ(), diag.getX(), diag.getY()).setCartVelocity(50).setCartAcceleration(5));
+		robot.move(linRel(diag.getZ(), diag.getX(), diag.getY()).setCartVelocity(50).setCartAcceleration(5));
+		robot.move(linRel(diag.getZ(), diag.getX(), diag.getY()).setCartVelocity(50).setCartAcceleration(5));
+		robot.move(linRel(diag.getZ(), diag.getX(), diag.getY()).setCartVelocity(50).setCartAcceleration(5));
+		robot.move(linRel(diag.getZ(), diag.getX(), diag.getY()).setCartVelocity(50).setCartAcceleration(5));
+		robot.move(linRel(diag.getZ(), diag.getX(), diag.getY()).setCartVelocity(50).setCartAcceleration(5));
 	}
 }
 

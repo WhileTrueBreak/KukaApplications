@@ -121,30 +121,30 @@ public class window extends RoboticsAPIApplication{
 		
 		robot.move(ptp(getApplicationData().getFrame("/P1")).setJointVelocityRel(0.5));
 //		
-//		//getting the vector
-//		robot.move(ptp(getApplicationData().getFrame("/windowHandle/P1")).setJointVelocityRel(0.5));
-//		logger.info("Calibrating vector point 1");
-//		Vector3D origin = frameToVector(calibrateFrame(gripper,30));
-//		logger.info(String.format("Origin: %s", origin.toString()));
-//
-//		logger.info("Moving to left");
-//		robot.move(ptp(getApplicationData().getFrame("/windowHandle/P2")).setJointVelocityRel(0.5));
-//		logger.info("Calibrating vector point 2");
-//		ThreadUtil.milliSleep(1000);
-//		Vector3D right = frameToVector(calibrateFrame(gripper,30));
-//		logger.info(String.format("Right: %s", right.toString()));
-//		
-//		logger.info("Moving to up");
-//		robot.move(ptp(getApplicationData().getFrame("/windowHandle/P4")).setJointVelocityRel(0.5));
-//		logger.info("Calibrating vector point 2");
-//		ThreadUtil.milliSleep(1000);
-//		Vector3D up = frameToVector(calibrateFrame(gripper,35));
-//		logger.info(String.format("Right: %s", up.toString()));
-//			
-//		robot.move(linRel(0, 0, -20).setJointVelocityRel(0.2));
-//		// get world unit vectors
-//		Pair<Vector3D,Vector3D> openLine = getCanvasPlane(origin, up, right);
-//		logger.info(String.format("Canvas X, Y: (%s), (%s)", openLine.getA().toString(), openLine.getB().toString()));
+		//getting the vector
+		robot.move(ptp(getApplicationData().getFrame("/windowHandle/P1")).setJointVelocityRel(0.5));
+		logger.info("Calibrating vector point 1");
+		Vector3D origin = frameToVector(calibrateFrame(gripper,30));
+		logger.info(String.format("Origin: %s", origin.toString()));
+
+		logger.info("Moving to left");
+		robot.move(ptp(getApplicationData().getFrame("/windowHandle/P2")).setJointVelocityRel(0.5));
+		logger.info("Calibrating vector point 2");
+		ThreadUtil.milliSleep(1000);
+		Vector3D right = frameToVector(calibrateFrame(gripper,30));
+		logger.info(String.format("Right: %s", right.toString()));
+		
+		logger.info("Moving to up");
+		robot.move(ptp(getApplicationData().getFrame("/windowHandle/P4")).setJointVelocityRel(0.5));
+		logger.info("Calibrating vector point 2");
+		ThreadUtil.milliSleep(1000);
+		Vector3D up = frameToVector(calibrateFrame(gripper,35));
+		logger.info(String.format("Right: %s", up.toString()));
+			
+		robot.move(linRel(0, 0, -20).setJointVelocityRel(0.2));
+		// get world unit vectors
+		Pair<Vector3D,Vector3D> openLine = getCanvasPlane(origin, up, right);
+		logger.info(String.format("Canvas X, Y: (%s), (%s)", openLine.getA().toString(), openLine.getB().toString()));
 
 		Spline mySpline = new Spline(
 				spl(getApplicationData().getFrame("/windowHandle/lockUp")),
@@ -156,45 +156,45 @@ public class window extends RoboticsAPIApplication{
 		robot.move(ptp(getApplicationData().getFrame("/windowHandle/lockUp")));
 		robot.move(mySpline.setJointVelocityRel(0.4));			
 				
-//				
-//		robot.move(ptp(getApplicationData().getFrame("/P1")).setJointVelocityRel(0.5));
-//		robot.move(ptp(getApplicationData().getFrame("/windowHandle/P3")).setJointVelocityRel(0.5));
-//		Boolean con1 = true;
-//		while (con1) {
-//			ForceSensorData data = robot.getExternalForceTorque(robot.getFlange(),World.Current.getRootFrame());
-//			Vector vForce = data.getForce();
-//			double forceInY = vForce.getY();
-//			forceInY = Math.abs(forceInY);
-//			if (forceInY < 25){
-//				robot.move(linRel(0, 0, 1).setJointVelocityRel(0.3));
-//			} else {
-//				con1 = false;
-//				break;
-//			}
-//		}
-//		robot.move(linRel(0, 0, -10).setJointVelocityRel(0.3));
-//		gripper2F1.setPos(20);
-//		robot.move(linRel(0, 0, 20).setJointVelocityRel(0.3));
-//		ThreadUtil.milliSleep(100);
-//		gripper2F1.close();
-//		
-//		springRobot.parametrize(CartDOF.X).setStiffness(1000);
-//		springRobot.parametrize(CartDOF.Y).setStiffness(1000);
-//		springRobot.parametrize(CartDOF.Z).setStiffness(1000);
-//
-//		// Stiff rotation
-//		springRobot.parametrize(CartDOF.C).setStiffness(110);
-//		springRobot.parametrize(CartDOF.B).setStiffness(110);
-//		springRobot.parametrize(CartDOF.A).setStiffness(110);
-//		springRobot.setReferenceSystem(World.Current.getRootFrame());
-//		springRobot.parametrize(CartDOF.ALL).setDamping(1);
-//		
-//		Vector3D diag = openLine.getA().multiply(200);
-//		logger.info("moving on a line");
-//		double acc = 20;
-//		robot.move(linRel(diag.getZ(), diag.getX(), diag.getY()).setCartVelocity(20).setCartAcceleration(acc));
-//		robot.move(linRel(diag.getZ(), diag.getX(), diag.getY()).setCartVelocity(20).setCartAcceleration(acc));
-//		robot.move(linRel(diag.getZ(), diag.getX(), diag.getY()).setCartVelocity(20).setCartAcceleration(acc));
+				
+		robot.move(ptp(getApplicationData().getFrame("/P1")).setJointVelocityRel(0.5));
+		robot.move(ptp(getApplicationData().getFrame("/windowHandle/P3")).setJointVelocityRel(0.5));
+		Boolean con1 = true;
+		while (con1) {
+			ForceSensorData data = robot.getExternalForceTorque(robot.getFlange(),World.Current.getRootFrame());
+			Vector vForce = data.getForce();
+			double forceInY = vForce.getY();
+			forceInY = Math.abs(forceInY);
+			if (forceInY < 25){
+				robot.move(linRel(0, 0, 1).setJointVelocityRel(0.3));
+			} else {
+				con1 = false;
+				break;
+			}
+		}
+		robot.move(linRel(0, 0, -10).setJointVelocityRel(0.3));
+		gripper2F1.setPos(20);
+		robot.move(linRel(0, 0, 20).setJointVelocityRel(0.3));
+		ThreadUtil.milliSleep(100);
+		gripper2F1.close();
+		
+		springRobot.parametrize(CartDOF.X).setStiffness(1000);
+		springRobot.parametrize(CartDOF.Y).setStiffness(1000);
+		springRobot.parametrize(CartDOF.Z).setStiffness(1000);
+
+		// Stiff rotation
+		springRobot.parametrize(CartDOF.C).setStiffness(110);
+		springRobot.parametrize(CartDOF.B).setStiffness(110);
+		springRobot.parametrize(CartDOF.A).setStiffness(110);
+		springRobot.setReferenceSystem(World.Current.getRootFrame());
+		springRobot.parametrize(CartDOF.ALL).setDamping(1);
+		
+		Vector3D diag = openLine.getA().multiply(200);
+		logger.info("moving on a line");
+		double acc = 20;
+		robot.move(linRel(diag.getZ(), diag.getX(), diag.getY()).setCartVelocity(20).setCartAcceleration(acc));
+		robot.move(linRel(diag.getZ(), diag.getX(), diag.getY()).setCartVelocity(20).setCartAcceleration(acc));
+		robot.move(linRel(diag.getZ(), diag.getX(), diag.getY()).setCartVelocity(20).setCartAcceleration(acc));
 	}
 }
 

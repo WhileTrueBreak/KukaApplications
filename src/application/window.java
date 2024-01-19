@@ -151,14 +151,13 @@ public class window extends RoboticsAPIApplication{
 				spl(getApplicationData().getFrame("/windowHandle/P5")),
 				spl(getApplicationData().getFrame("/windowHandle/P6")),
 				spl(getApplicationData().getFrame("/windowHandle/P7")),
-				spl(getApplicationData().getFrame("/windowHandle/lockDown")));
+				spl(getApplicationData().getFrame("/windowHandle/lockDown")),
+				spl(getApplicationData().getFrame("/windowHandle/P3")));
 				// ...
 		robot.move(ptp(getApplicationData().getFrame("/windowHandle/lockUp")));
 		robot.move(mySpline.setJointVelocityRel(0.4));			
 				
 				
-		robot.move(ptp(getApplicationData().getFrame("/P1")).setJointVelocityRel(0.5));
-		robot.move(ptp(getApplicationData().getFrame("/windowHandle/P3")).setJointVelocityRel(0.5));
 		Boolean con1 = true;
 		while (con1) {
 			ForceSensorData data = robot.getExternalForceTorque(robot.getFlange(),World.Current.getRootFrame());
@@ -178,20 +177,20 @@ public class window extends RoboticsAPIApplication{
 		ThreadUtil.milliSleep(100);
 		gripper2F1.close();
 		
-		springRobot.parametrize(CartDOF.X).setStiffness(3000);
-		springRobot.parametrize(CartDOF.Y).setStiffness(3000);
-		springRobot.parametrize(CartDOF.Z).setStiffness(3000);
+		springRobot.parametrize(CartDOF.X).setStiffness(1700);
+		springRobot.parametrize(CartDOF.Y).setStiffness(1700);
+		springRobot.parametrize(CartDOF.Z).setStiffness(1700);
 
 		// Stiff rotation
-		springRobot.parametrize(CartDOF.C).setStiffness(200);
-		springRobot.parametrize(CartDOF.B).setStiffness(200);
-		springRobot.parametrize(CartDOF.A).setStiffness(200);
+		springRobot.parametrize(CartDOF.C).setStiffness(300);
+		springRobot.parametrize(CartDOF.B).setStiffness(300);
+		springRobot.parametrize(CartDOF.A).setStiffness(300);
 		springRobot.setReferenceSystem(World.Current.getRootFrame());
 		springRobot.parametrize(CartDOF.ALL).setDamping(1);
 		
 		Vector3D diag = openLine.getA().multiply(50);
 		logger.info("moving on a line");
-		double acc = 10;
+		double acc = 20;
 		robot.move(linRel(diag.getZ(), diag.getX(), diag.getY()).setCartVelocity(20).setCartAcceleration(acc));
 		robot.move(linRel(diag.getZ(), diag.getX(), diag.getY()).setCartVelocity(20).setCartAcceleration(acc));
 		robot.move(linRel(diag.getZ(), diag.getX(), diag.getY()).setCartVelocity(20).setCartAcceleration(acc));

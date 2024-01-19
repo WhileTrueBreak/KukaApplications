@@ -139,7 +139,7 @@ public class window extends RoboticsAPIApplication{
 		
 		
 		robot.move(ptp(getApplicationData().getFrame("/P1")).setJointVelocityRel(0.5));
-		robot.move(ptp(getApplicationData().getFrame("/windowHandle")).setJointVelocityRel(0.5));
+		robot.move(ptp(getApplicationData().getFrame("/windowHandle/P3")).setJointVelocityRel(0.5));
 		Boolean con1 = true;
 		while (con1) {
 			ForceSensorData data = robot.getExternalForceTorque(robot.getFlange(),World.Current.getRootFrame());
@@ -154,6 +154,10 @@ public class window extends RoboticsAPIApplication{
 			}
 		}
 		robot.move(linRel(0, 0, -0.5).setJointVelocityRel(0.3));
+		gripper2F1.open();
+		robot.move(linRel(0, 0, 2).setJointVelocityRel(0.3));
+		gripper2F1.close();
+		
 		Vector3D openLine = openvector.multiply(50);
 		logger.info("moving on a line");
 		robot.move(linRel(openLine.getX(), openLine.getY(), openLine.getZ()).setCartVelocity(50).setCartAcceleration(5));

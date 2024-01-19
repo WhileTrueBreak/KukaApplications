@@ -146,7 +146,7 @@ public class window extends RoboticsAPIApplication{
 			Vector vForce = data.getForce();
 			double forceInY = vForce.getY();
 			forceInY = Math.abs(forceInY);
-			if (forceInY < 5){
+			if (forceInY < 10){
 				robot.move(linRel(0, 0, 2).setJointVelocityRel(0.3));
 			} else {
 				con1 = false;

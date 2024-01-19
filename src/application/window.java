@@ -69,16 +69,16 @@ public class window extends RoboticsAPIApplication{
 		// Set stiffness
 
 		// TODO: Stiff in every direction except plane perpendicular to flange
-		springRobot.parametrize(CartDOF.X).setStiffness(1750);
-		springRobot.parametrize(CartDOF.Y).setStiffness(1750);
-		springRobot.parametrize(CartDOF.Z).setStiffness(1750);
+		springRobot.parametrize(CartDOF.X).setStiffness(1500);
+		springRobot.parametrize(CartDOF.Y).setStiffness(1500);
+		springRobot.parametrize(CartDOF.Z).setStiffness(1500);
 
 		// Stiff rotation
 		springRobot.parametrize(CartDOF.C).setStiffness(200);
 		springRobot.parametrize(CartDOF.B).setStiffness(200);
 		springRobot.parametrize(CartDOF.A).setStiffness(200);
 		springRobot.setReferenceSystem(World.Current.getRootFrame());
-		springRobot.parametrize(CartDOF.ALL).setDamping(0.6);
+		springRobot.parametrize(CartDOF.ALL).setDamping(0.2);
 		
 		// Inits the Robot
 		gripper.attachTo(robot.getFlange());
@@ -122,14 +122,14 @@ public class window extends RoboticsAPIApplication{
 		//getting the vector
 		robot.move(ptp(getApplicationData().getFrame("/windowHandle/P1")).setJointVelocityRel(0.5));
 		logger.info("Calibrating vector point 1");
-		Vector3D origin = frameToVector(calibrateFrame(gripper,19));
+		Vector3D origin = frameToVector(calibrateFrame(gripper,20));
 		logger.info(String.format("Origin: %s", origin.toString()));
 
 		logger.info("Moving to left");
 		robot.move(ptp(getApplicationData().getFrame("/windowHandle/P2")).setJointVelocityRel(0.5));
 		logger.info("Calibrating vector point 2");
 		ThreadUtil.milliSleep(1000);
-		Vector3D right = frameToVector(calibrateFrame(gripper,24));
+		Vector3D right = frameToVector(calibrateFrame(gripper,25));
 		logger.info(String.format("Right: %s", right.toString()));
 			
 		robot.move(linRel(0, 0, -20).setJointVelocityRel(0.2));
@@ -155,12 +155,11 @@ public class window extends RoboticsAPIApplication{
 		}
 		robot.move(linRel(0, 0, -5).setJointVelocityRel(0.3));
 		gripper2F1.setPos(20);
-		robot.move(linRel(0, 0, 20).setJointVelocityRel(0.3));
+		robot.move(linRel(0, 0, 15).setJointVelocityRel(0.3));
 		gripper2F1.close();
 		
 		Vector3D openLine = openvector.multiply(50);
 		logger.info("moving on a line");
-		robot.move(linRel(openLine.getX(), openLine.getY(), openLine.getZ()).setCartVelocity(50).setCartAcceleration(5));
 		robot.move(linRel(openLine.getX(), openLine.getY(), openLine.getZ()).setCartVelocity(50).setCartAcceleration(5));
 		robot.move(linRel(openLine.getX(), openLine.getY(), openLine.getZ()).setCartVelocity(50).setCartAcceleration(5));
 	}

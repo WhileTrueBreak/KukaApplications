@@ -145,7 +145,8 @@ public class window extends RoboticsAPIApplication{
 			ForceSensorData data = robot.getExternalForceTorque(robot.getFlange(),World.Current.getRootFrame());
 			Vector vForce = data.getForce();
 			double forceInY = vForce.getY();
-			if (forceInY > -5){
+			forceInY = Math.abs(forceInY);
+			if (forceInY < 5){
 				robot.move(linRel(0, 0, 2).setJointVelocityRel(0.3));
 			} else {
 				con1 = false;

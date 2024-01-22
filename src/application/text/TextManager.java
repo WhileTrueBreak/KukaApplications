@@ -21,7 +21,11 @@ public class TextManager {
 	}
 	
 	public static void loadChar(char c, Canvas canvas) {
-		if(fontPath == null) return;
+		if(fontPath == null) {
+			Handler.getLogger().info("Font path not loaded");
+			System.out.println("Font path not loaded");
+			return;
+		}
 		List<String> file = null;
 		try {
 			file = FileReader.readFile(TextManager.fontPath+"/"+((int) c)+".txt");
@@ -29,7 +33,11 @@ public class TextManager {
 			Handler.getLogger().info("Failed to load char: \"" + c + "\"");
 			System.out.println("Failed to load char: \"" + c + "\"");
 		}
-		if(file == null) return;
+		if(file == null) {
+			Handler.getLogger().info("Failed to load char: \"" + c + "\"");
+			System.out.println("Failed to load char: \"" + c + "\"");
+			return;
+		}
 		charTable.put((int) c, PointPath.createPointPathsV2(file, canvas, baseScale));
 	}
 	

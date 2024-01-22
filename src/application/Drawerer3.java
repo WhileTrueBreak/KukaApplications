@@ -181,7 +181,6 @@ public class Drawerer3 extends RoboticsAPIApplication{
 
 		logger.info("Reading file");
 		String resPath = FileReader.findUniqueFolder("res", "..");
-		
 		List<String> file = FileReader.readFile(resPath+"/happynewyear.txt");
 		PointPath pointPath = PointPath.createPointPathsV2(file, canvas, 1);
 		pointPath.mirrorPaths();

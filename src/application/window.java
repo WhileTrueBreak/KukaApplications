@@ -192,8 +192,8 @@ public class window extends RoboticsAPIApplication{
 		
 		Vector3D diag = openLine.getA().multiply(650);
 		logger.info("moving on a line");
-		double acc = 20;
-		robot.move(linRel(diag.getZ(), diag.getX(), diag.getY()).setCartVelocity(12).setCartAcceleration(acc));
+		double acc = 28;
+		robot.move(linRel(diag.getZ(), diag.getX(), diag.getY()).setCartVelocity(10).setCartAcceleration(acc));
 
 	}
 }

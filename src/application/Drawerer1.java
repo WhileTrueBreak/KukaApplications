@@ -34,7 +34,7 @@ import application.text.TextManager;
 import application.utils.Handler;
 
 /*
- * Writes monash innovation labs mirrored
+ * Writes monash\n innovation\n labs mirrored
  */
 
 public class Drawerer1 extends RoboticsAPIApplication{
@@ -72,7 +72,7 @@ public class Drawerer1 extends RoboticsAPIApplication{
 		// Set stiffness
 
 		// TODO: Stiff in every direction except plane perpendicular to flange
-		springRobot.parametrize(CartDOF.X).setStiffness(500);
+		springRobot.parametrize(CartDOF.X).setStiffness(750);
 		springRobot.parametrize(CartDOF.Y).setStiffness(5000);
 		springRobot.parametrize(CartDOF.Z).setStiffness(5000);
 
@@ -178,16 +178,9 @@ public class Drawerer1 extends RoboticsAPIApplication{
 		Canvas canvas = new Canvas(origin, canvasPlane, size);
 		logger.info(String.format("Canvas size: %f", size));
 		logger.info("Calibration completed.");
-		mF.setLEDBlue(false);
 
 		logger.info("Reading file");
 		String resPath = FileReader.findUniqueFolder("res", "..");
-		
-//		List<String> file = FileReader.readFile(resPath+"/MonashLogo.txt");
-//		PointPath pointPath = PointPath.createPointPathsV2(file, canvas, 1);
-//		pointPath.mirrorPaths();
-//		PathPlan pathPlan = pointPath.toPathPlan(robot, originFrame, canvas, 200);
-//		drawPathPlan(pathPlan, originFrame, canvas);
 		
 		double buffer = 0.05;
 		double scale = 0.15;
@@ -234,6 +227,6 @@ public class Drawerer1 extends RoboticsAPIApplication{
 		logger.info("Moving to base");
 		gripper.move(lin(originUpFrame).setJointVelocityRel(0.2));
 		penUp();
-		mF.setLEDBlue(true);
+		mF.setLEDBlue(false);
 	}
 }

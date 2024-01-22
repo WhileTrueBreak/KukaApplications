@@ -72,7 +72,7 @@ public class Drawerer3 extends RoboticsAPIApplication{
 		// Set stiffness
 
 		// TODO: Stiff in every direction except plane perpendicular to flange
-		springRobot.parametrize(CartDOF.X).setStiffness(500);
+		springRobot.parametrize(CartDOF.X).setStiffness(750);
 		springRobot.parametrize(CartDOF.Y).setStiffness(5000);
 		springRobot.parametrize(CartDOF.Z).setStiffness(5000);
 
@@ -178,7 +178,6 @@ public class Drawerer3 extends RoboticsAPIApplication{
 		Canvas canvas = new Canvas(origin, canvasPlane, size);
 		logger.info(String.format("Canvas size: %f", size));
 		logger.info("Calibration completed.");
-		mF.setLEDBlue(false);
 
 		logger.info("Reading file");
 		String resPath = FileReader.findUniqueFolder("res", "..");
@@ -192,6 +191,6 @@ public class Drawerer3 extends RoboticsAPIApplication{
 		logger.info("Moving to base");
 		gripper.move(lin(originUpFrame).setJointVelocityRel(0.2));
 		penUp();
-		mF.setLEDBlue(true);
+		mF.setLEDBlue(false);
 	}
 }

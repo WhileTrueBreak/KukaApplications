@@ -158,19 +158,9 @@ public class window extends RoboticsAPIApplication{
 		robot.move(mySpline.setJointVelocityRel(0.4));			
 				
 				
-		Boolean con1 = true;
-		while (con1) {
-			ForceSensorData data = robot.getExternalForceTorque(robot.getFlange(),World.Current.getRootFrame());
-			Vector vForce = data.getForce();
-			double forceInY = vForce.getY();
-			forceInY = Math.abs(forceInY);
-			if (forceInY < 25){
-				robot.move(linRel(0, 0, 1).setJointVelocityRel(0.3));
-			} else {
-				con1 = false;
-				break;
-			}
-		}
+		ForceCondition touch = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 35);
+		gripper.move(linRel(0, 0, 100, gripper.getFrame("/TCP")).setCartVelocity(30).breakWhen(touch));
+		
 		robot.move(linRel(0, 0, -10).setJointVelocityRel(0.3));
 		gripper2F1.setPos(20);
 		robot.move(linRel(0, 0, 20).setJointVelocityRel(0.3));
@@ -188,24 +178,11 @@ public class window extends RoboticsAPIApplication{
 		springRobot.setReferenceSystem(World.Current.getRootFrame());
 		springRobot.parametrize(CartDOF.ALL).setDamping(1);
 		
-		Vector3D diag = openLine.getA().multiply(50);
+		Vector3D diag = openLine.getA().multiply(600);
 		logger.info("moving on a line");
 		double acc = 20;
 		robot.move(linRel(diag.getZ(), diag.getX(), diag.getY()).setCartVelocity(20).setCartAcceleration(acc));
-		robot.move(linRel(diag.getZ(), diag.getX(), diag.getY()).setCartVelocity(20).setCartAcceleration(acc));
-		robot.move(linRel(diag.getZ(), diag.getX(), diag.getY()).setCartVelocity(20).setCartAcceleration(acc));
-		robot.move(linRel(diag.getZ(), diag.getX(), diag.getY()).setCartVelocity(20).setCartAcceleration(acc));
-		robot.move(linRel(diag.getZ(), diag.getX(), diag.getY()).setCartVelocity(20).setCartAcceleration(acc));
-		robot.move(linRel(diag.getZ(), diag.getX(), diag.getY()).setCartVelocity(20).setCartAcceleration(acc));
-		robot.move(linRel(diag.getZ(), diag.getX(), diag.getY()).setCartVelocity(20).setCartAcceleration(acc));
-		robot.move(linRel(diag.getZ(), diag.getX(), diag.getY()).setCartVelocity(20).setCartAcceleration(acc));
-		robot.move(linRel(diag.getZ(), diag.getX(), diag.getY()).setCartVelocity(20).setCartAcceleration(acc));
-		robot.move(linRel(diag.getZ(), diag.getX(), diag.getY()).setCartVelocity(20).setCartAcceleration(acc));
-		robot.move(linRel(diag.getZ(), diag.getX(), diag.getY()).setCartVelocity(20).setCartAcceleration(acc));
-		robot.move(linRel(diag.getZ(), diag.getX(), diag.getY()).setCartVelocity(20).setCartAcceleration(acc));
-		robot.move(linRel(diag.getZ(), diag.getX(), diag.getY()).setCartVelocity(20).setCartAcceleration(acc));
-		robot.move(linRel(diag.getZ(), diag.getX(), diag.getY()).setCartVelocity(20).setCartAcceleration(acc));
-		robot.move(linRel(diag.getZ(), diag.getX(), diag.getY()).setCartVelocity(20).setCartAcceleration(acc));
+
 	}
 }
 

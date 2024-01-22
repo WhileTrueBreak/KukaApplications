@@ -190,10 +190,10 @@ public class window extends RoboticsAPIApplication{
 		springRobot.setReferenceSystem(World.Current.getRootFrame());
 		springRobot.parametrize(CartDOF.ALL).setDamping(1);
 		
-		Vector3D diag = openLine.getA().multiply(600);
+		Vector3D diag = openLine.getA().multiply(650);
 		logger.info("moving on a line");
 		double acc = 20;
-		robot.move(linRel(diag.getZ(), diag.getX(), diag.getY()).setCartVelocity(10).setCartAcceleration(acc));
+		robot.move(linRel(diag.getZ(), diag.getX(), diag.getY()).setCartVelocity(12).setCartAcceleration(acc));
 
 	}
 }

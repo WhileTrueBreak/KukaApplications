@@ -138,7 +138,7 @@ public class window extends RoboticsAPIApplication{
 		robot.move(ptp(getApplicationData().getFrame("/windowHandle/P4")).setJointVelocityRel(0.5));
 		logger.info("Calibrating vector point 2");
 		ThreadUtil.milliSleep(1000);
-		Vector3D up = frameToVector(calibrateFrame(gripper,35));
+		Vector3D up = frameToVector(calibrateFrame(gripper,40));
 		logger.info(String.format("Right: %s", up.toString()));
 			
 		robot.move(linRel(0, 0, -20).setJointVelocityRel(0.2));
@@ -174,7 +174,7 @@ public class window extends RoboticsAPIApplication{
 		
 		robot.move(linRel(0, 0, -20).setJointVelocityRel(0.3));
 		gripper2F1.setPos(15);
-		robot.move(linRel(0, 0, 20).setJointVelocityRel(0.3));
+		robot.move(linRel(0, 0, 30).setJointVelocityRel(0.3));
 		ThreadUtil.milliSleep(100);
 		gripper2F1.close();
 		

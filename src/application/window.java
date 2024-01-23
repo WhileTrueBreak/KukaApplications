@@ -187,7 +187,7 @@ public class window extends RoboticsAPIApplication{
 		springRobot.parametrize(CartDOF.B).setStiffness(100);
 		springRobot.parametrize(CartDOF.A).setStiffness(100);
 		springRobot.setReferenceSystem(World.Current.getRootFrame());
-		springRobot.parametrize(CartDOF.ALL).setDamping(0.8);
+		springRobot.parametrize(CartDOF.ALL).setDamping(1);
 		
 		Vector3D diag = openLine.getA().multiply(650);
 		logger.info("moving on a line");

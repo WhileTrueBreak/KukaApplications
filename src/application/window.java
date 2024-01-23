@@ -138,7 +138,7 @@ public class window extends RoboticsAPIApplication{
 		robot.move(ptp(getApplicationData().getFrame("/windowHandle/P4")).setJointVelocityRel(0.5));
 		logger.info("Calibrating vector point 2");
 		ThreadUtil.milliSleep(1000);
-		Vector3D up = frameToVector(calibrateFrame(gripper,40));
+		Vector3D up = frameToVector(calibrateFrame(gripper,45));
 		logger.info(String.format("Right: %s", up.toString()));
 			
 		robot.move(linRel(0, 0, -20).setJointVelocityRel(0.2));
@@ -158,19 +158,8 @@ public class window extends RoboticsAPIApplication{
 		robot.move(mySpline.setJointVelocityRel(0.5));			
 				
 				
-		Boolean con1 = true;
-		while (con1) {
-			ForceSensorData data = robot.getExternalForceTorque(robot.getFlange(),World.Current.getRootFrame());
-			Vector vForce = data.getForce();
-			double forceInY = vForce.getY();
-			forceInY = Math.abs(forceInY);
-			if (forceInY < 25){
-				robot.move(linRel(0, 0, 1).setJointVelocityRel(0.3));
-			} else {
-				con1 = false;
-				break;
-			}
-		}
+		ForceCondition touch1 = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 40);
+		robot.move(linRel(0, 0, 50).setJointVelocityRel(0.3).breakWhen(touch1));
 		
 		robot.move(linRel(0, 0, -20).setJointVelocityRel(0.3));
 		gripper2F1.setPos(15);

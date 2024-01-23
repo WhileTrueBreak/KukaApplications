@@ -178,14 +178,14 @@ public class window extends RoboticsAPIApplication{
 		ThreadUtil.milliSleep(100);
 		gripper2F1.close();
 		
-		springRobot.parametrize(CartDOF.X).setStiffness(3000);
+		springRobot.parametrize(CartDOF.X).setStiffness(1000);
 		springRobot.parametrize(CartDOF.Y).setStiffness(3000);
-		springRobot.parametrize(CartDOF.Z).setStiffness(3000);
+		springRobot.parametrize(CartDOF.Z).setStiffness(1000);
 
 		// Stiff rotation
 		springRobot.parametrize(CartDOF.C).setStiffness(300);
-		springRobot.parametrize(CartDOF.B).setStiffness(100);
-		springRobot.parametrize(CartDOF.A).setStiffness(100);
+		springRobot.parametrize(CartDOF.B).setStiffness(300);
+		springRobot.parametrize(CartDOF.A).setStiffness(300);
 		springRobot.setReferenceSystem(World.Current.getRootFrame());
 		springRobot.parametrize(CartDOF.ALL).setDamping(1);
 		

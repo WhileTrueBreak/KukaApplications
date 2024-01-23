@@ -159,7 +159,19 @@ public class window extends RoboticsAPIApplication{
 				
 				
 		ForceCondition touch1 = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 40);
-		robot.move(linRel(0, 0, 50).setJointVelocityRel(0.3).breakWhen(touch1));
+		robot.move(linRel(0, 0, 30).setJointVelocityRel(0.3).breakWhen(touch1));
+//		while (con1) {
+//			ForceSensorData data = robot.getExternalForceTorque(robot.getFlange(),World.Current.getRootFrame());
+//			Vector vForce = data.getForce();
+//			double forceInY = vForce.getY();
+//			forceInY = Math.abs(forceInY);
+//			if (forceInY < 25){
+//				robot.move(linRel(0, 0, 1).setJointVelocityRel(0.3));
+//			} else {
+//				con1 = false;
+//				break;
+//			}
+//		}
 		
 		robot.move(linRel(0, 0, -20).setJointVelocityRel(0.3));
 		gripper2F1.setPos(15);

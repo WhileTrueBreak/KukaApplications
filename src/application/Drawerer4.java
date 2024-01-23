@@ -34,7 +34,7 @@ import application.text.TextManager;
 import application.utils.Handler;
 
 /*
- * Draws automation logo mirrored
+ * Drawing random stuff mirrored
  */
 
 public class Drawerer4 extends RoboticsAPIApplication{

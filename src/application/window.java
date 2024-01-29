@@ -174,7 +174,7 @@ public class window extends RoboticsAPIApplication{
 //			gripper2F1.close();
 //		}
 		
-		ForceComponentCondition touch2_inverted = new ForceComponentCondition(gripper.getFrame("/TCP"), CoordinateAxis.Z, -15.0, -5.0);
+		ForceComponentCondition touch2_inverted = new ForceComponentCondition(gripper.getFrame("/TCP"), CoordinateAxis.Z, -25.0, -15.0);
 		ICondition touch2 =   touch2_inverted.invert();
 		IMotionContainer motion1 = gripper.move(linRel(0,0,35).setJointVelocityRel(0.2).breakWhen(touch2));
 		if (motion1.getFiredBreakConditionInfo() == null){

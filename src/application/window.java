@@ -21,6 +21,7 @@ import com.kuka.math.geometry.Vector3D;
 import com.kuka.nav.geometry.Vector2D;
 import com.kuka.roboticsAPI.applicationModel.IApplicationData;
 import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
+import com.kuka.roboticsAPI.conditionModel.ForceComponentCondition;
 import com.kuka.roboticsAPI.conditionModel.ForceCondition;
 import com.kuka.roboticsAPI.conditionModel.ICondition;
 import com.kuka.roboticsAPI.deviceModel.LBR;
@@ -31,6 +32,7 @@ import com.kuka.roboticsAPI.geometricModel.ITransformationProvider;
 import com.kuka.roboticsAPI.geometricModel.ObjectFrame;
 import com.kuka.roboticsAPI.geometricModel.Tool;
 import com.kuka.roboticsAPI.geometricModel.World;
+import com.kuka.roboticsAPI.geometricModel.math.CoordinateAxis;
 import com.kuka.roboticsAPI.geometricModel.math.ITransformation;
 import com.kuka.roboticsAPI.geometricModel.math.Vector;
 import com.kuka.roboticsAPI.motionModel.IMotionContainer;
@@ -69,16 +71,16 @@ public class window extends RoboticsAPIApplication{
 		// Set stiffness
 
 		// TODO: Stiff in every direction except plane perpendicular to flange
-		springRobot.parametrize(CartDOF.X).setStiffness(1500);
-		springRobot.parametrize(CartDOF.Y).setStiffness(1500);
-		springRobot.parametrize(CartDOF.Z).setStiffness(1500);
+		springRobot.parametrize(CartDOF.X).setStiffness(1000);
+		springRobot.parametrize(CartDOF.Y).setStiffness(3000);
+		springRobot.parametrize(CartDOF.Z).setStiffness(1000);
 
 		// Stiff rotation
-		springRobot.parametrize(CartDOF.C).setStiffness(200);
-		springRobot.parametrize(CartDOF.B).setStiffness(200);
-		springRobot.parametrize(CartDOF.A).setStiffness(200);
+		springRobot.parametrize(CartDOF.C).setStiffness(300);
+		springRobot.parametrize(CartDOF.B).setStiffness(300);
+		springRobot.parametrize(CartDOF.A).setStiffness(300);
 		springRobot.setReferenceSystem(World.Current.getRootFrame());
-		springRobot.parametrize(CartDOF.ALL).setDamping(0.2);
+		springRobot.parametrize(CartDOF.ALL).setDamping(1);
 		
 		// Inits the Robot
 		gripper.attachTo(robot.getFlange());
@@ -123,75 +125,75 @@ public class window extends RoboticsAPIApplication{
 //		
 		//getting the vector
 		robot.move(ptp(getApplicationData().getFrame("/windowHandle/P1")).setJointVelocityRel(0.5));
-		logger.info("Calibrating vector point 1");
-		Vector3D origin = frameToVector(calibrateFrame(gripper,30));
-		logger.info(String.format("Origin: %s", origin.toString()));
-
-		logger.info("Moving to left");
-		robot.move(ptp(getApplicationData().getFrame("/windowHandle/P2")).setJointVelocityRel(0.5));
-		logger.info("Calibrating vector point 2");
-		ThreadUtil.milliSleep(1000);
-		Vector3D right = frameToVector(calibrateFrame(gripper,30));
-		logger.info(String.format("Right: %s", right.toString()));
+//		logger.info("Calibrating vector point 1");
+//		Vector3D origin = frameToVector(calibrateFrame(gripper,30));
+//		logger.info(String.format("Origin: %s", origin.toString()));
+//
+//		logger.info("Moving to left");
+//		robot.move(ptp(getApplicationData().getFrame("/windowHandle/P2")).setJointVelocityRel(0.5));
+//		logger.info("Calibrating vector point 2");
+//		ThreadUtil.milliSleep(1000);
+//		Vector3D right = frameToVector(calibrateFrame(gripper,30));
+//		logger.info(String.format("Right: %s", right.toString()));
+//		
+//		logger.info("Moving to up");
+//		robot.move(ptp(getApplicationData().getFrame("/windowHandle/P4")).setJointVelocityRel(0.5));
+//		logger.info("Calibrating vector point 2");
+//		ThreadUtil.milliSleep(1000);
+//		Vector3D up = frameToVector(calibrateFrame(gripper,45));
+//		logger.info(String.format("Right: %s", up.toString()));
+//			
+//		robot.move(linRel(0, 0, -20).setJointVelocityRel(0.2));
+//		// get world unit vectors
+//		Pair<Vector3D,Vector3D> openLine = getCanvasPlane(origin, up, right);
+//		logger.info(String.format("Canvas X, Y: (%s), (%s)", openLine.getA().toString(), openLine.getB().toString()));
+//
+//		Spline mySpline = new Spline(
+//				spl(getApplicationData().getFrame("/windowHandle/lockUp")),
+//				spl(getApplicationData().getFrame("/windowHandle/P5")),
+//				spl(getApplicationData().getFrame("/windowHandle/P6")),
+//				spl(getApplicationData().getFrame("/windowHandle/P7")),
+//				spl(getApplicationData().getFrame("/windowHandle/lockDown")),
+//				spl(getApplicationData().getFrame("/windowHandle/P3")));
+//		
+//		robot.move(ptp(getApplicationData().getFrame("/windowHandle/lockUp")).setMode(springRobot));
+//		robot.move(mySpline.setJointVelocityRel(0.5));			
+//		
+//		ForceCondition touch = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 30);
+//		IMotionContainer motion2 = robot.move(linRel(0, 0, 40, gripper.getFrame("/TCP")).setCartVelocity(30).breakWhen(touch));
+//		
+//		if (motion2.getFiredBreakConditionInfo() == null){
+//			logger.info("No Collision Detected");
+//		}
+//		else{
+//			logger.info("Collision Detected");
+//			robot.move(linRel(0, 0, -20).setJointVelocityRel(0.3));
+//			gripper2F1.setPos(15);
+//			robot.move(linRel(0, 0, 30).setJointVelocityRel(0.3));
+//			ThreadUtil.milliSleep(100);
+//			gripper2F1.close();
+//		}
 		
-		logger.info("Moving to up");
-		robot.move(ptp(getApplicationData().getFrame("/windowHandle/P4")).setJointVelocityRel(0.5));
-		logger.info("Calibrating vector point 2");
-		ThreadUtil.milliSleep(1000);
-		Vector3D up = frameToVector(calibrateFrame(gripper,45));
-		logger.info(String.format("Right: %s", up.toString()));
-			
-		robot.move(linRel(0, 0, -20).setJointVelocityRel(0.2));
-		// get world unit vectors
-		Pair<Vector3D,Vector3D> openLine = getCanvasPlane(origin, up, right);
-		logger.info(String.format("Canvas X, Y: (%s), (%s)", openLine.getA().toString(), openLine.getB().toString()));
-
-		Spline mySpline = new Spline(
-				spl(getApplicationData().getFrame("/windowHandle/lockUp")),
-				spl(getApplicationData().getFrame("/windowHandle/P5")),
-				spl(getApplicationData().getFrame("/windowHandle/P6")),
-				spl(getApplicationData().getFrame("/windowHandle/P7")),
-				spl(getApplicationData().getFrame("/windowHandle/lockDown")),
-				spl(getApplicationData().getFrame("/windowHandle/P3")));
-				// ...
-		robot.move(ptp(getApplicationData().getFrame("/windowHandle/lockUp")));
-		robot.move(mySpline.setJointVelocityRel(0.5));			
-				
-		Boolean con1= true;
-		while (con1) {
-			ForceSensorData data = robot.getExternalForceTorque(robot.getFlange(),World.Current.getRootFrame());
-			Vector vForce = data.getForce();
-			double forceInY = vForce.getY();
-			forceInY = Math.abs(forceInY);
-			if (forceInY < 25){
-				robot.move(linRel(0, 0, 1).setJointVelocityRel(0.3));
-			} else {
-				con1 = false;
-				break;
-			}
-		}
+		ForceComponentCondition touch2 = new ForceComponentCondition(robot.getFrame("/TCP"), CoordinateAxis.Y, 20.0, 25.0);
+		robot.move(linRel(0, 0, 35).setJointVelocityRel(0.3).breakWhen(touch2));
 		
-		robot.move(linRel(0, 0, -20).setJointVelocityRel(0.3));
-		gripper2F1.setPos(15);
-		robot.move(linRel(0, 0, 30).setJointVelocityRel(0.3));
-		ThreadUtil.milliSleep(100);
-		gripper2F1.close();
-		
-		springRobot.parametrize(CartDOF.X).setStiffness(1000);
-		springRobot.parametrize(CartDOF.Y).setStiffness(3000);
-		springRobot.parametrize(CartDOF.Z).setStiffness(1000);
-
-		// Stiff rotation
-		springRobot.parametrize(CartDOF.C).setStiffness(300);
-		springRobot.parametrize(CartDOF.B).setStiffness(300);
-		springRobot.parametrize(CartDOF.A).setStiffness(300);
-		springRobot.setReferenceSystem(World.Current.getRootFrame());
-		springRobot.parametrize(CartDOF.ALL).setDamping(1);
-		
-		Vector3D diag = openLine.getA().multiply(650);
-		logger.info("moving on a line");
-		double acc = 25;
-		gripper.move(linRel(diag.getZ(), diag.getX(), diag.getY()).setCartVelocity(30).setCartAcceleration(acc).setMode(springRobot));
+////    	Boolean con1= true;
+////		while (con1) {
+////			ForceSensorData data = robot.getExternalForceTorque(robot.getFlange(),World.Current.getRootFrame());
+////			Vector vForce = data.getForce();
+////			double forceInY = vForce.getY();
+////			forceInY = Math.abs(forceInY);
+////			if (forceInY < 25){
+////				robot.move(linRel(0, 0, 1).setJointVelocityRel(0.3));
+////			} else {
+////				con1 = false;
+////				break;
+////			}
+////		}
+//		Vector3D diag = openLine.getA().multiply(650);
+//		logger.info("moving on a line");
+//		double acc = 25;
+//		gripper.move(linRel(diag.getZ(), diag.getX(), diag.getY()).setCartVelocity(40).setCartAcceleration(acc).setMode(springRobot));
 
 	}
 }

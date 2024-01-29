@@ -92,31 +92,31 @@ public class window extends RoboticsAPIApplication{
 		ThreadUtil.milliSleep(200);
 	}
 	
-	private Frame calibrateFrame(Tool grip, double force){
-		ForceCondition touch = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), force);
-		IMotionContainer motion1 = gripper.move(linRel(0, 0, 100, gripper.getFrame("/TCP")).setCartVelocity(30).breakWhen(touch));
-		if (motion1.getFiredBreakConditionInfo() == null){
-			logger.info("No Collision Detected");
-			return null;
-		}
-		else{
-			logger.info("Collision Detected");
-			return robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"));
-		}
-
-	}
-	
-	private Pair<Vector3D, Vector3D> getCanvasPlane(Vector3D origin, Vector3D up, Vector3D right){
-		Vector3D ver = up.subtract(origin).normalize();
-		Vector3D hor = right.subtract(origin).normalize();
-
-		return new Pair<Vector3D, Vector3D>(hor, ver);
-	}
-	
-	private Vector3D frameToVector(Frame frame){
-		return Vector3D.of(frame.getX(), frame.getY(), frame.getZ());
-	}
-	
+//	private Frame calibrateFrame(Tool grip, double force){
+//		ForceCondition touch = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), force);
+//		IMotionContainer motion1 = gripper.move(linRel(0, 0, 100, gripper.getFrame("/TCP")).setCartVelocity(30).breakWhen(touch));
+//		if (motion1.getFiredBreakConditionInfo() == null){
+//			logger.info("No Collision Detected");
+//			return null;
+//		}
+//		else{
+//			logger.info("Collision Detected");
+//			return robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"));
+//		}
+//
+//	}
+//	
+//	private Pair<Vector3D, Vector3D> getCanvasPlane(Vector3D origin, Vector3D up, Vector3D right){
+//		Vector3D ver = up.subtract(origin).normalize();
+//		Vector3D hor = right.subtract(origin).normalize();
+//
+//		return new Pair<Vector3D, Vector3D>(hor, ver);
+//	}
+//	
+//	private Vector3D frameToVector(Frame frame){
+//		return Vector3D.of(frame.getX(), frame.getY(), frame.getZ());
+//	}
+//	
 	public void run() {
 		// Calibration sequence
 		mF.setLEDBlue(true);

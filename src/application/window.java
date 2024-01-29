@@ -125,7 +125,7 @@ public class window extends RoboticsAPIApplication{
 //		
 		//getting the vector
 		robot.move(ptp(getApplicationData().getFrame("/windowHandle/P1")).setJointVelocityRel(0.5));
-//		logger.info("Calibrating vector point 1");
+		logger.info("Calibrating vector point 1");
 //		Vector3D origin = frameToVector(calibrateFrame(gripper,30));
 //		logger.info(String.format("Origin: %s", origin.toString()));
 //
@@ -191,7 +191,7 @@ public class window extends RoboticsAPIApplication{
 ////			}
 ////		}
 //		Vector3D diag = openLine.getA().multiply(650);
-//		logger.info("moving on a line");
+		logger.info("moving on a line");
 //		double acc = 25;
 //		gripper.move(linRel(diag.getZ(), diag.getX(), diag.getY()).setCartVelocity(40).setCartAcceleration(acc).setMode(springRobot));
 

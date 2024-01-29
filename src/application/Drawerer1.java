@@ -72,7 +72,7 @@ public class Drawerer1 extends RoboticsAPIApplication{
 		// Set stiffness
 
 		// TODO: Stiff in every direction except plane perpendicular to flange
-		springRobot.parametrize(CartDOF.X).setStiffness(750);
+		springRobot.parametrize(CartDOF.X).setStiffness(500);
 		springRobot.parametrize(CartDOF.Y).setStiffness(5000);
 		springRobot.parametrize(CartDOF.Z).setStiffness(5000);
 

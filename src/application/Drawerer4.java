@@ -72,7 +72,7 @@ public class Drawerer4 extends RoboticsAPIApplication{
 		// Set stiffness
 
 		// TODO: Stiff in every direction except plane perpendicular to flange
-		springRobot.parametrize(CartDOF.X).setStiffness(750);
+		springRobot.parametrize(CartDOF.X).setStiffness(500);
 		springRobot.parametrize(CartDOF.Y).setStiffness(5000);
 		springRobot.parametrize(CartDOF.Z).setStiffness(5000);
 
@@ -182,7 +182,7 @@ public class Drawerer4 extends RoboticsAPIApplication{
 		logger.info("Reading file");
 		String resPath = FileReader.findUniqueFolder("res", "..");
 		
-		List<String> file = FileReader.readFile(resPath+"/pa.txt");
+		List<String> file = FileReader.readFile(resPath+"/malogo.txt");
 		PointPath pointPath = PointPath.createPointPathsV2(file, canvas, 1);
 		pointPath.mirrorPaths();
 		PathPlan pathPlan = pointPath.toPathPlan(robot, originFrame, canvas, 200);

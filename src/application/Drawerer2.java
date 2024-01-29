@@ -53,9 +53,9 @@ public class Drawerer2 extends RoboticsAPIApplication{
 	private ITaskLogger logger;
 	
 	private CartesianImpedanceControlMode springRobot;
-
-	public static final double PEN_UP_DIST = 2;
-	public static final double PEN_DOWN_DIST = 10;
+	
+	public static final double PEN_UP_DIST = 5;
+	public static final double PEN_DOWN_DIST = 5;
 	
 	@Override
 	public void initialize() {

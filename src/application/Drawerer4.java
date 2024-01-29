@@ -53,9 +53,9 @@ public class Drawerer4 extends RoboticsAPIApplication{
 	private ITaskLogger logger;
 	
 	private CartesianImpedanceControlMode springRobot;
-
-	public static final double PEN_UP_DIST = 2;
-	public static final double PEN_DOWN_DIST = 10;
+	
+	public static final double PEN_UP_DIST = 5;
+	public static final double PEN_DOWN_DIST = 5;
 	
 	@Override
 	public void initialize() {
@@ -182,7 +182,7 @@ public class Drawerer4 extends RoboticsAPIApplication{
 		logger.info("Reading file");
 		String resPath = FileReader.findUniqueFolder("res", "..");
 		
-		List<String> file = FileReader.readFile(resPath+"/malogo.txt");
+		List<String> file = FileReader.readFile(resPath+"/pa.txt");
 		PointPath pointPath = PointPath.createPointPathsV2(file, canvas, 1);
 		pointPath.mirrorPaths();
 		PathPlan pathPlan = pointPath.toPathPlan(robot, originFrame, canvas, 200);

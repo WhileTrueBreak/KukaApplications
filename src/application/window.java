@@ -149,14 +149,16 @@ public class window extends RoboticsAPIApplication{
 //		// get world unit vectors
 //		Pair<Vector3D,Vector3D> openLine = getCanvasPlane(origin, up, right);
 //		logger.info(String.format("Canvas X, Y: (%s), (%s)", openLine.getA().toString(), openLine.getB().toString()));
-		try {
-			robot.move(ptp(getApplicationData().getFrame("/P2")).setJointVelocityRel(0.5));
-		}catch (Exception e){
-			logger.info("P2 doesn't exist. Guide me to the handle");
-			robot.move(handGuiding());
-			
-			
-		}
+//		try {
+//			robot.move(ptp(getApplicationData().getFrame("/P2")).setJointVelocityRel(0.5));
+//		}catch (Exception e){
+//			logger.info("P2 doesn't exist. Guide me to the handle");
+//			robot.move(handGuiding());
+//			
+//			
+//		}
+		robot.move(handGuiding());
+		
 //		Spline mySpline = new Spline(
 //				spl(getApplicationData().getFrame("/windowHandle/lockUp")),
 //				spl(getApplicationData().getFrame("/windowHandle/P5")),

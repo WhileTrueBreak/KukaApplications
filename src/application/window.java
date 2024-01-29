@@ -174,8 +174,9 @@ public class window extends RoboticsAPIApplication{
 //			gripper2F1.close();
 //		}
 		
-		ForceComponentCondition touch2 = new ForceComponentCondition(robot.getFrame("/TCP"), CoordinateAxis.Z, 100.0, 125.0);
-		robot.move(linRel(0, 0, 35).setJointVelocityRel(0.3).breakWhen(touch2));
+		ForceComponentCondition touch2_inverted = new ForceComponentCondition(gripper.getFrame("/TCP"), CoordinateAxis.Y, 100.0, 125.0);
+		ICondition touch2 =   touch2_inverted.invert();
+		gripper.move(linRel(0, 35,0).setJointVelocityRel(0.3).breakWhen(touch2));
 		
 ////    	Boolean con1= true;
 ////		while (con1) {

@@ -44,6 +44,7 @@ import com.kuka.roboticsAPI.persistenceModel.XmlApplicationDataSource;
 import com.kuka.roboticsAPI.sensorModel.ForceSensorData;
 import com.kuka.task.ITaskLogger;
 import static com.kuka.roboticsAPI.motionModel.HRCMotions.*;
+import com.kuka.roboticsAPI.motionModel.HandGuidingMotion;
 
 
 public class window extends RoboticsAPIApplication{
@@ -123,32 +124,30 @@ public class window extends RoboticsAPIApplication{
 		// Calibration sequence
 		mF.setLEDBlue(true);
 		
-//		robot.move(ptp(getApplicationData().getFrame("/P1")).setJointVelocityRel(0.5));
-////		
-//		//getting the vector
-//		robot.move(ptp(getApplicationData().getFrame("/windowHandle/P1")).setJointVelocityRel(0.5));
-//		logger.info("Calibrating vector point 1");
-//		Vector3D origin = frameToVector(calibrateFrame(gripper,30));
-//		logger.info(String.format("Origin: %s", origin.toString()));
-//
-//		logger.info("Moving to left");
-//		robot.move(ptp(getApplicationData().getFrame("/windowHandle/P2")).setJointVelocityRel(0.5));
-//		logger.info("Calibrating vector point 2");
-//		ThreadUtil.milliSleep(1000);
-//		Vector3D right = frameToVector(calibrateFrame(gripper,30));
-//		logger.info(String.format("Right: %s", right.toString()));
-//		
-//		logger.info("Moving to up");
-//		robot.move(ptp(getApplicationData().getFrame("/windowHandle/P4")).setJointVelocityRel(0.5));
-//		logger.info("Calibrating vector point 2");
-//		ThreadUtil.milliSleep(1000);
-//		Vector3D up = frameToVector(calibrateFrame(gripper,45));
-//		logger.info(String.format("Right: %s", up.toString()));
-//			
-//		robot.move(linRel(0, 0, -20).setJointVelocityRel(0.2));
-//		// get world unit vectors
-//		Pair<Vector3D,Vector3D> openLine = getCanvasPlane(origin, up, right);
-//		logger.info(String.format("Canvas X, Y: (%s), (%s)", openLine.getA().toString(), openLine.getB().toString()));
+		robot.move(ptp(getApplicationData().getFrame("/P1")).setJointVelocityRel(0.5));	
+		//getting the vector
+		robot.move(ptp(getApplicationData().getFrame("/windowHandle/P1")).setJointVelocityRel(0.5));
+		logger.info("Calibrating vector point 1");
+		Vector3D origin = frameToVector(calibrateFrame(gripper,30));
+		logger.info(String.format("Origin: %s", origin.toString()));
+
+		logger.info("Moving to left");
+		robot.move(ptp(getApplicationData().getFrame("/windowHandle/P2")).setJointVelocityRel(0.5));
+		logger.info("Calibrating vector point 2");
+		ThreadUtil.milliSleep(1000);
+		Vector3D right = frameToVector(calibrateFrame(gripper,30));
+		logger.info(String.format("Right: %s", right.toString()));
+		
+		logger.info("Moving to up");
+		robot.move(ptp(getApplicationData().getFrame("/windowHandle/P4")).setJointVelocityRel(0.5));
+		logger.info("Calibrating vector point 2");
+		ThreadUtil.milliSleep(1000);
+		Vector3D up = frameToVector(calibrateFrame(gripper,45));
+		logger.info(String.format("Right: %s", up.toString()));
+			
+		robot.move(linRel(0, 0, -20).setJointVelocityRel(0.2));
+		Pair<Vector3D,Vector3D> openLine = getCanvasPlane(origin, up, right);
+		logger.info(String.format("Canvas X, Y: (%s), (%s)", openLine.getA().toString(), openLine.getB().toString()));
 //		try {
 //			robot.move(ptp(getApplicationData().getFrame("/P2")).setJointVelocityRel(0.5));
 //		}catch (Exception e){
@@ -157,47 +156,50 @@ public class window extends RoboticsAPIApplication{
 //			
 //			
 //		}
-		robot.move(handGuiding());
+//		robot.setESMState("1");
+//
+//		robot.move(handGuiding());
+
 		
-//		Spline mySpline = new Spline(
-//				spl(getApplicationData().getFrame("/windowHandle/lockUp")),
-//				spl(getApplicationData().getFrame("/windowHandle/P5")),
-//				spl(getApplicationData().getFrame("/windowHandle/P6")),
-//				spl(getApplicationData().getFrame("/windowHandle/P7")),
-//				spl(getApplicationData().getFrame("/windowHandle/lockDown")),
-//				spl(getApplicationData().getFrame("/windowHandle/P3")));
-//		
-//		robot.move(ptp(getApplicationData().getFrame("/windowHandle/lockUp")).setMode(springRobot));
-//		robot.move(mySpline.setJointVelocityRel(0.5));			
-//		
-//		ForceCondition touch = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 30);
-//		IMotionContainer motion2 = robot.move(linRel(0, 0, 40, gripper.getFrame("/TCP")).setCartVelocity(30).breakWhen(touch));
-//		
-//		if (motion2.getFiredBreakConditionInfo() == null){
-//			logger.info("No Collision Detected");
-//		}
-//		else{
-//			logger.info("Collision Detected");
-//			robot.move(linRel(0, 0, -20).setJointVelocityRel(0.3));
-//			gripper2F1.setPos(15);
-//			robot.move(linRel(0, 0, 30).setJointVelocityRel(0.3));
-//			ThreadUtil.milliSleep(100);
-//			gripper2F1.close();
-//		}
-//		
-//		ForceComponentCondition touch2_inverted = new ForceComponentCondition(gripper.getFrame("/TCP"), CoordinateAxis.Z, -25.0, -15.0);
-//		ICondition touch2 =   touch2_inverted.invert();
-//		IMotionContainer motion1 = gripper.move(linRel(0,0,35).setJointVelocityRel(0.2).breakWhen(touch2));
-//		if (motion1.getFiredBreakConditionInfo() == null){
-//			logger.info("No Collision Detected");
-//		}
-//		else{
-//			logger.info("Collision Detected");
-//		}
-//		Vector3D diag = openLine.getA().multiply(650);
-//		logger.info("moving on a line");
-//		double acc = 25;
-//		gripper.move(linRel(diag.getZ(), diag.getX(), diag.getY()).setCartVelocity(40).setCartAcceleration(acc).setMode(springRobot));
+		Spline mySpline = new Spline(
+				spl(getApplicationData().getFrame("/windowHandle/lockUp")),
+				spl(getApplicationData().getFrame("/windowHandle/P5")),
+				spl(getApplicationData().getFrame("/windowHandle/P6")),
+				spl(getApplicationData().getFrame("/windowHandle/P7")),
+				spl(getApplicationData().getFrame("/windowHandle/lockDown")),
+				spl(getApplicationData().getFrame("/windowHandle/P3")));
+		
+		robot.move(ptp(getApplicationData().getFrame("/windowHandle/lockUp")).setMode(springRobot));
+		robot.move(mySpline.setJointVelocityRel(0.5).setMode(springRobot));			
+		
+		ForceCondition touch = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 30);
+		IMotionContainer motion2 = robot.move(linRel(0, 0, 40, gripper.getFrame("/TCP")).setCartVelocity(30).breakWhen(touch));
+		
+		if (motion2.getFiredBreakConditionInfo() == null){
+			logger.info("No Collision Detected");
+		}
+		else{
+			logger.info("Collision Detected");
+			robot.move(linRel(0, 0, -20).setJointVelocityRel(0.3));
+			gripper2F1.setPos(15);
+			robot.move(linRel(0, 0, 30).setJointVelocityRel(0.3));
+			ThreadUtil.milliSleep(100);
+			gripper2F1.close();
+		}
+		
+		ForceComponentCondition touch2_inverted = new ForceComponentCondition(gripper.getFrame("/TCP"), CoordinateAxis.Z, -25.0, -15.0);
+		ICondition touch2 =   touch2_inverted.invert();
+		IMotionContainer motion1 = gripper.move(linRel(0,0,35).setJointVelocityRel(0.2).breakWhen(touch2));
+		if (motion1.getFiredBreakConditionInfo() == null){
+			logger.info("No Collision Detected");
+		}
+		else{
+			logger.info("Collision Detected");
+		}
+		Vector3D diag = openLine.getA().multiply(650);
+		logger.info("moving on a line");
+		double acc = 25;
+		gripper.move(linRel(diag.getZ(), diag.getX(), diag.getY()).setCartVelocity(40).setCartAcceleration(acc).setMode(springRobot));
 
 	}
 }

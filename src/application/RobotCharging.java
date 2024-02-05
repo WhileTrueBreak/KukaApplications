@@ -12,7 +12,6 @@ import com.kuka.generated.ioAccess.RemoteControlIOGroup;
 import com.kuka.nav.Pose;
 import com.kuka.nav.data.LocationData;
 import com.kuka.nav.robot.MobileRobot;
-import com.kuka.nav.fleet.FleetManager;
 import com.kuka.resource.IResourceManager;
 import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
 
@@ -71,8 +70,6 @@ public class RobotCharging extends RoboticsAPIApplication {
 	@Inject
 	private ITaskLogger logger;
 	
-	@Inject
-	private FleetManager FM;
 	
 	@Inject
     private LocationData locData;
@@ -118,8 +115,6 @@ public class RobotCharging extends RoboticsAPIApplication {
 		int mod = RCIO.getMode();
 		logger.info("mod is" + mod);
 		
-		int graph = FM.getGraph().getMapId();
-		logger.info("graph" + graph);
 		
 		//////////
 		double posX = MPM.getX();

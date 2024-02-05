@@ -130,8 +130,8 @@ public class hand_over extends RoboticsAPIApplication {
 		mF.setLEDBlue(false);
 		ThreadUtil.milliSleep(180);
 		
-		robot.move(ptp(getApplicationData().getFrame("/P2/P1")).setJointVelocityRel(0.4));//frame1
-		robot.move(ptp(getApplicationData().getFrame("/P2")).setJointVelocityRel(0.4));//frame1
+		robot.move(ptp(getApplicationData().getFrame("/dropPoint/dropTransition")).setJointVelocityRel(0.4));//frame1
+		robot.move(ptp(getApplicationData().getFrame("/handOver")).setJointVelocityRel(0.4));//frame1
 		gripper2F1.close();
 		
 //		ThreadUtil.milliSleep(1000);
@@ -147,17 +147,17 @@ public class hand_over extends RoboticsAPIApplication {
 			mF.setLEDBlue(false);
 			ThreadUtil.milliSleep(200);
 			
-			robot.move(ptp(getApplicationData().getFrame("/P2/P1")).setJointVelocityRel(0.4));//frame1
+			robot.move(ptp(getApplicationData().getFrame("/dropPoint/dropTransition")).setJointVelocityRel(0.4));//frame1
 			ThreadUtil.milliSleep(200);
-			robot.move(ptp(getApplicationData().getFrame("/P2")).setJointVelocityRel(0.4));//frame1
+			robot.move(ptp(getApplicationData().getFrame("/handOver")).setJointVelocityRel(0.4));//frame1
 			gripper2F1.close();
 		}
 		logger.info("Object detected");
 		mF.setLEDBlue(true);
 		ThreadUtil.milliSleep(200);
 		
-		robot.move(ptp(getApplicationData().getFrame("/P2/P1")).setJointVelocityRel(0.4));//frame1
-		robot.move(lin(getApplicationData().getFrame("/P3")).setJointVelocityRel(0.4));
+		robot.move(ptp(getApplicationData().getFrame("/dropPoint/dropTransition")).setJointVelocityRel(0.4));//frame1
+		robot.move(lin(getApplicationData().getFrame("/handOver")).setJointVelocityRel(0.4));
 		
 		mF.setLEDBlue(true);
 		ThreadUtil.milliSleep(200);
@@ -185,7 +185,7 @@ public class hand_over extends RoboticsAPIApplication {
 			} 
 		}
 		
-		robot.move(lin(getApplicationData().getFrame("/P3")).setJointVelocityRel(0.4));
+		robot.move(lin(getApplicationData().getFrame("/handOver")).setJointVelocityRel(0.4));
 		m1 = robot.moveAsync(positionHold(springRobot, -2, TimeUnit.SECONDS));
 		logger.info("smak me to grab :)");
 		condition = false;
@@ -205,8 +205,8 @@ public class hand_over extends RoboticsAPIApplication {
 		ThreadUtil.milliSleep(5000);
 		honkCapability.honk();
 			
-		robot.move(ptp(getApplicationData().getFrame("/P2/P1")).setJointVelocityRel(0.4));//frame1
-		robot.move(ptp(getApplicationData().getFrame("/P3")).setJointVelocityRel(0.4));//frame1
+		robot.move(ptp(getApplicationData().getFrame("/dropPoint/dropTransition")).setJointVelocityRel(0.4));//frame1
+		robot.move(ptp(getApplicationData().getFrame("/handOver")).setJointVelocityRel(0.4));//frame1
 		gripper2F1.open();
 	}
 }

@@ -193,7 +193,13 @@ public class window extends RoboticsAPIApplication{
 		logger.info("moving on a line");
 		double acc = 20;
 		robot.move(linRel(diag.getZ(), diag.getX(), diag.getY()).setCartVelocity(10).setCartAcceleration(acc));
-
+//		int isCancel = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, informationText, "OK", "Cancel");
+//		if (isCancel == 1)
+//        {
+//			logger.info("cancelled");
+//        } else {
+//        	logger.info("continuing");
+//        }
 	}
 }
 

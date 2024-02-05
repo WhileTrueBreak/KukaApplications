@@ -20,6 +20,7 @@ import com.kuka.roboticsAPI.geometricModel.LoadData;
 import com.kuka.roboticsAPI.uiModel.ApplicationDialogType;
 import com.kuka.task.ITaskLogger;
 import com.kuka.roboticsAPI.motionModel.kmp.MobilePlatformPosition;
+import com.kuka.roboticsAPI.motionModel.kmp.MobilePlatformRelativeMotion;
 
 /**
  * Implementation of a robot application.
@@ -76,39 +77,37 @@ public class RobotCharging extends RoboticsAPIApplication {
 
 	@Override
 	public void run() {
-		
-		//IMobilePlatformBatteryState battStatus = kmp.getMobilePlatformBatteryState();
-		long batteryLevel = kmp.getMobilePlatformBatteryState().getStateOfCharge();
-		Boolean chargeEnableState = kmp.getMobilePlatformBatteryState().isChargingEnabled();
-		
-		boolean motion = kmp.isMotionEnabled();
+//      testing	
+//		IMobilePlatformBatteryState battStatus = kmp.getMobilePlatformBatteryState();
 //		Map<String, Object> frame = kmp.getAllUserParameters();
 //		double[] Jpos = kmp.getCurrentJointPosition();
-	//	LoadData Load = kmp.getLoadData();
+//		LoadData Load = kmp.getLoadData();
+//		ISafetyState safety = kmp.getSafetyState();
 		
+		long batteryLevel = kmp.getMobilePlatformBatteryState().getStateOfCharge();
+		Boolean chargeEnableState = kmp.getMobilePlatformBatteryState().isChargingEnabled();
+		boolean motion = kmp.isMotionEnabled();
 		OperationMode opMode = kmp.getOperationMode();
 		
-		ISafetyState safety = kmp.getSafetyState();
 		logger.info("batteryLevel is :" + batteryLevel);
 		logger.info("charge enabled : " + chargeEnableState);
 		logger.info("motion enable :" + motion);
 		logger.info("opMode is: " + opMode);
-		logger.info("safety is: " + safety);
 		
-		/////////
+		///////// Base position from NAV ////////
 		
 		Pose position = MR.getPose();
 		
 		logger.info("Position" + position);
 		
+		///////// moving Base ///////
 		
-//		int isCancel = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, informationText, "OK", "Cancel");
-//		if (isCancel == 1)
-//        {
-//			logger.info("cancelled");
-//        } else {
-//        	logger.info("continuing");
-//        }
+		double x = 20;
+		double y = 30;
+		double tita = 0;
+		MobilePlatformRelativeMotion motion1 = new MobilePlatformRelativeMotion(x, y, tita);
+		kmp.move(motion1.setVelocity(10, 10));
+		
 		
 //		//Charges with floor contacts for 10 minutes.
 //		int timeoutInMinutes = 60; 

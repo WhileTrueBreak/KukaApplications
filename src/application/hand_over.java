@@ -206,7 +206,7 @@ public class hand_over extends RoboticsAPIApplication {
 		honkCapability.honk();
 			
 		robot.move(ptp(getApplicationData().getFrame("/P2")).setJointVelocityRel(0.4));//frame1
-		robot.move(ptp(getApplicationData().getFrame("/P2/P1")).setJointVelocityRel(0.4));//frame1
+		//robot.move(ptp(getApplicationData().getFrame("/P2/P1")).setJointVelocityRel(0.4));//frame1
 		gripper2F1.open();
 	}
 }

@@ -82,35 +82,33 @@ public class RobotCharging extends RoboticsAPIApplication {
 		Boolean chargeEnableState = kmp.getMobilePlatformBatteryState().isChargingEnabled();
 		
 		boolean motion = kmp.isMotionEnabled();
-		Map<String, Object> frame = kmp.getAllUserParameters();
-		double[] Jpos = kmp.getCurrentJointPosition();
-		LoadData Load = kmp.getLoadData();
+//		Map<String, Object> frame = kmp.getAllUserParameters();
+//		double[] Jpos = kmp.getCurrentJointPosition();
+	//	LoadData Load = kmp.getLoadData();
 		
 		OperationMode opMode = kmp.getOperationMode();
 		
-		Boolean axisReference = kmp.getSafetyState().areAllAxesGMSReferenced();
-		logger.info("batteryLevel is" + batteryLevel);
-		logger.info("charge enabled" + chargeEnableState);
-		logger.info("motion enable" + motion);
-		logger.info("frame" + frame);
-		logger.info("J pos" + Jpos);
-		logger.info("Load" + Load);
-		logger.info("opMode is" + opMode);
-		logger.info("All axis are referenced, " + axisReference);
+		ISafetyState safety = kmp.getSafetyState();
+		logger.info("batteryLevel is :" + batteryLevel);
+		logger.info("charge enabled : " + chargeEnableState);
+		logger.info("motion enable :" + motion);
+		logger.info("opMode is: " + opMode);
+		logger.info("safety is: " + safety);
 		
 		/////////
+		
 		Pose position = MR.getPose();
 		
 		logger.info("Position" + position);
 		
 		
-		int isCancel = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, informationText, "OK", "Cancel");
-		if (isCancel == 1)
-        {
-			logger.info("cancelled");
-        } else {
-        	logger.info("continuing");
-        }
+//		int isCancel = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, informationText, "OK", "Cancel");
+//		if (isCancel == 1)
+//        {
+//			logger.info("cancelled");
+//        } else {
+//        	logger.info("continuing");
+//        }
 		
 //		//Charges with floor contacts for 10 minutes.
 //		int timeoutInMinutes = 60; 

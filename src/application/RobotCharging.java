@@ -5,9 +5,6 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
-import com.kuka.basictoolbox.container.IContainer;
-import com.kuka.common.ThreadUtil;
-import com.kuka.generated.ioAccess.Gripper2FIOGroup;
 import com.kuka.generated.ioAccess.RemoteControlIOGroup;
 import com.kuka.nav.Pose;
 import com.kuka.nav.data.LocationData;
@@ -15,21 +12,14 @@ import com.kuka.nav.robot.MobileRobot;
 import com.kuka.resource.IResourceManager;
 import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
 
-import com.kuka.roboticsAPI.capabilities.floorMountedCharge.ChargingType;
-import com.kuka.roboticsAPI.capabilities.floorMountedCharge.IFloorMountedChargeCapability;
-import com.kuka.roboticsAPI.capabilities.ledStrip.LEDStripUserStatePriority;
-import com.kuka.roboticsAPI.capabilities.ledStrip.SegmentColor;
 import com.kuka.roboticsAPI.controllerModel.sunrise.ISafetyState;
-import com.kuka.roboticsAPI.controllerModel.sunrise.state.kmp.IMobilePlatformBatteryState;
 import com.kuka.roboticsAPI.deviceModel.OperationMode;
 import com.kuka.roboticsAPI.deviceModel.kmp.KmpOmniMove;
 import com.kuka.roboticsAPI.deviceModel.kmp.SunriseOmniMoveMobilePlatform;
 import com.kuka.roboticsAPI.geometricModel.LoadData;
 import com.kuka.roboticsAPI.uiModel.ApplicationDialogType;
 import com.kuka.task.ITaskLogger;
-import com.kuka.task.ITaskManager;
 import com.kuka.roboticsAPI.motionModel.kmp.MobilePlatformPosition;
-import com.kuka.roboticsAPI.motionModel.kmp.MobilePlatformParameterSet;
 
 /**
  * Implementation of a robot application.
@@ -51,8 +41,8 @@ import com.kuka.roboticsAPI.motionModel.kmp.MobilePlatformParameterSet;
  */
 public class RobotCharging extends RoboticsAPIApplication {
 
-	@Inject
-	private KmpOmniMove kmp1;
+//	@Inject
+//	private KmpOmniMove kmp1;
 
 	@Inject
 	private MobileRobot MR;
@@ -68,11 +58,11 @@ public class RobotCharging extends RoboticsAPIApplication {
 	private ITaskLogger logger;
 	
 	
-	@Inject
-    private LocationData locData;
-	
-	@Inject
-	private RemoteControlIOGroup RCIO;
+//	@Inject
+//   private LocationData locData;
+//	
+//	@Inject
+//	private RemoteControlIOGroup RCIO;
 	
 	private final static String informationText=
 	         "Robot going to charge!"+ "\n" +
@@ -97,8 +87,8 @@ public class RobotCharging extends RoboticsAPIApplication {
 		LoadData Load = kmp.getLoadData();
 		
 		OperationMode opMode = kmp.getOperationMode();
-		ISafetyState safe = kmp.getSafetyState();
 		
+		Boolean axisReference = kmp.getSafetyState().areAllAxesGMSReferenced();
 		logger.info("batteryLevel is" + batteryLevel);
 		logger.info("charge enabled" + chargeEnableState);
 		logger.info("motion enable" + motion);
@@ -106,25 +96,14 @@ public class RobotCharging extends RoboticsAPIApplication {
 		logger.info("J pos" + Jpos);
 		logger.info("Load" + Load);
 		logger.info("opMode is" + opMode);
-		logger.info("safety" + safe);
+		logger.info("All axis are referenced, " + axisReference);
 		
-		//////////
-		int mod = RCIO.getMode();
-		logger.info("mod is" + mod);
-		
-		
-		//////////
-		double posX = MPM.getX();
-		double posY = MPM.getY();
-		double posT = MPM.getTheta();
-		logger.info("X" + posX);
-		logger.info("Y" + posY);
-		logger.info("T" + posT);
-		
+		/////////
 		Pose position = MR.getPose();
 		
 		logger.info("Position" + position);
-		///// LED STRIP //////
+		
+		
 		int isCancel = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, informationText, "OK", "Cancel");
 		if (isCancel == 1)
         {

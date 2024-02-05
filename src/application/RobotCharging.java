@@ -17,7 +17,6 @@ import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
 
 import com.kuka.roboticsAPI.capabilities.floorMountedCharge.ChargingType;
 import com.kuka.roboticsAPI.capabilities.floorMountedCharge.IFloorMountedChargeCapability;
-import com.kuka.roboticsAPI.capabilities.interfaces.ILEDStripControlCapability;
 import com.kuka.roboticsAPI.capabilities.ledStrip.LEDStripUserStatePriority;
 import com.kuka.roboticsAPI.capabilities.ledStrip.SegmentColor;
 import com.kuka.roboticsAPI.controllerModel.sunrise.ISafetyState;
@@ -64,8 +63,6 @@ public class RobotCharging extends RoboticsAPIApplication {
 	@Inject
 	private MobilePlatformPosition MPM;
 	
-	@Inject
-	private ILEDStripControlCapability ledStrip;
 	
 	@Inject
 	private ITaskLogger logger;
@@ -128,10 +125,6 @@ public class RobotCharging extends RoboticsAPIApplication {
 		
 		logger.info("Position" + position);
 		///// LED STRIP //////
-		ledStrip.setDefaultColor(SegmentColor.BLUE, LEDStripUserStatePriority.USER);
-		ledStrip.showUserEffect();
-		ThreadUtil.milliSleep(2000);
-		ledStrip.stopUserEffect();
 		int isCancel = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, informationText, "OK", "Cancel");
 		if (isCancel == 1)
         {

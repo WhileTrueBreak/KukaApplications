@@ -74,7 +74,6 @@ public class RobotPickandPlace extends RoboticsAPIApplication {
 		ThreadUtil.milliSleep(200);
 		mF.setLEDBlue(false);
 		ThreadUtil.milliSleep(200);
-
 		//FORCE CONDITIONS EXAMPLE
 		ForceCondition touch10 = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"),10 );
 		ForceCondition touch15 = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"),15 );

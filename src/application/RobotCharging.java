@@ -11,12 +11,10 @@ import com.kuka.roboticsAPI.capabilities.floorMountedCharge.ChargingType;
 import com.kuka.roboticsAPI.capabilities.floorMountedCharge.IFloorMountedChargeCapability;
 import com.kuka.roboticsAPI.capabilities.interfaces.ICapability;
 import com.kuka.roboticsAPI.commandModel.IAction;
-import com.kuka.roboticsAPI.controllerModel.sunrise.state.kmp.IMobilePlatformBatteryState;
 import com.kuka.roboticsAPI.deviceModel.LBR;
 import com.kuka.roboticsAPI.deviceModel.kmp.KmpOmniMove;
 import com.kuka.roboticsAPI.deviceModel.kmp.SunriseOmniMoveMobilePlatform;
 import com.kuka.roboticsAPI.motionModel.kmp.MobilePlatformRelativeMotion;
-import com.kuka.task.ITaskLogger;
 
 /**
  * Implementation of a robot application.
@@ -43,10 +41,7 @@ public class RobotCharging extends RoboticsAPIApplication {
 	
 	@Inject
 	private SunriseOmniMoveMobilePlatform kmp;
-	
-	@Inject
-	private ITaskLogger logger;
-	
+
 	@Override
 	public void initialize() {
 		// initialize your application here
@@ -56,11 +51,9 @@ public class RobotCharging extends RoboticsAPIApplication {
 	public void run() {
 		// Charges with floor contacts for 10 minutes.
 		int timeoutInSeconds = 3600; // value in seconds
-		IMobilePlatformBatteryState battLevel = kmp.getMobilePlatformBatteryState();
-		logger.info("batteryLevel is" + battLevel);
 		
-//		IFloorMountedChargeCapability chargeCapability = kmp.getCapability(IFloorMountedChargeCapability.class);
-//		chargeCapability.enableCharge(ChargingType.FOR_GIVEN_TIME,timeoutInSeconds);
+		IFloorMountedChargeCapability chargeCapability = kmp.getCapability(IFloorMountedChargeCapability.class);
+		chargeCapability.enableCharge(ChargingType.FOR_GIVEN_TIME,timeoutInSeconds);
 		// kmp.enableCharge(ChargingType.FOR_GIVEN_TIME, timeoutInSeconds);
 	}
 }

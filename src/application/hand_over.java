@@ -145,7 +145,7 @@ public class hand_over extends RoboticsAPIApplication {
 			mF.setLEDBlue(false);
 			while (true) {
 				Vector3D v1 = dist(pose);
-				if (v1.length() > 40 && v1.getZ() > 20) {
+				if (v1.length() > 30 && (v1.getZ() > 10 || v1.getY() > 10)) {
 					mF.setLEDBlue(true);
 					gripper2F1.open();
 					logger.info("yaaaaayyyyyyyyy :)");

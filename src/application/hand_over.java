@@ -112,7 +112,7 @@ public class hand_over extends RoboticsAPIApplication {
 			ThreadUtil.milliSleep(180);
 			robot.move(ptp(getApplicationData().getFrame("/P2")).setJointVelocityRel(0.5).setMode(springRobot));//frame1
 			//robot.move(ptp(getApplicationData().getFrame("/P2/P1")).setJointVelocityRel(0.4));//frame1
-			double offset = i*50;
+			double offset = -i*50;
 			robot.move(linRel(0,offset,0,0,0,0).setJointVelocityRel(0.3).setMode(springRobot));
 			robot.move(linRel(0,0,60,0,0,0).setJointVelocityRel(0.3).setMode(springRobot));
 			ThreadUtil.milliSleep(1000);

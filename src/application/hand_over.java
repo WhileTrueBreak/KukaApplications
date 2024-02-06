@@ -160,7 +160,7 @@ public class hand_over extends RoboticsAPIApplication {
 			lissajousMode.parametrize(CartDOF.X).setStiffness(400);
 			lissajousMode.setMaxCartesianVelocity(10, 10, 10, 10, 10, 10);
 			double[] vel = lissajousMode.getMaxCartesianVelocity();
-			IMotionContainer m1 = robot.moveAsync(positionHold(lissajousMode, 20, TimeUnit.SECONDS));
+			IMotionContainer m1 = robot.moveAsync(positionHold(lissajousMode, 20, TimeUnit.SECONDS).setMode(springRobot));
 			Frame pose = robot.getCurrentCartesianPosition(robot.getFlange());
 			logger.info("Please take the object!");
 			mF.setLEDBlue(true);
@@ -179,18 +179,8 @@ public class hand_over extends RoboticsAPIApplication {
 					m1.cancel();
 					break;
 				} else if (m1.isFinished()) {
-					if (gripper2F1.readObjectDetection() != 3) {
-						mF.setLEDBlue(true);
-						gripper2F1.open();
-						logger.info("yaaaaayyyyyyyyy :)");
-						logger.info(""+vel);
-						mF.setLEDBlue(false);
-						m1.cancel();
-					} else {
-						logger.info(""+vel);
-						logger.info("Sorry, Time out!");
-					}
-					break;
+					logger.info(""+vel);
+					logger.info("Sorry, Time out!");
 				}
 			}
 			

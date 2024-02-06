@@ -106,11 +106,10 @@ public class hand_over extends RoboticsAPIApplication {
 	@Override
 	public void run() {
 		IHonkCapability honkCapability = kmp.getCapability(IHonkCapability.class);
-		gripper2F1.setPos(50);
-		gripper2F1.open();
+
 		honkCapability.honk();
 		for (int i = 0; i < 5; i++) {
-			gripper2F1.open();
+			gripper2F1.setPos(50);
 			mF.setLEDBlue(true);
 			ThreadUtil.milliSleep(180);
 			robot.move(ptp(getApplicationData().getFrame("/P2")).setJointVelocityRel(0.5).setMode(springRobot));//frame1

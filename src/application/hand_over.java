@@ -18,6 +18,7 @@ import com.kuka.roboticsAPI.conditionModel.ITriggerAction;
 import com.kuka.roboticsAPI.deviceModel.JointPosition;
 import com.kuka.roboticsAPI.deviceModel.LBR;
 import com.kuka.roboticsAPI.deviceModel.kmp.SunriseOmniMoveMobilePlatform;
+import com.kuka.roboticsAPI.executionModel.CommandInvalidException;
 import com.kuka.roboticsAPI.executionModel.IFiredTriggerInfo;
 import com.kuka.roboticsAPI.geometricModel.CartDOF;
 import com.kuka.roboticsAPI.geometricModel.CartPlane;
@@ -158,7 +159,7 @@ public class hand_over extends RoboticsAPIApplication {
 			lissajousMode.parametrize(CartDOF.B).setStiffness(100);
 			lissajousMode.parametrize(CartDOF.C).setStiffness(100);
 			lissajousMode.parametrize(CartDOF.X).setStiffness(400);
-			lissajousMode.setMaxCartesianVelocity(30, 30, 30, 30, 30, 30);
+			lissajousMode.setMaxCartesianVelocity(70, 70, 70, 70, 70, 70);
 			double[] vel = lissajousMode.getMaxCartesianVelocity();
 			try {
 				IMotionContainer m1 = robot.moveAsync(positionHold(lissajousMode, 20, TimeUnit.SECONDS));
@@ -185,7 +186,7 @@ public class hand_over extends RoboticsAPIApplication {
 					}
 				}
 //				m1.cancel();
-			} catch(Exception e) {
+			} catch(CommandInvalidException e) {
 				mF.setLEDBlue(true);
 				gripper2F1.open();
 				logger.info("yaaaaayyyyyyyyy :)");

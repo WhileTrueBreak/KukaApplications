@@ -94,7 +94,7 @@ public class hand_over extends RoboticsAPIApplication {
 		springRobot.parametrize(CartDOF.B).setStiffness(100);
 		springRobot.parametrize(CartDOF.A).setStiffness(100);
 		springRobot.setReferenceSystem(World.Current.getRootFrame());
-		springRobot.parametrize(CartDOF.ALL).setDamping(0.8);
+		springRobot.parametrize(CartDOF.ALL).setDamping(0.2);
 		//USAGE, will move to next line when triggered
 		//LOOK at pipecutting.java for examples on analysing the break condition. 
 		//gripper.move(linRel(0, 0, -30, World.Current.getRootFrame()).setCartVelocity(50).breakWhen(touch10)); 
@@ -151,7 +151,7 @@ public class hand_over extends RoboticsAPIApplication {
 			CartesianSineImpedanceControlMode lissajousMode;
 			lissajousMode = CartesianSineImpedanceControlMode.createLissajousPattern(CartPlane.YZ, 1.0, 5.0, 400.0);
 
-			//IMotionContainer m1_1 = robot.moveAsync(positionHold(springRobot, 20, TimeUnit.SECONDS));
+			IMotionContainer m1_1 = robot.moveAsync(positionHold(springRobot, 20, TimeUnit.SECONDS));
 			IMotionContainer m1 = robot.moveAsync(positionHold(lissajousMode, 20, TimeUnit.SECONDS));
 			Frame pose = robot.getCurrentCartesianPosition(robot.getFlange());
 			logger.info("Please take the object!");
@@ -183,6 +183,7 @@ public class hand_over extends RoboticsAPIApplication {
 			/////
 			//robot.move(linRel(Transformation.ofDeg(0,0,0,0,0,90)).setJointVelocityRel(0.6).setMode(springRobot));
 			/////
+			gripper2F1.open();
 			pose = robot.getCurrentCartesianPosition(robot.getFlange());
 			while (true) {
 				Vector3D v2 = dist(pose);

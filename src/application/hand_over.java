@@ -160,7 +160,7 @@ public class hand_over extends RoboticsAPIApplication {
 			mF.setLEDBlue(false);
 			while (true) {
 				Vector3D v1 = dist(pose);
-				if (v1.length() > 30 && (v1.getX() > 15 || v1.getY() > 15)) {
+				if (v1.length() > 50) {
 					mF.setLEDBlue(true);
 					gripper2F1.open();
 					logger.info("yaaaaayyyyyyyyy :)");
@@ -186,7 +186,7 @@ public class hand_over extends RoboticsAPIApplication {
 			pose = robot.getCurrentCartesianPosition(robot.getFlange());
 			while (true) {
 				Vector3D v2 = dist(pose);
-				if (v2.length() > 30) {
+				if (v2.length() > 50) {
 					mF.setLEDBlue(true);
 					gripper2F1.close();
 					logger.info("yaaaaayyyyyyyy :)");

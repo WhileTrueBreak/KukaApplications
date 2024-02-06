@@ -77,11 +77,11 @@ public class hand_over extends RoboticsAPIApplication {
 		gripper.attachTo(robot.getFlange());
 		gripper2F1.initalise();
 		gripper2F1.setForce(10);
-		gripper2F1.setPos(1);
 		gripper2F1.setSpeed(150);
 		gripper2F1.open();
 		mF.setLEDBlue(true);
 		ThreadUtil.milliSleep(200);
+		gripper2F1.close();
 		mF.setLEDBlue(false);
 		ThreadUtil.milliSleep(200);
 		//Spring motion initialisation
@@ -106,6 +106,8 @@ public class hand_over extends RoboticsAPIApplication {
 	@Override
 	public void run() {
 		IHonkCapability honkCapability = kmp.getCapability(IHonkCapability.class);
+		gripper2F1.setPos(50);
+		gripper2F1.open();
 		honkCapability.honk();
 		for (int i = 0; i < 5; i++) {
 			gripper2F1.open();

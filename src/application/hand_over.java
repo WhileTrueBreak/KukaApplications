@@ -143,14 +143,10 @@ public class hand_over extends RoboticsAPIApplication {
 			robot.move(ptp(getApplicationData().getFrame("/P2")).setJointVelocityRel(0.4));//frame1
 			robot.move(lin(getApplicationData().getFrame("/P3")).setJointVelocityRel(0.4));
 			
-			CartesianSineImpedanceControlMode sineMode =  new CartesianSineImpedanceControlMode();
-			sineMode.parametrize(CartDOF.Z).setStiffness(4000.0);
-			sineMode.parametrize(CartDOF.Z).setBias(5.0);
-			sineMode.parametrize(CartDOF.A).setStiffness(10.0);
-			sineMode.parametrize(CartDOF.A).setAmplitude(15.0);
-			sineMode.parametrize(CartDOF.A).setFrequency(5.0);
+			CartesianSineImpedanceControlMode sineMode;
+			sineMode = CartesianSineImpedanceControlMode.createSinePattern(CartDOF.X, 2.0, 50.0, 500.0);
+			robot.move(linRel(0.0, 150.0,0.0).setCartVelocity(100).setMode(sineMode));
 			
-			IMotionContainer m1 = robot.move(linRel(0.0, 0.0, 10).setCartVelocity(10.0).setMode(sineMode));
 			//IMotionContainer m1 = robot.moveAsync(positionHold(sineMode, 20, TimeUnit.SECONDS));
 			Frame pose = robot.getCurrentCartesianPosition(robot.getFlange());
 			logger.info("Please take the object!");

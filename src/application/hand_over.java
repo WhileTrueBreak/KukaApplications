@@ -160,31 +160,37 @@ public class hand_over extends RoboticsAPIApplication {
 			lissajousMode.parametrize(CartDOF.X).setStiffness(400);
 			lissajousMode.setMaxCartesianVelocity(70, 70, 70, 70, 70, 70);
 			double[] vel = lissajousMode.getMaxCartesianVelocity();
-			IMotionContainer m1 = robot.moveAsync(positionHold(lissajousMode, 20, TimeUnit.SECONDS));
-			Frame pose = robot.getCurrentCartesianPosition(robot.getFlange());
-			logger.info("Please take the object!");
-			mF.setLEDBlue(true);
-			ThreadUtil.milliSleep(200);
-			mF.setLEDBlue(false);
-			while (true) {
-				Vector3D v1 = dist(pose);
-				
-				//setDeviceCartesianVelocityLimit
-				if (v1.length() > 100) {
-					mF.setLEDBlue(true);
-					gripper2F1.open();
-					logger.info("yaaaaayyyyyyyyy :)");
-					mF.setLEDBlue(false);
-					logger.info(""+vel);
-					m1.cancel();
-					break;
-				} else if (m1.isFinished()) {
-					logger.info(""+vel);
-					logger.info("Sorry, Time out!");
-				}
-			}
+			try {
+				IMotionContainer m1 = robot.moveAsync(positionHold(lissajousMode, 20, TimeUnit.SECONDS));
+				Frame pose = robot.getCurrentCartesianPosition(robot.getFlange());
+				logger.info("Please take the object!");
+				mF.setLEDBlue(true);
+				ThreadUtil.milliSleep(200);
+				mF.setLEDBlue(false);
+//				while (true) {
+//					Vector3D v1 = dist(pose);
+//					//setDeviceCartesianVelocityLimit
+//					if (v1.length() > 100) {
+//						mF.setLEDBlue(true);
+//						gripper2F1.open();
+//						logger.info("yaaaaayyyyyyyyy :)");
+//						mF.setLEDBlue(false);
+//						logger.info(""+vel);
+//						m1.cancel();
+//						break;
+//					} else if (m1.isFinished()) {
+//						logger.info(""+vel);
+//						logger.info("Sorry, Time out!");
+//						break;
+//					}
+//				}
 			
-			robot.deactivateDeviceCartesianVelocityLimit();
+			} catch(Exception e) {
+				mF.setLEDBlue(true);
+				gripper2F1.open();
+				logger.info("yaaaaayyyyyyyyy :)");
+				mF.setLEDBlue(false);
+			} 
 			m1.cancel();
 			
 
@@ -199,7 +205,7 @@ public class hand_over extends RoboticsAPIApplication {
 			/////
 			
 			gripper2F1.open();
-			pose = robot.getCurrentCartesianPosition(robot.getFlange());
+			Frame pose = robot.getCurrentCartesianPosition(robot.getFlange());
 			while (true) {
 				Vector3D v2 = dist(pose);
 				if (v2.length() > 50) {

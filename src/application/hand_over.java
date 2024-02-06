@@ -89,7 +89,6 @@ public class hand_over extends RoboticsAPIApplication {
 		//Spring motion initialisation
 		springRobot = new CartesianImpedanceControlMode(); 
 		springRobot.parametrize(CartDOF.X).setStiffness(200); 
-		springRobot.parametrize(CartDOF.Z).setStiffness(800);
 		springRobot.parametrize(CartDOF.C).setStiffness(100);
 		springRobot.parametrize(CartDOF.B).setStiffness(100);
 		springRobot.parametrize(CartDOF.A).setStiffness(100);
@@ -150,8 +149,11 @@ public class hand_over extends RoboticsAPIApplication {
 //			
 			CartesianSineImpedanceControlMode lissajousMode;
 			lissajousMode = CartesianSineImpedanceControlMode.createLissajousPattern(CartPlane.YZ, 1.0, 5.0, 400.0);
-
-			IMotionContainer m1_1 = robot.moveAsync(positionHold(springRobot, 20, TimeUnit.SECONDS));
+			lissajousMode.parametrize(CartDOF.A).setStiffness(100);
+			lissajousMode.parametrize(CartDOF.B).setStiffness(100);
+			lissajousMode.parametrize(CartDOF.C).setStiffness(100);
+			lissajousMode.parametrize(CartDOF.X).setStiffness(100);
+			
 			IMotionContainer m1 = robot.moveAsync(positionHold(lissajousMode, 20, TimeUnit.SECONDS));
 			Frame pose = robot.getCurrentCartesianPosition(robot.getFlange());
 			logger.info("Please take the object!");
@@ -166,7 +168,6 @@ public class hand_over extends RoboticsAPIApplication {
 					logger.info("yaaaaayyyyyyyyy :)");
 					mF.setLEDBlue(false);
 					m1.cancel();
-					m1_1.cancel();
 					break;
 				} else if (m1.isFinished()) {
 					logger.info("Sorry, Time out!");
@@ -174,7 +175,6 @@ public class hand_over extends RoboticsAPIApplication {
 				}
 			}
 			m1.cancel();
-			m1_1.cancel();
 			robot.move(lin(getApplicationData().getFrame("/P3")).setJointVelocityRel(0.4).setMode(springRobot));
 
 			mF.setLEDBlue(true);

@@ -149,7 +149,7 @@ public class hand_over extends RoboticsAPIApplication {
 //			//robot.move(linRel(0.0,0.0,0.0).setCartVelocity(100).setMode(sineMode));
 //			
 			CartesianSineImpedanceControlMode lissajousMode;
-			lissajousMode = CartesianSineImpedanceControlMode.createLissajousPattern(CartPlane.YZ, 5.0, 20.0, 500.0);
+			lissajousMode = CartesianSineImpedanceControlMode.createLissajousPattern(CartPlane.YZ, 1.0, 10.0, 500.0);
 
 			//IMotionContainer m1_1 = robot.moveAsync(positionHold(springRobot, 20, TimeUnit.SECONDS));
 			IMotionContainer m1 = robot.moveAsync(positionHold(lissajousMode, 20, TimeUnit.SECONDS));

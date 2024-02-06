@@ -65,16 +65,16 @@ public class window extends RoboticsAPIApplication{
 		// Set stiffness
  
 		// TODO: Stiff in every direction except plane perpendicular to flange
-		springRobot.parametrize(CartDOF.X).setStiffness(1500);
-		springRobot.parametrize(CartDOF.Y).setStiffness(1500);
-		springRobot.parametrize(CartDOF.Z).setStiffness(1500);
+		springRobot.parametrize(CartDOF.X).setStiffness(1000);
+		springRobot.parametrize(CartDOF.Y).setStiffness(1000);
+		springRobot.parametrize(CartDOF.Z).setStiffness(1000);
  
 		// Stiff rotation
-		springRobot.parametrize(CartDOF.C).setStiffness(200);
-		springRobot.parametrize(CartDOF.B).setStiffness(200);
-		springRobot.parametrize(CartDOF.A).setStiffness(200);
+		springRobot.parametrize(CartDOF.C).setStiffness(100);
+		springRobot.parametrize(CartDOF.B).setStiffness(100);
+		springRobot.parametrize(CartDOF.A).setStiffness(100);
 		springRobot.setReferenceSystem(World.Current.getRootFrame());
-		springRobot.parametrize(CartDOF.ALL).setDamping(0.2);
+		springRobot.parametrize(CartDOF.ALL).setDamping(0.8);
 		// Inits the Robot
 		gripper.attachTo(robot.getFlange());
 		gripper2F1.initalise();
@@ -163,16 +163,7 @@ public class window extends RoboticsAPIApplication{
 		robot.move(linRel(0, 0, 20).setJointVelocityRel(0.3));
 		ThreadUtil.milliSleep(100);
 		gripper2F1.close();
-		springRobot.parametrize(CartDOF.X).setStiffness(3000);
-		springRobot.parametrize(CartDOF.Y).setStiffness(3000);
-		springRobot.parametrize(CartDOF.Z).setStiffness(3000);
- 
-		// Stiff rotation
-		springRobot.parametrize(CartDOF.C).setStiffness(500);
-		springRobot.parametrize(CartDOF.B).setStiffness(500);
-		springRobot.parametrize(CartDOF.A).setStiffness(500);
-		springRobot.setReferenceSystem(World.Current.getRootFrame());
-		springRobot.parametrize(CartDOF.ALL).setDamping(1);
+		
 		Vector3D diag = openLine.getA().multiply(600);
 		logger.info("moving on a line");
 		double acc = 20;

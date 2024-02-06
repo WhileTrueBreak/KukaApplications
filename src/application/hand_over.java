@@ -26,6 +26,7 @@ import com.kuka.roboticsAPI.geometricModel.math.Transformation;
 import com.kuka.roboticsAPI.geometricModel.math.Vector;
 import com.kuka.roboticsAPI.motionModel.IMotionContainer;
 import com.kuka.roboticsAPI.motionModel.controlModeModel.CartesianImpedanceControlMode;
+import com.kuka.roboticsAPI.motionModel.controlModeModel.CartesianSineImpedanceControlMode;
 import com.kuka.roboticsAPI.sensorModel.ForceSensorData;
 import com.kuka.roboticsAPI.sensorModel.TorqueSensorData;
 import com.kuka.task.ITaskLogger;
@@ -97,6 +98,9 @@ public class hand_over extends RoboticsAPIApplication {
 		//USAGE, will move to next line when triggered
 		//LOOK at pipecutting.java for examples on analysing the break condition. 
 		//gripper.move(linRel(0, 0, -30, World.Current.getRootFrame()).setCartVelocity(50).breakWhen(touch10)); 
+		
+	
+
 	}
 	private Vector3D dist(Frame pose){
 		Frame newPosition = robot.getCurrentCartesianPosition(robot.getFlange());
@@ -138,7 +142,15 @@ public class hand_over extends RoboticsAPIApplication {
 			mF.setLEDBlue(false);
 			robot.move(ptp(getApplicationData().getFrame("/P2")).setJointVelocityRel(0.4));//frame1
 			robot.move(lin(getApplicationData().getFrame("/P3")).setJointVelocityRel(0.4));
-
+			
+			CartesianSineImpedanceControlMode sineMode =  new CartesianSineImpedanceControlMode();
+			sineMode.parametrize(CartDOF.Z).setStiffness(4000.0);
+			sineMode.parametrize(CartDOF.Z).setBias(5.0);
+			sineMode.parametrize(CartDOF.A).setStiffness(10.0);
+			sineMode.parametrize(CartDOF.A).setAmplitude(15.0);
+			sineMode.parametrize(CartDOF.A).setFrequency(5.0);
+			
+			IMotionContainer m1_1 = robot.moveAsync(positionHold(sineMode, 20, TimeUnit.SECONDS));
 			IMotionContainer m1 = robot.moveAsync(positionHold(springRobot, 20, TimeUnit.SECONDS));
 			Frame pose = robot.getCurrentCartesianPosition(robot.getFlange());
 			logger.info("Please take the object!");
@@ -153,6 +165,7 @@ public class hand_over extends RoboticsAPIApplication {
 					logger.info("yaaaaayyyyyyyyy :)");
 					mF.setLEDBlue(false);
 					m1.cancel();
+					m1_1.cancel();
 					break;
 				} else if (m1.isFinished()) {
 					logger.info("Sorry, Time out!");
@@ -164,7 +177,7 @@ public class hand_over extends RoboticsAPIApplication {
 			mF.setLEDBlue(true);
 			ThreadUtil.milliSleep(200);
 			mF.setLEDBlue(false);
-			IMotionContainer m2 = robot.moveAsync(positionHold(springRobot, 20, TimeUnit.SECONDS));
+			IMotionContainer m2 = robot.moveAsync(positionHold(sineMode, 20, TimeUnit.SECONDS));
 			logger.info("hit me to grab or go back");
 			/////
 			//robot.move(linRel(Transformation.ofDeg(0,0,0,0,0,90)).setJointVelocityRel(0.6).setMode(springRobot));
@@ -184,6 +197,7 @@ public class hand_over extends RoboticsAPIApplication {
 				}
 			}
 			m2.cancel();
+			
 			robot.move(ptp(getApplicationData().getFrame("/P2")).setJointVelocityRel(0.4).setMode(springRobot));//frame1
 			//robot.move(ptp(getApplicationData().getFrame("/P2/P1")).setJointVelocityRel(0.4));//frame1
 		}

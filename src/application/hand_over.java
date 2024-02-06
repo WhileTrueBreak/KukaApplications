@@ -85,12 +85,12 @@ public class hand_over extends RoboticsAPIApplication {
 		ThreadUtil.milliSleep(200);
 		//Spring motion initialisation
 		springRobot = new CartesianImpedanceControlMode(); 
-		springRobot.parametrize(CartDOF.X).setStiffness(120); 
-		springRobot.parametrize(CartDOF.Y).setStiffness(120);
+		springRobot.parametrize(CartDOF.X).setStiffness(1000); 
+		springRobot.parametrize(CartDOF.Y).setStiffness(1000);
 		springRobot.parametrize(CartDOF.Z).setStiffness(1500);
-		springRobot.parametrize(CartDOF.C).setStiffness(100);
-		springRobot.parametrize(CartDOF.B).setStiffness(100);
-		springRobot.parametrize(CartDOF.A).setStiffness(100);
+		springRobot.parametrize(CartDOF.C).setStiffness(200);
+		springRobot.parametrize(CartDOF.B).setStiffness(200);
+		springRobot.parametrize(CartDOF.A).setStiffness(200);
 		springRobot.setReferenceSystem(World.Current.getRootFrame());
 		springRobot.parametrize(CartDOF.ALL).setDamping(0.8);
 		//USAGE, will move to next line when triggered
@@ -112,9 +112,9 @@ public class hand_over extends RoboticsAPIApplication {
 			ThreadUtil.milliSleep(180);
 			robot.move(ptp(getApplicationData().getFrame("/P2")).setJointVelocityRel(0.5).setMode(springRobot));//frame1
 			//robot.move(ptp(getApplicationData().getFrame("/P2/P1")).setJointVelocityRel(0.4));//frame1
-			double offset = i*25;
+			double offset = i*50;
 			robot.move(linRel(0,offset,0,0,0,0).setJointVelocityRel(0.3).setMode(springRobot));
-			robot.move(linRel(0,0,80,0,0,0).setJointVelocityRel(0.3).setMode(springRobot));
+			robot.move(linRel(0,0,70,0,0,0).setJointVelocityRel(0.3).setMode(springRobot));
 			ThreadUtil.milliSleep(1000);
 			gripper2F1.close();
 			ThreadUtil.milliSleep(200);
@@ -123,9 +123,8 @@ public class hand_over extends RoboticsAPIApplication {
 				honkCapability.honk();
 				gripper2F1.open();
 				mF.setLEDBlue(true);
-				ThreadUtil.milliSleep(200);
+				ThreadUtil.milliSleep(1000);
 				mF.setLEDBlue(false);
-				ThreadUtil.milliSleep(200);
 				gripper2F1.close();
 				//robot.move(ptp(getApplicationData().getFrame("/P2/P1")).setJointVelocityRel(0.4));//frame1
 			}
@@ -135,7 +134,7 @@ public class hand_over extends RoboticsAPIApplication {
 			mF.setLEDBlue(true);
 			ThreadUtil.milliSleep(200);
 			mF.setLEDBlue(false);
-			robot.move(ptp(getApplicationData().getFrame("/P2/P1")).setJointVelocityRel(0.4));//frame1
+			robot.move(ptp(getApplicationData().getFrame("/P2")).setJointVelocityRel(0.4));//frame1
 			robot.move(lin(getApplicationData().getFrame("/P3")).setJointVelocityRel(0.4));
 
 			IMotionContainer m1 = robot.moveAsync(positionHold(springRobot, 20, TimeUnit.SECONDS));

@@ -126,6 +126,7 @@ public class hand_over extends RoboticsAPIApplication {
 				ThreadUtil.milliSleep(200);
 				mF.setLEDBlue(false);
 				ThreadUtil.milliSleep(200);
+				gripper2F1.close();
 				//robot.move(ptp(getApplicationData().getFrame("/P2/P1")).setJointVelocityRel(0.4));//frame1
 			}
 			

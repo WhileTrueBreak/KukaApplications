@@ -150,8 +150,8 @@ public class hand_over extends RoboticsAPIApplication {
 			sineMode.parametrize(CartDOF.A).setAmplitude(15.0);
 			sineMode.parametrize(CartDOF.A).setFrequency(5.0);
 			
-			IMotionContainer m1_1 = gripper.getFrame("/TCP").move(linRel(0.0, 0.0, 10).setCartVelocity(10.0).setMode(sineMode));
-			IMotionContainer m1 = robot.moveAsync(positionHold(springRobot, 20, TimeUnit.SECONDS));
+			//IMotionContainer m1_1 = gripper.getFrame("/TCP").move(linRel(0.0, 0.0, 10).setCartVelocity(10.0).setMode(sineMode));
+			IMotionContainer m1 = robot.moveAsync(positionHold(sineMode, 20, TimeUnit.SECONDS));
 			Frame pose = robot.getCurrentCartesianPosition(robot.getFlange());
 			logger.info("Please take the object!");
 			mF.setLEDBlue(true);
@@ -165,7 +165,7 @@ public class hand_over extends RoboticsAPIApplication {
 					logger.info("yaaaaayyyyyyyyy :)");
 					mF.setLEDBlue(false);
 					m1.cancel();
-					m1_1.cancel();
+					//m1_1.cancel();
 					break;
 				} else if (m1.isFinished()) {
 					logger.info("Sorry, Time out!");

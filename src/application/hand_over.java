@@ -78,7 +78,7 @@ public class hand_over extends RoboticsAPIApplication {
 		gripper2F1.initalise();
 		gripper2F1.setForce(10);
 		gripper2F1.setSpeed(150);
-		gripper2F1.open();
+		gripper2F1.setPos(50);
 		mF.setLEDBlue(true);
 		ThreadUtil.milliSleep(200);
 		gripper2F1.close();
@@ -123,7 +123,7 @@ public class hand_over extends RoboticsAPIApplication {
 			while (gripper2F1.readObjectDetection() == 3){
 				logger.info("No objects detected");
 				honkCapability.honk();
-				gripper2F1.open();
+				gripper2F1.setPos(50);
 				mF.setLEDBlue(true);
 				ThreadUtil.milliSleep(1000);
 				mF.setLEDBlue(false);

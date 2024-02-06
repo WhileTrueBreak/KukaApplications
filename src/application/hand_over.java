@@ -94,7 +94,7 @@ public class hand_over extends RoboticsAPIApplication {
 		springRobot.parametrize(CartDOF.B).setStiffness(100);
 		springRobot.parametrize(CartDOF.A).setStiffness(100);
 		springRobot.setReferenceSystem(World.Current.getRootFrame());
-		springRobot.parametrize(CartDOF.ALL).setDamping(0.2);
+		springRobot.parametrize(CartDOF.ALL).setDamping(0.5);
 		//USAGE, will move to next line when triggered
 		//LOOK at pipecutting.java for examples on analysing the break condition. 
 		//gripper.move(linRel(0, 0, -30, World.Current.getRootFrame()).setCartVelocity(50).breakWhen(touch10)); 
@@ -107,7 +107,7 @@ public class hand_over extends RoboticsAPIApplication {
 		Vector3D distance = new Vector3D((pose.getX()-newPosition.getX()), (pose.getY()-newPosition.getY()), (pose.getZ()-newPosition.getZ()));
 		return distance;
 	}
-	@SuppressWarnings("static-access")
+	
 	@Override
 	public void run() {
 		IHonkCapability honkCapability = kmp.getCapability(IHonkCapability.class);
@@ -160,7 +160,7 @@ public class hand_over extends RoboticsAPIApplication {
 			mF.setLEDBlue(false);
 			while (true) {
 				Vector3D v1 = dist(pose);
-				if (v1.length() > 50) {
+				if (v1.length() > 30) {
 					mF.setLEDBlue(true);
 					gripper2F1.open();
 					logger.info("yaaaaayyyyyyyyy :)");
@@ -187,7 +187,7 @@ public class hand_over extends RoboticsAPIApplication {
 			pose = robot.getCurrentCartesianPosition(robot.getFlange());
 			while (true) {
 				Vector3D v2 = dist(pose);
-				if (v2.length() > 50) {
+				if (v2.length() > 30) {
 					mF.setLEDBlue(true);
 					gripper2F1.close();
 					logger.info("yaaaaayyyyyyyy :)");

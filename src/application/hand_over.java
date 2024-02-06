@@ -77,6 +77,7 @@ public class hand_over extends RoboticsAPIApplication {
 		gripper.attachTo(robot.getFlange());
 		gripper2F1.initalise();
 		gripper2F1.setForce(10);
+		gripper2F1.setPos(50);
 		gripper2F1.setSpeed(150);
 		gripper2F1.open();
 		mF.setLEDBlue(true);
@@ -98,7 +99,7 @@ public class hand_over extends RoboticsAPIApplication {
 		//gripper.move(linRel(0, 0, -30, World.Current.getRootFrame()).setCartVelocity(50).breakWhen(touch10)); 
 	}
 	private Vector3D dist(Frame pose){
-		Frame newPosition = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"));
+		Frame newPosition = robot.getCurrentCartesianPosition(robot.getFrame("/TCP"));
 		Vector3D distance = new Vector3D((pose.getX()-newPosition.getX()), (pose.getY()-newPosition.getY()), (pose.getZ()-newPosition.getZ()));
 		return distance;
 	}
@@ -145,7 +146,7 @@ public class hand_over extends RoboticsAPIApplication {
 			mF.setLEDBlue(false);
 			while (true) {
 				Vector3D v1 = dist(pose);
-				if (v1.length() > 30 && (v1.getZ() > 10 || v1.getY() > 10)) {
+				if (v1.length() > 30 && (v1.getX() > 10 || v1.getY() > 10)) {
 					mF.setLEDBlue(true);
 					gripper2F1.open();
 					logger.info("yaaaaayyyyyyyyy :)");
@@ -167,7 +168,7 @@ public class hand_over extends RoboticsAPIApplication {
 			/////
 			//robot.move(linRel(Transformation.ofDeg(0,0,0,0,0,90)).setJointVelocityRel(0.6).setMode(springRobot));
 			/////
-			pose = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"));
+			pose = robot.getCurrentCartesianPosition(robot.getFrame("/TCP"));
 			while (true) {
 				Vector3D v2 = dist(pose);
 				if (v2.length() > 30) {

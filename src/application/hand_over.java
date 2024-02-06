@@ -184,14 +184,13 @@ public class hand_over extends RoboticsAPIApplication {
 //						break;
 //					}
 //				}
-			
+//				m1.cancel();
 			} catch(Exception e) {
 				mF.setLEDBlue(true);
 				gripper2F1.open();
 				logger.info("yaaaaayyyyyyyyy :)");
 				mF.setLEDBlue(false);
 			} 
-			m1.cancel();
 			
 
 			mF.setLEDBlue(true);

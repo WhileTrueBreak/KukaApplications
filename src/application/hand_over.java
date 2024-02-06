@@ -5,6 +5,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
  
 //import com.kuka.math.geometry.Vector3D;
+import com.kuka.nav.command.CommandContainer;
 import com.kuka.nav.geometry.Vector2D;
 import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.*;
@@ -166,6 +167,8 @@ public class hand_over extends RoboticsAPIApplication {
 			mF.setLEDBlue(false);
 			while (true) {
 				Vector3D v1 = dist(pose);
+				robot.setDeviceCartesianVelocityLimit(10);
+				
 				if (v1.length() > 50) {
 					mF.setLEDBlue(true);
 					gripper2F1.open();
@@ -174,23 +177,33 @@ public class hand_over extends RoboticsAPIApplication {
 					m1.cancel();
 					break;
 				} else if (m1.isFinished()) {
-					logger.info("Sorry, Time out!");
+					if (gripper2F1.readObjectDetection() != 3) {
+						mF.setLEDBlue(true);
+						gripper2F1.open();
+						logger.info("yaaaaayyyyyyyyy :)");
+						mF.setLEDBlue(false);
+						m1.cancel();
+					} else {
+						logger.info("Sorry, Time out!");
+					}
 					break;
 				}
 			}
+			
+			robot.deactivateDeviceCartesianVelocityLimit();
 			m1.cancel();
-			double vel;
-			IMotionContainer m3 = robot.move(lin(getApplicationData().getFrame("/P3")).setJointVelocityRel(0.4).setMode(springRobot));
-			vel = ((SplineMotionCP<RelativeLIN>) m3).getCartVelocity();
-			logger.info("vel is" + vel);
+			
+
 			mF.setLEDBlue(true);
 			ThreadUtil.milliSleep(200);
 			mF.setLEDBlue(false);
 			IMotionContainer m2 = robot.moveAsync(positionHold(lissajousMode, 20, TimeUnit.SECONDS));
+			//IMotion
 			logger.info("hit me to grab or go back");
 			/////
 			//robot.move(linRel(Transformation.ofDeg(0,0,0,0,0,90)).setJointVelocityRel(0.6).setMode(springRobot));
 			/////
+			
 			gripper2F1.open();
 			pose = robot.getCurrentCartesianPosition(robot.getFlange());
 			while (true) {

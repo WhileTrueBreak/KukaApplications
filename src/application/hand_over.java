@@ -77,7 +77,7 @@ public class hand_over extends RoboticsAPIApplication {
 		gripper.attachTo(robot.getFlange());
 		gripper2F1.initalise();
 		gripper2F1.setForce(10);
-		gripper2F1.setSpeed(200);
+		gripper2F1.setSpeed(150);
 		gripper2F1.open();
 		mF.setLEDBlue(true);
 		ThreadUtil.milliSleep(200);
@@ -85,9 +85,9 @@ public class hand_over extends RoboticsAPIApplication {
 		ThreadUtil.milliSleep(200);
 		//Spring motion initialisation
 		springRobot = new CartesianImpedanceControlMode(); 
-		springRobot.parametrize(CartDOF.X).setStiffness(1000); 
-		springRobot.parametrize(CartDOF.Y).setStiffness(1000);
-		springRobot.parametrize(CartDOF.Z).setStiffness(1500);
+		springRobot.parametrize(CartDOF.X).setStiffness(200); 
+		springRobot.parametrize(CartDOF.Y).setStiffness(200);
+		springRobot.parametrize(CartDOF.Z).setStiffness(500);
 		springRobot.parametrize(CartDOF.C).setStiffness(200);
 		springRobot.parametrize(CartDOF.B).setStiffness(200);
 		springRobot.parametrize(CartDOF.A).setStiffness(200);

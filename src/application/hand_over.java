@@ -114,7 +114,8 @@ public class hand_over extends RoboticsAPIApplication {
 			//robot.move(ptp(getApplicationData().getFrame("/P2/P1")).setJointVelocityRel(0.4));//frame1
 			double offset = i*25;
 			robot.move(linRel(offset,0,0,0,0,0).setJointVelocityRel(0.3).setMode(springRobot));
-			robot.move(linRel(0,0,-10,0,0,0).setJointVelocityRel(0.3).setMode(springRobot));
+			robot.move(linRel(0,0,85,0,0,0).setJointVelocityRel(0.3).setMode(springRobot));
+			ThreadUtil.milliSleep(1000);
 			gripper2F1.close();
 			ThreadUtil.milliSleep(200);
 			while (gripper2F1.readObjectDetection() == 3){
@@ -126,10 +127,11 @@ public class hand_over extends RoboticsAPIApplication {
 				mF.setLEDBlue(false);
 				ThreadUtil.milliSleep(200);
 				//robot.move(ptp(getApplicationData().getFrame("/P2/P1")).setJointVelocityRel(0.4));//frame1
-				robot.move(linRel(0,0,10,0,0,0).setJointVelocityRel(0.3).setMode(springRobot));
-				robot.move(ptp(getApplicationData().getFrame("/P3")).setJointVelocityRel(0.4));//frame1
+				robot.move(linRel(offset,0,0,0,0,0).setJointVelocityRel(0.3).setMode(springRobot));
+				robot.move(linRel(0,0,85,0,0,0).setJointVelocityRel(0.3).setMode(springRobot));
 				gripper2F1.close();
 			}
+			
 			logger.info("Object detected");
 			mF.setLEDBlue(true);
 			ThreadUtil.milliSleep(200);
@@ -169,7 +171,7 @@ public class hand_over extends RoboticsAPIApplication {
 			pose = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"));
 			while (true) {
 				Vector3D v2 = dist(pose);
-				if (v2.length() > 10) {
+				if (v2.length() > 20) {
 					mF.setLEDBlue(true);
 					gripper2F1.setSpeed(50);
 					gripper2F1.close();

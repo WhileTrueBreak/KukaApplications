@@ -127,8 +127,6 @@ public class hand_over extends RoboticsAPIApplication {
 				mF.setLEDBlue(false);
 				ThreadUtil.milliSleep(200);
 				//robot.move(ptp(getApplicationData().getFrame("/P2/P1")).setJointVelocityRel(0.4));//frame1
-				robot.move(linRel(offset,0,0,0,0,0).setJointVelocityRel(0.3).setMode(springRobot));
-				robot.move(linRel(0,0,85,0,0,0).setJointVelocityRel(0.3).setMode(springRobot));
 			}
 			
 			gripper2F1.close();

@@ -148,7 +148,7 @@ public class hand_over extends RoboticsAPIApplication {
 //			//robot.move(linRel(0.0,0.0,0.0).setCartVelocity(100).setMode(sineMode));
 //			
 			CartesianSineImpedanceControlMode lissajousMode;
-			lissajousMode = CartesianSineImpedanceControlMode.createLissajousPattern(CartPlane.YZ, 1.0, 5.0, 400.0);
+			lissajousMode = CartesianSineImpedanceControlMode.createLissajousPattern(CartPlane.YZ, 0.5, 4.0, 400.0);
 			lissajousMode.parametrize(CartDOF.A).setStiffness(100);
 			lissajousMode.parametrize(CartDOF.B).setStiffness(100);
 			lissajousMode.parametrize(CartDOF.C).setStiffness(100);
@@ -162,7 +162,7 @@ public class hand_over extends RoboticsAPIApplication {
 			mF.setLEDBlue(false);
 			while (true) {
 				Vector3D v1 = dist(pose);
-				if (v1.length() > 50) {
+				if (v1.length() > 40) {
 					mF.setLEDBlue(true);
 					gripper2F1.open();
 					logger.info("yaaaaayyyyyyyyy :)");

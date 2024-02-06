@@ -144,7 +144,7 @@ public class hand_over extends RoboticsAPIApplication {
 			robot.move(lin(getApplicationData().getFrame("/P3")).setJointVelocityRel(0.4));
 			
 			CartesianSineImpedanceControlMode sineMode;
-			sineMode = CartesianSineImpedanceControlMode.createSinePattern(CartDOF.Y, 0.5, 10.0, 500.0);
+			sineMode = CartesianSineImpedanceControlMode.createSinePattern(CartDOF.Y, 1, 10.0, 500.0);
 			//robot.move(linRel(0.0,0.0,0.0).setCartVelocity(100).setMode(sineMode));
 			
 			IMotionContainer m1_1 = robot.moveAsync(positionHold(springRobot, 20, TimeUnit.SECONDS));

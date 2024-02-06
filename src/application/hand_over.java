@@ -87,10 +87,10 @@ public class hand_over extends RoboticsAPIApplication {
 		springRobot = new CartesianImpedanceControlMode(); 
 		springRobot.parametrize(CartDOF.X).setStiffness(200); 
 		springRobot.parametrize(CartDOF.Y).setStiffness(200);
-		springRobot.parametrize(CartDOF.Z).setStiffness(500);
-		springRobot.parametrize(CartDOF.C).setStiffness(200);
-		springRobot.parametrize(CartDOF.B).setStiffness(200);
-		springRobot.parametrize(CartDOF.A).setStiffness(200);
+		springRobot.parametrize(CartDOF.Z).setStiffness(800);
+		springRobot.parametrize(CartDOF.C).setStiffness(100);
+		springRobot.parametrize(CartDOF.B).setStiffness(100);
+		springRobot.parametrize(CartDOF.A).setStiffness(100);
 		springRobot.setReferenceSystem(World.Current.getRootFrame());
 		springRobot.parametrize(CartDOF.ALL).setDamping(0.8);
 		//USAGE, will move to next line when triggered
@@ -145,7 +145,7 @@ public class hand_over extends RoboticsAPIApplication {
 			mF.setLEDBlue(false);
 			while (true) {
 				Vector3D v1 = dist(pose);
-				if (v1.length() > 30 && v1.getX() < 0) {
+				if (v1.length() > 40 && v1.getX() < 0) {
 					mF.setLEDBlue(true);
 					gripper2F1.open();
 					logger.info("yaaaaayyyyyyyyy :)");
@@ -170,7 +170,7 @@ public class hand_over extends RoboticsAPIApplication {
 			pose = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"));
 			while (true) {
 				Vector3D v2 = dist(pose);
-				if (v2.length() > 20) {
+				if (v2.length() > 30) {
 					mF.setLEDBlue(true);
 					gripper2F1.close();
 					logger.info("yaaaaayyyyyyyy :)");

@@ -107,6 +107,7 @@ public class hand_over extends RoboticsAPIApplication {
 		Vector3D distance = new Vector3D((pose.getX()-newPosition.getX()), (pose.getY()-newPosition.getY()), (pose.getZ()-newPosition.getZ()));
 		return distance;
 	}
+	@SuppressWarnings("static-access")
 	@Override
 	public void run() {
 		IHonkCapability honkCapability = kmp.getCapability(IHonkCapability.class);
@@ -144,7 +145,7 @@ public class hand_over extends RoboticsAPIApplication {
 			robot.move(lin(getApplicationData().getFrame("/P3")).setJointVelocityRel(0.4));
 			
 			CartesianSineImpedanceControlMode sineMode;
-			sineMode = CartesianSineImpedanceControlMode.createSinePattern(CartDOF.ALL, 0.01, 5.0, 500.0);
+			sineMode = CartesianSineImpedanceControlMode.createSinePattern(CartDOF.X.Y.Z, 0.01, 5.0, 500.0);
 			//robot.move(linRel(0.0,0.0,0.0).setCartVelocity(100).setMode(sineMode));
 
 			IMotionContainer m1 = robot.moveAsync(positionHold(sineMode, 20, TimeUnit.SECONDS));

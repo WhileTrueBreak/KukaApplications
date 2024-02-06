@@ -113,7 +113,7 @@ public class hand_over extends RoboticsAPIApplication {
 			robot.move(ptp(getApplicationData().getFrame("/P2")).setJointVelocityRel(0.5).setMode(springRobot));//frame1
 			//robot.move(ptp(getApplicationData().getFrame("/P2/P1")).setJointVelocityRel(0.4));//frame1
 			double offset = i*25;
-			robot.move(linRel(offset,0,0,0,0,0).setJointVelocityRel(0.3).setMode(springRobot));
+			robot.move(linRel(0,offset,0,0,0,0).setJointVelocityRel(0.3).setMode(springRobot));
 			robot.move(linRel(0,0,80,0,0,0).setJointVelocityRel(0.3).setMode(springRobot));
 			ThreadUtil.milliSleep(1000);
 			gripper2F1.close();
@@ -149,7 +149,7 @@ public class hand_over extends RoboticsAPIApplication {
 				if (v1.length() > 30 && v1.getX() < 0) {
 					mF.setLEDBlue(true);
 					gripper2F1.open();
-					logger.info("yaaaaayyyyyyyyyyyy :)");
+					logger.info("yaaaaayyyyyyyyy :)");
 					mF.setLEDBlue(false);
 					m1.cancel();
 					break;
@@ -159,29 +159,30 @@ public class hand_over extends RoboticsAPIApplication {
 				}
 			}
 			robot.move(lin(getApplicationData().getFrame("/P3")).setJointVelocityRel(0.4).setMode(springRobot));
-			IMotionContainer m2 = robot.moveAsync(positionHold(springRobot, 20, TimeUnit.SECONDS));
-			logger.info("hit me to grab or go back");
+
 			mF.setLEDBlue(true);
 			ThreadUtil.milliSleep(200);
 			mF.setLEDBlue(false);
+			IMotionContainer m2 = robot.moveAsync(positionHold(springRobot, 20, TimeUnit.SECONDS));
+			logger.info("hit me to grab or go back");
 			/////
-			robot.move(linRel(Transformation.ofDeg(0,0,0,0,0,90)).setJointVelocityRel(0.6).setMode(springRobot));
+			//robot.move(linRel(Transformation.ofDeg(0,0,0,0,0,90)).setJointVelocityRel(0.6).setMode(springRobot));
 			/////
+			pose = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"));
 			while (true) {
 				Vector3D v2 = dist(pose);
-				if (v2.length() > 2) {
+				if (v2.length() > 20) {
 					mF.setLEDBlue(true);
-					gripper2F1.setSpeed(50);
 					gripper2F1.close();
-					logger.info("yaaaaayyyyyyyyyyyy :)");
+					logger.info("yaaaaayyyyyyyy :)");
 					mF.setLEDBlue(false);
-					m2.cancel();
 					break;
 				} else if (m2.isFinished()) {
 					logger.info("Sorry, Time out!");
 					break;
 				}
 			}
+			m2.cancel();
 			robot.move(ptp(getApplicationData().getFrame("/P2")).setJointVelocityRel(0.4).setMode(springRobot));//frame1
 			//robot.move(ptp(getApplicationData().getFrame("/P2/P1")).setJointVelocityRel(0.4));//frame1
 		}

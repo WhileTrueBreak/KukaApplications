@@ -77,7 +77,7 @@ public class hand_over extends RoboticsAPIApplication {
 		gripper.attachTo(robot.getFlange());
 		gripper2F1.initalise();
 		gripper2F1.setForce(10);
-		gripper2F1.setPos(50);
+		gripper2F1.setPos(1);
 		gripper2F1.setSpeed(150);
 		gripper2F1.open();
 		mF.setLEDBlue(true);

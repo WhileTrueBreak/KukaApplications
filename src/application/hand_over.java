@@ -171,7 +171,7 @@ public class hand_over extends RoboticsAPIApplication {
 			pose = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"));
 			while (true) {
 				Vector3D v2 = dist(pose);
-				if (v2.length() > 20) {
+				if (v2.length() > 2) {
 					mF.setLEDBlue(true);
 					gripper2F1.setSpeed(50);
 					gripper2F1.close();

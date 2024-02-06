@@ -19,6 +19,7 @@ import com.kuka.roboticsAPI.deviceModel.LBR;
 import com.kuka.roboticsAPI.deviceModel.kmp.SunriseOmniMoveMobilePlatform;
 import com.kuka.roboticsAPI.executionModel.IFiredTriggerInfo;
 import com.kuka.roboticsAPI.geometricModel.CartDOF;
+import com.kuka.roboticsAPI.geometricModel.CartPlane;
 import com.kuka.roboticsAPI.geometricModel.Frame;
 import com.kuka.roboticsAPI.geometricModel.Tool;
 import com.kuka.roboticsAPI.geometricModel.World;
@@ -143,12 +144,15 @@ public class hand_over extends RoboticsAPIApplication {
 			robot.move(ptp(getApplicationData().getFrame("/P2")).setJointVelocityRel(0.4));//frame1
 			robot.move(lin(getApplicationData().getFrame("/P3")).setJointVelocityRel(0.4));
 			
-			CartesianSineImpedanceControlMode sineMode;
-			sineMode = CartesianSineImpedanceControlMode.createSinePattern(CartDOF.Y, 5, 12.0, 700.0);
-			//robot.move(linRel(0.0,0.0,0.0).setCartVelocity(100).setMode(sineMode));
-			
-			IMotionContainer m1_1 = robot.moveAsync(positionHold(springRobot, 20, TimeUnit.SECONDS));
-			IMotionContainer m1 = robot.moveAsync(positionHold(sineMode, 20, TimeUnit.SECONDS));
+//			CartesianSineImpedanceControlMode sineMode;
+//			sineMode = CartesianSineImpedanceControlMode.createSinePattern(CartDOF.Y, 5, 12.0, 700.0);
+//			//robot.move(linRel(0.0,0.0,0.0).setCartVelocity(100).setMode(sineMode));
+//			
+			CartesianSineImpedanceControlMode lissajousMode;
+			lissajousMode = CartesianSineImpedanceControlMode.createLissajousPattern(CartPlane.YZ, 5.0, 20.0, 500.0);
+
+			//IMotionContainer m1_1 = robot.moveAsync(positionHold(springRobot, 20, TimeUnit.SECONDS));
+			IMotionContainer m1 = robot.moveAsync(positionHold(lissajousMode, 20, TimeUnit.SECONDS));
 			Frame pose = robot.getCurrentCartesianPosition(robot.getFlange());
 			logger.info("Please take the object!");
 			mF.setLEDBlue(true);
@@ -174,7 +178,7 @@ public class hand_over extends RoboticsAPIApplication {
 			mF.setLEDBlue(true);
 			ThreadUtil.milliSleep(200);
 			mF.setLEDBlue(false);
-			IMotionContainer m2 = robot.moveAsync(positionHold(sineMode, 20, TimeUnit.SECONDS));
+			IMotionContainer m2 = robot.moveAsync(positionHold(lissajousMode, 20, TimeUnit.SECONDS));
 			logger.info("hit me to grab or go back");
 			/////
 			//robot.move(linRel(Transformation.ofDeg(0,0,0,0,0,90)).setJointVelocityRel(0.6).setMode(springRobot));

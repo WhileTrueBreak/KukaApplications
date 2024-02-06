@@ -99,7 +99,7 @@ public class hand_over extends RoboticsAPIApplication {
 		//gripper.move(linRel(0, 0, -30, World.Current.getRootFrame()).setCartVelocity(50).breakWhen(touch10)); 
 	}
 	private Vector3D dist(Frame pose){
-		Frame newPosition = robot.getCurrentCartesianPosition(robot.getFrame("/TCP"));
+		Frame newPosition = robot.getCurrentCartesianPosition(robot.getFlange());
 		Vector3D distance = new Vector3D((pose.getX()-newPosition.getX()), (pose.getY()-newPosition.getY()), (pose.getZ()-newPosition.getZ()));
 		return distance;
 	}
@@ -140,7 +140,7 @@ public class hand_over extends RoboticsAPIApplication {
 			robot.move(lin(getApplicationData().getFrame("/P3")).setJointVelocityRel(0.4));
 
 			IMotionContainer m1 = robot.moveAsync(positionHold(springRobot, 20, TimeUnit.SECONDS));
-			Frame pose = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"));
+			Frame pose = robot.getCurrentCartesianPosition(robot.getFlange());
 			logger.info("Please take the object!");
 			mF.setLEDBlue(true);
 			ThreadUtil.milliSleep(200);
@@ -169,7 +169,7 @@ public class hand_over extends RoboticsAPIApplication {
 			/////
 			//robot.move(linRel(Transformation.ofDeg(0,0,0,0,0,90)).setJointVelocityRel(0.6).setMode(springRobot));
 			/////
-			pose = robot.getCurrentCartesianPosition(robot.getFrame("/TCP"));
+			pose = robot.getCurrentCartesianPosition(robot.getFlange());
 			while (true) {
 				Vector3D v2 = dist(pose);
 				if (v2.length() > 30) {

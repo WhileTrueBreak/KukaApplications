@@ -25,7 +25,10 @@ import com.kuka.roboticsAPI.geometricModel.Tool;
 import com.kuka.roboticsAPI.geometricModel.World;
 import com.kuka.roboticsAPI.geometricModel.math.Transformation;
 import com.kuka.roboticsAPI.geometricModel.math.Vector;
+import com.kuka.roboticsAPI.motionModel.IMotion;
 import com.kuka.roboticsAPI.motionModel.IMotionContainer;
+import com.kuka.roboticsAPI.motionModel.RelativeLIN;
+import com.kuka.roboticsAPI.motionModel.SplineMotionCP;
 import com.kuka.roboticsAPI.motionModel.controlModeModel.CartesianImpedanceControlMode;
 import com.kuka.roboticsAPI.motionModel.controlModeModel.CartesianSineImpedanceControlMode;
 import com.kuka.roboticsAPI.sensorModel.ForceSensorData;
@@ -107,6 +110,7 @@ public class hand_over extends RoboticsAPIApplication {
 		return distance;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public void run() {
 		IHonkCapability honkCapability = kmp.getCapability(IHonkCapability.class);
@@ -175,9 +179,10 @@ public class hand_over extends RoboticsAPIApplication {
 				}
 			}
 			m1.cancel();
-			
-			robot.move(lin(getApplicationData().getFrame("/P3")).setJointVelocityRel(0.4).setMode(springRobot));
-
+			double vel;
+			IMotionContainer m3 = robot.move(lin(getApplicationData().getFrame("/P3")).setJointVelocityRel(0.4).setMode(springRobot));
+			vel = ((SplineMotionCP<RelativeLIN>) m3).getCartVelocity();
+			logger.info("vel is" + vel);
 			mF.setLEDBlue(true);
 			ThreadUtil.milliSleep(200);
 			mF.setLEDBlue(false);

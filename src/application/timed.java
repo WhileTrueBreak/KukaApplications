@@ -113,12 +113,13 @@ public class timed {
 	        	acceleration = velAcc.getB();
 	        	acc = acceleration.get(acceleration.size()-1);
 	        	
-	    		logger.info("cartesian velocity : "+ vel);
-	    		logger.info("cartesian acceleration : "+ acc);
+//	    		logger.info("cartesian velocity : "+ vel);
+//	    		logger.info("cartesian acceleration : "+ acc);
 	    		pose.add(robot.getCurrentCartesianPosition(gripper.getFrame("/TCP")));
 	        }
 		};
 		beeperHandle = scheduler.scheduleAtFixedRate(beeper, 10, 10, TimeUnit.MILLISECONDS);
+		scheduler.schedule(new Runnable() {public void run() { beeperHandle.cancel(true); }}, 60 * 5, TimeUnit.SECONDS);
 	}
 	
 	public void stop(){

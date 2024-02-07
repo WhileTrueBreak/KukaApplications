@@ -108,7 +108,7 @@ public class hand_over extends RoboticsAPIApplication {
 	private Vector3D dist(Frame pose){
 		Frame newPosition = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"),World.Current.getRootFrame());
 		
-		Vector3D distance = new Vector3D((pose.getX()-newPosition.getX()), (pose.getY()-newPosition.getY()), (pose.getZ()-newPosition.getZ()));
+		Vector3D distance = new Vector3D((newPosition.getX()-pose.getX()), (newPosition.getY()-pose.getY()), (newPosition.getZ()-pose.getZ()));
 		return distance;
 	}
 	

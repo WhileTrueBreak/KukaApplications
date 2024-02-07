@@ -86,7 +86,7 @@ public class timed {
 	private Pair<ArrayList<Double>  , ArrayList<Double>> distance(Frame pose, ArrayList<Double> velocity, ArrayList<Double> acceleration) {
 	    Frame newPosition = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"));
 	    Vector3D distance = new Vector3D((pose.getX() - newPosition.getX()), (pose.getY() - newPosition.getY()), (pose.getZ() - newPosition.getZ()));
-	    double currentVel = distance.length() * 10;  
+	    double currentVel = distance.length();  
 	    velocity.add(currentVel);
 	    double accel = 0.0;
 	    if (velocity.size() > 9) {
@@ -118,7 +118,7 @@ public class timed {
 	    		pose.add(robot.getCurrentCartesianPosition(gripper.getFrame("/TCP")));
 	        }
 		};
-		beeperHandle = scheduler.scheduleAtFixedRate(beeper, 10, 100, TimeUnit.MILLISECONDS);
+		beeperHandle = scheduler.scheduleAtFixedRate(beeper, 10, 1000, TimeUnit.SECONDS);
 		scheduler.schedule(new Runnable() {public void run() { beeperHandle.cancel(true); }}, 60 * 3, TimeUnit.SECONDS);
 	}
 	

@@ -126,6 +126,7 @@ public class timed {
 	
 	public void stop(){
 		scheduler.schedule(new Runnable() { public void run() { beeperHandle.cancel(true); }}, 0 , TimeUnit.SECONDS);
+		scheduler.shutdown();
 	}
 	
 }

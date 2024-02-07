@@ -148,11 +148,11 @@ public class hand_over extends RoboticsAPIApplication {
 			robot.move(ptp(getApplicationData().getFrame("/P2")).setJointVelocityRel(0.4).setMode(springRobot));
 			robot.move(lin(getApplicationData().getFrame("/P3")).setJointVelocityRel(0.4).setMode(springRobot));
 			CartesianSineImpedanceControlMode lissajousMode;
-			lissajousMode = CartesianSineImpedanceControlMode.createLissajousPattern(CartPlane.YZ, 0.7, 4.0, 400.0);
-			lissajousMode.parametrize(CartDOF.A).setStiffness(100);
-			lissajousMode.parametrize(CartDOF.B).setStiffness(100);
-			lissajousMode.parametrize(CartDOF.C).setStiffness(100);
-			lissajousMode.parametrize(CartDOF.X).setStiffness(400);
+			lissajousMode = CartesianSineImpedanceControlMode.createLissajousPattern(CartPlane.YZ, 0.7, 4.0, 300.0);
+			lissajousMode.parametrize(CartDOF.A).setStiffness(80);
+			lissajousMode.parametrize(CartDOF.B).setStiffness(80);
+			lissajousMode.parametrize(CartDOF.C).setStiffness(80);
+			lissajousMode.parametrize(CartDOF.X).setStiffness(300);
 			IMotionContainer m1 = robot.moveAsync(positionHold(lissajousMode, 25, TimeUnit.SECONDS));
 			Frame pose = robot.getCurrentCartesianPosition(robot.getFlange());
 			ThreadUtil.milliSleep(1000);

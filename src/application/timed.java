@@ -91,11 +91,12 @@ public class timed {
 	    double currentVel = distance.length()*100;  
 	    velocity.add(currentVel);
 	    double accel = 0.0;
+	    double vel_diff = 0.0;
 	    if (velocity.size() > 9) {
 	    	for (int i = 1; i<10;i++){
-	    		accel -= velocity.get(velocity.size()-i);
+	    		vel_diff += velocity.get(velocity.size()-i);
 	    	}
-	    	accel = accel/9;
+	    	accel = vel_diff/9;
 	    	acceleration.add(accel);
 	    } else {
 	    	acceleration.add(accel);
@@ -105,7 +106,7 @@ public class timed {
 	}
 	
 	public void run() {
-		logger.info("velocity function ready to go ! calculating the velocity");
+		logger.info("velocity function ready to go ! calculating the velocity (mm/s) acceleration (mm^2/s)");
 		pose.add(robot.getCurrentCartesianPosition(gripper.getFrame("/TCP")));
 		
 		Runnable beeper = new Runnable() {

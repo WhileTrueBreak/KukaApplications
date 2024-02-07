@@ -153,8 +153,9 @@ public class hand_over extends RoboticsAPIApplication {
 			lissajousMode.parametrize(CartDOF.B).setStiffness(100);
 			lissajousMode.parametrize(CartDOF.C).setStiffness(100);
 			lissajousMode.parametrize(CartDOF.X).setStiffness(400);
-			IMotionContainer m1 = robot.moveAsync(positionHold(lissajousMode, 20, TimeUnit.SECONDS));
+			IMotionContainer m1 = robot.moveAsync(positionHold(lissajousMode, 25, TimeUnit.SECONDS));
 			Frame pose = robot.getCurrentCartesianPosition(robot.getFlange());
+			ThreadUtil.milliSleep(1000);
 			logger.info("Please take the object!");
 			mF.setLEDBlue(true);
 			ThreadUtil.milliSleep(200);
@@ -162,7 +163,7 @@ public class hand_over extends RoboticsAPIApplication {
 			while (true) {
 				Vector3D v1 = dist(pose);
 				velocity = cartData.vel;
-				if ((v1.length() > 1000 && v1.getY() < -10) || (velocity > 120)) {
+				if ((v1.length() > 1000 && v1.getY() < -10) || (velocity > 90)) {
 					mF.setLEDBlue(true);
 					gripper2F1.open();
 					logger.info("velocity : " + velocity);
@@ -181,14 +182,14 @@ public class hand_over extends RoboticsAPIApplication {
 			mF.setLEDBlue(true);
 			ThreadUtil.milliSleep(200);
 			mF.setLEDBlue(false);
-			IMotionContainer m2 = robot.moveAsync(positionHold(lissajousMode, 20, TimeUnit.SECONDS));
+			IMotionContainer m2 = robot.moveAsync(positionHold(lissajousMode, 25, TimeUnit.SECONDS));
 			logger.info("hit me to grab or go back");
 			gripper2F1.open();
 			pose = robot.getCurrentCartesianPosition(robot.getFlange());
 			while (true) {
 				Vector3D v2 = dist(pose);
 				velocity = cartData.vel;
-				if (v2.length() > 1000 || velocity > 120) {
+				if (v2.length() > 1000 || velocity > 90) {
 					mF.setLEDBlue(true);
 					logger.info("velocity : " + velocity);
 					logger.info("yaaaaayyyyyyyyy :)");

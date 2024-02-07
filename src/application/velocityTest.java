@@ -114,14 +114,14 @@ public class velocityTest extends RoboticsAPIApplication {
 		double acceleration = cartData.acc;
 		logger.info("arm velocity :" + velocity);
 		logger.info("arm acceleration :" + acceleration);
-		IMotionContainer m = robot.moveAsync(ptp(getApplicationData().getFrame("/P2")).setJointVelocityRel(0.1).setJointAccelerationRel(0.05).setMode(springRobot));
+		IMotionContainer m3 = robot.moveAsync(ptp(getApplicationData().getFrame("/P2")).setJointVelocityRel(0.1));
 		while (true){
 			velocity = cartData.vel;
 			acceleration = cartData.acc;
 			logger.info("arm velocity :" + velocity);
 			logger.info("arm acceleration :" + acceleration);
 			ThreadUtil.milliSleep(1000);
-			if (m1.isFinished()){
+			if (m3.isFinished()){
 				break;
 			}
 			
@@ -131,5 +131,6 @@ public class velocityTest extends RoboticsAPIApplication {
 		acceleration = cartData.acc;
 		logger.info("arm velocity :" + velocity);
 		logger.info("arm acceleration :" + acceleration);
+		cartData.stop();
 	}
 }

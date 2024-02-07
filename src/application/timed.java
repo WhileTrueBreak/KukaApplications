@@ -78,9 +78,11 @@ public class timed {
 	public double vel ;
 	public double acc;
 	public ScheduledFuture<?> beeperHandle;
+	public ScheduledExecutorService scheduler;
 	
 	public void initialize() {
 		gripper.attachTo(robot.getFlange());
+		scheduler = Executors.newScheduledThreadPool(1);
 	}
 	
 	private Pair<ArrayList<Double>  , ArrayList<Double>> distance(Frame pose, ArrayList<Double> velocity, ArrayList<Double> acceleration) {
@@ -105,7 +107,7 @@ public class timed {
 	public void run() {
 		logger.info("velocity function ready to go ! calculating the velocity");
 		pose.add(robot.getCurrentCartesianPosition(gripper.getFrame("/TCP")));
-		ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+		
 		Runnable beeper = new Runnable() {
 	        public void run() {
 	        	Pair<ArrayList<Double> ,ArrayList<Double> > velAcc = distance(pose.get(pose.size()-1), velocity, acceleration);
@@ -123,7 +125,7 @@ public class timed {
 	}
 	
 	public void stop(){
-		beeperHandle.cancel(true);
+		scheduler.schedule(new Runnable() { public void run() { beeperHandle.cancel(true); }}, 0 , TimeUnit.SECONDS);
 	}
 	
 }

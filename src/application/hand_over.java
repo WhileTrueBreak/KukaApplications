@@ -156,7 +156,6 @@ public class hand_over extends RoboticsAPIApplication {
 			lissajousMode.parametrize(CartDOF.B).setStiffness(100);
 			lissajousMode.parametrize(CartDOF.C).setStiffness(100);
 			lissajousMode.parametrize(CartDOF.X).setStiffness(400);
-			lissajousMode.setMaxCartesianVelocity(70, 70, 70, 70, 70, 70);
 			IMotionContainer m1 = robot.moveAsync(positionHold(lissajousMode, 20, TimeUnit.SECONDS));
 			Frame pose = robot.getCurrentCartesianPosition(robot.getFlange());
 			logger.info("Please take the object!");

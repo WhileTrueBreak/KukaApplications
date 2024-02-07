@@ -92,15 +92,13 @@ public class timed {
 	    velocity.add(currentVel);
 	    double accel = 0.0;
 	    double vel_diff = 0.0;
-	    if (velocity.size() > 9) {
-	    	for (int i = 1; i<10;i++){
+	    if (velocity.size() > 19) {
+	    	for (int i = 1; i<20;i++){
 	    		vel_diff += velocity.get(velocity.size()-i);
 	    	}
-	    	accel = vel_diff/9;
-	    	acceleration.add(accel);
-	    } else {
-	    	acceleration.add(accel);
-	    }
+	    	accel = vel_diff/19;
+	    } 
+	    acceleration.add(accel);
 	    
 	    return new Pair<ArrayList<Double> ,ArrayList<Double>>(velocity,acceleration);
 	}

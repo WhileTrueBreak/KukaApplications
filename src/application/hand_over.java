@@ -162,13 +162,6 @@ public class hand_over extends RoboticsAPIApplication {
 			mF.setLEDBlue(false);
 			while (true) {
 				Vector3D v1 = dist(pose);
-				if (v1.getY() > 50){
-					logger.info("y positive " );
-					break;
-				}
-			}
-			while (true) {
-				Vector3D v1 = dist(pose);
 				if (v1.getX() > 50){
 					logger.info("X positive " );
 					break;

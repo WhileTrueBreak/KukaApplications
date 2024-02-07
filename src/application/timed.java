@@ -92,9 +92,9 @@ public class timed {
 	    velocity.add(currentVel);
 	    double accel = 0.0;
 	    double vel_diff = 0.0;
-	    if (velocity.size() > 2) {
-	    	vel_diff = velocity.get(velocity.size()-1) - velocity.get(velocity.size()-2);
-	    	accel = vel_diff/0.1;
+	    if (velocity.size() > 3) {
+	    	vel_diff = velocity.get(velocity.size()-1) - velocity.get(velocity.size()-3);
+	    	accel = vel_diff/0.2;
 	    } 
 	    acceleration.add(accel);
 	    

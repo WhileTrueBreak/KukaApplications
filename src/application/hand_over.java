@@ -154,7 +154,7 @@ public class hand_over extends RoboticsAPIApplication {
 			lissajousMode.parametrize(CartDOF.B).setStiffness(80);
 			lissajousMode.parametrize(CartDOF.C).setStiffness(80);
 			lissajousMode.parametrize(CartDOF.X).setStiffness(300);
-			IMotionContainer m1 = robot.moveAsync(positionHold(lissajousMode, 600, TimeUnit.SECONDS));
+			IMotionContainer m1 = robot.moveAsync(positionHold(lissajousMode, 60, TimeUnit.SECONDS));
 			
 			Frame pose = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"),World.Current.getRootFrame());;
 			
@@ -186,7 +186,7 @@ public class hand_over extends RoboticsAPIApplication {
 			mF.setLEDBlue(true);
 			ThreadUtil.milliSleep(200);
 			mF.setLEDBlue(false);
-			IMotionContainer m2 = robot.moveAsync(positionHold(lissajousMode, 25, TimeUnit.SECONDS));
+			IMotionContainer m2 = robot.moveAsync(positionHold(lissajousMode, 40, TimeUnit.SECONDS));
 			ThreadUtil.milliSleep(1000);
 			logger.info("hit me to grab or go back");
 			gripper2F1.open();
@@ -194,7 +194,7 @@ public class hand_over extends RoboticsAPIApplication {
 			while (true) {
 				Vector3D v2 = dist(pose);
 				velocity = cartData.vel;
-				if (v2.length() > 75 || velocity > 200) {
+				if (v2.length() > 85 || velocity > 200) {
 					mF.setLEDBlue(true);
 					logger.info("velocity : " + velocity);
 					logger.info("yaaaaayyyyyyyyy :)");

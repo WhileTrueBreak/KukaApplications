@@ -88,13 +88,13 @@ public class timed {
 	private Pair<ArrayList<Double>  , ArrayList<Double>> distance(Frame pose, ArrayList<Double> velocity, ArrayList<Double> acceleration) {
 	    Frame newPosition = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"));
 	    Vector3D distance = new Vector3D((pose.getX() - newPosition.getX()), (pose.getY() - newPosition.getY()), (pose.getZ() - newPosition.getZ()));
-	    double currentVel = distance.length()*10;  
+	    double currentVel = (distance.length()/100)*1000;  
 	    velocity.add(currentVel);
 	    double accel = 0.0;
 	    double vel_diff = 0.0;
 	    if (velocity.size() > 2) {
 	    	vel_diff = velocity.get(velocity.size()-1) - velocity.get(velocity.size()-2);
-	    	accel = (vel_diff/(100))*1000;
+	    	accel = vel_diff/0.1;
 	    } 
 	    acceleration.add(accel);
 	    

@@ -169,7 +169,7 @@ public class hand_over extends RoboticsAPIApplication {
 				acceleration = cartData.acc;
 				logger.info("arm velocity :" + velocity);
 				logger.info("arm acceleration :" + acceleration);
-				if (v1.length() > 20 && v1.getX() < 10) {
+				if (v1.length() > 30 && v1.getY() < -10) {
 					mF.setLEDBlue(true);
 					gripper2F1.open();
 					logger.info("yaaaaayyyyyyyyy :)");
@@ -181,9 +181,13 @@ public class hand_over extends RoboticsAPIApplication {
 					break;
 				}
 			}
+		
 			m1.cancel();
- 
-
+			velocity = cartData.vel;
+			acceleration = cartData.acc;
+			logger.info("arm velocity :" + velocity);
+			logger.info("arm acceleration :" + acceleration);
+			
 			mF.setLEDBlue(true);
 			ThreadUtil.milliSleep(200);
 			mF.setLEDBlue(false);
@@ -197,7 +201,7 @@ public class hand_over extends RoboticsAPIApplication {
 				acceleration = cartData.acc;
 				logger.info("arm velocity :" + velocity);
 				logger.info("arm acceleration :" + acceleration);
-				if (v2.length() > 20) {
+				if (v2.length() > 30) {
 					mF.setLEDBlue(true);
 					gripper2F1.close();
 					logger.info("yaaaaayyyyyyyy :)");
@@ -209,6 +213,10 @@ public class hand_over extends RoboticsAPIApplication {
 				}
 			}
 			m2.cancel();
+			velocity = cartData.vel;
+			acceleration = cartData.acc;
+			logger.info("arm velocity :" + velocity);
+			logger.info("arm acceleration :" + acceleration);
 			robot.move(ptp(getApplicationData().getFrame("/P2")).setJointVelocityRel(0.4).setMode(springRobot));
 			cartData.stop();
 		}

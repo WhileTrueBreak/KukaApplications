@@ -183,6 +183,7 @@ public class hand_over extends RoboticsAPIApplication {
 			ThreadUtil.milliSleep(200);
 			mF.setLEDBlue(false);
 			IMotionContainer m2 = robot.moveAsync(positionHold(lissajousMode, 25, TimeUnit.SECONDS));
+			ThreadUtil.milliSleep(1000);
 			logger.info("hit me to grab or go back");
 			gripper2F1.open();
 			pose = robot.getCurrentCartesianPosition(robot.getFlange());

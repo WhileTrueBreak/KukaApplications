@@ -110,6 +110,7 @@ public class hand_over extends RoboticsAPIApplication {
 		Vector3D distance = new Vector3D((pose.getX()-newPosition.getX()), (pose.getY()-newPosition.getY()), (pose.getZ()-newPosition.getZ()));
 		return distance;
 	}
+	
 	@Override
 	public void run() {
 //		IHonkCapability honkCapability = kmp.getCapability(IHonkCapability.class);

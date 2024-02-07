@@ -153,7 +153,7 @@ public class hand_over extends RoboticsAPIApplication {
 			lissajousMode.parametrize(CartDOF.B).setStiffness(80);
 			lissajousMode.parametrize(CartDOF.C).setStiffness(80);
 			lissajousMode.parametrize(CartDOF.X).setStiffness(300);
-			IMotionContainer m1 = robot.moveAsync(positionHold(lissajousMode, 25, TimeUnit.SECONDS));
+			IMotionContainer m1 = robot.moveAsync(positionHold(lissajousMode, 600, TimeUnit.SECONDS));
 			Frame pose = robot.getCurrentCartesianPosition(robot.getFlange());
 			ThreadUtil.milliSleep(1000);
 			logger.info("Please take the object!");
@@ -163,7 +163,9 @@ public class hand_over extends RoboticsAPIApplication {
 			while (true) {
 				ThreadUtil.milliSleep(1000);
 				Vector3D v1 = dist(pose);
-				logger.info("REL POSE" + v1.getX()+ v1.getY() + v1.getZ());
+				logger.info("REL POSE X" + v1.getX());
+				logger.info("REL POSE Y" + v1.getY());
+				logger.info("REL POSE Z" + v1.getZ());
 				if ( v1.getX() > 1000) {
 					break;
 				}

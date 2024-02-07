@@ -81,7 +81,7 @@ public class hand_over extends RoboticsAPIApplication {
 	public void initialize() {
 		gripper.attachTo(robot.getFlange());
 		gripper2F1.initalise();
-		gripper2F1.setForce(10);
+		gripper2F1.setForce(30);
 		gripper2F1.setSpeed(150);
 		gripper2F1.setPos(100);
 		mF.setLEDBlue(true);
@@ -133,10 +133,6 @@ public class hand_over extends RoboticsAPIApplication {
 			logger.info("arm acceleration :" + acceleration);
 			while (gripper2F1.readObjectDetection() == 3){
 				logger.info("No objects detected");
-				velocity = cartData.vel;
-				acceleration = cartData.acc;
-				logger.info("arm velocity :" + velocity);
-				logger.info("arm acceleration :" + acceleration);
 				gripper2F1.setPos(100);
 				mF.setLEDBlue(true);
 				ThreadUtil.milliSleep(1000);
@@ -165,12 +161,10 @@ public class hand_over extends RoboticsAPIApplication {
 			while (true) {
 				Vector3D v1 = dist(pose);
 				velocity = cartData.vel;
-				acceleration = cartData.acc;
-				logger.info("arm velocity :" + velocity);
-				logger.info("arm acceleration :" + acceleration);
-				if (v1.length() > 30 && v1.getY() < -10) {
+				if ((v1.length() > 1000 && v1.getY() < -10) || (velocity > 60)) {
 					mF.setLEDBlue(true);
 					gripper2F1.open();
+					logger.info("velocity : " + velocity);
 					logger.info("yaaaaayyyyyyyyy :)");
 					mF.setLEDBlue(false);
 					m1.cancel();
@@ -182,10 +176,6 @@ public class hand_over extends RoboticsAPIApplication {
 			}
 		
 			m1.cancel();
-			velocity = cartData.vel;
-			acceleration = cartData.acc;
-			logger.info("arm velocity :" + velocity);
-			logger.info("arm acceleration :" + acceleration);
 			
 			mF.setLEDBlue(true);
 			ThreadUtil.milliSleep(200);
@@ -197,13 +187,11 @@ public class hand_over extends RoboticsAPIApplication {
 			while (true) {
 				Vector3D v2 = dist(pose);
 				velocity = cartData.vel;
-				acceleration = cartData.acc;
-				logger.info("arm velocity :" + velocity);
-				logger.info("arm acceleration :" + acceleration);
-				if (v2.length() > 30) {
+				if (v2.length() > 1000 || velocity > 50) {
 					mF.setLEDBlue(true);
+					logger.info("velocity : " + velocity);
+					logger.info("yaaaaayyyyyyyyy :)");
 					gripper2F1.close();
-					logger.info("yaaaaayyyyyyyy :)");
 					mF.setLEDBlue(false);
 					break;
 				} else if (m2.isFinished()) {
@@ -212,10 +200,6 @@ public class hand_over extends RoboticsAPIApplication {
 				}
 			}
 			m2.cancel();
-			velocity = cartData.vel;
-			acceleration = cartData.acc;
-			logger.info("arm velocity :" + velocity);
-			logger.info("arm acceleration :" + acceleration);
 			robot.move(ptp(getApplicationData().getFrame("/P2")).setJointVelocityRel(0.4).setMode(springRobot));
 			cartData.stop();
 		}

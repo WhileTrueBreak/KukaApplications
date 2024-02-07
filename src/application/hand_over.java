@@ -81,9 +81,9 @@ public class hand_over extends RoboticsAPIApplication {
 	public void initialize() {
 		gripper.attachTo(robot.getFlange());
 		gripper2F1.initalise();
-		gripper2F1.setForce(30);
-		gripper2F1.setSpeed(150);
-		gripper2F1.setPos(100);
+		gripper2F1.setForce(60);
+		gripper2F1.setSpeed(100);
+		gripper2F1.setPos(150);
 		mF.setLEDBlue(true);
 		ThreadUtil.milliSleep(200);
 		gripper2F1.close();
@@ -163,7 +163,7 @@ public class hand_over extends RoboticsAPIApplication {
 			while (true) {
 				Vector3D v1 = dist(pose);
 				velocity = cartData.vel;
-				if ((v1.length() > 1000 && v1.getY() < -10) || (velocity > 100)) {
+				if ((v1.length() > 1000 && v1.getY() < -10) || (velocity > 200)) {
 					mF.setLEDBlue(true);
 					gripper2F1.open();
 					logger.info("velocity : " + velocity);
@@ -190,7 +190,7 @@ public class hand_over extends RoboticsAPIApplication {
 			while (true) {
 				Vector3D v2 = dist(pose);
 				velocity = cartData.vel;
-				if (v2.length() > 1000 || velocity > 100) {
+				if (v2.length() > 1000 || velocity > 200) {
 					mF.setLEDBlue(true);
 					logger.info("velocity : " + velocity);
 					logger.info("yaaaaayyyyyyyyy :)");
@@ -204,7 +204,7 @@ public class hand_over extends RoboticsAPIApplication {
 			}
 			m2.cancel();
 			robot.move(ptp(getApplicationData().getFrame("/P2")).setJointVelocityRel(0.4).setMode(springRobot));
-			cartData.stop();
 		}
+		cartData.stop();
 	}
 }

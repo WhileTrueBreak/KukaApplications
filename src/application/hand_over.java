@@ -106,7 +106,9 @@ public class hand_over extends RoboticsAPIApplication {
 
 	}
 	private Vector3D dist(Frame pose){
-		Frame newPosition = robot.getCurrentCartesianPosition(robot.getFlange());
+//		Frame newPosition = robot.getCurrentCartesianPosition(robot.getFlange());
+		@SuppressWarnings("deprecation")
+		Frame newPosition =robot.getCommandedCartesianPosition(robot.getDefaultMotionFrame());
 		Vector3D distance = new Vector3D((pose.getX()-newPosition.getX()), (pose.getY()-newPosition.getY()), (pose.getZ()-newPosition.getZ()));
 		return distance;
 	}

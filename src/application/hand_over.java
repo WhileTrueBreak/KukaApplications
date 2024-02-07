@@ -162,8 +162,30 @@ public class hand_over extends RoboticsAPIApplication {
 			mF.setLEDBlue(false);
 			while (true) {
 				Vector3D v1 = dist(pose);
+				if (v1.getY() > 50){
+					logger.info("y positive " );
+					break;
+				}
+			}
+			while (true) {
+				Vector3D v1 = dist(pose);
+				if (v1.getX() > 50){
+					logger.info("X positive " );
+					break;
+				}
+			}
+			while (true) {
+				Vector3D v1 = dist(pose);
+				if (v1.getZ() > 50){
+					logger.info("Z positive " );
+					break;
+				}
+			}
+			
+			while (true) {
+				Vector3D v1 = dist(pose);
 				velocity = cartData.vel;
-				if ((v1.length() > 1000 && v1.getY() < -10) || (velocity > 200)) {
+				if ((v1.length() > 1000 && v1.getY() < -10) || (velocity > 300)) {
 					mF.setLEDBlue(true);
 					gripper2F1.open();
 					logger.info("velocity : " + velocity);

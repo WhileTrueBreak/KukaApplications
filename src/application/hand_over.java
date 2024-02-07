@@ -154,7 +154,8 @@ public class hand_over extends RoboticsAPIApplication {
 			lissajousMode.parametrize(CartDOF.C).setStiffness(80);
 			lissajousMode.parametrize(CartDOF.X).setStiffness(300);
 			IMotionContainer m1 = robot.moveAsync(positionHold(lissajousMode, 600, TimeUnit.SECONDS));
-			Frame pose = robot.getCurrentCartesianPosition(robot.getFlange());
+			//Frame pose = robot.getCurrentCartesianPosition(robot.getFlange());
+			Frame pose =robot.getCommandedCartesianPosition(robot.getRootFrame());
 			ThreadUtil.milliSleep(1000);
 			logger.info("Please take the object!");
 			mF.setLEDBlue(true);

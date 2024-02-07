@@ -161,16 +161,10 @@ public class hand_over extends RoboticsAPIApplication {
 			ThreadUtil.milliSleep(200);
 			mF.setLEDBlue(false);
 			while (true) {
+				ThreadUtil.milliSleep(1000);
 				Vector3D v1 = dist(pose);
-				if (v1.getX() > 50){
-					logger.info("X positive " );
-					break;
-				}
-			}
-			while (true) {
-				Vector3D v1 = dist(pose);
-				if (v1.getZ() > 50){
-					logger.info("Z positive " );
+				logger.info("REL POSE" + v1.getX()+ v1.getY() + v1.getZ());
+				if ( v1.getX() > 1000) {
 					break;
 				}
 			}

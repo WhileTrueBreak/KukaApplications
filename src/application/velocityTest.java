@@ -114,7 +114,7 @@ public class velocityTest extends RoboticsAPIApplication {
 		double acceleration = cartData.acc;
 		logger.info("arm velocity :" + velocity);
 		logger.info("arm acceleration :" + acceleration);
-		IMotionContainer m3 = robot.moveAsync(ptp(getApplicationData().getFrame("/P2")).setJointVelocityRel(0.1));
+		IMotionContainer m3 = gripper.moveAsync(linRel(50,50,50,0,0,0).setCartVelocity(0.1));
 		while (true){
 			velocity = cartData.vel;
 			acceleration = cartData.acc;

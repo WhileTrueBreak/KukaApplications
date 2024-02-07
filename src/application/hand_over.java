@@ -129,6 +129,8 @@ public class hand_over extends RoboticsAPIApplication {
 			ThreadUtil.milliSleep(1000);
 			gripper2F1.close();
 			ThreadUtil.milliSleep(200);
+			logger.info("arm velocity :" + velocity);
+			logger.info("arm acceleration :" + acceleration);
 			while (gripper2F1.readObjectDetection() == 3){
 				logger.info("No objects detected");
 				velocity = cartData.vel;
@@ -167,7 +169,7 @@ public class hand_over extends RoboticsAPIApplication {
 				acceleration = cartData.acc;
 				logger.info("arm velocity :" + velocity);
 				logger.info("arm acceleration :" + acceleration);
-				if (v1.length() > 100) {
+				if (v1.length() > 50) {
 					mF.setLEDBlue(true);
 					gripper2F1.open();
 					logger.info("yaaaaayyyyyyyyy :)");
@@ -195,7 +197,7 @@ public class hand_over extends RoboticsAPIApplication {
 				acceleration = cartData.acc;
 				logger.info("arm velocity :" + velocity);
 				logger.info("arm acceleration :" + acceleration);
-				if (v2.length() > 50) {
+				if (v2.length() > 40) {
 					mF.setLEDBlue(true);
 					gripper2F1.close();
 					logger.info("yaaaaayyyyyyyy :)");

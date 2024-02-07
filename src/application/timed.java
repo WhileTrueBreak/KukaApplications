@@ -119,7 +119,7 @@ public class timed {
 	        }
 		};
 		beeperHandle = scheduler.scheduleAtFixedRate(beeper, 10, 10, TimeUnit.MILLISECONDS);
-		scheduler.schedule(new Runnable() {public void run() { beeperHandle.cancel(true); }}, 60 * 5, TimeUnit.SECONDS);
+		scheduler.schedule(new Runnable() {public void run() { beeperHandle.cancel(true); }}, 60 * 3, TimeUnit.SECONDS);
 	}
 	
 	public void stop(){

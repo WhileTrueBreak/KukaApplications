@@ -146,8 +146,8 @@ public class window extends RoboticsAPIApplication{
 		//calibrating Main frame
 		gripper.move(linRel(0, 0, -10).setJointVelocityRel(0.3));
 		ForceCondition touch = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 100);
-		IMotionContainer motion = gripper.move(linRel(0,-70, 0, gripper.getFrame("/TCP")).setCartVelocity(30).breakWhen(touch));
-		gripper.move(linRel(0,10,0).setJointVelocityRel(0.3));
+		IMotionContainer motion = gripper.move(linRel(0,100, 0, gripper.getFrame("/TCP")).setCartVelocity(30).breakWhen(touch));
+		gripper.move(linRel(0,-10,0).setJointVelocityRel(0.3));
 		if (touch != null){
 			logger.error("No Collision Detected");
 		}

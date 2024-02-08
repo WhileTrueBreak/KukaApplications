@@ -220,9 +220,10 @@ public class window extends RoboticsAPIApplication{
 		gripper.move(ptp(window).setJointVelocityRel(0.3));
 		logger.info("test 1.1");
 		gripper.move(ptp(lock1).setJointVelocityRel(0.3));
-		gripper.move(ptp(lock2).setJointVelocityRel(0.3));
-		gripper.move(ptp(lock3).setJointVelocityRel(0.3));
-		gripper.move(ptp(lock4).setJointVelocityRel(0.3));
+		ThreadUtil.milliSleep(5000);
+//		gripper.move(ptp(lock2).setJointVelocityRel(0.3));
+//		gripper.move(ptp(lock3).setJointVelocityRel(0.3));
+//		gripper.move(ptp(lock4).setJointVelocityRel(0.3));
 		logger.info("test 1.11");
 		gripper.move(ptp(handle).setJointVelocityRel(0.3));
 		logger.info("test2");

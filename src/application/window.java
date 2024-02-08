@@ -219,12 +219,19 @@ public class window extends RoboticsAPIApplication{
 		gripper.move(ptp(getApplicationData().getFrame("/window/away")).setJointVelocityRel(0.2));
 		logger.info("test 1.11");
 		gripper.move(ptp(handle).setJointVelocityRel(0.3).setMode(springRobot));
-		
+		logger.info("l1");
+		gripper.move(ptp(lock1).setJointVelocityRel(0.3).setMode(springRobot));
+		logger.info("l2");
+		gripper.move(ptp(lock2).setJointVelocityRel(0.3).setMode(springRobot));
+		logger.info("l3");
+		gripper.move(ptp(lock3).setJointVelocityRel(0.3).setMode(springRobot));
+		logger.info("l4");
+		gripper.move(ptp(lock4).setJointVelocityRel(0.3).setMode(springRobot));
 		logger.info("spline");
 		gripper.move(mySpline.setJointVelocityRel(0.4));			
 		
 		gripper.move(ptp(handle).setJointVelocityRel(0.4).setMode(springRobot));
-		gripper.move(linRel(0, -10, 0).setJointVelocityRel(0.3).setMode(springRobot));
+		//gripper.move(linRel(0, -10, 0).setJointVelocityRel(0.3).setMode(springRobot));
 		gripper2F1.setPos(20);
 		gripper.move(linRel(0, 20, 0).setJointVelocityRel(0.3).setMode(springRobot));
 		ThreadUtil.milliSleep(100);

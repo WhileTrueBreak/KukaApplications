@@ -145,7 +145,7 @@ public class window extends RoboticsAPIApplication{
 		
 		//calibrating Main frame
 		gripper.move(linRel(0, 0, -10).setJointVelocityRel(0.3));
-		ForceCondition touch = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 100);
+		ForceCondition touch = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 200);
 		IMotionContainer motion = gripper.move(linRel(0,100, 0, gripper.getFrame("/TCP")).setCartVelocity(30).breakWhen(touch));
 		gripper.move(linRel(0,-10,0).setJointVelocityRel(0.3));
 		if (touch != null){
@@ -206,7 +206,7 @@ public class window extends RoboticsAPIApplication{
 				spl(away)
 		);
 		logger.info("test 1");
-		robot.move(lin(away).setJointVelocityRel(0.3));
+		robot.move(ptp(away).setJointVelocityRel(0.3));
 		logger.info("test2");
 		gripper.move(circ(lock1,lock2).setJointVelocityRel(0.2));
 		logger.info("test3");

@@ -146,8 +146,8 @@ public class window extends RoboticsAPIApplication{
 		gripper.move(ptp(getApplicationData().getFrame("/window")).setJointVelocityRel(0.5));
 		Vector3D mainCal = openLine.getA().multiply(-20);
 		
-		ForceCondition touch = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 100);
-		IMotionContainer motion = robot.move(linRel(mainCal.getZ(), mainCal.getX(), mainCal.getY()).setCartVelocity(10).setCartAcceleration(5).breakWhen(touch).setMode(springRobot));
+		ForceCondition touch = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 200);
+		IMotionContainer motion = gripper.move(linRel(mainCal.getY(), mainCal.getX(), mainCal.getZ()).setCartVelocity(10).setCartAcceleration(5).breakWhen(touch).setMode(springRobot));
 		if (motion.getFiredBreakConditionInfo() == null){
 			logger.error("No Collision Detected");
 		}

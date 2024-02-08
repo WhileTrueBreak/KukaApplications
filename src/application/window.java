@@ -139,7 +139,7 @@ public class window extends RoboticsAPIApplication{
 		robot.move(linRel(0, 0, -10).setJointVelocityRel(0.2));
 		gripper.move(ptp(getApplicationData().getFrame("/window/v1")).setJointVelocityRel(0.5));
 		logger.info("Calibrating vector point 1");
-		Vector3D origin = frameToVector(calibrateFrame(gripper,30));
+		Vector3D origin = frameToVector(calibrateFrame(gripper,35));
 		logger.info(String.format("Origin: %s", origin.toString()));
 		
 		// get world unit vectors

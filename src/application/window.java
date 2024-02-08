@@ -225,9 +225,10 @@ public class window extends RoboticsAPIApplication{
 		gripper.move(ptp(lock3).setJointVelocityRel(0.3).setMode(springRobot));
 		logger.info("l4");
 		gripper.move(ptp(lock4).setJointVelocityRel(0.3).setMode(springRobot));
-		logger.info("spline");
+		logger.info("away");
 		
 		gripper.move(ptp(away).setJointVelocityRel(0.4).setMode(springRobot));
+		logger.info("spline");
 		gripper.move(mySpline.setJointVelocityRel(0.4));	
 		gripper.move(ptp(away).setJointVelocityRel(0.4).setMode(springRobot));
 

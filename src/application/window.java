@@ -145,10 +145,10 @@ public class window extends RoboticsAPIApplication{
 		//calibrating Main frame
 		robot.move(linRel(0, -10, 0).setJointVelocityRel(0.3));
 		gripper.move(ptp(getApplicationData().getFrame("/window")).setJointVelocityRel(0.5));
-		ForceCondition touch = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 100);
-		IMotionContainer motion1 = robot.move(linRel(20, 0, 0, gripper.getFrame("/TCP")).setCartVelocity(30).breakWhen(touch));
-		robot.move(linRel(10,0, 0).setJointVelocityRel(0.3));
-		if (motion1.getFiredBreakConditionInfo() == null){
+		ForceCondition touch = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 200);
+		IMotionContainer motion = gripper.move(linRel(0,20, 0, gripper.getFrame("/TCP")).setCartVelocity(30).breakWhen(touch));
+		gripper.move(linRel(0,-10,0).setJointVelocityRel(0.3));
+		if (motion.getFiredBreakConditionInfo() == null){
 			logger.error("No Collision Detected");
 		}
 		else{

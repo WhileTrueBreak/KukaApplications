@@ -143,12 +143,11 @@ public class window extends RoboticsAPIApplication{
 		logger.info(String.format("Canvas X, Y: (%s), (%s)", openLine.getA().toString(), openLine.getB().toString()));
 		
 		//calibrating Main frame
-		gripper.move(ptp(getApplicationData().getFrame("/window")).setJointVelocityRel(0.5));
-		Vector3D mainCal = openLine.getA().multiply(-20);
-		
-		ForceCondition touch = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 200);
-		IMotionContainer motion = gripper.move(linRel(mainCal.getY(), mainCal.getX(), mainCal.getZ()).setCartVelocity(10).setCartAcceleration(5).breakWhen(touch).setMode(springRobot));
-		if (motion.getFiredBreakConditionInfo() == null){
+		robot.move(linRel(0, -10, 0).setJointVelocityRel(0.3).setMode(springRobot));
+		ForceCondition touch = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 100);
+		IMotionContainer motion1 = robot.move(linRel(20, 0, 0, gripper.getFrame("/TCP")).setCartVelocity(30).breakWhen(touch));
+		robot.move(linRel(10,0, 0).setJointVelocityRel(0.3).setMode(springRobot));
+		if (motion1.getFiredBreakConditionInfo() == null){
 			logger.error("No Collision Detected");
 		}
 		else{
@@ -208,7 +207,7 @@ public class window extends RoboticsAPIApplication{
 				spl(away)
 		);
 		
-		gripper.move(mySpline.setJointVelocityRel(0.4).setMode(springRobot));			
+		gripper.move(mySpline.setJointVelocityRel(0.4));			
 		
 		gripper.move(ptp(handle).setJointVelocityRel(0.4).setMode(springRobot));
 		robot.move(linRel(0, 0, -10).setJointVelocityRel(0.3).setMode(springRobot));

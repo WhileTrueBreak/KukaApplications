@@ -80,6 +80,7 @@ public class window extends RoboticsAPIApplication{
 		// Inits the Robot
 		gripper.attachTo(robot.getFlange());
 		gripper2F1.initalise();
+		gripper2F1.setPos(180);
 		gripper2F1.setSpeed(100);
 		gripper2F1.setForce(10);
 		mF.setLEDBlue(false);
@@ -234,7 +235,7 @@ public class window extends RoboticsAPIApplication{
 
 		gripper.move(ptp(handle).setJointVelocityRel(0.4).setMode(springRobot));
 		//gripper.move(linRel(0, -10, 0).setJointVelocityRel(0.3).setMode(springRobot));
-		gripper2F1.setPos(20);
+		gripper2F1.setPos(180);
 		gripper.move(linRel(0, 20, 0).setJointVelocityRel(0.3).setMode(springRobot));
 		ThreadUtil.milliSleep(100);
 		gripper2F1.close();

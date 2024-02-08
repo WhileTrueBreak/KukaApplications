@@ -210,27 +210,27 @@ public class window extends RoboticsAPIApplication{
 		
 		Spline mySpline = new Spline(
 				spl(lock1),
-				spl(lock4),
-				spl(away)
+				spl(lock2),
+				spl(lock3),
+				spl(lock4)
 		);
-		logger.info("test 1");
-		gripper.move(ptp(getApplicationData().getFrame("/window/away")).setJointVelocityRel(0.2));
-		logger.info("test 1.11");
-		gripper.move(ptp(handle).setJointVelocityRel(0.3).setMode(springRobot));
-		logger.info("l1");
-		gripper.move(ptp(lock1).setJointVelocityRel(0.3).setMode(springRobot));
-		logger.info("l2");
-		gripper.move(ptp(lock2).setJointVelocityRel(0.3).setMode(springRobot));
-		logger.info("l3");
-		gripper.move(ptp(lock3).setJointVelocityRel(0.3).setMode(springRobot));
-		logger.info("l4");
-		gripper.move(ptp(lock4).setJointVelocityRel(0.3).setMode(springRobot));
-		logger.info("away");
+//		logger.info("test 1");
+//		gripper.move(ptp(getApplicationData().getFrame("/window/away")).setJointVelocityRel(0.2));
+//		logger.info("test 1.11");
+//		gripper.move(ptp(handle).setJointVelocityRel(0.3).setMode(springRobot));
+//		logger.info("l1");
+//		gripper.move(ptp(lock1).setJointVelocityRel(0.3).setMode(springRobot));
+//		logger.info("l2");
+//		gripper.move(ptp(lock2).setJointVelocityRel(0.3).setMode(springRobot));
+//		logger.info("l3");
+//		gripper.move(ptp(lock3).setJointVelocityRel(0.3).setMode(springRobot));
+//		logger.info("l4");
+//		gripper.move(ptp(lock4).setJointVelocityRel(0.3).setMode(springRobot));
 		
-		gripper.move(ptp(away).setJointVelocityRel(0.4).setMode(springRobot));
 		logger.info("spline");
+		gripper.move(ptp(getApplicationData().getFrame("/window/away")).setJointVelocityRel(0.2));
 		gripper.move(mySpline.setJointVelocityRel(0.4));	
-		gripper.move(ptp(away).setJointVelocityRel(0.4).setMode(springRobot));
+		gripper.move(ptp(getApplicationData().getFrame("/window/away")).setJointVelocityRel(0.2));
 
 		gripper.move(ptp(handle).setJointVelocityRel(0.4).setMode(springRobot));
 		//gripper.move(linRel(0, -10, 0).setJointVelocityRel(0.3).setMode(springRobot));

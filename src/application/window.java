@@ -118,10 +118,6 @@ public class window extends RoboticsAPIApplication{
 		
 		mF.setLEDBlue(true);
 		//getting the vector
-		gripper.move(ptp(getApplicationData().getFrame("/window/v1")).setJointVelocityRel(0.5));
-		logger.info("Calibrating vector point 1");
-		Vector3D origin = frameToVector(calibrateFrame(gripper,30));
-		logger.info(String.format("Origin: %s", origin.toString()));
  
 		logger.info("Moving to left");
 		robot.move(linRel(0, 0, -10).setJointVelocityRel(0.2));
@@ -135,8 +131,13 @@ public class window extends RoboticsAPIApplication{
 		gripper.move(ptp(getApplicationData().getFrame("/window/v3")).setJointVelocityRel(0.5));
 		logger.info("Calibrating vector point 3");
 		ThreadUtil.milliSleep(500);
-		Vector3D up = frameToVector(calibrateFrame(gripper,70));
+		Vector3D up = frameToVector(calibrateFrame(gripper,200));
 		logger.info(String.format("Right: %s", up.toString()));
+		
+		gripper.move(ptp(getApplicationData().getFrame("/window/v1")).setJointVelocityRel(0.5));
+		logger.info("Calibrating vector point 1");
+		Vector3D origin = frameToVector(calibrateFrame(gripper,30));
+		logger.info(String.format("Origin: %s", origin.toString()));
 		
 		// get world unit vectors
 		Pair<Vector3D,Vector3D> openLine = getCanvasPlane(origin, up, right);
@@ -144,9 +145,8 @@ public class window extends RoboticsAPIApplication{
 		
 		//calibrating Main frame
 		gripper.move(linRel(0, 0, -10).setJointVelocityRel(0.3));
-		gripper.move(ptp(getApplicationData().getFrame("/window")).setJointVelocityRel(0.5));
 		ForceCondition touch = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 100);
-		IMotionContainer motion = gripper.move(linRel(0,-30, 0, gripper.getFrame("/TCP")).setCartVelocity(30).breakWhen(touch));
+		IMotionContainer motion = gripper.move(linRel(0,-70, 0, gripper.getFrame("/TCP")).setCartVelocity(30).breakWhen(touch));
 		gripper.move(linRel(0,10,0).setJointVelocityRel(0.3));
 		if (touch != null){
 			logger.error("No Collision Detected");
@@ -205,7 +205,11 @@ public class window extends RoboticsAPIApplication{
 				spl(lock4),
 				spl(away)
 		);
-		
+		logger.info("test 1");
+		robot.move(lin(away).setJointVelocityRel(0.3));
+		logger.info("test2");
+		gripper.move(circ(lock1,lock2).setJointVelocityRel(0.2));
+		logger.info("test3");
 		gripper.move(mySpline.setJointVelocityRel(0.4));			
 		
 		gripper.move(ptp(handle).setJointVelocityRel(0.4).setMode(springRobot));

@@ -214,7 +214,7 @@ public class window extends RoboticsAPIApplication{
 				spl(away)
 		);
 		logger.info("test 1");
-		robot.move(ptp(away).setJointVelocityRel(0.3));
+		gripper.move(ptp(away).setJointVelocityRel(0.3));
 		logger.info("test2");
 		gripper.move(circ(lock1,lock2).setJointVelocityRel(0.2));
 		logger.info("test3");

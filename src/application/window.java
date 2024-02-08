@@ -123,7 +123,6 @@ public class window extends RoboticsAPIApplication{
 		//getting the vector
  
 		logger.info("Moving to left");
-		robot.move(linRel(0, 0, -10).setJointVelocityRel(0.2));
 		gripper.move(ptp(getApplicationData().getFrame("/window/v2")).setJointVelocityRel(0.5));
 		logger.info("Calibrating vector point 2");
 		ThreadUtil.milliSleep(500);
@@ -136,7 +135,8 @@ public class window extends RoboticsAPIApplication{
 		ThreadUtil.milliSleep(500);
 		Vector3D up = frameToVector(calibrateFrame(gripper,200));
 		logger.info(String.format("Right: %s", up.toString()));
-		
+
+		robot.move(linRel(0, 0, -10).setJointVelocityRel(0.2));
 		gripper.move(ptp(getApplicationData().getFrame("/window/v1")).setJointVelocityRel(0.5));
 		logger.info("Calibrating vector point 1");
 		Vector3D origin = frameToVector(calibrateFrame(gripper,30));

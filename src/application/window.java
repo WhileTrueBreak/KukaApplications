@@ -163,44 +163,44 @@ public class window extends RoboticsAPIApplication{
 		window = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"));
 		
 		// defining other frames
-		away.setX(window.getX() -16);
-		away.setY(window.getY()-36);
-		away.setZ(window.getZ()-156);
-		away.setAlphaRad(window.getAlphaRad() + 1.5);
+		away.setX(window.getX()+16);
+		away.setY(window.getY()+36);
+		away.setZ(window.getZ()+156);
+		away.setAlphaRad(window.getAlphaRad() - 1.5);
 		away.setBetaRad(window.getBetaRad());
 		away.setGammaRad(window.getGammaRad());
 		
 		handle.setX(window.getX());
-		handle.setY(window.getY()+48);
-		handle.setZ(window.getZ()-39);
+		handle.setY(window.getY()-48);
+		handle.setZ(window.getZ()+39);
 		handle.setAlphaRad(window.getAlphaRad());
 		handle.setBetaRad(window.getBetaRad());
 		handle.setGammaRad(window.getGammaRad());
 		
-		lock1.setX(window.getX() -118);
-		lock1.setY(window.getY()+ 14);
-		lock1.setZ(window.getZ()-29);
+		lock1.setX(window.getX() +118);
+		lock1.setY(window.getY()-14);
+		lock1.setZ(window.getZ()+29);
 		lock1.setAlphaRad(window.getAlphaRad());
 		lock1.setBetaRad(window.getBetaRad());
 		lock1.setGammaRad(window.getGammaRad());
 		
-		lock2.setX(window.getX()-154);
-		lock2.setY(window.getY()+19);
-		lock2.setZ(window.getZ()-19);
+		lock2.setX(window.getX()+154);
+		lock2.setY(window.getY()-19);
+		lock2.setZ(window.getZ()+19);
 		lock2.setAlphaRad(window.getAlphaRad());
 		lock2.setBetaRad(window.getBetaRad());
 		lock2.setGammaRad(window.getGammaRad());
 		
-		lock3.setX(window.getX() -180);
-		lock3.setY(window.getY()+27);
-		lock3.setZ(window.getZ()-29);
+		lock3.setX(window.getX()+180);
+		lock3.setY(window.getY()-27);
+		lock3.setZ(window.getZ()+29);
 		lock3.setAlphaRad(window.getAlphaRad());
 		lock3.setBetaRad(window.getBetaRad());
 		lock3.setGammaRad(window.getGammaRad());
 		
-		lock4.setX(window.getX() -211);
-		lock4.setY(window.getY()+44);
-		lock4.setZ(window.getZ()-55);
+		lock4.setX(window.getX()+211);
+		lock4.setY(window.getY()-44);
+		lock4.setZ(window.getZ()+55);
 		lock4.setAlphaRad(window.getAlphaRad());
 		lock4.setBetaRad(window.getBetaRad());
 		lock4.setGammaRad(window.getGammaRad());

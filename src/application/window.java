@@ -154,7 +154,7 @@ public class window extends RoboticsAPIApplication{
 		ForceComponentCondition FORCE = new ForceComponentCondition(gripper.getFrame("/TCP"), CoordinateAxis.Y, -250.0,-25);
 		ICondition FORCE1 = FORCE.invert();
 
-		IMotionContainer motion = gripper.move(linRel(0,120, 0, gripper.getFrame("/TCP")).setCartVelocity(30).breakWhen(FORCE1));
+		IMotionContainer motion = gripper.move(linRel(0,100, 0, gripper.getFrame("/TCP")).setCartVelocity(30).breakWhen(FORCE1));
 		gripper.move(linRel(0,-10,0).setJointVelocityRel(0.3));
 		if (FORCE1 != null){
 			logger.error("No Collision Detected");

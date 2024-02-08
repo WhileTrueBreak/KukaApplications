@@ -135,7 +135,7 @@ public class window extends RoboticsAPIApplication{
 		gripper.move(ptp(getApplicationData().getFrame("/window/v3")).setJointVelocityRel(0.5));
 		logger.info("Calibrating vector point 3");
 		ThreadUtil.milliSleep(500);
-		Vector3D up = frameToVector(calibrateFrame(gripper,50));
+		Vector3D up = frameToVector(calibrateFrame(gripper,70));
 		logger.info(String.format("Right: %s", up.toString()));
 		
 		// get world unit vectors
@@ -146,7 +146,7 @@ public class window extends RoboticsAPIApplication{
 		gripper.move(ptp(getApplicationData().getFrame("/window")).setJointVelocityRel(0.5));
 		Vector3D mainCal = openLine.getA().multiply(-50);
 		
-		ForceCondition touch = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 20);
+		ForceCondition touch = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 40);
 		IMotionContainer motion = robot.move(linRel(mainCal.getZ(), mainCal.getX(), mainCal.getY()).setCartVelocity(10).setCartAcceleration(10).breakWhen(touch).setMode(springRobot));
 		if (motion.getFiredBreakConditionInfo() == null){
 			logger.error("No Collision Detected");

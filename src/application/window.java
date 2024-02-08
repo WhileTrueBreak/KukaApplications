@@ -236,7 +236,7 @@ public class window extends RoboticsAPIApplication{
 		gripper.move(ptp(handle).setJointVelocityRel(0.4).setMode(springRobot));
 		//gripper.move(linRel(0, -10, 0).setJointVelocityRel(0.3).setMode(springRobot));
 		gripper2F1.setPos(180);
-		gripper.move(linRel(0, 20, 0).setJointVelocityRel(0.3).setMode(springRobot));
+		gripper.move(linRel(0, 0, 15).setJointVelocityRel(0.3).setMode(springRobot));
 		ThreadUtil.milliSleep(100);
 		gripper2F1.close();
 		

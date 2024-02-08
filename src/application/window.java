@@ -210,8 +210,6 @@ public class window extends RoboticsAPIApplication{
 		
 		Spline mySpline = new Spline(
 				spl(lock1),
-				spl(lock2),
-				spl(lock3),
 				spl(lock4),
 				spl(away)
 		);

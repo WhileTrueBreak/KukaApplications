@@ -67,16 +67,16 @@ public class window extends RoboticsAPIApplication{
 		// Set stiffness
  
 		// TODO: Stiff in every direction except plane perpendicular to flange
-		springRobot.parametrize(CartDOF.X).setStiffness(1000);
-		springRobot.parametrize(CartDOF.Y).setStiffness(1000);
-		springRobot.parametrize(CartDOF.Z).setStiffness(1000);
+		springRobot.parametrize(CartDOF.X).setStiffness(400);
+		springRobot.parametrize(CartDOF.Y).setStiffness(400);
+		springRobot.parametrize(CartDOF.Z).setStiffness(1500);
  
 		// Stiff rotation
 		springRobot.parametrize(CartDOF.C).setStiffness(100);
 		springRobot.parametrize(CartDOF.B).setStiffness(100);
 		springRobot.parametrize(CartDOF.A).setStiffness(100);
 		springRobot.setReferenceSystem(World.Current.getRootFrame());
-		springRobot.parametrize(CartDOF.ALL).setDamping(0.8);
+		springRobot.parametrize(CartDOF.ALL).setDamping(0.9);
 		// Inits the Robot
 		gripper.attachTo(robot.getFlange());
 		gripper2F1.initalise();
@@ -165,16 +165,16 @@ public class window extends RoboticsAPIApplication{
 		}
 		
 		// defining other frames
-		away.setX(window.getX()-155);
-		away.setY(window.getY()-36);
-		away.setZ(window.getZ()-15);
+		away.setX(window.getX()-35.8);
+		away.setY(window.getY()-156);
+		away.setZ(window.getZ()-16);
 		away.setAlphaRad(window.getAlphaRad() + 1.5);
 		away.setBetaRad(window.getBetaRad());
 		away.setGammaRad(window.getGammaRad());
 		
-		handle.setX(window.getX());  // ---> 
-		handle.setY(window.getY()+48); // ---> 0 put X values
-		handle.setZ(window.getZ()-39);
+		handle.setX(window.getX()+48);  // ---> 
+		handle.setY(window.getY()-39); // ---> 0 put X values
+		handle.setZ(window.getZ());
 		handle.setAlphaRad(window.getAlphaRad());
 		handle.setBetaRad(window.getBetaRad());
 		handle.setGammaRad(window.getGammaRad());
@@ -187,29 +187,28 @@ public class window extends RoboticsAPIApplication{
 		lock1.setBetaRad(window.getBetaRad());
 		lock1.setGammaRad(window.getGammaRad());
 		
-		lock2.setX(window.getX()-154);
-		lock2.setY(window.getY()+19);
-		lock2.setZ(window.getZ()-19.6);
+		lock2.setX(window.getX()+19);
+		lock2.setY(window.getY()-20);
+		lock2.setZ(window.getZ()-154);
 		lock2.setAlphaRad(window.getAlphaRad());
 		lock2.setBetaRad(window.getBetaRad());
 		lock2.setGammaRad(window.getGammaRad());
 		
-		lock3.setX(window.getX()-180);
-		lock3.setY(window.getY()+28);
-		lock3.setZ(window.getZ()-26);
+		lock3.setX(window.getX()+28);
+		lock3.setY(window.getY()-26);
+		lock3.setZ(window.getZ()-180);
 		lock3.setAlphaRad(window.getAlphaRad());
 		lock3.setBetaRad(window.getBetaRad());
 		lock3.setGammaRad(window.getGammaRad());
 		
-		lock4.setX(window.getX()-211);
-		lock4.setY(window.getY()+44);
-		lock4.setZ(window.getZ()-55);
+		lock4.setX(window.getX()+44);
+		lock4.setY(window.getY()-55);
+		lock4.setZ(window.getZ()-211);
 		lock4.setAlphaRad(window.getAlphaRad());
 		lock4.setBetaRad(window.getBetaRad());
 		lock4.setGammaRad(window.getGammaRad());
 		
 		Spline mySpline = new Spline(
-				spl(away),
 				spl(lock1),
 				spl(lock2),
 				spl(lock3),
@@ -218,24 +217,16 @@ public class window extends RoboticsAPIApplication{
 		);
 		logger.info("test 1");
 		gripper.move(ptp(getApplicationData().getFrame("/window/away")).setJointVelocityRel(0.2));
-		gripper.move(ptp(window).setJointVelocityRel(0.3));
-		logger.info("test 1.1");
-		gripper.move(ptp(lock1).setJointVelocityRel(0.3));
-		ThreadUtil.milliSleep(5000);
-//		gripper.move(ptp(lock2).setJointVelocityRel(0.3));
-//		gripper.move(ptp(lock3).setJointVelocityRel(0.3));
-//		gripper.move(ptp(lock4).setJointVelocityRel(0.3));
 		logger.info("test 1.11");
-		gripper.move(ptp(handle).setJointVelocityRel(0.3));
-		logger.info("test2");
-		gripper.move(circ(lock1,lock2).setJointVelocityRel(0.2));
-		logger.info("test3");
+		gripper.move(ptp(handle).setJointVelocityRel(0.3).setMode(springRobot));
+		
+		logger.info("spline");
 		gripper.move(mySpline.setJointVelocityRel(0.4));			
 		
 		gripper.move(ptp(handle).setJointVelocityRel(0.4).setMode(springRobot));
-		robot.move(linRel(0, 0, -10).setJointVelocityRel(0.3).setMode(springRobot));
+		gripper.move(linRel(0, -10, 0).setJointVelocityRel(0.3).setMode(springRobot));
 		gripper2F1.setPos(20);
-		robot.move(linRel(0, 0, 20).setJointVelocityRel(0.3).setMode(springRobot));
+		gripper.move(linRel(0, 20, 0).setJointVelocityRel(0.3).setMode(springRobot));
 		ThreadUtil.milliSleep(100);
 		gripper2F1.close();
 		

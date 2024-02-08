@@ -117,22 +117,22 @@ public class window extends RoboticsAPIApplication{
 		Frame lock4 = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"));
 		
 		mF.setLEDBlue(true);
-		robot.move(ptp(getApplicationData().getFrame("/window/away")).setJointVelocityRel(0.5));
+		gripper.move(ptp(getApplicationData().getFrame("/window/away")).setJointVelocityRel(0.5));
 		
 		//getting the vector
-		robot.move(ptp(getApplicationData().getFrame("/window/v1")).setJointVelocityRel(0.5));
+		gripper.move(ptp(getApplicationData().getFrame("/window/v1")).setJointVelocityRel(0.5));
 		logger.info("Calibrating vector point 1");
 		Vector3D origin = frameToVector(calibrateFrame(gripper,30));
 		logger.info(String.format("Origin: %s", origin.toString()));
  
 		logger.info("Moving to left");
-		robot.move(ptp(getApplicationData().getFrame("/window/v2")).setJointVelocityRel(0.5));
+		gripper.move(ptp(getApplicationData().getFrame("/window/v2")).setJointVelocityRel(0.5));
 		logger.info("Calibrating vector point 2");
 		ThreadUtil.milliSleep(500);
 		Vector3D right = frameToVector(calibrateFrame(gripper,30));
 		logger.info(String.format("Right: %s", right.toString()));
 		logger.info("Moving to up");
-		robot.move(ptp(getApplicationData().getFrame("/window/v3")).setJointVelocityRel(0.5));
+		gripper.move(ptp(getApplicationData().getFrame("/window/v3")).setJointVelocityRel(0.5));
 		logger.info("Calibrating vector point 3");
 		ThreadUtil.milliSleep(500);
 		Vector3D up = frameToVector(calibrateFrame(gripper,35));

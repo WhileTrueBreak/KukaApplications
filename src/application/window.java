@@ -143,21 +143,16 @@ public class window extends RoboticsAPIApplication{
 		logger.info(String.format("Canvas X, Y: (%s), (%s)", openLine.getA().toString(), openLine.getB().toString()));
 		
 		//calibrating Main frame
-		robot.move(linRel(0, -10, 0).setJointVelocityRel(0.3));
+		gripper.move(linRel(0, 0, -10).setJointVelocityRel(0.3));
 		gripper.move(ptp(getApplicationData().getFrame("/window")).setJointVelocityRel(0.5));
 		ForceCondition touch = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 200);
-		IMotionContainer motion = gripper.move(linRel(0,20, 0, gripper.getFrame("/TCP")).setCartVelocity(30).breakWhen(touch));
-		gripper.move(linRel(0,-10,0).setJointVelocityRel(0.3));
+		IMotionContainer motion = gripper.move(linRel(0,-20, 0, gripper.getFrame("/TCP")).setCartVelocity(30).breakWhen(touch));
+		gripper.move(linRel(0,10,0).setJointVelocityRel(0.3));
 		if (touch != null){
 			logger.error("No Collision Detected");
 		}
-		if (motion.getFiredBreakConditionInfo() == null){
-			logger.error("No Collision Detected");
-		}
-		else{
-			logger.info("Collision Detected");
-			window = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"));
-		}
+	
+		window = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"));
 		
 		// defining other frames
 		away.setX(window.getX() -16);

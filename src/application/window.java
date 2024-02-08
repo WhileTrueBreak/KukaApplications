@@ -151,7 +151,7 @@ public class window extends RoboticsAPIApplication{
 		gripper.move(linRel(0, 0, -10).setJointVelocityRel(0.3));
 		//ForceCondition touch = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 200);
 		
-		ForceComponentCondition FORCE = new ForceComponentCondition(gripper.getFrame("/TCP"), CoordinateAxis.Y, -25.0,-100);
+		ForceComponentCondition FORCE = new ForceComponentCondition(gripper.getFrame("/TCP"), CoordinateAxis.Y, -250.0,-50);
 		ICondition FORCE1 = FORCE.invert();
 
 		IMotionContainer motion = gripper.move(linRel(0,100, 0, gripper.getFrame("/TCP")).setCartVelocity(30).breakWhen(FORCE1));

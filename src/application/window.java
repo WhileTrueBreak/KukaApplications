@@ -161,7 +161,7 @@ public class window extends RoboticsAPIApplication{
 		}
 		else{
 			logger.info("Collision Detected");
-			window = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"));
+			window = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"),World.Current.getRootFrame());
 		}
 		
 		// defining other frames
@@ -172,9 +172,9 @@ public class window extends RoboticsAPIApplication{
 		away.setBetaRad(window.getBetaRad());
 		away.setGammaRad(window.getGammaRad());
 		
-		handle.setX(window.getX()-39);  // ---> 
+		handle.setX(window.getX());  // ---> 
 		handle.setY(window.getY()+48); // ---> 0 put X values
-		handle.setZ(window.getZ());
+		handle.setZ(window.getZ()-39);
 		handle.setAlphaRad(window.getAlphaRad());
 		handle.setBetaRad(window.getBetaRad());
 		handle.setGammaRad(window.getGammaRad());
@@ -219,7 +219,7 @@ public class window extends RoboticsAPIApplication{
 		gripper.move(ptp(getApplicationData().getFrame("/window/away")).setJointVelocityRel(0.2));
 		gripper.move(ptp(window).setJointVelocityRel(0.3));
 		logger.info("test 1.1");
-		gripper.move(ptp(lock1).setJointVelocityRel(0.3));
+		gripper.move(ptp(handle).setJointVelocityRel(0.3));
 		logger.info("test2");
 		gripper.move(circ(lock1,lock2).setJointVelocityRel(0.2));
 		logger.info("test3");

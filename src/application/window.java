@@ -124,16 +124,18 @@ public class window extends RoboticsAPIApplication{
 		logger.info(String.format("Origin: %s", origin.toString()));
  
 		logger.info("Moving to left");
+		robot.move(linRel(0, 0, -10).setJointVelocityRel(0.2));
 		gripper.move(ptp(getApplicationData().getFrame("/window/v2")).setJointVelocityRel(0.5));
 		logger.info("Calibrating vector point 2");
 		ThreadUtil.milliSleep(500);
 		Vector3D right = frameToVector(calibrateFrame(gripper,30));
 		logger.info(String.format("Right: %s", right.toString()));
+		robot.move(linRel(0, 0, -10).setJointVelocityRel(0.2));
 		logger.info("Moving to up");
 		gripper.move(ptp(getApplicationData().getFrame("/window/v3")).setJointVelocityRel(0.5));
 		logger.info("Calibrating vector point 3");
 		ThreadUtil.milliSleep(500);
-		Vector3D up = frameToVector(calibrateFrame(gripper,35));
+		Vector3D up = frameToVector(calibrateFrame(gripper,50));
 		logger.info(String.format("Right: %s", up.toString()));
 		
 		// get world unit vectors
@@ -141,8 +143,8 @@ public class window extends RoboticsAPIApplication{
 		logger.info(String.format("Canvas X, Y: (%s), (%s)", openLine.getA().toString(), openLine.getB().toString()));
 		
 		//calibrating Main frame
-		robot.move(linRel(0, 0, -10).setJointVelocityRel(0.2));
-		Vector3D mainCal = openLine.getA().multiply(-200);
+		gripper.move(ptp(getApplicationData().getFrame("/window")).setJointVelocityRel(0.5));
+		Vector3D mainCal = openLine.getA().multiply(-50);
 		
 		ForceCondition touch = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 20);
 		IMotionContainer motion = robot.move(linRel(mainCal.getZ(), mainCal.getX(), mainCal.getY()).setCartVelocity(10).setCartAcceleration(10).breakWhen(touch).setMode(springRobot));

@@ -117,8 +117,6 @@ public class window extends RoboticsAPIApplication{
 		Frame lock4 = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"));
 		
 		mF.setLEDBlue(true);
-		gripper.move(ptp(getApplicationData().getFrame("/window/away")).setJointVelocityRel(0.5));
-		
 		//getting the vector
 		gripper.move(ptp(getApplicationData().getFrame("/window/v1")).setJointVelocityRel(0.5));
 		logger.info("Calibrating vector point 1");

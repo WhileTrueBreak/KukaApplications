@@ -156,17 +156,19 @@ public class window extends RoboticsAPIApplication{
 
 		IMotionContainer motion = gripper.move(linRel(0,100, 0, gripper.getFrame("/TCP")).setCartVelocity(30).breakWhen(FORCE1));
 		gripper.move(linRel(0,-10,0).setJointVelocityRel(0.3));
-		if (FORCE1 != null){
-			logger.error("No Collision Detected");
+		if (motion.getFiredBreakConditionInfo() == null){
+			logger.info("No Collision Detected");
 		}
-	
-		window = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"));
+		else{
+			logger.info("Collision Detected");
+			window = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"));
+		}
 		
 		// defining other frames
-		away.setX(window.getX()+16);
-		away.setY(window.getY()+36);
-		away.setZ(window.getZ()+156);
-		away.setAlphaRad(window.getAlphaRad() - 1.5);
+		away.setX(window.getX()-15);
+		away.setY(window.getY()-36);
+		away.setZ(window.getZ()-155);
+		away.setAlphaRad(window.getAlphaRad() + 1.5);
 		away.setBetaRad(window.getBetaRad());
 		away.setGammaRad(window.getGammaRad());
 		
@@ -177,30 +179,30 @@ public class window extends RoboticsAPIApplication{
 		handle.setBetaRad(window.getBetaRad());
 		handle.setGammaRad(window.getGammaRad());
 		
-		lock1.setX(window.getX() +118);
-		lock1.setY(window.getY()-14);
-		lock1.setZ(window.getZ()+29);
+		lock1.setX(window.getX()-118);
+		lock1.setY(window.getY()+14);
+		lock1.setZ(window.getZ()-29);
 		lock1.setAlphaRad(window.getAlphaRad());
 		lock1.setBetaRad(window.getBetaRad());
 		lock1.setGammaRad(window.getGammaRad());
 		
-		lock2.setX(window.getX()+154);
-		lock2.setY(window.getY()-19);
-		lock2.setZ(window.getZ()+19);
+		lock2.setX(window.getX()-154);
+		lock2.setY(window.getY()+19);
+		lock2.setZ(window.getZ()-19);
 		lock2.setAlphaRad(window.getAlphaRad());
 		lock2.setBetaRad(window.getBetaRad());
 		lock2.setGammaRad(window.getGammaRad());
 		
-		lock3.setX(window.getX()+180);
-		lock3.setY(window.getY()-27);
-		lock3.setZ(window.getZ()+29);
+		lock3.setX(window.getX()-180);
+		lock3.setY(window.getY()+27);
+		lock3.setZ(window.getZ()-29);
 		lock3.setAlphaRad(window.getAlphaRad());
 		lock3.setBetaRad(window.getBetaRad());
 		lock3.setGammaRad(window.getGammaRad());
 		
-		lock4.setX(window.getX()+211);
-		lock4.setY(window.getY()-44);
-		lock4.setZ(window.getZ()+55);
+		lock4.setX(window.getX()-211);
+		lock4.setY(window.getY()+44);
+		lock4.setZ(window.getZ()-55);
 		lock4.setAlphaRad(window.getAlphaRad());
 		lock4.setBetaRad(window.getBetaRad());
 		lock4.setGammaRad(window.getGammaRad());
@@ -215,6 +217,8 @@ public class window extends RoboticsAPIApplication{
 		);
 		logger.info("test 1");
 		gripper.move(ptp(getApplicationData().getFrame("/window/away")).setJointVelocityRel(0.2));
+		gripper.move(ptp(away).setJointVelocityRel(0.3));
+		logger.info("test 1.1");
 		gripper.move(ptp(lock1).setJointVelocityRel(0.3));
 		logger.info("test2");
 		gripper.move(circ(lock1,lock2).setJointVelocityRel(0.2));

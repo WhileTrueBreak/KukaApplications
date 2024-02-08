@@ -179,9 +179,9 @@ public class window extends RoboticsAPIApplication{
 		handle.setBetaRad(window.getBetaRad());
 		handle.setGammaRad(window.getGammaRad());
 		
-		lock1.setX(window.getX()-118);
-		lock1.setY(window.getY()+14);
-		lock1.setZ(window.getZ()-29);
+		lock1.setX(window.getX()+14);
+		lock1.setY(window.getY()-118);
+		lock1.setZ(window.getZ()-30);
 		lock1.setAlphaRad(window.getAlphaRad());
 		lock1.setBetaRad(window.getBetaRad());
 		lock1.setGammaRad(window.getGammaRad());

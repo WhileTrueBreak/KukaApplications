@@ -69,7 +69,7 @@ public class window extends RoboticsAPIApplication{
 		// TODO: Stiff in every direction except plane perpendicular to flange
 		springRobot.parametrize(CartDOF.X).setStiffness(400);
 		springRobot.parametrize(CartDOF.Y).setStiffness(400);
-		springRobot.parametrize(CartDOF.Z).setStiffness(1500);
+		springRobot.parametrize(CartDOF.Z).setStiffness(2000);
  
 		// Stiff rotation
 		springRobot.parametrize(CartDOF.C).setStiffness(100);
@@ -229,9 +229,9 @@ public class window extends RoboticsAPIApplication{
 //		gripper.move(ptp(lock4).setJointVelocityRel(0.3).setMode(springRobot));
 		
 		logger.info("spline");
-		gripper.move(ptp(getApplicationData().getFrame("/window/away")).setJointVelocityRel(0.2));
-		gripper.move(mySpline.setJointVelocityRel(0.4));	
-		gripper.move(ptp(getApplicationData().getFrame("/window/away")).setJointVelocityRel(0.2));
+		gripper.move(ptp(getApplicationData().getFrame("/window/away")).setJointVelocityRel(0.2).setMode(springRobot));
+		gripper.move(mySpline.setJointVelocityRel(0.4).setMode(springRobot));	
+		gripper.move(ptp(getApplicationData().getFrame("/window/away")).setJointVelocityRel(0.2).setMode(springRobot));
 
 		gripper.move(ptp(handle).setJointVelocityRel(0.4).setMode(springRobot));
 		//gripper.move(linRel(0, -10, 0).setJointVelocityRel(0.3).setMode(springRobot));

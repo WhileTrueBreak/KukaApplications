@@ -198,7 +198,8 @@ public class window extends RoboticsAPIApplication{
 //				spl(away)
 //		);
 //		logger.info("spline");
-//		gripper.move(ptp(getApplicationData().getFrame("/window/away")).setJointVelocityRel(0.2).setMode(springRobot));
+		gripper.move(ptp(getApplicationData().getFrame("/window/away")).setJointVelocityRel(0.2).setMode(springRobot));
+		gripper.move(ptp(getApplicationData().getFrame("/window/handle")).setJointVelocityRel(0.2).setMode(springRobot));
 //		gripper.move(mySpline.setJointVelocityRel(0.4).setMode(springRobot).setOrientationType(SplineOrientationType.Constant));	
 //		//gripper.move(ptp(getApplicationData().getFrame("/window/away")).setJointVelocityRel(0.2).setMode(springRobot));
 //		gripper.move(ptp(handle).setJointVelocityRel(0.4).setMode(springRobot));

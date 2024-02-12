@@ -89,14 +89,15 @@ public class RobotPickandPlaceMatrix extends RoboticsAPIApplication {
  
 	@Override
 	public void run() {
-		IHonkCapability honkCapability = kmp.getCapability(IHonkCapability.class);
-		honkCapability.honk();
+//		IHonkCapability honkCapability = kmp.getCapability(IHonkCapability.class);
+//		honkCapability.honk();
 		gripper2F1.close();
 		Frame pickMain = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"),World.Current.getRootFrame());
 		Frame pick1 = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"),World.Current.getRootFrame());
 
 		mF.setLEDBlue(false);
 		ThreadUtil.milliSleep(200);
+		gripper.move(ptp(getApplicationData().getFrame("/P5")).setJointVelocityRel(0.3));
 		gripper.move(linRel(0, 0, -10, World.Current.getRootFrame()).setJointVelocityRel(0.3));
 		
 		ForceComponentCondition force1 = new ForceComponentCondition(gripper.getFrame("/TCP"), CoordinateAxis.Y, 20.0,100.0);

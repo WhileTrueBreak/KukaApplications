@@ -83,7 +83,7 @@ public class window extends RoboticsAPIApplication{
 	}
 	private Frame calibrateFrame(Tool grip, double force){
 		ForceCondition touch = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), force);
-		IMotionContainer motion1 = gripper.move(linRel(0, 0, 15, gripper.getFrame("/TCP")).setCartVelocity(30).breakWhen(touch));
+		IMotionContainer motion1 = gripper.move(linRel(0, 0, 25, gripper.getFrame("/TCP")).setCartVelocity(30).breakWhen(touch));
 		if (motion1.getFiredBreakConditionInfo() == null){
 			logger.info("No Collision Detected");
 			return null;

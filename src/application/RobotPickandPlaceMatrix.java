@@ -126,7 +126,7 @@ public class RobotPickandPlaceMatrix extends RoboticsAPIApplication {
 		gripper.move(ptp(getApplicationData().getFrame("/P5")).setJointVelocityRel(0.3));
 		gripper.move(linRel(0, 0, -10, World.Current.getRootFrame()).setJointVelocityRel(0.3));
 		
-		ForceCondition touch = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 15);
+		ForceCondition touch = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 20);
 		IMotionContainer motion1 = gripper.move(linRel(0,-100, 0, World.Current.getRootFrame()).setCartVelocity(30).breakWhen(touch));
 		gripper.move(linRel(0,5,0, World.Current.getRootFrame()).setJointVelocityRel(0.3));
 		ThreadUtil.milliSleep(200);

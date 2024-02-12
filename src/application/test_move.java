@@ -98,8 +98,8 @@ public class test_move extends RoboticsAPIApplication {
 		//Collections<MobileRobot> robots = robotManager.getRobots(MobileRobot.class);
 
 		//Collection<Location> locations = locationData.getAll();
-		double x = 20;
-		double y = 30;
+		double x = 1000;
+		double y = 1000;
 		double tita = 0;
 		MobilePlatformRelativeMotion motion = new MobilePlatformRelativeMotion(x, y, tita);
 		base.move(motion.setVelocity(10, 10));

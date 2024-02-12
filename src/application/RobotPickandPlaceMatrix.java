@@ -161,6 +161,7 @@ public class RobotPickandPlaceMatrix extends RoboticsAPIApplication {
 		
 		Spline mySpline = new Spline(
 				spl(getApplicationData().getFrame("/P6")),
+				spl(getApplicationData().getFrame("/P7")),
 				spl(getApplicationData().getFrame("/P2"))
 		);
 		

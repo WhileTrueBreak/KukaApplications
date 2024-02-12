@@ -136,75 +136,76 @@ public class window extends RoboticsAPIApplication{
 		// get world unit vectors
 		Pair<Vector3D,Vector3D> openLine = getCanvasPlane(origin, up, left);
 		logger.info(String.format("Canvas X, Y: (%s), (%s)", openLine.getA().toString(), openLine.getB().toString()));
-		//calibrating Main frame
- 
-		gripper.move(linRel(0, 0, -10).setJointVelocityRel(0.3));
-		//ForceCondition touch = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 200);
-		ForceComponentCondition FORCE = new ForceComponentCondition(gripper.getFrame("/TCP"), CoordinateAxis.Y, -250.0,-25);
-		ICondition FORCE1 = FORCE.invert();
-		IMotionContainer motion = gripper.move(linRel(0,100, 0, gripper.getFrame("/TCP")).setCartVelocity(30).breakWhen(FORCE1));
-		gripper.move(linRel(0,-10,0).setJointVelocityRel(0.3));
-		if (motion.getFiredBreakConditionInfo() == null){
-			logger.info("No Collision Detected");
-		}
-		else{
-			logger.info("Collision Detected");
-			window = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"),World.Current.getRootFrame());
-		}
-		// defining other frames
-		// YZX
-		away.setX(window.getX()-35.8);
-		away.setY(window.getY()-156);
-		away.setZ(window.getZ()-16);
-		away.setAlphaRad(window.getAlphaRad() + 1.5);
-		away.setBetaRad(window.getBetaRad());
-		away.setGammaRad(window.getGammaRad());
-		handle.setX(window.getX()+48);   
-		handle.setY(window.getY()-39); 
-		handle.setZ(window.getZ());
-		handle.setAlphaRad(window.getAlphaRad());
-		handle.setBetaRad(window.getBetaRad());
-		handle.setGammaRad(window.getGammaRad());
-		lock1.setX(window.getX()+10);
-		lock1.setY(window.getY()-30);
-		lock1.setZ(window.getZ()-105); 
-		lock1.setAlphaRad(window.getAlphaRad());
-		lock1.setBetaRad(window.getBetaRad());
-		lock1.setGammaRad(window.getGammaRad());
-		lock2.setX(window.getX()+15);
-		lock2.setY(window.getY()-15);
-		lock2.setZ(window.getZ()-154);
-		lock2.setAlphaRad(window.getAlphaRad());
-		lock2.setBetaRad(window.getBetaRad());
-		lock2.setGammaRad(window.getGammaRad());
-		lock3.setX(window.getX()+30);
-		lock3.setY(window.getY()-20);
-		lock3.setZ(window.getZ()-180);
-		lock3.setAlphaRad(window.getAlphaRad());
-		lock3.setBetaRad(window.getBetaRad());
-		lock3.setGammaRad(window.getGammaRad());
-		lock4.setX(window.getX()+45);
-		lock4.setY(window.getY()-45);
-		lock4.setZ(window.getZ()-210);
-		lock4.setAlphaRad(window.getAlphaRad());
-		lock4.setBetaRad(window.getBetaRad());
-		lock4.setGammaRad(window.getGammaRad());
-
-		Spline mySpline = new Spline(
-				spl(lock1),
-				spl(lock2),
-				spl(lock3),
-				spl(lock4)
-		);
-		logger.info("spline");
-		gripper.move(ptp(getApplicationData().getFrame("/window/away")).setJointVelocityRel(0.2).setMode(springRobot));
-		gripper.move(mySpline.setJointVelocityRel(0.4).setMode(springRobot).setOrientationType(SplineOrientationType.Constant));	
-		gripper.move(ptp(getApplicationData().getFrame("/window/away")).setJointVelocityRel(0.2).setMode(springRobot));
-		gripper.move(ptp(handle).setJointVelocityRel(0.4).setMode(springRobot));
+//		//calibrating Main frame
+// 
+//		gripper.move(linRel(0, 0, -10).setJointVelocityRel(0.3));
+//		//ForceCondition touch = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 200);
+//		ForceComponentCondition FORCE = new ForceComponentCondition(gripper.getFrame("/TCP"), CoordinateAxis.Y, -250.0,-25);
+//		ICondition FORCE1 = FORCE.invert();
+//		IMotionContainer motion = gripper.move(linRel(0,100, 0, gripper.getFrame("/TCP")).setCartVelocity(30).breakWhen(FORCE1));
+//		gripper.move(linRel(0,-10,0).setJointVelocityRel(0.3));
+//		if (motion.getFiredBreakConditionInfo() == null){
+//			logger.info("No Collision Detected");
+//		}
+//		else{
+//			logger.info("Collision Detected");
+//			window = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"),World.Current.getRootFrame());
+//		}
+//		// defining other frames
+//		// YZX
+//		away.setX(window.getX()-35.8);
+//		away.setY(window.getY()-156);
+//		away.setZ(window.getZ()-16);
+//		away.setAlphaRad(window.getAlphaRad() + 1.5);
+//		away.setBetaRad(window.getBetaRad());
+//		away.setGammaRad(window.getGammaRad());
+//		handle.setX(window.getX()+48);   
+//		handle.setY(window.getY()-45); 
+//		handle.setZ(window.getZ());
+//		handle.setAlphaRad(window.getAlphaRad());
+//		handle.setBetaRad(window.getBetaRad());
+//		handle.setGammaRad(window.getGammaRad());
+//		lock1.setX(window.getX()+10);
+//		lock1.setY(window.getY()-30);
+//		lock1.setZ(window.getZ()-105); 
+//		lock1.setAlphaRad(window.getAlphaRad());
+//		lock1.setBetaRad(window.getBetaRad());
+//		lock1.setGammaRad(window.getGammaRad());
+//		lock2.setX(window.getX()+15);
+//		lock2.setY(window.getY()-15);
+//		lock2.setZ(window.getZ()-154);
+//		lock2.setAlphaRad(window.getAlphaRad());
+//		lock2.setBetaRad(window.getBetaRad());
+//		lock2.setGammaRad(window.getGammaRad());
+//		lock3.setX(window.getX()+30);
+//		lock3.setY(window.getY()-20);
+//		lock3.setZ(window.getZ()-180);
+//		lock3.setAlphaRad(window.getAlphaRad());
+//		lock3.setBetaRad(window.getBetaRad());
+//		lock3.setGammaRad(window.getGammaRad());
+//		lock4.setX(window.getX()+45);
+//		lock4.setY(window.getY()-45);
+//		lock4.setZ(window.getZ()-210);
+//		lock4.setAlphaRad(window.getAlphaRad());
+//		lock4.setBetaRad(window.getBetaRad());
+//		lock4.setGammaRad(window.getGammaRad());
+//
+//		Spline mySpline = new Spline(
+//				spl(lock1),
+//				spl(lock2),
+//				spl(lock3),
+//				spl(lock4),
+//				spl(away)
+//		);
+//		logger.info("spline");
+//		gripper.move(ptp(getApplicationData().getFrame("/window/away")).setJointVelocityRel(0.2).setMode(springRobot));
+//		gripper.move(mySpline.setJointVelocityRel(0.4).setMode(springRobot).setOrientationType(SplineOrientationType.Constant));	
+//		//gripper.move(ptp(getApplicationData().getFrame("/window/away")).setJointVelocityRel(0.2).setMode(springRobot));
+//		gripper.move(ptp(handle).setJointVelocityRel(0.4).setMode(springRobot));
 		//gripper.move(linRel(0, -10, 0).setJointVelocityRel(0.3).setMode(springRobot));
 		gripper2F1.setPos(150);
-		gripper.move(linRel(0, 0, 25).setJointVelocityRel(0.3).setMode(springRobot));
-		ThreadUtil.milliSleep(1000);
+		gripper.move(linRel(0, -20, 0, World.Current.getRootFrame()).setJointVelocityRel(0.3).setMode(springRobot));
+		ThreadUtil.milliSleep(500);
 		gripper2F1.close();
 		Vector3D diag = openLine.getA().multiply(-600);
 		logger.info("moving on a line");

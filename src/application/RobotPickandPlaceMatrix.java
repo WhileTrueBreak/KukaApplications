@@ -89,12 +89,25 @@ public class RobotPickandPlaceMatrix extends RoboticsAPIApplication {
 	public void initialize() {
 		gripper.attachTo(robot.getFlange());
 		gripper2F1.initalise();
-		gripper2F1.setSpeed(189);
+		gripper2F1.setSpeed(130);
 		gripper2F1.open();
 		mF.setLEDBlue(true);
 		ThreadUtil.milliSleep(200);
 		mF.setLEDBlue(false);
 		ThreadUtil.milliSleep(200);
+		
+		springRobot = new CartesianImpedanceControlMode(); 
+		// Set stiffness
+		// TODO: Stiff in every direction except plane perpendicular to flange
+		springRobot.parametrize(CartDOF.X).setStiffness(800);
+		springRobot.parametrize(CartDOF.Y).setStiffness(800);
+		springRobot.parametrize(CartDOF.Z).setStiffness(2500);
+		// Stiff rotation
+		springRobot.parametrize(CartDOF.C).setStiffness(100);
+		springRobot.parametrize(CartDOF.B).setStiffness(100);
+		springRobot.parametrize(CartDOF.A).setStiffness(100);
+		springRobot.setReferenceSystem(World.Current.getRootFrame());
+		springRobot.parametrize(CartDOF.ALL).setDamping(1);
 		//FORCE CONDITIONS EXAMPLE
 		//USAGE, will move to next line when triggered
 		//LOOK at pipecutting.java for examples on analysing the break condition. 
@@ -108,7 +121,6 @@ public class RobotPickandPlaceMatrix extends RoboticsAPIApplication {
 		gripper2F1.close();
 		Frame pickMain = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"));
 		Frame pick1 = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"));
-		
 		mF.setLEDBlue(false);
 		ThreadUtil.milliSleep(200);
 		gripper.move(ptp(getApplicationData().getFrame("/P5")).setJointVelocityRel(0.3));
@@ -136,12 +148,24 @@ public class RobotPickandPlaceMatrix extends RoboticsAPIApplication {
 		
 		pick1.setX(pickMain.getX()+100);
 		pick1.setY(pickMain.getY()+20);
-		pick1.setZ(pickMain.getZ()+30);
+		pick1.setZ(pickMain.getZ()+50);
 		pick1.setAlphaRad(pickMain.getAlphaRad());
 		pick1.setBetaRad(pickMain.getBetaRad());
 		pick1.setGammaRad(pickMain.getGammaRad());
 		
 		gripper.move(ptp(pick1).setJointVelocityRel(0.4));
+		
+		gripper2F1.setPos(150);
+		gripper.move(linRel(0, 0, -30, World.Current.getRootFrame()).setCartVelocity(50).setMode(springRobot));
+		gripper2F1.close();
+		
+		Spline mySpline = new Spline(
+				spl(getApplicationData().getFrame("/P6")),
+				spl(getApplicationData().getFrame("/P2"))
+		);
+		
+		gripper.move(mySpline.setJointVelocityRel(0.4).setMode(springRobot).setOrientationType(SplineOrientationType.Constant));
+		gripper2F1.setPos(150);
 //		gripper.move(lin(getApplicationData().getFrame("/P1")).setCartVelocity(200));//frame1
 //	    gripper.move(linRel(0, 0, -30, World.Current.getRootFrame()).setCartVelocity(50));//going down
 //		gripper2F1.close();

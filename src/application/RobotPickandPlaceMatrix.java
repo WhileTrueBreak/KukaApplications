@@ -1,33 +1,49 @@
 package application;
- 
+import static com.kuka.roboticsAPI.motionModel.BasicMotions.circ;
+import static com.kuka.roboticsAPI.motionModel.BasicMotions.lin;
+import static com.kuka.roboticsAPI.motionModel.BasicMotions.linRel;
+import static com.kuka.roboticsAPI.motionModel.BasicMotions.positionHold;
+import static com.kuka.roboticsAPI.motionModel.BasicMotions.ptp;
+import static com.kuka.roboticsAPI.motionModel.BasicMotions.spl;
+import java.util.Arrays;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 import javax.inject.Named;
+import com.kuka.common.Pair;
+import com.kuka.common.ThreadUtil;
+import com.kuka.generated.ioAccess.MediaFlangeIOGroup;
+import com.kuka.math.geometry.Vector3D;
+import com.kuka.nav.geometry.Vector2D;
+import com.kuka.roboticsAPI.RoboticsAPIContext;
+import com.kuka.roboticsAPI.applicationModel.IApplicationData;
 import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
-import static com.kuka.roboticsAPI.motionModel.BasicMotions.*;
- 
-import com.kuka.roboticsAPI.capabilities.honk.IHonkCapability;
-import com.kuka.roboticsAPI.conditionModel.BooleanIOCondition;
 import com.kuka.roboticsAPI.conditionModel.ForceComponentCondition;
 import com.kuka.roboticsAPI.conditionModel.ForceCondition;
-import com.kuka.roboticsAPI.conditionModel.ICallbackAction;
 import com.kuka.roboticsAPI.conditionModel.ICondition;
-import com.kuka.roboticsAPI.conditionModel.ITriggerAction;
 import com.kuka.roboticsAPI.deviceModel.LBR;
 import com.kuka.roboticsAPI.deviceModel.kmp.SunriseOmniMoveMobilePlatform;
-import com.kuka.roboticsAPI.executionModel.IFiredTriggerInfo;
+import com.kuka.roboticsAPI.geometricModel.AbstractFrame;
+import com.kuka.roboticsAPI.geometricModel.CartDOF;
+import com.kuka.roboticsAPI.geometricModel.Frame;
+import com.kuka.roboticsAPI.geometricModel.ITransformationProvider;
+import com.kuka.roboticsAPI.geometricModel.ObjectFrame;
 import com.kuka.roboticsAPI.geometricModel.Tool;
 import com.kuka.roboticsAPI.geometricModel.World;
 import com.kuka.roboticsAPI.geometricModel.math.CoordinateAxis;
+import com.kuka.roboticsAPI.geometricModel.math.ITransformation;
 import com.kuka.roboticsAPI.geometricModel.math.Vector;
-import com.kuka.roboticsAPI.geometricModel.Frame;
 import com.kuka.roboticsAPI.motionModel.IMotionContainer;
+import com.kuka.roboticsAPI.motionModel.OrientationReferenceSystem;
+import com.kuka.roboticsAPI.motionModel.SPL;
+import com.kuka.roboticsAPI.motionModel.Spline;
+import com.kuka.roboticsAPI.motionModel.SplineOrientationType;
 import com.kuka.roboticsAPI.motionModel.controlModeModel.CartesianImpedanceControlMode;
+import com.kuka.roboticsAPI.persistenceModel.IPersistenceEngine;
+import com.kuka.roboticsAPI.persistenceModel.XmlApplicationDataSource;
 import com.kuka.roboticsAPI.sensorModel.ForceSensorData;
-import com.kuka.roboticsAPI.sensorModel.TorqueSensorData;
 import com.kuka.task.ITaskLogger;
-import com.kuka.common.ThreadUtil;
-import com.kuka.generated.ioAccess.MediaFlangeIOGroup;
-import static com.kuka.roboticsAPI.motionModel.HRCMotions.*;
 
  
 /**
@@ -80,8 +96,6 @@ public class RobotPickandPlaceMatrix extends RoboticsAPIApplication {
 		mF.setLEDBlue(false);
 		ThreadUtil.milliSleep(200);
 		//FORCE CONDITIONS EXAMPLE
-		ForceCondition touch10 = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"),10 );
-		ForceCondition touch15 = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"),15 );
 		//USAGE, will move to next line when triggered
 		//LOOK at pipecutting.java for examples on analysing the break condition. 
 		//gripper.move(linRel(0, 0, -30, World.Current.getRootFrame()).setCartVelocity(50).breakWhen(touch10)); 

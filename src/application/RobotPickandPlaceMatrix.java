@@ -7,15 +7,20 @@ import static com.kuka.roboticsAPI.motionModel.BasicMotions.*;
  
 import com.kuka.roboticsAPI.capabilities.honk.IHonkCapability;
 import com.kuka.roboticsAPI.conditionModel.BooleanIOCondition;
+import com.kuka.roboticsAPI.conditionModel.ForceComponentCondition;
 import com.kuka.roboticsAPI.conditionModel.ForceCondition;
 import com.kuka.roboticsAPI.conditionModel.ICallbackAction;
+import com.kuka.roboticsAPI.conditionModel.ICondition;
 import com.kuka.roboticsAPI.conditionModel.ITriggerAction;
 import com.kuka.roboticsAPI.deviceModel.LBR;
 import com.kuka.roboticsAPI.deviceModel.kmp.SunriseOmniMoveMobilePlatform;
 import com.kuka.roboticsAPI.executionModel.IFiredTriggerInfo;
 import com.kuka.roboticsAPI.geometricModel.Tool;
 import com.kuka.roboticsAPI.geometricModel.World;
+import com.kuka.roboticsAPI.geometricModel.math.CoordinateAxis;
 import com.kuka.roboticsAPI.geometricModel.math.Vector;
+import com.kuka.roboticsAPI.geometricModel.Frame;
+import com.kuka.roboticsAPI.motionModel.IMotionContainer;
 import com.kuka.roboticsAPI.motionModel.controlModeModel.CartesianImpedanceControlMode;
 import com.kuka.roboticsAPI.sensorModel.ForceSensorData;
 import com.kuka.roboticsAPI.sensorModel.TorqueSensorData;
@@ -43,7 +48,7 @@ import static com.kuka.roboticsAPI.motionModel.HRCMotions.*;
 * @see #run()
 * @see #dispose()
 */
-public class RobotPickandPlace extends RoboticsAPIApplication {
+public class RobotPickandPlaceMatrix extends RoboticsAPIApplication {
 	@Inject
 	private LBR robot;
  
@@ -87,11 +92,44 @@ public class RobotPickandPlace extends RoboticsAPIApplication {
 		IHonkCapability honkCapability = kmp.getCapability(IHonkCapability.class);
 		honkCapability.honk();
 		gripper2F1.close();
- 
+		Frame pickMain = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"),World.Current.getRootFrame());
+		Frame pick1 = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"),World.Current.getRootFrame());
+
 		mF.setLEDBlue(false);
 		ThreadUtil.milliSleep(200);
- 
-		gripper.move(lin(getApplicationData().getFrame("/P5")).setCartVelocity(200));//frame1
+		gripper.move(linRel(0, 0, -10, World.Current.getRootFrame()).setJointVelocityRel(0.3));
+		
+		ForceComponentCondition force1 = new ForceComponentCondition(gripper.getFrame("/TCP"), CoordinateAxis.Y, 20.0,100.0);
+		ICondition forceY = force1.invert();
+		IMotionContainer motion1 = gripper.move(linRel(0,-100, 0, gripper.getFrame("/TCP")).setCartVelocity(30).breakWhen(forceY));
+		
+		ForceComponentCondition force2 = new ForceComponentCondition(gripper.getFrame("/TCP"), CoordinateAxis.X, 20.0,100.0);
+		ICondition forceX = force2.invert();
+		IMotionContainer motion2 = gripper.move(linRel(-100,0, 0, gripper.getFrame("/TCP")).setCartVelocity(30).breakWhen(forceX));
+		
+		ForceComponentCondition force3 = new ForceComponentCondition(gripper.getFrame("/TCP"), CoordinateAxis.Z, 20.0,100.0);
+		ICondition forceZ = force3.invert();
+		IMotionContainer motion3 = gripper.move(linRel(0,0, -100, gripper.getFrame("/TCP")).setCartVelocity(30).breakWhen(forceZ));
+		gripper.move(linRel(0,-50,0, World.Current.getRootFrame()).setJointVelocityRel(0.3));
+		
+		
+		if (motion1.getFiredBreakConditionInfo() == null && motion2.getFiredBreakConditionInfo() == null && motion3.getFiredBreakConditionInfo() == null){
+			logger.info("No Collision Detected in x y z");
+		}
+		else{
+			logger.info("Collision Detected");
+			pickMain = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"),World.Current.getRootFrame());
+		}
+		
+		pick1.setX(pickMain.getX()+100);
+		pick1.setY(pickMain.getY()+20);
+		pick1.setZ(pickMain.getZ()+30);
+		pick1.setAlphaRad(pickMain.getAlphaRad());
+		pick1.setBetaRad(pickMain.getBetaRad());
+		pick1.setGammaRad(pickMain.getGammaRad());
+		
+		gripper.move(ptp(pick1).setJointVelocityRel(0.4));
+//		gripper.move(lin(getApplicationData().getFrame("/P1")).setCartVelocity(200));//frame1
 //	    gripper.move(linRel(0, 0, -30, World.Current.getRootFrame()).setCartVelocity(50));//going down
 //		gripper2F1.close();
 //		mF.setLEDBlue(true);

@@ -164,7 +164,7 @@ public class RobotPickandPlaceMatrix extends RoboticsAPIApplication {
 				spl(getApplicationData().getFrame("/P2"))
 		);
 		
-		gripper.move(mySpline.setJointVelocityRel(0.4).setMode(springRobot).setOrientationType(SplineOrientationType.Constant));
+		gripper.move(mySpline.setJointVelocityRel(0.4).setMode(springRobot));
 		gripper2F1.setPos(150);
 //		gripper.move(lin(getApplicationData().getFrame("/P1")).setCartVelocity(200));//frame1
 //	    gripper.move(linRel(0, 0, -30, World.Current.getRootFrame()).setCartVelocity(50));//going down

@@ -123,6 +123,7 @@ public class RobotPickandPlaceMatrix extends RoboticsAPIApplication {
 		Frame pick1 = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"));
 		mF.setLEDBlue(false);
 		ThreadUtil.milliSleep(200);
+		gripper.move(ptp(getApplicationData().getFrame("/P6")).setJointVelocityRel(0.3));
 		gripper.move(ptp(getApplicationData().getFrame("/P5")).setJointVelocityRel(0.3));
 		gripper.move(linRel(0, 0, -10, World.Current.getRootFrame()).setJointVelocityRel(0.3));
 		

@@ -62,9 +62,9 @@ public class window extends RoboticsAPIApplication{
 		springRobot = new CartesianImpedanceControlMode(); 
 		// Set stiffness
 		// TODO: Stiff in every direction except plane perpendicular to flange
-		springRobot.parametrize(CartDOF.X).setStiffness(400);
-		springRobot.parametrize(CartDOF.Y).setStiffness(400);
-		springRobot.parametrize(CartDOF.Z).setStiffness(3000);
+		springRobot.parametrize(CartDOF.X).setStiffness(800);
+		springRobot.parametrize(CartDOF.Y).setStiffness(800);
+		springRobot.parametrize(CartDOF.Z).setStiffness(2500);
 		// Stiff rotation
 		springRobot.parametrize(CartDOF.C).setStiffness(100);
 		springRobot.parametrize(CartDOF.B).setStiffness(100);
@@ -205,7 +205,7 @@ public class window extends RoboticsAPIApplication{
 		gripper.move(linRel(0, 40, 0, World.Current.getRootFrame()).setJointVelocityRel(0.3).setMode(springRobot));
 		ThreadUtil.milliSleep(500);
 		gripper2F1.close();
-		Vector3D diag = openLine.getA().multiply(-100);
+		Vector3D diag = openLine.getA().multiply(-600);
 		logger.info("moving on a line");
 		double acc = 20;
 		robot.move(linRel(diag.getX(), diag.getY(), diag.getZ(), World.Current.getRootFrame()).setCartVelocity(10).setCartAcceleration(acc).setMode(springRobot));

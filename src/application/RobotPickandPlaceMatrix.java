@@ -114,18 +114,19 @@ public class RobotPickandPlaceMatrix extends RoboticsAPIApplication {
 		gripper.move(ptp(getApplicationData().getFrame("/P5")).setJointVelocityRel(0.3));
 		gripper.move(linRel(0, 0, -10, World.Current.getRootFrame()).setJointVelocityRel(0.3));
 		
-		ForceComponentCondition force1 = new ForceComponentCondition(gripper.getFrame("/TCP"), CoordinateAxis.Y, 20.0,100.0);
+		ForceComponentCondition force1 = new ForceComponentCondition(gripper.getFrame("/TCP"), CoordinateAxis.Y, 10.0,100.0);
 		ICondition forceY = force1.invert();
-		IMotionContainer motion1 = gripper.move(linRel(0,-100, 0, gripper.getFrame("/TCP")).setCartVelocity(30).breakWhen(forceY));
+		IMotionContainer motion1 = gripper.move(linRel(0,-100, 0, World.Current.getRootFrame()).setCartVelocity(30).breakWhen(forceY));
 		
-		ForceComponentCondition force2 = new ForceComponentCondition(gripper.getFrame("/TCP"), CoordinateAxis.X, 20.0,100.0);
+		ForceComponentCondition force2 = new ForceComponentCondition(gripper.getFrame("/TCP"), CoordinateAxis.X, 10.0,100.0);
 		ICondition forceX = force2.invert();
-		IMotionContainer motion2 = gripper.move(linRel(-100,0, 0, gripper.getFrame("/TCP")).setCartVelocity(30).breakWhen(forceX));
+		IMotionContainer motion2 = gripper.move(linRel(-100,0, 0, World.Current.getRootFrame()).setCartVelocity(30).breakWhen(forceX));
 		
-		ForceComponentCondition force3 = new ForceComponentCondition(gripper.getFrame("/TCP"), CoordinateAxis.Z, 20.0,100.0);
+		ForceComponentCondition force3 = new ForceComponentCondition(gripper.getFrame("/TCP"), CoordinateAxis.Z, 10.0,100.0);
 		ICondition forceZ = force3.invert();
-		IMotionContainer motion3 = gripper.move(linRel(0,0, -100, gripper.getFrame("/TCP")).setCartVelocity(30).breakWhen(forceZ));
-		gripper.move(linRel(0,-50,0, World.Current.getRootFrame()).setJointVelocityRel(0.3));
+		IMotionContainer motion3 = gripper.move(linRel(0,0, -100, World.Current.getRootFrame()).setCartVelocity(30).breakWhen(forceZ));
+		
+		gripper.move(linRel(10,10,10, World.Current.getRootFrame()).setJointVelocityRel(0.3));
 		
 		
 		if (motion1.getFiredBreakConditionInfo() == null && motion2.getFiredBreakConditionInfo() == null && motion3.getFiredBreakConditionInfo() == null){

@@ -103,8 +103,8 @@ public class window extends RoboticsAPIApplication{
 	}
 	public void run() {
 		// Calibration sequence
-		gripper.move(ptp(getApplicationData().getFrame("/handOver/P1")).setJointVelocityRel(0.4).setMode(springRobot));
-		gripper.move(ptp(getApplicationData().getFrame("/window/away")).setJointVelocityRel(0.4).setMode(springRobot));
+		gripper.move(ptp(getApplicationData().getFrame("/handOver/P1")).setJointVelocityRel(0.2).setMode(springRobot));
+		gripper.move(ptp(getApplicationData().getFrame("/window/away")).setJointVelocityRel(0.2).setMode(springRobot));
 		Frame window = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"));
 		Frame away = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"));
 		Frame handle = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"));
@@ -116,7 +116,7 @@ public class window extends RoboticsAPIApplication{
 		
 		//getting the vector
 		logger.info("Moving to left");
-		gripper.move(ptp(getApplicationData().getFrame("/window/v2")).setJointVelocityRel(0.5));
+		gripper.move(ptp(getApplicationData().getFrame("/window/v2")).setJointVelocityRel(0.3));
 		logger.info("Calibrating vector point 2");
 		ThreadUtil.milliSleep(500);
 		Vector3D left = frameToVector(calibrateFrame(gripper,30));

@@ -127,7 +127,7 @@ public class hand_over extends RoboticsAPIApplication {
 			gripper2F1.setPos(100);
 			mF.setLEDBlue(true);
 			ThreadUtil.milliSleep(180);
-			gripper.move(ptp(getApplicationData().getFrame("/P2")).setJointVelocityRel(0.5).setMode(springRobot));
+			gripper.move(ptp(getApplicationData().getFrame("/P2")).setJointVelocityRel(0.2));
 			double offset = -i*70;
 			robot.move(linRel(0,offset,0,0,0,0).setJointVelocityRel(0.3).setMode(springRobot));
 			gripper.move(linRel(0,0,-60,0,0,0, World.Current.getRootFrame()).setJointVelocityRel(0.3).setMode(springRobot));
@@ -151,8 +151,8 @@ public class hand_over extends RoboticsAPIApplication {
 			mF.setLEDBlue(false);
 			gripper.move(linRel(0,0,60,0,0,0, World.Current.getRootFrame()).setJointVelocityRel(0.3).setMode(springRobot));
 			
-			gripper.move(ptp(getApplicationData().getFrame("/handOver/P1")).setJointVelocityRel(0.5).setMode(springRobot));
-			gripper.move(ptp(getApplicationData().getFrame("/handOver")).setJointVelocityRel(0.5).setMode(springRobot));
+			gripper.move(ptp(getApplicationData().getFrame("/handOver/P1")).setJointVelocityRel(0.3));
+			gripper.move(ptp(getApplicationData().getFrame("/handOver")).setJointVelocityRel(0.3).setMode(springRobot));
 			
 			CartesianSineImpedanceControlMode lissajousMode;
 			lissajousMode = CartesianSineImpedanceControlMode.createLissajousPattern(CartPlane.YZ, 0.7, 4.0, 300.0);
@@ -211,7 +211,7 @@ public class hand_over extends RoboticsAPIApplication {
 				}
 			}
 			m2.cancel();
-			gripper.move(ptp(getApplicationData().getFrame("/P2")).setJointVelocityRel(0.4).setMode(springRobot));
+			gripper.move(ptp(getApplicationData().getFrame("/P2")).setJointVelocityRel(0.3).setMode(springRobot));
 			gripper2F1.open();
 		}
 		cartData.stop();

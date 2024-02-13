@@ -76,7 +76,7 @@ public class window extends RoboticsAPIApplication{
 		gripper2F1.initalise();
 		gripper2F1.setPos(180);
 		gripper2F1.setSpeed(100);
-		gripper2F1.setForce(10);
+		gripper2F1.setForce(50);
 		mF.setLEDBlue(false);
 		gripper2F1.close();
 		ThreadUtil.milliSleep(200);
@@ -134,7 +134,7 @@ public class window extends RoboticsAPIApplication{
 		logger.info("Moving to origin");
 		gripper.move(ptp(getApplicationData().getFrame("/window/v1")).setJointVelocityRel(0.5));
 		logger.info("Calibrating vector point 1");
-		Vector3D origin = frameToVector(calibrateFrame(gripper,40));
+		Vector3D origin = frameToVector(calibrateFrame(gripper,45));
 		logger.info(String.format("Origin: %s", origin.toString()));
 		// get world unit vectors
 		Pair<Vector3D,Vector3D> openLine = getCanvasPlane(origin, up, left);
@@ -143,7 +143,7 @@ public class window extends RoboticsAPIApplication{
  
 		gripper.move(linRel(0, 0, -10).setJointVelocityRel(0.3));
 		//ForceCondition touch = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 200);
-		ForceComponentCondition FORCE = new ForceComponentCondition(gripper.getFrame("/TCP"), CoordinateAxis.Y, -250.0,-25);
+		ForceComponentCondition FORCE = new ForceComponentCondition(gripper.getFrame("/TCP"), CoordinateAxis.Y, -250.0,-15);
 		ICondition FORCE1 = FORCE.invert();
 		IMotionContainer motion = gripper.move(linRel(0,100, 0, gripper.getFrame("/TCP")).setCartVelocity(30).breakWhen(FORCE1));
 		gripper.move(linRel(0,-10,0).setJointVelocityRel(0.3));
@@ -211,7 +211,7 @@ public class window extends RoboticsAPIApplication{
 		gripper.move(ptp(handle).setJointVelocityRel(0.4).setMode(springRobot));
 		gripper2F1.setPos(150);
 		gripper.move(linRel(0, 15, 0, World.Current.getRootFrame()).setJointVelocityRel(0.3).setMode(springRobot));
-		ThreadUtil.milliSleep(500);
+		
 		gripper2F1.close();
 		Vector3D diag = openLine.getA().multiply(-600);
 		logger.info("moving on a line");
@@ -219,7 +219,8 @@ public class window extends RoboticsAPIApplication{
 		robot.move(linRel(diag.getX(), diag.getY(), diag.getZ(), World.Current.getRootFrame()).setCartVelocity(40).setCartAcceleration(acc).setMode(springRobot));
 		logger.info("moving away");
 		gripper2F1.open();
-		gripper.move(linRel(0, -30, 0, World.Current.getRootFrame()).setJointVelocityRel(0.3).setMode(springRobot));
+		ThreadUtil.milliSleep(500);
+		gripper.move(linRel(0, -30, 0, World.Current.getRootFrame()).setJointVelocityRel(0.3));
 		gripper.move(ptp(getApplicationData().getFrame("/handOver/P1")).setJointVelocityRel(0.4).setMode(springRobot));
 		gripper.move(ptp(getApplicationData().getFrame("/P2")).setJointVelocityRel(0.4).setMode(springRobot));
 		

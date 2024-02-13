@@ -149,8 +149,8 @@ public class hand_over extends RoboticsAPIApplication {
 			mF.setLEDBlue(true);
 			ThreadUtil.milliSleep(200);
 			mF.setLEDBlue(false);
+			gripper.move(linRel(0,0,60,0,0,0, World.Current.getRootFrame()).setJointVelocityRel(0.3).setMode(springRobot));
 			Spline mySpline = new Spline(
-					spl(getApplicationData().getFrame("/P2")),
 					spl(getApplicationData().getFrame("/handOver/P1")),
 					spl(getApplicationData().getFrame("/handOver"))
 			);

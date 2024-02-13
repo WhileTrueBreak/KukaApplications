@@ -150,12 +150,9 @@ public class hand_over extends RoboticsAPIApplication {
 			ThreadUtil.milliSleep(200);
 			mF.setLEDBlue(false);
 			gripper.move(linRel(0,0,60,0,0,0, World.Current.getRootFrame()).setJointVelocityRel(0.3).setMode(springRobot));
-			Spline mySpline = new Spline(
-					spl(getApplicationData().getFrame("/handOver/P1")),
-					spl(getApplicationData().getFrame("/handOver"))
-			);
 			
-			gripper.move(mySpline.setJointVelocityRel(0.4).setMode(springRobot));
+			gripper.move(ptp(getApplicationData().getFrame("/handOver/P1")).setJointVelocityRel(0.5).setMode(springRobot));
+			gripper.move(ptp(getApplicationData().getFrame("/handOver")).setJointVelocityRel(0.5).setMode(springRobot));
 			
 			CartesianSineImpedanceControlMode lissajousMode;
 			lissajousMode = CartesianSineImpedanceControlMode.createLissajousPattern(CartPlane.YZ, 0.7, 4.0, 300.0);

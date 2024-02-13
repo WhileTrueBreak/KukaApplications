@@ -202,12 +202,12 @@ public class window extends RoboticsAPIApplication{
 		gripper.move(mySpline.setJointVelocityRel(0.4).setMode(springRobot).setOrientationType(SplineOrientationType.Constant));
 		gripper.move(ptp(handle).setJointVelocityRel(0.4).setMode(springRobot));
 		gripper2F1.setPos(150);
-		gripper.move(linRel(0, 10, 0, World.Current.getRootFrame()).setJointVelocityRel(0.3).setMode(springRobot));
+		gripper.move(linRel(0, 15, 0, World.Current.getRootFrame()).setJointVelocityRel(0.3).setMode(springRobot));
 		ThreadUtil.milliSleep(500);
 		gripper2F1.close();
 		Vector3D diag = openLine.getA().multiply(-600);
 		logger.info("moving on a line");
-		double acc = 5;
+		double acc = 15;
 		robot.move(linRel(diag.getX(), diag.getY(), diag.getZ(), World.Current.getRootFrame()).setCartVelocity(40).setCartAcceleration(acc).setMode(springRobot));
 		gripper.move(ptp(away).setJointVelocityRel(0.4).setMode(springRobot));
 		gripper.move(ptp(getApplicationData().getFrame("/window/p2")).setJointVelocityRel(0.4).setMode(springRobot));

@@ -160,19 +160,19 @@ public class window extends RoboticsAPIApplication{
 		away.setBetaRad(window.getBetaRad());
 		away.setGammaRad(window.getGammaRad());
 		handle.setX(window.getX()+48);   
-		handle.setY(window.getY()-45); 
+		handle.setY(window.getY()-35); 
 		handle.setZ(window.getZ());
 		handle.setAlphaRad(window.getAlphaRad());
 		handle.setBetaRad(window.getBetaRad());
 		handle.setGammaRad(window.getGammaRad());
 		lock1.setX(window.getX()+10);
-		lock1.setY(window.getY()-30);
+		lock1.setY(window.getY()-25);
 		lock1.setZ(window.getZ()-105); 
 		lock1.setAlphaRad(window.getAlphaRad());
 		lock1.setBetaRad(window.getBetaRad());
 		lock1.setGammaRad(window.getGammaRad());
 		lock2.setX(window.getX()+15);
-		lock2.setY(window.getY()-15);
+		lock2.setY(window.getY()-10);
 		lock2.setZ(window.getZ()-154);
 		lock2.setAlphaRad(window.getAlphaRad());
 		lock2.setBetaRad(window.getBetaRad());
@@ -207,9 +207,12 @@ public class window extends RoboticsAPIApplication{
 		gripper2F1.close();
 		Vector3D diag = openLine.getA().multiply(-600);
 		logger.info("moving on a line");
-		double acc = 20;
-		robot.move(linRel(diag.getX(), diag.getY(), diag.getZ(), World.Current.getRootFrame()).setCartVelocity(10).setCartAcceleration(acc).setMode(springRobot));
- 
+		double acc = 5;
+		robot.move(linRel(diag.getX(), diag.getY(), diag.getZ(), World.Current.getRootFrame()).setCartVelocity(40).setCartAcceleration(acc).setMode(springRobot));
+		gripper.move(ptp(away).setJointVelocityRel(0.4).setMode(springRobot));
+		gripper.move(ptp(getApplicationData().getFrame("/window/p2")).setJointVelocityRel(0.4).setMode(springRobot));
+		gripper2F1.open();
+		
 	}
 }
  

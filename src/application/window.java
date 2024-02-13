@@ -209,9 +209,11 @@ public class window extends RoboticsAPIApplication{
 		logger.info("moving on a line");
 		double acc = 15;
 		robot.move(linRel(diag.getX(), diag.getY(), diag.getZ(), World.Current.getRootFrame()).setCartVelocity(40).setCartAcceleration(acc).setMode(springRobot));
-		gripper.move(ptp(away).setJointVelocityRel(0.4).setMode(springRobot));
-		gripper.move(ptp(getApplicationData().getFrame("/window/p2")).setJointVelocityRel(0.4).setMode(springRobot));
+		logger.info("moving away");
 		gripper2F1.open();
+		gripper.move(linRel(0, -30, 0, World.Current.getRootFrame()).setJointVelocityRel(0.3).setMode(springRobot));
+		gripper.move(ptp(getApplicationData().getFrame("/window/p2")).setJointVelocityRel(0.5).setMode(springRobot));
+
 		
 	}
 }

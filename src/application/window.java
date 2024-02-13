@@ -162,32 +162,37 @@ public class window extends RoboticsAPIApplication{
 		away.setAlphaRad(window.getAlphaRad() + 1.5);
 		away.setBetaRad(window.getBetaRad());
 		away.setGammaRad(window.getGammaRad());
+		
 		handle.setX(window.getX()+48);   
 		handle.setY(window.getY()-35); 
 		handle.setZ(window.getZ());
 		handle.setAlphaRad(window.getAlphaRad());
 		handle.setBetaRad(window.getBetaRad());
 		handle.setGammaRad(window.getGammaRad());
+		
 		lock1.setX(window.getX()+10);
-		lock1.setY(window.getY()-25);
+		lock1.setY(window.getY()-35);
 		lock1.setZ(window.getZ()-105); 
 		lock1.setAlphaRad(window.getAlphaRad());
 		lock1.setBetaRad(window.getBetaRad());
 		lock1.setGammaRad(window.getGammaRad());
+		
 		lock2.setX(window.getX()+15);
-		lock2.setY(window.getY()-10);
+		lock2.setY(window.getY()-20);
 		lock2.setZ(window.getZ()-154);
 		lock2.setAlphaRad(window.getAlphaRad());
 		lock2.setBetaRad(window.getBetaRad());
 		lock2.setGammaRad(window.getGammaRad());
+		
 		lock3.setX(window.getX()+30);
-		lock3.setY(window.getY()-20);
+		lock3.setY(window.getY()-30);
 		lock3.setZ(window.getZ()-180);
 		lock3.setAlphaRad(window.getAlphaRad());
 		lock3.setBetaRad(window.getBetaRad());
 		lock3.setGammaRad(window.getGammaRad());
+		
 		lock4.setX(window.getX()+45);
-		lock4.setY(window.getY()-45);
+		lock4.setY(window.getY()-55);
 		lock4.setZ(window.getZ()-210);
 		lock4.setAlphaRad(window.getAlphaRad());
 		lock4.setBetaRad(window.getBetaRad());

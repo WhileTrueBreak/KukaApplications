@@ -211,7 +211,8 @@ public class hand_over extends RoboticsAPIApplication {
 				}
 			}
 			m2.cancel();
-			robot.move(ptp(getApplicationData().getFrame("/P2")).setJointVelocityRel(0.4).setMode(springRobot));
+			gripper.move(ptp(getApplicationData().getFrame("/P2")).setJointVelocityRel(0.4).setMode(springRobot));
+			gripper2F1.open();
 		}
 		cartData.stop();
 	}

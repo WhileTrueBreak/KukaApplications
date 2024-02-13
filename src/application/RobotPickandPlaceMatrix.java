@@ -125,7 +125,7 @@ public class RobotPickandPlaceMatrix extends RoboticsAPIApplication {
 		ThreadUtil.milliSleep(200);
 		gripper.move(ptp(getApplicationData().getFrame("/P6")).setJointVelocityRel(0.3));
 		gripper.move(ptp(getApplicationData().getFrame("/P5")).setJointVelocityRel(0.3));
-		gripper.move(linRel(0, 0, -10, World.Current.getRootFrame()).setJointVelocityRel(0.3));
+		gripper.move(linRel(0, 0, -130, World.Current.getRootFrame()).setJointVelocityRel(0.3));
 		
 		ForceCondition touch = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 20);
 		IMotionContainer motion1 = gripper.move(linRel(0,-100, 0, World.Current.getRootFrame()).setCartVelocity(30).breakWhen(touch));
@@ -139,6 +139,7 @@ public class RobotPickandPlaceMatrix extends RoboticsAPIApplication {
 		gripper.move(linRel(0,0,5, World.Current.getRootFrame()).setJointVelocityRel(0.3));
 		ThreadUtil.milliSleep(200);
 		
+		
 		if (motion1.getFiredBreakConditionInfo() == null && motion2.getFiredBreakConditionInfo() == null && motion3.getFiredBreakConditionInfo() == null){
 			logger.info("No Collision Detected in x y z");
 		}
@@ -146,6 +147,8 @@ public class RobotPickandPlaceMatrix extends RoboticsAPIApplication {
 			logger.info("Collision Detected");
 			pickMain = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"),World.Current.getRootFrame());
 		}
+		ThreadUtil.milliSleep(500);
+		gripper.move(ptp(getApplicationData().getFrame("/P5")).setJointVelocityRel(0.3).setMode(springRobot));
 		
 		pick1.setX(pickMain.getX()+100);
 		pick1.setY(pickMain.getY()+20);
@@ -154,7 +157,7 @@ public class RobotPickandPlaceMatrix extends RoboticsAPIApplication {
 		pick1.setBetaRad(pickMain.getBetaRad());
 		pick1.setGammaRad(pickMain.getGammaRad());
 		
-		gripper.move(ptp(pick1).setJointVelocityRel(0.4));
+		gripper.move(ptp(pick1).setJointVelocityRel(0.4).setMode(springRobot));
 		
 		gripper2F1.setPos(150);
 		gripper.move(linRel(0, 0, -130, World.Current.getRootFrame()).setCartVelocity(50).setMode(springRobot));

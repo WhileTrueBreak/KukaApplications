@@ -131,7 +131,7 @@ public class window extends RoboticsAPIApplication{
 		logger.info("Moving to origin");
 		gripper.move(ptp(getApplicationData().getFrame("/window/v1")).setJointVelocityRel(0.5));
 		logger.info("Calibrating vector point 1");
-		Vector3D origin = frameToVector(calibrateFrame(gripper,35));
+		Vector3D origin = frameToVector(calibrateFrame(gripper,40));
 		logger.info(String.format("Origin: %s", origin.toString()));
 		// get world unit vectors
 		Pair<Vector3D,Vector3D> openLine = getCanvasPlane(origin, up, left);

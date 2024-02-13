@@ -8,6 +8,7 @@ import com.kuka.nav.command.CommandContainer;
 import com.kuka.nav.geometry.Vector2D;
 import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.*;
+
 import com.kuka.roboticsAPI.capabilities.honk.IHonkCapability;
 import com.kuka.roboticsAPI.conditionModel.BooleanIOCondition;
 import com.kuka.roboticsAPI.conditionModel.ForceCondition;
@@ -29,7 +30,9 @@ import com.kuka.roboticsAPI.geometricModel.math.Vector;
 import com.kuka.roboticsAPI.motionModel.IMotion;
 import com.kuka.roboticsAPI.motionModel.IMotionContainer;
 import com.kuka.roboticsAPI.motionModel.RelativeLIN;
+import com.kuka.roboticsAPI.motionModel.Spline;
 import com.kuka.roboticsAPI.motionModel.SplineMotionCP;
+import com.kuka.roboticsAPI.motionModel.SplineOrientationType;
 import com.kuka.roboticsAPI.motionModel.controlModeModel.CartesianImpedanceControlMode;
 import com.kuka.roboticsAPI.motionModel.controlModeModel.CartesianSineImpedanceControlMode;
 import com.kuka.roboticsAPI.sensorModel.ForceSensorData;
@@ -120,7 +123,7 @@ public class hand_over extends RoboticsAPIApplication {
 		double acceleration = cartData.acc;
 		logger.info("arm velocity :" + velocity);
 		logger.info("arm acceleration :" + acceleration);
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 1; i++) {
 			gripper2F1.setPos(100);
 			mF.setLEDBlue(true);
 			ThreadUtil.milliSleep(180);
@@ -146,8 +149,14 @@ public class hand_over extends RoboticsAPIApplication {
 			mF.setLEDBlue(true);
 			ThreadUtil.milliSleep(200);
 			mF.setLEDBlue(false);
-			robot.move(ptp(getApplicationData().getFrame("/P2")).setJointVelocityRel(0.4).setMode(springRobot));
-			robot.move(lin(getApplicationData().getFrame("/P3")).setJointVelocityRel(0.4).setMode(springRobot));
+			Spline mySpline = new Spline(
+					spl(getApplicationData().getFrame("/P2")),
+					spl(getApplicationData().getFrame("/handOver/P1")),
+					spl(getApplicationData().getFrame("/handOver"))
+			);
+			
+			gripper.move(mySpline.setJointVelocityRel(0.4).setMode(springRobot));
+			
 			CartesianSineImpedanceControlMode lissajousMode;
 			lissajousMode = CartesianSineImpedanceControlMode.createLissajousPattern(CartPlane.YZ, 0.7, 4.0, 300.0);
 			lissajousMode.parametrize(CartDOF.A).setStiffness(80);

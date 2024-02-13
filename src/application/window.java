@@ -103,6 +103,8 @@ public class window extends RoboticsAPIApplication{
 	}
 	public void run() {
 		// Calibration sequence
+		gripper.move(ptp(getApplicationData().getFrame("/handOver/P1")).setJointVelocityRel(0.4).setMode(springRobot));
+		gripper.move(ptp(getApplicationData().getFrame("/window/away")).setJointVelocityRel(0.4).setMode(springRobot));
 		Frame window = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"));
 		Frame away = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"));
 		Frame handle = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"));
@@ -111,6 +113,7 @@ public class window extends RoboticsAPIApplication{
 		Frame lock3 = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"));
 		Frame lock4 = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"));
 		mF.setLEDBlue(true);
+		
 		//getting the vector
 		logger.info("Moving to left");
 		gripper.move(ptp(getApplicationData().getFrame("/window/v2")).setJointVelocityRel(0.5));
@@ -212,8 +215,8 @@ public class window extends RoboticsAPIApplication{
 		logger.info("moving away");
 		gripper2F1.open();
 		gripper.move(linRel(0, -30, 0, World.Current.getRootFrame()).setJointVelocityRel(0.3).setMode(springRobot));
-		gripper.move(ptp(getApplicationData().getFrame("/window/p2")).setJointVelocityRel(0.5).setMode(springRobot));
-
+		gripper.move(ptp(getApplicationData().getFrame("/handOver/P1")).setJointVelocityRel(0.4).setMode(springRobot));
+		gripper.move(ptp(getApplicationData().getFrame("/P2")).setJointVelocityRel(0.4).setMode(springRobot));
 		
 	}
 }

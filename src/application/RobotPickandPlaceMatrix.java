@@ -151,7 +151,7 @@ public class RobotPickandPlaceMatrix extends RoboticsAPIApplication {
 		mF.setLEDBlue(false);
 		ThreadUtil.milliSleep(200);
 		gripper.move(ptp(getApplicationData().getFrame("/P6")).setJointVelocityRel(0.3));
-		//gripper.move(ptp(getApplicationData().getFrame("/P5")).setJointVelocityRel(0.3));
+		gripper.move(ptp(getApplicationData().getFrame("/P5")).setJointVelocityRel(0.3));
 		
 		
 		logger.info("calibrating");

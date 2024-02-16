@@ -187,7 +187,7 @@ public class RobotPickandPlaceMatrix extends RoboticsAPIApplication {
 		logger.info("150 down");
 		gripper.move(linRel(0,0,150, World.Current.getRootFrame()).setJointVelocityRel(0.3));
 		
-		pick1.setX(pickMain.getX()+100);
+		pick1.setX(pickMain.getX()+180);
 		pick1.setY(pickMain.getY()+20);
 		pick1.setZ(pickMain.getZ()+150);
 		pick1.setAlphaRad(pickMain.getAlphaRad());

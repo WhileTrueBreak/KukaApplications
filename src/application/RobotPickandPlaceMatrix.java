@@ -118,7 +118,7 @@ public class RobotPickandPlaceMatrix extends RoboticsAPIApplication {
 	}
 	
 	public Frame calibrate() {
-		springRobot2 = CartesianSineImpedanceControlMode.createSpiralPattern(CartPlane.XY, 1.0, 100, 500, 5);
+		springRobot2 = CartesianSineImpedanceControlMode.createSpiralPattern(CartPlane.XY, 0.1, 30, 500, 15);
 		springRobot2.parametrize(CartDOF.Z).setStiffness(1500);
 		// Stiff rotation
 		springRobot2.parametrize(CartDOF.C).setStiffness(100);

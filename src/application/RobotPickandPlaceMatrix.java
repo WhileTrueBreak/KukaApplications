@@ -26,6 +26,7 @@ import com.kuka.roboticsAPI.deviceModel.LBR;
 import com.kuka.roboticsAPI.deviceModel.kmp.SunriseOmniMoveMobilePlatform;
 import com.kuka.roboticsAPI.geometricModel.AbstractFrame;
 import com.kuka.roboticsAPI.geometricModel.CartDOF;
+import com.kuka.roboticsAPI.geometricModel.CartPlane;
 import com.kuka.roboticsAPI.geometricModel.Frame;
 import com.kuka.roboticsAPI.geometricModel.ITransformationProvider;
 import com.kuka.roboticsAPI.geometricModel.ObjectFrame;
@@ -40,6 +41,7 @@ import com.kuka.roboticsAPI.motionModel.SPL;
 import com.kuka.roboticsAPI.motionModel.Spline;
 import com.kuka.roboticsAPI.motionModel.SplineOrientationType;
 import com.kuka.roboticsAPI.motionModel.controlModeModel.CartesianImpedanceControlMode;
+import com.kuka.roboticsAPI.motionModel.controlModeModel.CartesianSineImpedanceControlMode;
 import com.kuka.roboticsAPI.persistenceModel.IPersistenceEngine;
 import com.kuka.roboticsAPI.persistenceModel.XmlApplicationDataSource;
 import com.kuka.roboticsAPI.sensorModel.ForceSensorData;
@@ -113,9 +115,10 @@ public class RobotPickandPlaceMatrix extends RoboticsAPIApplication {
 		//LOOK at pipecutting.java for examples on analysing the break condition. 
 		//gripper.move(linRel(0, 0, -30, World.Current.getRootFrame()).setCartVelocity(50).breakWhen(touch10)); 
 		
-		springRobot2 = new CartesianImpedanceControlMode(); 
-		springRobot2.parametrize(CartDOF.X).setStiffness(200);
-		springRobot2.parametrize(CartDOF.Y).setStiffness(200);
+	}
+	
+	public Frame calibrate() {
+		springRobot2 = CartesianSineImpedanceControlMode.createSpiralPattern(CartPlane.XY, 1.0, 100, 500, 5);
 		springRobot2.parametrize(CartDOF.Z).setStiffness(1500);
 		// Stiff rotation
 		springRobot2.parametrize(CartDOF.C).setStiffness(100);
@@ -123,13 +126,12 @@ public class RobotPickandPlaceMatrix extends RoboticsAPIApplication {
 		springRobot2.parametrize(CartDOF.A).setStiffness(200);
 		springRobot2.setReferenceSystem(World.Current.getRootFrame());
 		springRobot2.parametrize(CartDOF.ALL).setDamping(1);
-	}
-	
-	public Frame calibrate() {
+		
 		ForceCondition touch = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 10);
 		ForceComponentCondition calibrate_inverted =  new ForceComponentCondition( gripper.getFrame("/TCP"),World.Current.getRootFrame(), CoordinateAxis.Z,10.0,15.0);
 		ICondition calibrateForce =  calibrate_inverted.invert();
-		IMotionContainer motion1 = gripper.move(linRel(0,0,-150, World.Current.getRootFrame()).setCartVelocity(30).setMode(springRobot2).breakWhen(calibrateForce));
+		gripper.moveAsync(positionHold(springRobot2, 20, TimeUnit.SECONDS).breakWhen(calibrateForce));
+		IMotionContainer motion1 = gripper.move(linRel(0,0,-150, World.Current.getRootFrame()).setCartVelocity(30).breakWhen(calibrateForce));
 		if (motion1.getFiredBreakConditionInfo() == null){
 			logger.info("No Collision Detected in x y z");
 		}

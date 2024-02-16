@@ -118,8 +118,8 @@ public class RobotPickandPlaceMatrix extends RoboticsAPIApplication {
 		// TODO: Stiff in every direction except plane perpendicular to flange
 		springRobot2.parametrize(CartDOF.X).setStiffness(200);
 		springRobot2.parametrize(CartDOF.Y).setStiffness(200);
-		springRobot2.parametrize(CartDOF.Z).setStiffness(1000);
-		springRobot2.parametrize(CartDOF.Z).setAdditionalControlForce(-5);
+		springRobot2.parametrize(CartDOF.Z).setStiffness(800);
+		springRobot2.parametrize(CartDOF.Z).setAdditionalControlForce(-15);
 		// Stiff rotation
 		springRobot2.parametrize(CartDOF.C).setStiffness(100);
 		springRobot2.parametrize(CartDOF.B).setStiffness(100);

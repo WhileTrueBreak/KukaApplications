@@ -118,7 +118,7 @@ public class RobotPickandPlaceMatrix extends RoboticsAPIApplication {
 		// TODO: Stiff in every direction except plane perpendicular to flange
 		springRobot2.parametrize(CartDOF.X).setStiffness(200);
 		springRobot2.parametrize(CartDOF.Y).setStiffness(200);
-		springRobot2.parametrize(CartDOF.Z).setStiffness(800);
+		springRobot2.parametrize(CartDOF.Z).setStiffness(1500);
 		// Stiff rotation
 		springRobot2.parametrize(CartDOF.C).setStiffness(100);
 		springRobot2.parametrize(CartDOF.B).setStiffness(100);
@@ -131,7 +131,7 @@ public class RobotPickandPlaceMatrix extends RoboticsAPIApplication {
 		ForceCondition touch = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 10);
 		ForceComponentCondition calibrate_inverted =  new ForceComponentCondition( gripper.getFrame("/TCP"),World.Current.getRootFrame(), CoordinateAxis.Z,10.0,15.0);
 		ICondition calibrateForce =  calibrate_inverted.invert();
-		IMotionContainer motion1 = gripper.move(linRel(0,-100, 0, World.Current.getRootFrame()).setCartVelocity(20).setMode(springRobot2).breakWhen(calibrateForce));
+		IMotionContainer motion1 = gripper.move(linRel(0,0,-100, World.Current.getRootFrame()).setCartVelocity(20).setMode(springRobot2).breakWhen(calibrateForce));
 		return robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"),World.Current.getRootFrame());
 	}
  

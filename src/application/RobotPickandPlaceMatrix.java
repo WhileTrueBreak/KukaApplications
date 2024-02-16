@@ -131,7 +131,13 @@ public class RobotPickandPlaceMatrix extends RoboticsAPIApplication {
 		ForceCondition touch = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 10);
 		ForceComponentCondition calibrate_inverted =  new ForceComponentCondition( gripper.getFrame("/TCP"),World.Current.getRootFrame(), CoordinateAxis.Z,10.0,15.0);
 		ICondition calibrateForce =  calibrate_inverted.invert();
-		IMotionContainer motion1 = gripper.move(linRel(0,0,-100, World.Current.getRootFrame()).setCartVelocity(20).setMode(springRobot2).breakWhen(calibrateForce));
+		IMotionContainer motion1 = gripper.move(linRel(0,0,-150, World.Current.getRootFrame()).setCartVelocity(30).setMode(springRobot2).breakWhen(calibrateForce));
+		if (motion1.getFiredBreakConditionInfo() == null){
+			logger.info("No Collision Detected in x y z");
+		}
+		else{
+			logger.info("Collision Detected");
+		}
 		return robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"),World.Current.getRootFrame());
 	}
  
@@ -174,8 +180,13 @@ public class RobotPickandPlaceMatrix extends RoboticsAPIApplication {
 //			pickMain = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"),World.Current.getRootFrame());
 //		}
 		ThreadUtil.milliSleep(500);
+		logger.info("100 up");
 		gripper.move(linRel(0,0,100, World.Current.getRootFrame()).setJointVelocityRel(0.3));
-		gripper.move(ptp(getApplicationData().getFrame("/P5")).setJointVelocityRel(0.3).setMode(springRobot));
+		ThreadUtil.milliSleep(500);
+		logger.info("going back to p5");
+		gripper.move(ptp(getApplicationData().getFrame("/P5")).setJointVelocityRel(0.3));
+		ThreadUtil.milliSleep(500);
+		logger.info("150 down");
 		gripper.move(linRel(0,0,150, World.Current.getRootFrame()).setJointVelocityRel(0.3));
 		
 		pick1.setX(pickMain.getX()+100);

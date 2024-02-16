@@ -130,8 +130,8 @@ public class RobotPickandPlaceMatrix extends RoboticsAPIApplication {
 		ForceComponentCondition calibrate_inverted =  new ForceComponentCondition( gripper.getFrame("/TCP"),World.Current.getRootFrame(), CoordinateAxis.Z,15.0,25.0);
 		ICondition calibrateForce =  calibrate_inverted.invert();
 
-		IMotionContainer motion1 = gripper.moveAsync(linRel(0,0,-150, World.Current.getRootFrame()).setCartVelocity(30).breakWhen(calibrateForce));
-		gripper.move(positionHold(springRobot2, -1, TimeUnit.SECONDS).breakWhen(calibrateForce));
+		IMotionContainer motion1 = gripper.move(linRel(0,0,-150, World.Current.getRootFrame()).setMode(springRobot2).setCartVelocity(30).breakWhen(calibrateForce));
+		//gripper.move(positionHold(springRobot2, -1, TimeUnit.SECONDS).breakWhen(calibrateForce));
 		if (motion1.getFiredBreakConditionInfo() == null){
 			logger.info("No Collision Detected in x y z");
 		}

@@ -84,7 +84,7 @@ public class RobotPickandPlaceMatrix extends RoboticsAPIApplication {
 	private SunriseOmniMoveMobilePlatform kmp;
 	
 	CartesianImpedanceControlMode springRobot;
-	
+	CartesianImpedanceControlMode springRobot2;
 	@Override
 	public void initialize() {
 		gripper.attachTo(robot.getFlange());
@@ -112,6 +112,20 @@ public class RobotPickandPlaceMatrix extends RoboticsAPIApplication {
 		//USAGE, will move to next line when triggered
 		//LOOK at pipecutting.java for examples on analysing the break condition. 
 		//gripper.move(linRel(0, 0, -30, World.Current.getRootFrame()).setCartVelocity(50).breakWhen(touch10)); 
+		
+		springRobot2 = new CartesianImpedanceControlMode(); 
+		// Set stiffness
+		// TODO: Stiff in every direction except plane perpendicular to flange
+		springRobot2.parametrize(CartDOF.X).setStiffness(200);
+		springRobot2.parametrize(CartDOF.Y).setStiffness(200);
+		springRobot2.parametrize(CartDOF.Z).setStiffness(2500);
+		springRobot2.parametrize(CartDOF.Z).setAdditionalControlForce(-10);
+		// Stiff rotation
+		springRobot2.parametrize(CartDOF.C).setStiffness(100);
+		springRobot2.parametrize(CartDOF.B).setStiffness(100);
+		springRobot2.parametrize(CartDOF.A).setStiffness(100);
+		springRobot2.setReferenceSystem(World.Current.getRootFrame());
+		springRobot2.parametrize(CartDOF.ALL).setDamping(1);
 	}
  
 	@Override
@@ -125,6 +139,10 @@ public class RobotPickandPlaceMatrix extends RoboticsAPIApplication {
 		ThreadUtil.milliSleep(200);
 		gripper.move(ptp(getApplicationData().getFrame("/P6")).setJointVelocityRel(0.3));
 		gripper.move(ptp(getApplicationData().getFrame("/P5")).setJointVelocityRel(0.3));
+		gripper.move(positionHold(springRobot2, 20, TimeUnit.SECONDS));
+		
+		
+		logger.info("rotMode Done : ");
 		gripper.move(linRel(0, 0, -130, World.Current.getRootFrame()).setJointVelocityRel(0.3));
 		
 		ForceCondition touch = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 20);

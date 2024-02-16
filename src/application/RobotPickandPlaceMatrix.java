@@ -118,7 +118,7 @@ public class RobotPickandPlaceMatrix extends RoboticsAPIApplication {
 	}
 	
 	public Frame calibrate() {
-		springRobot2 = CartesianSineImpedanceControlMode.createSpiralPattern(CartPlane.XY, 0.1, 30, 500, 15);
+		springRobot2 = CartesianSineImpedanceControlMode.createSpiralPattern(CartPlane.XY, 1, 20, 400, 10);
 		springRobot2.parametrize(CartDOF.Z).setStiffness(1500);
 		// Stiff rotation
 		springRobot2.parametrize(CartDOF.C).setStiffness(100);
@@ -127,8 +127,7 @@ public class RobotPickandPlaceMatrix extends RoboticsAPIApplication {
 		springRobot2.setReferenceSystem(World.Current.getRootFrame());
 		springRobot2.parametrize(CartDOF.ALL).setDamping(1);
 		
-		ForceCondition touch = ForceCondition.createSpatialForceCondition(gripper.getFrame("/TCP"), 10);
-		ForceComponentCondition calibrate_inverted =  new ForceComponentCondition( gripper.getFrame("/TCP"),World.Current.getRootFrame(), CoordinateAxis.Z,10.0,15.0);
+		ForceComponentCondition calibrate_inverted =  new ForceComponentCondition( gripper.getFrame("/TCP"),World.Current.getRootFrame(), CoordinateAxis.Z,15.0,25.0);
 		ICondition calibrateForce =  calibrate_inverted.invert();
 		gripper.moveAsync(positionHold(springRobot2, 20, TimeUnit.SECONDS).breakWhen(calibrateForce));
 		IMotionContainer motion1 = gripper.move(linRel(0,0,-150, World.Current.getRootFrame()).setCartVelocity(30).breakWhen(calibrateForce));
@@ -151,7 +150,7 @@ public class RobotPickandPlaceMatrix extends RoboticsAPIApplication {
 		mF.setLEDBlue(false);
 		ThreadUtil.milliSleep(200);
 		gripper.move(ptp(getApplicationData().getFrame("/P6")).setJointVelocityRel(0.3));
-		gripper.move(ptp(getApplicationData().getFrame("/P5")).setJointVelocityRel(0.3));
+		//gripper.move(ptp(getApplicationData().getFrame("/P5")).setJointVelocityRel(0.3));
 		
 		
 		logger.info("calibrating");

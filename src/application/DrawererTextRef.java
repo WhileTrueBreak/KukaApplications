@@ -34,12 +34,10 @@ import application.text.TextManager;
 import application.utils.Handler;
 
 /*
- * Writes masters of\n advenced\n robotics\n engineering\n mirrored
+ * Writes monash\n innovation\n labs mirrored
  */
 
-public class Drawerer2 extends RoboticsAPIApplication{
-	@Inject
-	private SunriseOmniMoveMobilePlatform kmp;
+public class DrawererTextRef extends RoboticsAPIApplication{
 	@Inject
 	private LBR robot;
 	@Inject 
@@ -53,7 +51,7 @@ public class Drawerer2 extends RoboticsAPIApplication{
 	private ITaskLogger logger;
 	
 	private CartesianImpedanceControlMode springRobot;
-	
+
 	public static final double PEN_UP_DIST = 5;
 	public static final double PEN_DOWN_DIST = 5;
 	
@@ -96,11 +94,11 @@ public class Drawerer2 extends RoboticsAPIApplication{
 	}
 
 	private void penUp(){
-		gripper.move(linRel(0,0, -Drawerer2.PEN_UP_DIST).setJointVelocityRel(0.2));
+		gripper.move(linRel(0,0, -DrawererTextRef.PEN_UP_DIST).setJointVelocityRel(0.2));
 	}
 	
 	private void penDown(){
-		gripper.move(linRel(0, 0, Drawerer2.PEN_DOWN_DIST+Drawerer2.PEN_UP_DIST).setMode(springRobot).setCartVelocity(20));
+		gripper.move(linRel(0, 0, DrawererTextRef.PEN_DOWN_DIST+DrawererTextRef.PEN_UP_DIST).setMode(springRobot).setCartVelocity(20));
 	}
 	
 	private void springyMove(RobotMotion<?> motion){
@@ -110,7 +108,7 @@ public class Drawerer2 extends RoboticsAPIApplication{
 	private void drawPathPlan(PathPlan plan, Frame originFrame, Canvas canvas) {
 		logger.info("Paths: " + plan.getMotions().size());
 		logger.info("Start Drawing");
-		Vector3D v = Vector3D.of(-Drawerer2.PEN_UP_DIST,0,0);
+		Vector3D v = Vector3D.of(-DrawererTextRef.PEN_UP_DIST,0,0);
 		for(int i = 0;i < plan.getStartLocs().size();i++) {
 			logger.info("Start path "+i);
 			Vector3D first = canvas.toWorld(plan.getStartLocs().get(i)).add(RobotController.frameToVector(originFrame)).add(v);
@@ -136,8 +134,8 @@ public class Drawerer2 extends RoboticsAPIApplication{
 		}
 		
 		logger.info("Calibrating point 1");
-		Frame originFrame = RobotController.calibrateFrame(robot, gripper, 150);
-		gripper.move(linRel(0,0, -Drawerer2.PEN_UP_DIST*2).setJointVelocityRel(0.2));
+		Frame originFrame = RobotController.calibrateFrame(robot, gripper, 150, 10);
+		gripper.move(linRel(0,0, -DrawererTextRef.PEN_UP_DIST*2).setJointVelocityRel(0.2));
 		Frame originUpFrame = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"));
 		Vector3D origin = RobotController.frameToVector(originFrame);
 		logger.info(String.format("Origin: %s", origin.toString()));
@@ -146,7 +144,7 @@ public class Drawerer2 extends RoboticsAPIApplication{
 		RobotController.safeMove(gripper, lin(originUpFrame).setJointVelocityRel(0.2));
 		gripper.move(linRel(0, 50, 0).setJointVelocityRel(0.2));
 		logger.info("Calibrating point 2");
-		Vector3D up = RobotController.frameToVector(RobotController.calibrateFrame(robot, gripper, 150));
+		Vector3D up = RobotController.frameToVector(RobotController.calibrateFrame(robot, gripper, 150, 10));
 		penUp();
 		logger.info(String.format("Up: %s", up.toString()));
 
@@ -154,7 +152,7 @@ public class Drawerer2 extends RoboticsAPIApplication{
 		RobotController.safeMove(gripper, lin(originUpFrame).setJointVelocityRel(0.2));
 		gripper.move(linRel(-50, 0,0).setJointVelocityRel(0.2));
 		logger.info("Calibrating point 3");
-		Vector3D right = RobotController.frameToVector(RobotController.calibrateFrame(robot, gripper, 150));
+		Vector3D right = RobotController.frameToVector(RobotController.calibrateFrame(robot, gripper, 150, 10));
 		penUp();
 		logger.info(String.format("Right: %s", right.toString()));
 		
@@ -186,7 +184,7 @@ public class Drawerer2 extends RoboticsAPIApplication{
 		double scale = 0.15;
 		double charHeight = scale;
 		double spacing = scale/10;
-		double currentY = 1-charHeight-buffer;
+		double currentY = 0.8-charHeight-buffer;
 		double currentX;
 		
 		TextManager.setFontPath(resPath+"/font/arialnarrow");
@@ -199,10 +197,9 @@ public class Drawerer2 extends RoboticsAPIApplication{
 		}
 		
 		List<String> text = new ArrayList<String>();
-		text.add("Masters of");
-		text.add("Advanced");
-		text.add("Robotics");
-		text.add("Engineering");
+		text.add("Monash");
+		text.add("Innovation");
+		text.add("Labs");
 		for(String line:text) {
 			currentX = 1-buffer;
 			List<PointPath> PointPaths = new ArrayList<PointPath>();

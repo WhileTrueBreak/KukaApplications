@@ -9,6 +9,7 @@ import com.kuka.roboticsAPI.conditionModel.ForceCondition;
 import com.kuka.roboticsAPI.deviceModel.LBR;
 import com.kuka.roboticsAPI.geometricModel.Frame;
 import com.kuka.roboticsAPI.geometricModel.Tool;
+import com.kuka.roboticsAPI.geometricModel.World;
 import com.kuka.roboticsAPI.motionModel.IMotionContainer;
 import com.kuka.roboticsAPI.motionModel.RobotMotion;
 import com.kuka.roboticsAPI.motionModel.Spline;
@@ -22,12 +23,12 @@ import application.utils.Handler;
 
 public class RobotController {
 	
-	public static Frame calibrateFrame(LBR robot, Tool tool, int distance){
+	public static Frame calibrateFrame(LBR robot, Tool tool, int distance, double force){
 		
 		IMotionContainer motion = tool.moveAsync(linRel(0, 0, distance, tool.getFrame("/TCP")).setCartVelocity(10));
 
 		ForceSensorData forceData = robot.getExternalForceTorque(tool.getFrame("/TCP"),tool.getFrame("/TCP"));
-		while(Math.abs(forceData.getForce().getZ()) < 5) {
+		while(Math.abs(forceData.getForce().getZ()) < force) {
 			forceData = robot.getExternalForceTorque(tool.getFrame("/TCP"),tool.getFrame("/TCP"));
 			Handler.getLogger().info("Z force: "+Math.abs(forceData.getForce().getZ()));
 			if(!motion.isFinished()) continue;
@@ -36,7 +37,7 @@ public class RobotController {
 		}
 		motion.cancel();
 		Handler.getLogger().info("Collision Detected");
-		return robot.getCurrentCartesianPosition(tool.getFrame("/TCP"));
+		return robot.getCurrentCartesianPosition(tool.getFrame("/TCP"), World.Current.getRootFrame());
 	}
 
 	public static Vector3D frameToVector(Frame frame){

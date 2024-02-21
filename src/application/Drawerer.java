@@ -53,7 +53,7 @@ public class Drawerer extends RoboticsAPIApplication{
 	private CartesianImpedanceControlMode springRobot;
 	
 	public static final double PEN_UP_DIST = 10;
-	public static final double PEN_DOWN_DIST = 5;
+	public static final double PEN_DOWN_DIST = 10;
 
 	public static Vector3D upVector = null;
 	public static Vector3D downVector = null;
@@ -189,6 +189,22 @@ public class Drawerer extends RoboticsAPIApplication{
 		double dist = 400;
 		Vector3D moveVector = diag.multiply(dist);
 		gripper.move(linRel(moveVector.getX(), moveVector.getY(), moveVector.getZ(), World.Current.getRootFrame()).setJointVelocityRel(0.3));
+		
+		//recalibrate on entire canvas
+		logger.info("Calibrating top right");
+		Frame topRightFrame = RobotController.calibrateFrame(robot, gripper, 150, 10);
+		penUp();
+		logger.info("Moving to Origin up");
+		RobotController.safeMove(gripper, lin(originUpFrame).setJointVelocityRel(0.2));
+		moveVector = canvasPlane.getB().multiply(dist);
+		gripper.move(linRel(moveVector.getX(), moveVector.getY(), moveVector.getZ(), World.Current.getRootFrame()).setJointVelocityRel(0.3));
+		logger.info("Calibrating bottom right");
+		Frame topLeftFrame = RobotController.calibrateFrame(robot, gripper, 150, 10);
+		penUp();
+		
+		canvasPlane = Canvas.getCanvasPlane(origin, RobotController.frameToVector(topLeftFrame), RobotController.frameToVector(topRightFrame));
+		logger.info(String.format("New Canvas X, Y: (%s), (%s)", canvasPlane.getA().toString(), canvasPlane.getB().toString()));
+
 		
 		// gets top right frame
 		Vector3D top_right = RobotController.frameToVector(robot.getCurrentCartesianPosition(gripper.getFrame("/TCP")));

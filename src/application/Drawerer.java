@@ -52,7 +52,7 @@ public class Drawerer extends RoboticsAPIApplication{
 	
 	private CartesianImpedanceControlMode springRobot;
 	
-	public static final double PEN_UP_DIST = 5;
+	public static final double PEN_UP_DIST = 10;
 	public static final double PEN_DOWN_DIST = 5;
 
 	public static Vector3D upVector = null;
@@ -97,11 +97,19 @@ public class Drawerer extends RoboticsAPIApplication{
 	}
 
 	private void penUp(){
-		gripper.move(linRel(Drawerer.upVector.getX(), Drawerer.upVector.getY(), Drawerer.upVector.getZ(), World.Current.getRootFrame()).setMode(springRobot).setCartVelocity(20));
+		gripper.move(linRel(
+				Drawerer.upVector.getX(), 
+				Drawerer.upVector.getY(), 
+				Drawerer.upVector.getZ(), 
+				World.Current.getRootFrame()).setMode(springRobot).setCartVelocity(20));
 	}
 	
 	private void penDown(){
-		gripper.move(linRel(Drawerer.downVector.getX()*2, Drawerer.downVector.getY()*2, Drawerer.downVector.getZ()*2, World.Current.getRootFrame()).setMode(springRobot).setCartVelocity(20));
+		gripper.move(linRel(
+				Drawerer.downVector.getX()-Drawerer.upVector.getX(), 
+				Drawerer.downVector.getY()-Drawerer.upVector.getY(), 
+				Drawerer.downVector.getZ()-Drawerer.upVector.getZ(), 
+				World.Current.getRootFrame()).setMode(springRobot).setCartVelocity(20));
 	}
 	
 	private void springyMove(RobotMotion<?> motion){
@@ -111,10 +119,9 @@ public class Drawerer extends RoboticsAPIApplication{
 	private void drawPathPlan(PathPlan plan, Frame originFrame, Canvas canvas) {
 		logger.info("Paths: " + plan.getMotions().size());
 		logger.info("Start Drawing");
-		Vector3D v = Vector3D.of(-Drawerer.PEN_UP_DIST,0,0);
 		for(int i = 0;i < plan.getStartLocs().size();i++) {
 			logger.info("Start path "+i);
-			Vector3D first = canvas.toWorld(plan.getStartLocs().get(i)).add(RobotController.frameToVector(originFrame)).add(v);
+			Vector3D first = canvas.toWorld(plan.getStartLocs().get(i)).add(RobotController.frameToVector(originFrame)).add(Drawerer.upVector);
 			logger.info("Moving to first frame");
 			gripper.move(lin(RobotController.vectorToFrame(first, originFrame)).setCartVelocity(200));
 			penDown();
@@ -178,7 +185,7 @@ public class Drawerer extends RoboticsAPIApplication{
 		logger.info("Moving to top right");
 //		double dist = RobotController.maxMove(gripper, diag);
 //		logger.info(String.format("Found max at top right: %s", diag.toString()));
-		double dist = 40;
+		double dist = 400;
 		Vector3D moveVector = diag.multiply(dist);
 		gripper.move(linRel(moveVector.getX(), moveVector.getY(), moveVector.getZ(), World.Current.getRootFrame()).setJointVelocityRel(0.3));
 		

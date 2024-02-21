@@ -13,6 +13,7 @@ import com.kuka.roboticsAPI.motionModel.LIN;
 import com.kuka.roboticsAPI.motionModel.MotionBatch;
 import com.kuka.roboticsAPI.motionModel.RobotMotion;
 
+import application.Drawerer;
 import application.DrawererTextRef;
 import application.parser.PathParser;
 import application.robotControl.Canvas;
@@ -116,13 +117,12 @@ public class PointPath {
 		LBRE1Redundancy e1val = new LBRE1Redundancy();
 		e1val.setE1(0);
 		
-		Vector3D v = Vector3D.of(DrawererTextRef.PEN_DOWN_DIST,0,0);
 		for(List<Vector2D> points:this.pointPaths) {
 			List<RobotMotion<?>> pathMotions = new ArrayList<RobotMotion<?>>();
 			Vector3D prevDir = null;
 			Vector3D prevPos = null;
 			for(Vector2D point: points) {
-				Vector3D currPos = canvas.toWorld(point).add(canvas.getOrigin()).add(v);
+				Vector3D currPos = canvas.toWorld(point).add(canvas.getOrigin()).add(Drawerer.downVector);
 				if(prevPos != null) {
 					Vector3D currDir = currPos.subtract(prevPos);
 					if(prevDir != null) {

@@ -101,7 +101,7 @@ public class Drawerer extends RoboticsAPIApplication{
 				Drawerer.upVector.getX(), 
 				Drawerer.upVector.getY(), 
 				Drawerer.upVector.getZ(), 
-				World.Current.getRootFrame()).setMode(springRobot).setCartVelocity(20));
+				World.Current.getRootFrame()).setMode(springRobot).setCartVelocity(50));
 	}
 	
 	private void penDown(){
@@ -109,7 +109,7 @@ public class Drawerer extends RoboticsAPIApplication{
 				Drawerer.downVector.getX()-Drawerer.upVector.getX(), 
 				Drawerer.downVector.getY()-Drawerer.upVector.getY(), 
 				Drawerer.downVector.getZ()-Drawerer.upVector.getZ(), 
-				World.Current.getRootFrame()).setMode(springRobot).setCartVelocity(20));
+				World.Current.getRootFrame()).setMode(springRobot).setCartVelocity(50));
 	}
 	
 	private void springyMove(RobotMotion<?> motion){
@@ -123,7 +123,7 @@ public class Drawerer extends RoboticsAPIApplication{
 			logger.info("Start path "+i);
 			Vector3D first = canvas.toWorld(plan.getStartLocs().get(i)).add(RobotController.frameToVector(originFrame)).add(Drawerer.upVector);
 			logger.info("Moving to first frame");
-			gripper.move(lin(RobotController.vectorToFrame(first, originFrame)).setCartVelocity(200));
+			gripper.move(lin(RobotController.vectorToFrame(first, originFrame)).setCartVelocity(100));
 			penDown();
 			logger.info("Start path");
 			springyMove(plan.getMotions().get(i));
@@ -154,6 +154,7 @@ public class Drawerer extends RoboticsAPIApplication{
 		Drawerer.upVector = originUp.subtract(origin).normalize().multiply(Drawerer.PEN_UP_DIST);
 		Drawerer.downVector = origin.subtract(originUp).normalize().multiply(Drawerer.PEN_DOWN_DIST);
 
+		logger.info(String.format("up: %s", originUp.subtract(origin)));
 		logger.info(String.format("up: %s", Drawerer.upVector.toString()));
 		logger.info(String.format("down: %s", Drawerer.downVector.toString()));
 

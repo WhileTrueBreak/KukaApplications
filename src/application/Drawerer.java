@@ -73,15 +73,15 @@ public class Drawerer extends RoboticsAPIApplication{
 		// Set stiffness
 
 		// TODO: Stiff in every direction except plane perpendicular to flange
-		springRobot.parametrize(CartDOF.X).setStiffness(500);
+		springRobot.parametrize(CartDOF.X).setStiffness(5000);
 		springRobot.parametrize(CartDOF.Y).setStiffness(5000);
-		springRobot.parametrize(CartDOF.Z).setStiffness(5000);
+		springRobot.parametrize(CartDOF.Z).setStiffness(500);
 
 		// Stiff rotation
 		springRobot.parametrize(CartDOF.C).setStiffness(300);
 		springRobot.parametrize(CartDOF.B).setStiffness(300);
 		springRobot.parametrize(CartDOF.A).setStiffness(300);
-		springRobot.setReferenceSystem(World.Current.getRootFrame());
+		springRobot.setReferenceSystem(gripper.getFrame("/TCP"));
 		springRobot.parametrize(CartDOF.ALL).setDamping(0.4);
 		
 		// Inits the Robot
@@ -193,7 +193,7 @@ public class Drawerer extends RoboticsAPIApplication{
 		// gets top right frame
 		Vector3D top_right = RobotController.frameToVector(robot.getCurrentCartesianPosition(gripper.getFrame("/TCP")));
 		double diag_mag = top_right.subtract(origin).length();
-		double size = Math.min(diag_mag/Math.sqrt(2), Math.sqrt(dist*dist/2));
+		double size = Math.min(diag_mag/Math.sqrt(2), dist);
 		Canvas canvas = new Canvas(origin, canvasPlane, size);
 		logger.info(String.format("Canvas size: %f", size));
 		logger.info("Calibration completed.");

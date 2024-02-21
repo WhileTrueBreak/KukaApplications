@@ -30,7 +30,6 @@ public class RobotController {
 		ForceSensorData forceData = robot.getExternalForceTorque(tool.getFrame("/TCP"),tool.getFrame("/TCP"));
 		while(Math.abs(forceData.getForce().getZ()) < force) {
 			forceData = robot.getExternalForceTorque(tool.getFrame("/TCP"),tool.getFrame("/TCP"));
-			Handler.getLogger().info("Z force: "+Math.abs(forceData.getForce().getZ()));
 			if(!motion.isFinished()) continue;
 			Handler.getLogger().info("No Collision Detected");
 			return null;

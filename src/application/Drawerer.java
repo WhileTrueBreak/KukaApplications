@@ -23,6 +23,7 @@ import com.kuka.roboticsAPI.geometricModel.Tool;
 import com.kuka.roboticsAPI.geometricModel.World;
 import com.kuka.roboticsAPI.motionModel.RobotMotion;
 import com.kuka.roboticsAPI.motionModel.controlModeModel.CartesianImpedanceControlMode;
+import com.kuka.roboticsAPI.sensorModel.ForceSensorData;
 import com.kuka.task.ITaskLogger;
 
 import application.parser.FileReader;
@@ -192,23 +193,24 @@ public class Drawerer extends RoboticsAPIApplication{
 		
 		//recalibrate on entire canvas
 		logger.info("Calibrating top right");
-		Frame topRightFrame = RobotController.calibrateFrame(robot, gripper, 150, 10);
+		Vector3D topRight = RobotController.frameToVector(robot.getCurrentCartesianPosition(gripper.getFrame("/TCP")));
+		ForceSensorData forceSensorData = robot.getExternalForceTorque(gripper.getFrame("/TCP"),gripper.getFrame("/TCP"));
+		Vector3D topRightDown = RobotController.frameToVector(RobotController.calibrateFrame(robot, gripper, 150, forceSensorData.getForce().getZ()+10));
 		penUp();
-		logger.info("Moving to Origin up");
-		RobotController.safeMove(gripper, lin(originUpFrame).setJointVelocityRel(0.2));
+		gripper.move(lin(originUpFrame).setJointVelocityRel(0.2));
 		moveVector = canvasPlane.getB().multiply(dist);
 		gripper.move(linRel(moveVector.getX(), moveVector.getY(), moveVector.getZ(), World.Current.getRootFrame()).setJointVelocityRel(0.3));
-		logger.info("Calibrating bottom right");
-		Frame topLeftFrame = RobotController.calibrateFrame(robot, gripper, 150, 10);
+		logger.info("Calibrating top left");
+		forceSensorData = robot.getExternalForceTorque(gripper.getFrame("/TCP"),gripper.getFrame("/TCP"));
+		Vector3D topLeftDown = RobotController.frameToVector(RobotController.calibrateFrame(robot, gripper, 150, forceSensorData.getForce().getZ()+10));
 		penUp();
 		
-		canvasPlane = Canvas.getCanvasPlane(origin, RobotController.frameToVector(topLeftFrame), RobotController.frameToVector(topRightFrame));
+		canvasPlane = Canvas.getCanvasPlane(origin, topLeftDown, topRightDown);
 		logger.info(String.format("New Canvas X, Y: (%s), (%s)", canvasPlane.getA().toString(), canvasPlane.getB().toString()));
 
 		
 		// gets top right frame
-		Vector3D top_right = RobotController.frameToVector(robot.getCurrentCartesianPosition(gripper.getFrame("/TCP")));
-		double diag_mag = top_right.subtract(origin).length();
+		double diag_mag = topRight.subtract(origin).length();
 		double size = Math.min(diag_mag/Math.sqrt(2), dist);
 		Canvas canvas = new Canvas(origin, canvasPlane, size);
 		logger.info(String.format("Canvas size: %f", size));

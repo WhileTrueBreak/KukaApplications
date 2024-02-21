@@ -185,7 +185,7 @@ public class Drawerer extends RoboticsAPIApplication{
 		logger.info("Moving to top right");
 //		double dist = RobotController.maxMove(gripper, diag);
 //		logger.info(String.format("Found max at top right: %s", diag.toString()));
-		double dist = 400;
+		double dist = 360;
 		Vector3D moveVector = diag.multiply(dist);
 		gripper.move(linRel(moveVector.getX(), moveVector.getY(), moveVector.getZ(), World.Current.getRootFrame()).setJointVelocityRel(0.3));
 		

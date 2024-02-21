@@ -101,7 +101,7 @@ public class Drawerer extends RoboticsAPIApplication{
 				Drawerer.upVector.getX(), 
 				Drawerer.upVector.getY(), 
 				Drawerer.upVector.getZ(), 
-				World.Current.getRootFrame()).setMode(springRobot).setCartVelocity(50));
+				World.Current.getRootFrame()).setCartVelocity(25));
 	}
 	
 	private void penDown(){
@@ -109,7 +109,7 @@ public class Drawerer extends RoboticsAPIApplication{
 				Drawerer.downVector.getX()-Drawerer.upVector.getX(), 
 				Drawerer.downVector.getY()-Drawerer.upVector.getY(), 
 				Drawerer.downVector.getZ()-Drawerer.upVector.getZ(), 
-				World.Current.getRootFrame()).setMode(springRobot).setCartVelocity(50));
+				World.Current.getRootFrame()).setMode(springRobot).setCartVelocity(25));
 	}
 	
 	private void springyMove(RobotMotion<?> motion){
@@ -146,7 +146,7 @@ public class Drawerer extends RoboticsAPIApplication{
 		logger.info("Calibrating point 1");
 		Frame originFrame = RobotController.calibrateFrame(robot, gripper, 150, 10);
 		gripper.move(linRel(0,0, -Drawerer.PEN_UP_DIST, gripper.getFrame("/TCP")).setJointVelocityRel(0.2));
-		Frame originUpFrame = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"));
+		Frame originUpFrame = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"), World.Current.getRootFrame());
 		Vector3D origin = RobotController.frameToVector(originFrame);
 		Vector3D originUp = RobotController.frameToVector(originUpFrame);
 		logger.info(String.format("Origin: %s", origin.toString()));
@@ -186,14 +186,14 @@ public class Drawerer extends RoboticsAPIApplication{
 		logger.info("Moving to top right");
 //		double dist = RobotController.maxMove(gripper, diag);
 //		logger.info(String.format("Found max at top right: %s", diag.toString()));
-		double dist = 360;
+		double dist = 400;
 		Vector3D moveVector = diag.multiply(dist);
 		gripper.move(linRel(moveVector.getX(), moveVector.getY(), moveVector.getZ(), World.Current.getRootFrame()).setJointVelocityRel(0.3));
 		
 		// gets top right frame
 		Vector3D top_right = RobotController.frameToVector(robot.getCurrentCartesianPosition(gripper.getFrame("/TCP")));
 		double diag_mag = top_right.subtract(origin).length();
-		double size = Math.min(diag_mag/Math.sqrt(2), Math.sqrt(dist*dist/2))*0.9;
+		double size = Math.min(diag_mag/Math.sqrt(2), Math.sqrt(dist*dist/2));
 		Canvas canvas = new Canvas(origin, canvasPlane, size);
 		logger.info(String.format("Canvas size: %f", size));
 		logger.info("Calibration completed.");

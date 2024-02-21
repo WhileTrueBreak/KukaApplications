@@ -14,6 +14,7 @@ import com.kuka.roboticsAPI.motionModel.RobotMotion;
 import com.kuka.roboticsAPI.motionModel.Spline;
 import com.kuka.roboticsAPI.motionModel.SplineMotionCP;
 import com.kuka.roboticsAPI.motionModel.SplineOrientationType;
+import com.kuka.roboticsAPI.sensorModel.ForceSensorData;
 
 import application.path.Node;
 import application.path.Path;
@@ -22,17 +23,20 @@ import application.utils.Handler;
 public class RobotController {
 	
 	public static Frame calibrateFrame(LBR robot, Tool tool, int distance){
-		ForceCondition touch10 = ForceCondition.createSpatialForceCondition(tool.getFrame("/TCP"), 10);
-		IMotionContainer motion1 = tool.move(linRel(0, 0, distance, tool.getFrame("/TCP")).setCartVelocity(10).breakWhen(touch10));
-		if (motion1.getFiredBreakConditionInfo() == null){
+		
+		IMotionContainer motion = tool.moveAsync(linRel(0, 0, distance, tool.getFrame("/TCP")).setCartVelocity(10));
+
+		ForceSensorData forceData = robot.getExternalForceTorque(tool.getFrame("/TCP"),tool.getFrame("/TCP"));
+		while(Math.abs(forceData.getForce().getZ()) < 5) {
+			forceData = robot.getExternalForceTorque(tool.getFrame("/TCP"),tool.getFrame("/TCP"));
+			Handler.getLogger().info("Z force: "+Math.abs(forceData.getForce().getZ()));
+			if(!motion.isFinished()) continue;
 			Handler.getLogger().info("No Collision Detected");
 			return null;
 		}
-		else{
-			Handler.getLogger().info("Collision Detected");
-			return robot.getCurrentCartesianPosition(tool.getFrame("/TCP"));
-		}
-
+		motion.cancel();
+		Handler.getLogger().info("Collision Detected");
+		return robot.getCurrentCartesianPosition(tool.getFrame("/TCP"));
 	}
 
 	public static Vector3D frameToVector(Frame frame){

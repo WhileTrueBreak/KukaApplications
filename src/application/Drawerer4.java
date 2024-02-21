@@ -39,8 +39,6 @@ import application.utils.Handler;
 
 public class Drawerer4 extends RoboticsAPIApplication{
 	@Inject
-	private SunriseOmniMoveMobilePlatform kmp;
-	@Inject
 	private LBR robot;
 	@Inject 
 	private Gripper2F gripper2F1;
@@ -56,6 +54,9 @@ public class Drawerer4 extends RoboticsAPIApplication{
 	
 	public static final double PEN_UP_DIST = 5;
 	public static final double PEN_DOWN_DIST = 5;
+
+	public static Vector3D upVector = null;
+	public static Vector3D downVector = null;
 	
 	@Override
 	public void initialize() {
@@ -96,11 +97,11 @@ public class Drawerer4 extends RoboticsAPIApplication{
 	}
 
 	private void penUp(){
-		gripper.move(linRel(0,0, -Drawerer4.PEN_UP_DIST).setJointVelocityRel(0.2));
+		gripper.move(linRel(Drawerer4.upVector.getY(), Drawerer4.upVector.getZ(), Drawerer4.upVector.getX()).setMode(springRobot).setCartVelocity(20));
 	}
 	
 	private void penDown(){
-		gripper.move(linRel(0, 0, Drawerer4.PEN_DOWN_DIST+Drawerer4.PEN_UP_DIST).setMode(springRobot).setCartVelocity(20));
+		gripper.move(linRel(Drawerer4.downVector.getY()*2, Drawerer4.downVector.getZ()*2, Drawerer4.downVector.getX()*2).setMode(springRobot).setCartVelocity(20));
 	}
 	
 	private void springyMove(RobotMotion<?> motion){
@@ -129,7 +130,7 @@ public class Drawerer4 extends RoboticsAPIApplication{
 		// Calibration sequence
 		mF.setLEDBlue(true);
 		logger.info("Moving to bottom left");
-		try {
+		try {	
 			gripper.move(lin(getApplicationData().getFrame("/bottom_left")).setJointVelocityRel(0.2));
 		} catch (Exception e) {
 			gripper.move(ptp(getApplicationData().getFrame("/bottom_left")).setJointVelocityRel(0.2));
@@ -140,7 +141,11 @@ public class Drawerer4 extends RoboticsAPIApplication{
 		gripper.move(linRel(0,0, -Drawerer4.PEN_UP_DIST*2).setJointVelocityRel(0.2));
 		Frame originUpFrame = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"));
 		Vector3D origin = RobotController.frameToVector(originFrame);
+		Vector3D originUp = RobotController.frameToVector(originUpFrame);
 		logger.info(String.format("Origin: %s", origin.toString()));
+
+		Drawerer4.upVector = originUp.subtract(origin).normalize().multiply(Drawerer4.PEN_UP_DIST);
+		Drawerer4.downVector = origin.subtract(originUp).normalize().multiply(Drawerer4.PEN_DOWN_DIST);
 
 		logger.info("Moving to Origin up");
 		RobotController.safeMove(gripper, lin(originUpFrame).setJointVelocityRel(0.2));
@@ -168,8 +173,11 @@ public class Drawerer4 extends RoboticsAPIApplication{
 		Vector3D diag = canvasPlane.getA().add(canvasPlane.getB());
 		logger.info("Diagonal vector: " + diag.toString());
 		logger.info("Moving to top right");
-		double dist = RobotController.maxMove(gripper, diag);
-		logger.info(String.format("Found max at top right: %s", diag.toString()));
+//		double dist = RobotController.maxMove(gripper, diag);
+//		logger.info(String.format("Found max at top right: %s", diag.toString()));
+		double dist = 40;
+		Vector3D moveVector = diag.multiply(dist);
+		gripper.move(linRel(moveVector.getY(), moveVector.getZ(), moveVector.getX()).setJointVelocityRel(0.3));
 		
 		// gets top right frame
 		Vector3D top_right = RobotController.frameToVector(robot.getCurrentCartesianPosition(gripper.getFrame("/TCP")));

@@ -73,15 +73,15 @@ public class Drawerer extends RoboticsAPIApplication{
 		// Set stiffness
 
 		// TODO: Stiff in every direction except plane perpendicular to flange
-		springRobot.parametrize(CartDOF.X).setStiffness(5000);
+		springRobot.parametrize(CartDOF.X).setStiffness(500);
 		springRobot.parametrize(CartDOF.Y).setStiffness(5000);
-		springRobot.parametrize(CartDOF.Z).setStiffness(500);
+		springRobot.parametrize(CartDOF.Z).setStiffness(5000);
 
 		// Stiff rotation
 		springRobot.parametrize(CartDOF.C).setStiffness(300);
 		springRobot.parametrize(CartDOF.B).setStiffness(300);
 		springRobot.parametrize(CartDOF.A).setStiffness(300);
-		springRobot.setReferenceSystem(gripper.getFrame("/TCP"));
+		springRobot.setReferenceSystem(World.Current.getRootFrame());
 		springRobot.parametrize(CartDOF.ALL).setDamping(0.4);
 		
 		// Inits the Robot

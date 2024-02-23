@@ -4,6 +4,7 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 import javax.inject.Named;
 //import com.kuka.math.geometry.Vector3D;
+import com.kuka.math.geometry.Vector3D;
 import com.kuka.nav.command.CommandContainer;
 import com.kuka.nav.geometry.Vector2D;
 import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
@@ -40,7 +41,6 @@ import com.kuka.roboticsAPI.sensorModel.TorqueSensorData;
 import com.kuka.task.ITaskLogger;
 import com.kuka.common.ThreadUtil;
 import com.kuka.generated.ioAccess.MediaFlangeIOGroup;
-import com.vividsolutions.jts.math.Vector3D;
  
 import static com.kuka.roboticsAPI.motionModel.HRCMotions.*;
  
@@ -111,7 +111,7 @@ public class hand_over extends RoboticsAPIApplication {
 	private Vector3D dist(Frame pose){
 		Frame newPosition = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"),World.Current.getRootFrame());
 		
-		Vector3D distance = new Vector3D((newPosition.getX()-pose.getX()), (newPosition.getY()-pose.getY()), (newPosition.getZ()-pose.getZ()));
+		Vector3D distance = Vector3D.of((newPosition.getX()-pose.getX()), (newPosition.getY()-pose.getY()), (newPosition.getZ()-pose.getZ()));
 		return distance;
 	}
 	

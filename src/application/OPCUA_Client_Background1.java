@@ -253,7 +253,7 @@ public class OPCUA_Client_Background1 {
 		client.writeAttribute(NID_MomZ, attributeId,  MomZ);
 		client.writeAttribute(NID_BaseX, attributeId,  BaseX);
 		client.writeAttribute(NID_BaseY, attributeId,  BaseY);
-		client.writeAttribute(NID_BaseA, attributeId,  BaseA);
+		client.writeAttribute(NID_BaseA, attributeId,  Math.toDegrees(BaseA));
 		//Control Variable to Disconnect Client
 		Disconnect = client.readAttribute(NID_Disconnect,attributeId).getValue().booleanValue();		
 	}

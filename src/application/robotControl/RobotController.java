@@ -31,6 +31,7 @@ public class RobotController {
 		while(Math.abs(forceData.getForce().getZ()) < force) {
 			forceData = robot.getExternalForceTorque(tool.getFrame("/TCP"),tool.getFrame("/TCP"));
 			if(!motion.isFinished()) continue;
+			motion.cancel();
 			Handler.getLogger().info("No Collision Detected");
 			return null;
 		}

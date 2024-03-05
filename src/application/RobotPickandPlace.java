@@ -91,25 +91,25 @@ public class RobotPickandPlace extends RoboticsAPIApplication {
 		mF.setLEDBlue(false);
 		ThreadUtil.milliSleep(200);
  
-		gripper.move(lin(getApplicationData().getFrame("/P5")).setCartVelocity(200));//frame1
+		gripper.move(ptp(getApplicationData().getFrame("/P9")).setJointVelocityRel(0.3));//frame1-collabtable
 //	    gripper.move(linRel(0, 0, -30, World.Current.getRootFrame()).setCartVelocity(50));//going down
-//		gripper2F1.close();
-//		mF.setLEDBlue(true);
+		gripper2F1.close();
+		mF.setLEDBlue(true);
 //		gripper.move(lin(getApplicationData().getFrame("/P1")).setCartVelocity(100));//get back to frame1
 //		gripper.move(lin(getApplicationData().getFrame("/P2")).setCartVelocity(200));// go to frame2
-//	    gripper.move(linRel(0, 0, -90, World.Current.getRootFrame()).setCartVelocity(50));// going down
+	    gripper.move(linRel(0, 0, 90, World.Current.getRootFrame()).setCartVelocity(50));// going up
 //		gripper2F1.open();
 //		mF.setLEDBlue(false);
-//	    gripper.move(lin(getApplicationData().getFrame("/P2")).setCartVelocity(100));
+	    gripper.move(ptp(getApplicationData().getFrame("/P9/P1")).setJointVelocityRel(0.2));
 // 
 //		
-//		gripper.move(lin(getApplicationData().getFrame("/P1")).setCartVelocity(200));//frame1
+	    gripper.move(ptp(getApplicationData().getFrame("/P7")).setJointVelocityRel(0.3));
 //	    gripper.move(linRel(0, 0, -60, World.Current.getRootFrame()).setCartVelocity(50));//going down
 //		gripper2F1.close();
 //		gripper.move(lin(getApplicationData().getFrame("/P1")).setCartVelocity(100));//get back to frame1
 //		gripper.move(lin(getApplicationData().getFrame("/P2")).setCartVelocity(200));// go to frame2
 //	    gripper.move(linRel(0, 0, -60, World.Current.getRootFrame()).setCartVelocity(50));// going down
-//		gripper2F1.open();
+		gripper2F1.open();
 //	    gripper.move(lin(getApplicationData().getFrame("/P2")).setCartVelocity(100));
 //		gripper.move(lin(getApplicationData().getFrame("/P1")).setCartVelocity(200));//frame1
 //	    gripper.move(linRel(0, 0, -90, World.Current.getRootFrame()).setCartVelocity(50));//going down

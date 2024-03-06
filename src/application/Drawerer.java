@@ -224,10 +224,10 @@ public class Drawerer extends RoboticsAPIApplication{
 		logger.info("Reading file");
 		String resPath = FileReader.findUniqueFolder("res", "..");
 		
-		List<String> file = FileReader.readFile(resPath+"/exit.txt");
+		List<String> file = FileReader.readFile(resPath+"/MonashLogo.txt");
 		PointPath pointPath = PointPath.createPointPathsV2(file, canvas, 1);
 		pointPath.mirrorPaths();
-		PathPlan pathPlan = pointPath.toPathPlan(robot, originFrame, canvas, 200);
+		PathPlan pathPlan = pointPath.toPathPlan(robot, originFrame, canvas, 200); 
 		drawPathPlan(pathPlan, originFrame, canvas);
 		
 		logger.info("Moving to base");

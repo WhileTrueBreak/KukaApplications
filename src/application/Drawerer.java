@@ -226,7 +226,7 @@ public class Drawerer extends RoboticsAPIApplication{
 		
 		List<String> file = FileReader.readFile(resPath+"/exit.txt");
 		PointPath pointPath = PointPath.createPointPathsV2(file, canvas, 1);
-//		pointPath.mirrorPaths();
+		pointPath.mirrorPaths();
 		PathPlan pathPlan = pointPath.toPathPlan(robot, originFrame, canvas, 200);
 		drawPathPlan(pathPlan, originFrame, canvas);
 		

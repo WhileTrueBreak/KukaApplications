@@ -23,6 +23,7 @@ import com.kuka.roboticsAPI.geometricModel.Tool;
 import com.kuka.roboticsAPI.geometricModel.World;
 import com.kuka.roboticsAPI.motionModel.RobotMotion;
 import com.kuka.roboticsAPI.motionModel.controlModeModel.CartesianImpedanceControlMode;
+import com.kuka.roboticsAPI.sensorModel.ForceSensorData;
 import com.kuka.task.ITaskLogger;
 
 import application.parser.FileReader;
@@ -127,7 +128,7 @@ public class DrawererTextRef extends RoboticsAPIApplication{
 		// Calibration sequence
 		mF.setLEDBlue(true);
 		logger.info("Moving to bottom left");
-		try {
+		try {	
 			gripper.move(lin(getApplicationData().getFrame("/bottom_left")).setJointVelocityRel(0.2));
 		} catch (Exception e) {
 			gripper.move(ptp(getApplicationData().getFrame("/bottom_left")).setJointVelocityRel(0.2));
@@ -135,14 +136,22 @@ public class DrawererTextRef extends RoboticsAPIApplication{
 		
 		logger.info("Calibrating point 1");
 		Frame originFrame = RobotController.calibrateFrame(robot, gripper, 150, 10);
-		gripper.move(linRel(0,0, -DrawererTextRef.PEN_UP_DIST*2).setJointVelocityRel(0.2));
-		Frame originUpFrame = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"));
+		gripper.move(linRel(0,0, -Drawerer.PEN_UP_DIST, gripper.getFrame("/TCP")).setJointVelocityRel(0.2));
+		Frame originUpFrame = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"), World.Current.getRootFrame());
 		Vector3D origin = RobotController.frameToVector(originFrame);
+		Vector3D originUp = RobotController.frameToVector(originUpFrame);
 		logger.info(String.format("Origin: %s", origin.toString()));
+
+		Drawerer.upVector = originUp.subtract(origin).normalize().multiply(Drawerer.PEN_UP_DIST);
+		Drawerer.downVector = origin.subtract(originUp).normalize().multiply(Drawerer.PEN_DOWN_DIST);
+
+		logger.info(String.format("up: %s", originUp.subtract(origin)));
+		logger.info(String.format("up: %s", Drawerer.upVector.toString()));
+		logger.info(String.format("down: %s", Drawerer.downVector.toString()));
 
 		logger.info("Moving to Origin up");
 		RobotController.safeMove(gripper, lin(originUpFrame).setJointVelocityRel(0.2));
-		gripper.move(linRel(0, 50, 0).setJointVelocityRel(0.2));
+		gripper.move(linRel(0, 50, 0, gripper.getFrame("/TCP")).setJointVelocityRel(0.2));
 		logger.info("Calibrating point 2");
 		Vector3D up = RobotController.frameToVector(RobotController.calibrateFrame(robot, gripper, 150, 10));
 		penUp();
@@ -150,7 +159,7 @@ public class DrawererTextRef extends RoboticsAPIApplication{
 
 		logger.info("Moving to Origin up");
 		RobotController.safeMove(gripper, lin(originUpFrame).setJointVelocityRel(0.2));
-		gripper.move(linRel(-50, 0,0).setJointVelocityRel(0.2));
+		gripper.move(linRel(-50, 0,0, gripper.getFrame("/TCP")).setJointVelocityRel(0.2));
 		logger.info("Calibrating point 3");
 		Vector3D right = RobotController.frameToVector(RobotController.calibrateFrame(robot, gripper, 150, 10));
 		penUp();
@@ -166,13 +175,38 @@ public class DrawererTextRef extends RoboticsAPIApplication{
 		Vector3D diag = canvasPlane.getA().add(canvasPlane.getB());
 		logger.info("Diagonal vector: " + diag.toString());
 		logger.info("Moving to top right");
-		double dist = RobotController.maxMove(gripper, diag);
-		logger.info(String.format("Found max at top right: %s", diag.toString()));
+//				double dist = RobotController.maxMove(gripper, diag);
+//				logger.info(String.format("Found max at top right: %s", diag.toString()));
+		double dist = 400;
+		Vector3D moveVector = diag.multiply(dist);
+		gripper.move(linRel(moveVector.getX(), moveVector.getY(), moveVector.getZ(), World.Current.getRootFrame()).setJointVelocityRel(0.3));
+		
+		//recalibrate on entire canvas
+		Vector3D topRight = RobotController.frameToVector(robot.getCurrentCartesianPosition(gripper.getFrame("/TCP")));
+		gripper.move(lin(originUpFrame).setJointVelocityRel(0.2));
+		moveVector = canvasPlane.getA().multiply(dist);
+		gripper.move(linRel(moveVector.getX(), moveVector.getY(), moveVector.getZ(), World.Current.getRootFrame()).setJointVelocityRel(0.3));
+		logger.info("Calibrating bottom right");
+		ForceSensorData forceSensorData = robot.getExternalForceTorque(gripper.getFrame("/TCP"),gripper.getFrame("/TCP"));
+		logger.info("Force before: " + forceSensorData.getForce().getZ());
+		Vector3D bottomRightDown = RobotController.frameToVector(RobotController.calibrateFrame(robot, gripper, 30, forceSensorData.getForce().getZ()+20));
+		penUp();
+		gripper.move(lin(originUpFrame).setJointVelocityRel(0.2));
+		moveVector = canvasPlane.getB().multiply(dist);
+		gripper.move(linRel(moveVector.getX(), moveVector.getY(), moveVector.getZ(), World.Current.getRootFrame()).setJointVelocityRel(0.3));
+		logger.info("Calibrating top left");
+		forceSensorData = robot.getExternalForceTorque(gripper.getFrame("/TCP"),gripper.getFrame("/TCP"));
+		logger.info("Force before: " + forceSensorData.getForce().getZ());
+		Vector3D topLeftDown = RobotController.frameToVector(RobotController.calibrateFrame(robot, gripper, 30, forceSensorData.getForce().getZ()+20));
+		penUp();
+		
+		canvasPlane = Canvas.getCanvasPlane(origin, topLeftDown, bottomRightDown);
+		logger.info(String.format("New Canvas X, Y: (%s), (%s)", canvasPlane.getA().toString(), canvasPlane.getB().toString()));
+
 		
 		// gets top right frame
-		Vector3D top_right = RobotController.frameToVector(robot.getCurrentCartesianPosition(gripper.getFrame("/TCP")));
-		double diag_mag = top_right.subtract(origin).length();
-		double size = Math.min(diag_mag/Math.sqrt(2), Math.sqrt(dist*dist/2))*0.9;
+		double diag_mag = topRight.subtract(origin).length();
+		double size = Math.min(diag_mag/Math.sqrt(2), dist);
 		Canvas canvas = new Canvas(origin, canvasPlane, size);
 		logger.info(String.format("Canvas size: %f", size));
 		logger.info("Calibration completed.");
@@ -184,7 +218,7 @@ public class DrawererTextRef extends RoboticsAPIApplication{
 		double scale = 0.15;
 		double charHeight = scale;
 		double spacing = scale/10;
-		double currentY = 0.8-charHeight-buffer;
+		double currentY = 1-charHeight-buffer;
 		double currentX;
 		
 		TextManager.setFontPath(resPath+"/font/arialnarrow");
@@ -197,9 +231,11 @@ public class DrawererTextRef extends RoboticsAPIApplication{
 		}
 		
 		List<String> text = new ArrayList<String>();
+		text.add("Welcome to");
 		text.add("Monash");
 		text.add("Innovation");
-		text.add("Labs");
+		text.add("Labs Launch");
+		text.add("Event");
 		for(String line:text) {
 			currentX = 1-buffer;
 			List<PointPath> PointPaths = new ArrayList<PointPath>();

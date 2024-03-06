@@ -189,7 +189,7 @@ public class DrawererTextRef extends RoboticsAPIApplication{
 		logger.info("Calibrating bottom right");
 		ForceSensorData forceSensorData = robot.getExternalForceTorque(gripper.getFrame("/TCP"),gripper.getFrame("/TCP"));
 		logger.info("Force before: " + forceSensorData.getForce().getZ());
-		Vector3D bottomRightDown = RobotController.frameToVector(RobotController.calibrateFrame(robot, gripper, 30, forceSensorData.getForce().getZ()+20));
+		Vector3D bottomRightDown = RobotController.frameToVector(RobotController.calibrateFrame(robot, gripper, 30, forceSensorData.getForce().getZ()+15));
 		penUp();
 		gripper.move(lin(originUpFrame).setJointVelocityRel(0.2));
 		moveVector = canvasPlane.getB().multiply(dist);
@@ -197,7 +197,7 @@ public class DrawererTextRef extends RoboticsAPIApplication{
 		logger.info("Calibrating top left");
 		forceSensorData = robot.getExternalForceTorque(gripper.getFrame("/TCP"),gripper.getFrame("/TCP"));
 		logger.info("Force before: " + forceSensorData.getForce().getZ());
-		Vector3D topLeftDown = RobotController.frameToVector(RobotController.calibrateFrame(robot, gripper, 30, forceSensorData.getForce().getZ()+20));
+		Vector3D topLeftDown = RobotController.frameToVector(RobotController.calibrateFrame(robot, gripper, 30, forceSensorData.getForce().getZ()+15));
 		penUp();
 		
 		canvasPlane = Canvas.getCanvasPlane(origin, topLeftDown, bottomRightDown);

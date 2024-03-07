@@ -61,6 +61,7 @@ import com.kuka.task.ITaskLogger;
 * <b>It is imperative to call <code>super.dispose()</code> when overriding the 
 * {@link RoboticsAPITask#dispose()} method.</b> 
 * 
+* 
 * @see UseRoboticsAPIContext
 * @see #initialize()
 * @see #run()

@@ -86,11 +86,12 @@ public class RobotPickandPlace extends RoboticsAPIApplication {
 	public void run() {
 		IHonkCapability honkCapability = kmp.getCapability(IHonkCapability.class);
 		honkCapability.honk();
-		gripper2F1.close();
+
  
 		mF.setLEDBlue(false);
 		ThreadUtil.milliSleep(200);
- 
+		gripper.move(ptp(getApplicationData().getFrame("/P7")).setJointVelocityRel(0.3));
+		gripper2F1.close();
 		gripper.move(ptp(getApplicationData().getFrame("/P9/P1")).setJointVelocityRel(0.3));//frame2 mid of collab table
 		gripper.move(ptp(getApplicationData().getFrame("/P9")).setJointVelocityRel(0.3));//frame1-collabtable
 //	    gripper.move(linRel(0, 0, -30, World.Current.getRootFrame()).setCartVelocity(50));//going down

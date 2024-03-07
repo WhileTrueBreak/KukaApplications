@@ -110,6 +110,7 @@ public class RobotPickandPlaceWindow extends RoboticsAPIApplication {
 	    gripper.move(ptp(getApplicationData().getFrame("/P7/P1")).setJointVelocityRel(0.3));
 		gripper.move(ptp(getApplicationData().getFrame("/P7")).setJointVelocityRel(0.3));
 		gripper2F1.open();
+	    gripper.move(ptp(getApplicationData().getFrame("/P10")).setJointVelocityRel(0.3));
 
 //	    gripper.move(lin(getApplicationData().getFrame("/P2")).setCartVelocity(100));
 //		gripper.move(lin(getApplicationData().getFrame("/P1")).setCartVelocity(200));//frame1

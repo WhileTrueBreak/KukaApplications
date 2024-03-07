@@ -215,6 +215,7 @@ public class OPCUA_Client_Background1 {
 		NID_ForZ = findNode("R1d_ForZ", references);
 		NID_MomX = findNode("R1d_MomX", references);
 		NID_MomY = findNode("R1d_MomY", references);
+		
 		NID_MomZ = findNode("R1d_MomZ", references);
 		NID_BaseX = findNode("R1d_BaseX", references);
 		NID_BaseY = findNode("R1d_BaseY", references);

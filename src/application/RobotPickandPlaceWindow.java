@@ -91,7 +91,7 @@ public class RobotPickandPlaceWindow extends RoboticsAPIApplication {
 		mF.setLEDBlue(false);
 		ThreadUtil.milliSleep(200);
  
-		gripper.move(ptp(getApplicationData().getFrame("/P7")).setJointVelocityRel(0.3));//frame1-collabtable
+		gripper.move(ptp(getApplicationData().getFrame("/P7")).setJointVelocityRel(0.3));//frame1-window table
 		gripper2F1.close();
 		mF.setLEDBlue(true);
 	    gripper.move(linRel(0, 0, 90, World.Current.getRootFrame()).setCartVelocity(50));// going up
@@ -100,14 +100,13 @@ public class RobotPickandPlaceWindow extends RoboticsAPIApplication {
 	    gripper.move(ptp(getApplicationData().getFrame("/P9/P1")).setJointVelocityRel(0.2));
 	
 	    gripper.move(ptp(getApplicationData().getFrame("/P8")).setJointVelocityRel(0.3));
-		gripper2F1.open();
-	    gripper.move(linRel(0, 0, 90, World.Current.getRootFrame()).setCartVelocity(50));		
-		ThreadUtil.milliSleep(200);
-	    gripper.move(linRel(0, 0, -90, World.Current.getRootFrame()).setCartVelocity(50));
 		gripper2F1.close();
-	    gripper.move(ptp(getApplicationData().getFrame("/P8")).setJointVelocityRel(0.3));
+	    gripper.move(linRel(0, 0, 90, World.Current.getRootFrame()).setCartVelocity(50));	//going up	
+		ThreadUtil.milliSleep(200);
+	    gripper.move(ptp(getApplicationData().getFrame("/P7/P1")).setJointVelocityRel(0.3));
+		gripper.move(ptp(getApplicationData().getFrame("/P7")).setJointVelocityRel(0.3));
 		gripper2F1.open();
-	    gripper.move(linRel(0, 0, 90, World.Current.getRootFrame()).setCartVelocity(50));
+
 //	    gripper.move(lin(getApplicationData().getFrame("/P2")).setCartVelocity(100));
 //		gripper.move(lin(getApplicationData().getFrame("/P1")).setCartVelocity(200));//frame1
 //	    gripper.move(linRel(0, 0, -90, World.Current.getRootFrame()).setCartVelocity(50));//going down

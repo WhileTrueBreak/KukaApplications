@@ -54,7 +54,8 @@ import com.kuka.task.ITaskLogger;
 * The application provides a {@link RoboticsAPITask#initialize()} and a 
 * {@link RoboticsAPITask#run()} method, which will be called successively in 
 * the application lifecycle. The application will terminate automatically after 
-* the {@link RoboticsAPITask#run()} method has finished or after stopping the 
+* the {@li
+* nk RoboticsAPITask#run()} method has finished or after stopping the 
 * task. The {@link RoboticsAPITask#dispose()} method will be called, even if an 
 * exception is thrown during initialization or run. 
 * <p>

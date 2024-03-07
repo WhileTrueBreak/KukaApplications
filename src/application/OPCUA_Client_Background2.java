@@ -168,7 +168,6 @@ public class OPCUA_Client_Background2 {
 	// Variable to Select the Data field (DO NOT CHANGE)
 	public UnsignedInteger attributeId = UnsignedInteger.valueOf(13);
 
-	
 	// Input Server Endpoint
 	public UaClient client = new UaClient("opc.tcp://172.32.1.236:4840/");
 

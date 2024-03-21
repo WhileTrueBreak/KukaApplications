@@ -69,46 +69,46 @@ public class OCPUA_cycle	 {
 	
 	public void initialize() {
 		initialize = true;
-		scheduler = Executors.newScheduledThreadPool(1);
-		try {
-			OPCUA.SetUp();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		try {
-			OPCUA.ServerUpdate();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
+//		scheduler = Executors.newScheduledThreadPool(1);
+//		try {
+//			OPCUA.SetUp();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		try {
+//			OPCUA.ServerUpdate();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		
 	}
 	
 	public void startCycle() {
-		Runnable OPCUA_Background = new Runnable() {
-	        public void run() {
-	        	if (OPCUA.Disconnect==false) {
-	    			try {
-	    				OPCUA.ServerUpdate();
-	    			} catch (Exception e) {
-	    				// TODO Auto-generated catch block
-	    				e.printStackTrace();
-	    			}
-	    		} else if (OPCUA.Disconnect==true) {
-	    			OPCUA.clientDisconnect();
-	    			stop();
-	    			
-	    		}
-	        }
-		};
+//		Runnable OPCUA_Background = new Runnable() {
+//	        public void run() {
+//	        	if (OPCUA.Disconnect==false) {
+//	    			try {
+//	    				OPCUA.ServerUpdate();
+//	    			} catch (Exception e) {
+//	    				// TODO Auto-generated catch block
+//	    				e.printStackTrace();
+//	    			}
+//	    		} else if (OPCUA.Disconnect==true) {
+//	    			OPCUA.clientDisconnect();
+//	    			stop();
+//	    			
+//	    		}
+//	        }
+//		};
 		
 		
-		OPCUAbackgroundCycle = scheduler.scheduleAtFixedRate(OPCUA_Background, 0, 100, TimeUnit.MILLISECONDS);
+//		OPCUAbackgroundCycle = scheduler.scheduleAtFixedRate(OPCUA_Background, 0, 100, TimeUnit.MILLISECONDS);
 	}
 	
 	public void stop(){
 //		scheduler.schedule(new Runnable() { public void run() { beeperHandle.cancel(true); }}, 0 , TimeUnit.SECONDS);
-		OPCUAbackgroundCycle.cancel(true);
-		scheduler.shutdown();
+//		OPCUAbackgroundCycle.cancel(true);
+//		scheduler.shutdown();
 	}
 	
 }

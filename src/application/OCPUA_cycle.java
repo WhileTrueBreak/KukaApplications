@@ -71,6 +71,11 @@ public class OCPUA_cycle	 {
 		initialize = true;
 		scheduler = Executors.newScheduledThreadPool(1);
 		try {
+			TimeUnit.SECONDS.sleep(20);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		try {
 			OPCUA.SetUp();
 		} catch (Exception e) {
 			e.printStackTrace();

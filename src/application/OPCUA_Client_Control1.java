@@ -185,7 +185,7 @@ public class OPCUA_Client_Control1 {
 		nodeId = target;
 
 		references = client.getAddressSpace().browse(nodeId);
-		target = findNode("robot4", references);
+		target = findNode("robot2", references);
 		nodeId = target;
 
 		targetC = findNode("Communication", references);
@@ -198,16 +198,16 @@ public class OPCUA_Client_Control1 {
 		List<ReferenceDescription> referencesC = client.getAddressSpace().browse(nodeIdC);
 		List<ReferenceDescription> referencesD = client.getAddressSpace().browse(nodeIdD);
 
-		NID_Connected = findNode("R4c_Connected",references);
-		NID_Start = findNode("R4c_Start",references);
-		NID_ProgID = findNode("R4c_ProgID",references);
+		NID_Connected = findNode("R2c_Connected",references);
+		NID_Start = findNode("R2c_Start",references);
+		NID_ProgID = findNode("R2c_ProgID",references);
 		NID_Count = findNode("LabCount",referencesC);
-		NID_End = findNode("R4f_End",references);
-		NID_Ready = findNode("R4f_Ready",references);
+		NID_End = findNode("R2f_End",references);
+		NID_Ready = findNode("R2f_Ready",references);
 		
-		NID_int1 = findNode("R4c_int1",references);
-		NID_int2 = findNode("R4c_int2",references);
-		NID_int3 = findNode("R4c_int3",references);
+		NID_int1 = findNode("R2c_int1",references);
+		NID_int2 = findNode("R2c_int2",references);
+		NID_int3 = findNode("R2c_int3",references);
 		
 		NID_Count = findNode("LabCount",referencesC);
 		NID_JAISnap = findNode("C1c_Snap",referencesD);
@@ -215,27 +215,27 @@ public class OPCUA_Client_Control1 {
 		NID_JAIName = findNode("C1c_Name",referencesD);
 		NID_JAIReady = findNode("C1f_Ready",referencesD);
 		
-		NID_Joi1 = findNode("R4c_Joi1", references);
-		NID_Joi2 = findNode("R4c_Joi2", references);
-		NID_Joi3 = findNode("R4c_Joi3", references);
-		NID_Joi4 = findNode("R4c_Joi4", references);
-		NID_Joi5 = findNode("R4c_Joi5", references);
-		NID_Joi6 = findNode("R4c_Joi6", references);
-		NID_Joi7 = findNode("R4c_Joi7", references);
-		NID_Vel = findNode("R4c_Vel", references);
+		NID_Joi1 = findNode("R2c_Joi1", references);
+		NID_Joi2 = findNode("R2c_Joi2", references);
+		NID_Joi3 = findNode("R2c_Joi3", references);
+		NID_Joi4 = findNode("R2c_Joi4", references);
+		NID_Joi5 = findNode("R2c_Joi5", references);
+		NID_Joi6 = findNode("R2c_Joi6", references);
+		NID_Joi7 = findNode("R2c_Joi7", references);
+		NID_Vel = findNode("R2c_Vel", references);
 
-		NID_PosX = findNode("R4c_PosX", references);
-		NID_PosY = findNode("R4c_PosY", references);
-		NID_PosZ = findNode("R4c_PosZ", references);
-		NID_RotA = findNode("R4c_RotA", references);
-		NID_RotB = findNode("R4c_RotB", references);
-		NID_RotC = findNode("R4c_RotC", references);
+		NID_PosX = findNode("R2c_PosX", references);
+		NID_PosY = findNode("R2c_PosY", references);
+		NID_PosZ = findNode("R2c_PosZ", references);
+		NID_RotA = findNode("R2c_RotA", references);
+		NID_RotB = findNode("R2c_RotB", references);
+		NID_RotC = findNode("R2c_RotC", references);
 		
-		NID_GripperControl = findNode("R4c_GripperControl", references);
-		NID_GripperAct = findNode("R4c_GripperAct", references);
-		NID_GripperSpeed = findNode("R4c_GripperSpeed", references);
-		NID_GripperForce = findNode("R4c_GripperForce", references);
-		NID_GripperPos = findNode("R4c_GripperPos", references);
+		NID_GripperControl = findNode("R2c_GripperControl", references);
+		NID_GripperAct = findNode("R2c_GripperAct", references);
+		NID_GripperSpeed = findNode("R2c_GripperSpeed", references);
+		NID_GripperForce = findNode("R2c_GripperForce", references);
+		NID_GripperPos = findNode("R2c_GripperPos", references);
 		
 	}
 
@@ -339,7 +339,7 @@ public class OPCUA_Client_Control1 {
 	
 	protected static void initialize(UaClient client) throws SecureIdentityException, IOException, UnknownHostException {
 		ApplicationDescription appDescription = new ApplicationDescription();
-		appDescription.setApplicationName(new LocalizedText("Robot4_Control", Locale.ENGLISH));
+		appDescription.setApplicationName(new LocalizedText("Robot2_Control", Locale.ENGLISH));
 		appDescription.setApplicationUri("Robot4_Control");
 		appDescription.setProductUri("Robot4_Control");
 		appDescription.setApplicationType(ApplicationType.Client);

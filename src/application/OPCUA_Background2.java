@@ -33,15 +33,15 @@ public class OPCUA_Background2 extends RoboticsAPICyclicBackgroundTask{
 	private OCPUA_cycle cycle2;	
 	
 	public void initialize(){
-//		try {
-//			TimeUnit.SECONDS.sleep(20);
-//		} catch (InterruptedException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		initializeCyclic(0, 500, TimeUnit.MILLISECONDS,	CycleBehavior.BestEffort);
-//		cycle2.initialize();
-//		cycle2.startCycle();
+		try {
+			TimeUnit.SECONDS.sleep(20);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		initializeCyclic(0, 500, TimeUnit.MILLISECONDS,	CycleBehavior.BestEffort);
+		cycle2.initialize();
+		cycle2.startCycle();
 	}
 	
 	@Override

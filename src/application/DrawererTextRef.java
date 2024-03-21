@@ -231,11 +231,11 @@ public class DrawererTextRef extends RoboticsAPIApplication{
 		}
 		
 		List<String> text = new ArrayList<String>();
-		text.add("Welcome to");
-		text.add("Monash");
-		text.add("Innovation");
-		text.add("Labs Launch");
-		text.add("Event");
+		text.add("Masters of");
+		text.add("Advanced");
+		text.add("Engineering");
+//		text.add("Labs Launch");
+//		text.add("Event");
 		for(String line:text) {
 			currentX = 1-buffer;
 			List<PointPath> PointPaths = new ArrayList<PointPath>();

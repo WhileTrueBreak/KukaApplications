@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import com.kuka.roboticsAPI.applicationModel.tasks.CycleBehavior;
 import com.kuka.roboticsAPI.applicationModel.tasks.RoboticsAPICyclicBackgroundTask;
+import com.sun.corba.se.impl.javax.rmi.CORBA.Util;
 
 //import com.kuka.math.geometry.Vector3D;
 /**
@@ -32,6 +33,12 @@ public class OPCUA_Background2 extends RoboticsAPICyclicBackgroundTask{
 	private OCPUA_cycle cycle2;	
 	
 	public void initialize(){
+		try {
+			TimeUnit.SECONDS.sleep(20);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		initializeCyclic(0, 500, TimeUnit.MILLISECONDS,	CycleBehavior.BestEffort);
 		cycle2.initialize();
 		cycle2.startCycle();

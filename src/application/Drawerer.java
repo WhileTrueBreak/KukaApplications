@@ -225,7 +225,7 @@ public class Drawerer extends RoboticsAPIApplication{
 		logger.info("Reading file");
 		String resPath = FileReader.findUniqueFolder("res", "..");
 		
-		List<String> file = FileReader.readFile(resPath+"/WelcomeInKorean.txt");
+		List<String> file = FileReader.readFile(resPath+"/NewKoreaWelcome.txt");
 		PointPath pointPath = PointPath.createPointPathsV2(file, canvas, 1);
 		pointPath.mirrorPaths();
 		PathPlan pathPlan = pointPath.toPathPlan(robot, originFrame, canvas, 200); 

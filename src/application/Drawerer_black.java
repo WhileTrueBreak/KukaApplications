@@ -155,6 +155,8 @@ public class Drawerer_black extends RoboticsAPIApplication{
 
 		Drawerer_black.upVector = originUp.subtract(origin).normalize().multiply(Drawerer_black.PEN_UP_DIST);
 		Drawerer_black.downVector = origin.subtract(originUp).normalize().multiply(Drawerer_black.PEN_DOWN_DIST);
+		Drawerer.upVector = originUp.subtract(origin).normalize().multiply(Drawerer_black.PEN_UP_DIST);
+		Drawerer.downVector = origin.subtract(originUp).normalize().multiply(Drawerer_black.PEN_DOWN_DIST);
 
 		logger.info(String.format("up: %s", originUp.subtract(origin)));
 		logger.info(String.format("up: %s", Drawerer_black.upVector.toString()));

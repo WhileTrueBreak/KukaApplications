@@ -39,7 +39,7 @@ import application.utils.Handler;
  * Drawing random stuff mirrored
  */
 
-public class Drawerer extends RoboticsAPIApplication{
+public class Drawerer_blue extends RoboticsAPIApplication{
 	@Inject
 	private LBR robot;
 	@Inject 
@@ -100,17 +100,17 @@ public class Drawerer extends RoboticsAPIApplication{
 
 	private void penUp(){
 		gripper.move(linRel(
-				Drawerer.upVector.getX(), 
-				Drawerer.upVector.getY(), 
-				Drawerer.upVector.getZ(), 
+				Drawerer_blue.upVector.getX(), 
+				Drawerer_blue.upVector.getY(), 
+				Drawerer_blue.upVector.getZ(), 
 				World.Current.getRootFrame()).setCartVelocity(25));
 	}
 	
 	private void penDown(){
 		gripper.move(linRel(
-				Drawerer.downVector.getX()-Drawerer.upVector.getX(), 
-				Drawerer.downVector.getY()-Drawerer.upVector.getY(), 
-				Drawerer.downVector.getZ()-Drawerer.upVector.getZ(), 
+				Drawerer_blue.downVector.getX()-Drawerer_blue.upVector.getX(), 
+				Drawerer_blue.downVector.getY()-Drawerer_blue.upVector.getY(), 
+				Drawerer_blue.downVector.getZ()-Drawerer_blue.upVector.getZ(), 
 				World.Current.getRootFrame()).setMode(springRobot).setCartVelocity(25));
 	}
 	
@@ -123,7 +123,7 @@ public class Drawerer extends RoboticsAPIApplication{
 		logger.info("Start Drawing");
 		for(int i = 0;i < plan.getStartLocs().size();i++) {
 			logger.info("Start path "+i);
-			Vector3D first = canvas.toWorld(plan.getStartLocs().get(i)).add(RobotController.frameToVector(originFrame)).add(Drawerer.upVector);
+			Vector3D first = canvas.toWorld(plan.getStartLocs().get(i)).add(RobotController.frameToVector(originFrame)).add(Drawerer_blue.upVector);
 			logger.info("Moving to first frame");
 			gripper.move(lin(RobotController.vectorToFrame(first, originFrame)).setCartVelocity(100));
 			penDown();
@@ -147,18 +147,18 @@ public class Drawerer extends RoboticsAPIApplication{
 		
 		logger.info("Calibrating point 1");
 		Frame originFrame = RobotController.calibrateFrame(robot, gripper, 150, 10);
-		gripper.move(linRel(0,0, -Drawerer.PEN_UP_DIST, gripper.getFrame("/TCP")).setJointVelocityRel(0.2));
+		gripper.move(linRel(0,0, -Drawerer_blue.PEN_UP_DIST, gripper.getFrame("/TCP")).setJointVelocityRel(0.2));
 		Frame originUpFrame = robot.getCurrentCartesianPosition(gripper.getFrame("/TCP"), World.Current.getRootFrame());
 		Vector3D origin = RobotController.frameToVector(originFrame);
 		Vector3D originUp = RobotController.frameToVector(originUpFrame);
 		logger.info(String.format("Origin: %s", origin.toString()));
 
-		Drawerer.upVector = originUp.subtract(origin).normalize().multiply(Drawerer.PEN_UP_DIST);
-		Drawerer.downVector = origin.subtract(originUp).normalize().multiply(Drawerer.PEN_DOWN_DIST);
+		Drawerer_blue.upVector = originUp.subtract(origin).normalize().multiply(Drawerer_blue.PEN_UP_DIST);
+		Drawerer_blue.downVector = origin.subtract(originUp).normalize().multiply(Drawerer_blue.PEN_DOWN_DIST);
 
 		logger.info(String.format("up: %s", originUp.subtract(origin)));
-		logger.info(String.format("up: %s", Drawerer.upVector.toString()));
-		logger.info(String.format("down: %s", Drawerer.downVector.toString()));
+		logger.info(String.format("up: %s", Drawerer_blue.upVector.toString()));
+		logger.info(String.format("down: %s", Drawerer_blue.downVector.toString()));
 
 		logger.info("Moving to Origin up");
 		RobotController.safeMove(gripper, lin(originUpFrame).setJointVelocityRel(0.2));
@@ -225,7 +225,7 @@ public class Drawerer extends RoboticsAPIApplication{
 		logger.info("Reading file");
 		String resPath = FileReader.findUniqueFolder("res", "..");
 		 
-		List<String> file = FileReader.readFile(resPath+"/NewKoreaWelcome.txt");
+		List<String> file = FileReader.readFile(resPath+"/KFlagBlue.txt");
 		PointPath pointPath = PointPath.createPointPathsV2(file, canvas, 1);
 		pointPath.mirrorPaths();
 		PathPlan pathPlan = pointPath.toPathPlan(robot, originFrame, canvas, 200); 

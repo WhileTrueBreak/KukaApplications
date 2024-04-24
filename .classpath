@@ -169,6 +169,5 @@
 			<attribute name="javadoc_location" value="jar:platform:/resource/_Robot1/Robot1_Dev/KUKAJavaLib/#Bundle-JavaDoc#!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/prosys-opc-ua-sdk-client-4.6.2-1636.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

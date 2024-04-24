@@ -17,14 +17,11 @@ import com.kuka.roboticsAPI.applicationModel.tasks.RoboticsAPITask;
 
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.*;
 
-import com.kuka.roboticsAPI.capabilities.honk.IHonkCapability;
 import com.kuka.roboticsAPI.conditionModel.ForceCondition;
 import com.kuka.roboticsAPI.deviceModel.LBR;
-import com.kuka.roboticsAPI.deviceModel.kmp.KmpOmniMove;
 import com.kuka.roboticsAPI.deviceModel.kmp.SunriseOmniMoveMobilePlatform;
 import com.kuka.roboticsAPI.geometricModel.Tool;
 import com.kuka.roboticsAPI.geometricModel.World;
-import com.kuka.roboticsAPI.motionModel.kmp.MobilePlatformRelativeMotion;
 import com.kuka.task.ITaskLogger;
 import com.kuka.common.ThreadUtil;
 import com.kuka.generated.ioAccess.MediaFlangeIOGroup;
@@ -47,16 +44,11 @@ import com.kuka.generated.ioAccess.MediaFlangeIOGroup;
  * @see #run()
  * @see #dispose()
  */
-
+@NavTaskCategory(maxInstances = 2)
 public class test_move extends RoboticsAPIApplication {
 	@Inject
+	@Named("lBR_iiwa_14_R820_1")
 	private LBR robot;
-	
-	@Inject 
-	private SunriseOmniMoveMobilePlatform kmp;
-	
-	@Inject
-	private KmpOmniMove base;
 	
 	@Inject
 	private MobileRobotManager robotManager;
@@ -81,11 +73,8 @@ public class test_move extends RoboticsAPIApplication {
 	@Override
 	public void initialize() {
 		gripper.attachTo(robot.getFlange());
-		
 		gripper2F1.initalise();
 		gripper2F1.setSpeed(189);
-		gripper2F1.close();
-		ThreadUtil.milliSleep(200);
 		gripper2F1.open();
 	}
 
@@ -98,10 +87,14 @@ public class test_move extends RoboticsAPIApplication {
 		//Collections<MobileRobot> robots = robotManager.getRobots(MobileRobot.class);
 
 		//Collection<Location> locations = locationData.getAll();
-		double x = -1000;
-		double y = 0;
-		double tita = 0;
-		MobilePlatformRelativeMotion motion = new MobilePlatformRelativeMotion(x, y, tita);
-		base.move(motion.setVelocity(40, 40));
+		
+		int robotID = 1;
+		MobileRobot platform = robotManager.getRobot(robotID);
+		double x = 0.05; // In meters
+		double y = 0.05; // In meters
+		// Convert degrees to radians
+		double theta = Math.toRadians(5);
+		RelativeMotion motion = new RelativeMotion(x, y, theta);
+		platform.execute(motion);
 	}
 }

@@ -1,17 +1,33 @@
 package application;
 
+import java.util.concurrent.TimeUnit;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.*;
-
+ 
+import com.kuka.roboticsAPI.capabilities.honk.IHonkCapability;
+import com.kuka.roboticsAPI.conditionModel.BooleanIOCondition;
 import com.kuka.roboticsAPI.conditionModel.ForceCondition;
+import com.kuka.roboticsAPI.conditionModel.ICallbackAction;
+import com.kuka.roboticsAPI.conditionModel.ITriggerAction;
+import com.kuka.roboticsAPI.deviceModel.JointPosition;
 import com.kuka.roboticsAPI.deviceModel.LBR;
+import com.kuka.roboticsAPI.deviceModel.kmp.SunriseOmniMoveMobilePlatform;
+import com.kuka.roboticsAPI.executionModel.IFiredTriggerInfo;
+import com.kuka.roboticsAPI.geometricModel.CartDOF;
+import com.kuka.roboticsAPI.geometricModel.Frame;
 import com.kuka.roboticsAPI.geometricModel.Tool;
 import com.kuka.roboticsAPI.geometricModel.World;
+import com.kuka.roboticsAPI.geometricModel.math.Vector;
+import com.kuka.roboticsAPI.motionModel.controlModeModel.CartesianImpedanceControlMode;
+import com.kuka.roboticsAPI.sensorModel.ForceSensorData;
+import com.kuka.roboticsAPI.sensorModel.TorqueSensorData;
 import com.kuka.task.ITaskLogger;
 import com.kuka.common.ThreadUtil;
 import com.kuka.generated.ioAccess.MediaFlangeIOGroup;
+import static com.kuka.roboticsAPI.motionModel.HRCMotions.*;
 
 /**
  * Implementation of a robot application.
@@ -48,6 +64,11 @@ public class IndirectHandoverFinlay extends RoboticsAPIApplication {
 	@Inject
 	private ITaskLogger logger;
 	
+	@Inject
+	private SunriseOmniMoveMobilePlatform kmp;
+
+	CartesianImpedanceControlMode springRobot;
+	
 	@Override
 	public void initialize() {
 		gripper.attachTo(robot.getFlange());
@@ -65,55 +86,87 @@ public class IndirectHandoverFinlay extends RoboticsAPIApplication {
 		//USAGE, will move to next line when triggered
 		//LOOK at pipecutting.java for examples on analysing the break condition. 
 		//gripper.move(linRel(0, 0, -30, World.Current.getRootFrame()).setCartVelocity(50).breakWhen(touch10)); 
+		springRobot = new CartesianImpedanceControlMode();
+		
+		springRobot.parametrize(CartDOF.X).setStiffness(1000);
+		springRobot.parametrize(CartDOF.Y).setStiffness(180);
+		springRobot.parametrize(CartDOF.Z).setStiffness(1000);
+		springRobot.parametrize(CartDOF.C).setStiffness(300);
+		springRobot.parametrize(CartDOF.B).setStiffness(300);
+		springRobot.parametrize(CartDOF.A).setStiffness(300);
+		springRobot.setReferenceSystem(World.Current.getRootFrame());
+		springRobot.parametrize(CartDOF.ALL).setDamping(0.5);
+		//USAGE, will move to next line when triggered
+		//LOOK at pipecutting.java for examples on analysing the break condition.
+		//gripper.move(linRel(0, 0, -30, World.Current.getRootFrame()).setCartVelocity(50).breakWhen(touch10));
 	}
 
 	
 	@Override
 	public void run() {
+		
+		get_part(3, 147);
+		drop_part();
+		get_from_drop(3,147);
+		
+		get_part(4, 147);
+		drop_part();
+		get_from_drop(4,147);
+		
+		get_part(1, 0);
+		drop_part();
+		get_from_drop(1,0);
+		
+		get_part(2, 0);
+		drop_part();
+		get_from_drop(2,0);
+		
+		
 
-		// part 1
-		robot.move(ptp(getApplicationData().getFrame("/PART_1/p1_transition")).setJointVelocityRel(0.3));//frame1
-		robot.move(ptp(getApplicationData().getFrame("/PART_1")).setJointVelocityRel(0.3));//frame1
-		gripper2F1.close();
-		robot.move(ptp(getApplicationData().getFrame("/PART_1/p1_transition")).setJointVelocityRel(0.3));//frame1
-		robot.move(ptp(getApplicationData().getFrame("/drop_point/drop_transition")).setJointVelocityRel(0.3));//frame1
-		robot.move(ptp(getApplicationData().getFrame("/drop_point")).setJointVelocityRel(0.3));//frame1
-		gripper2F1.open();
-		
-		// part 2
-		robot.move(ptp(getApplicationData().getFrame("/PART_2/p2_transition")).setJointVelocityRel(0.3));//frame1
-		robot.move(ptp(getApplicationData().getFrame("/PART_2")).setJointVelocityRel(0.3));//frame1
-		gripper2F1.close();
-		robot.move(ptp(getApplicationData().getFrame("/PART_2/p2_transition")).setJointVelocityRel(0.3));//frame1
-		robot.move(ptp(getApplicationData().getFrame("/drop_point/drop_transition")).setJointVelocityRel(0.3));//frame1
-		robot.move(ptp(getApplicationData().getFrame("/drop_point")).setJointVelocityRel(0.3));//frame1
-		gripper2F1.open();
-		
-		robot.move(ptp(getApplicationData().getFrame("/PART_3/p3_transition")).setJointVelocityRel(0.3));//frame1
-		robot.move(ptp(getApplicationData().getFrame("/PART_3")).setJointVelocityRel(0.3));//frame1
-		gripper2F1.close();
-		robot.move(ptp(getApplicationData().getFrame("/PART_3/p3_transition")).setJointVelocityRel(0.3));//frame1
-		robot.move(ptp(getApplicationData().getFrame("/drop_point/drop_transition")).setJointVelocityRel(0.3));//frame1
-		robot.move(ptp(getApplicationData().getFrame("/drop_point")).setJointVelocityRel(0.3));//frame1
-		gripper2F1.open();
-		
-		robot.move(ptp(getApplicationData().getFrame("/PART_4/p4_transition")).setJointVelocityRel(0.3));//frame1
-		robot.move(ptp(getApplicationData().getFrame("/PART_4")).setJointVelocityRel(0.3));//frame1
-		gripper2F1.close();
-		robot.move(ptp(getApplicationData().getFrame("/PART_4/p4_transition")).setJointVelocityRel(0.3));//frame1
-		robot.move(ptp(getApplicationData().getFrame("/drop_point/drop_transition")).setJointVelocityRel(0.3));//frame1
-		robot.move(ptp(getApplicationData().getFrame("/drop_point")).setJointVelocityRel(0.3));//frame1
-		gripper2F1.open();
-		
-		robot.move(ptp(getApplicationData().getFrame("/PART_5/p5_transition")).setJointVelocityRel(0.3));//frame1
-		robot.move(ptp(getApplicationData().getFrame("/PART_5")).setJointVelocityRel(0.3));//frame1
-		gripper2F1.close();
-		robot.move(ptp(getApplicationData().getFrame("/PART_5/p5_transition")).setJointVelocityRel(0.3));//frame1
-		robot.move(ptp(getApplicationData().getFrame("/drop_point/drop_transition")).setJointVelocityRel(0.3));//frame1
-		robot.move(ptp(getApplicationData().getFrame("/drop_point")).setJointVelocityRel(0.3));//frame1
-		gripper2F1.open();
-		
 		mF.setLEDBlue(true);
 		
 	}
+	
+	public static double calc_dist(double x1, double y1, double z1, double x2, double y2, double z2){
+		
+		double dist = Math.sqrt(Math.pow(x1-x2,2) +Math.pow(y1-y2,2)  + Math.pow(z1-z2,2) );
+		
+		return dist;
+	}
+	
+	public void get_part(int part, int grip_offset){
+		// part: integer 1-4
+		// grip offset: how wide the gripper should be picking up parts - important for certain parts, 0 is open
+		
+		robot.move(ptp(getApplicationData().getFrame("/PART_"+ Integer.toString(part) +"/p" + Integer.toString(part) + "_transition")).setJointVelocityRel(0.3));
+		gripper2F1.setPos(grip_offset);
+		robot.move(ptp(getApplicationData().getFrame("/PART_" + Integer.toString(part))).setJointVelocityRel(0.3));//frame1
+		gripper2F1.close();
+		robot.move(ptp(getApplicationData().getFrame("/PART_"+ Integer.toString(part) +"/p" + Integer.toString(part) + "_transition")).setJointVelocityRel(0.3));
+		
+	}
+	
+	public void drop_part(){
+		// part: integer 1-4
+		// grip offset: how wide the gripper should be picking up parts - important for certain parts, 0 is open
+		robot.move(ptp(getApplicationData().getFrame("/drop_point/drop_transition")).setJointVelocityRel(0.3));//frame1
+		robot.move(ptp(getApplicationData().getFrame("/drop_point/drop_DROP")).setJointVelocityRel(0.3));//frame1
+		gripper2F1.open();
+		robot.move(ptp(getApplicationData().getFrame("/drop_point/drop_transition")).setJointVelocityRel(0.3));//frame1
+	}
+	
+	public void get_from_drop(int part, int grip_offset){
+		// part: integer 1-4
+		// grip offset: how wide the gripper should be picking up parts - important for certain parts, 0 is open
+		robot.move(ptp(getApplicationData().getFrame("/drop_point/drop_transition")).setJointVelocityRel(0.3));//frame1
+		robot.move(ptp(getApplicationData().getFrame("/drop_point")).setJointVelocityRel(0.3));//frame1
+		gripper2F1.close();
+		robot.move(ptp(getApplicationData().getFrame("/drop_point/drop_transition")).setJointVelocityRel(0.3));
+		robot.move(ptp(getApplicationData().getFrame("/PART_"+ Integer.toString(part) +"/p" + Integer.toString(part) + "_transition")).setJointVelocityRel(0.3));
+		robot.move(ptp(getApplicationData().getFrame("/PART_" + Integer.toString(part))).setJointVelocityRel(0.3));
+		gripper2F1.setPos(grip_offset);
+		robot.move(ptp(getApplicationData().getFrame("/PART_"+ Integer.toString(part) +"/p" + Integer.toString(part) + "_transition")).setJointVelocityRel(0.3));
+	}
+	
+	
 }

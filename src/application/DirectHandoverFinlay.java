@@ -235,7 +235,7 @@ public class DirectHandoverFinlay extends RoboticsAPIApplication {
 		
 		
 		
-		perform_handover(1, 1, 1);
+		//perform_handover(1, 1, 1);
 		
 		perform_handover(1, 1, 0);
 		

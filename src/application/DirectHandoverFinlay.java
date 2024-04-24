@@ -217,8 +217,9 @@ public class DirectHandoverFinlay extends RoboticsAPIApplication {
 			go_to_frame("/handover");	
 			
 			detect_handover();	
-			
+			gripper2F1.setSpeed(10);
 			gripper2F1.close();		
+			gripper2F1.setSpeed(20);
 			
 			take_to_jig(1, 1);
 			

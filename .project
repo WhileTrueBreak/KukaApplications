@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>Robot1_Finlay2</name>
+	<name>_Robot1_Deafult</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -12,6 +12,11 @@
 		</buildCommand>
 		<buildCommand>
 			<name>com.kuka.roboticsAPI.eclipseBase.sunriseBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>com.kuka.appframework.swb.build.BlmBuilder</name>
 			<arguments>
 			</arguments>
 		</buildCommand>

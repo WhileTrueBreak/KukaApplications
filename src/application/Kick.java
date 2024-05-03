@@ -80,7 +80,7 @@ public class Kick extends RoboticsAPIApplication{
 		// Calibration sequence
 		mF.setLEDBlue(true);
 		gripper.move(ptp(getApplicationData().getFrame("/P10")));
-		gripper.move(lin(getApplicationData().getFrame("/P8")).setCartVelocity(500));
+		gripper.move(lin(getApplicationData().getFrame("/P8")));
 		mF.setLEDBlue(false);
 	}
 }

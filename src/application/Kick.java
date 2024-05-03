@@ -78,9 +78,11 @@ public class Kick extends RoboticsAPIApplication{
 	@Override
 	public void run() throws Exception {
 		// Calibration sequence
-		mF.setLEDBlue(true);
-		gripper.move(lin(getApplicationData().getFrame("/P10")));
-		gripper.move(lin(getApplicationData().getFrame("/P8")));
-		mF.setLEDBlue(false);
+		while(true){
+			mF.setLEDBlue(true);
+			gripper.move(lin(getApplicationData().getFrame("/P10")));
+			gripper.move(lin(getApplicationData().getFrame("/P8")));
+			mF.setLEDBlue(false);
+		}
 	}
 }

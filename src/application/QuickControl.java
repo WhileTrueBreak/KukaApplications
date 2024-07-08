@@ -11,6 +11,7 @@ import com.kuka.roboticsAPI.geometricModel.Frame;
 import com.kuka.roboticsAPI.geometricModel.Tool;
 import com.kuka.roboticsAPI.motionModel.BasicMotions;
 import com.kuka.roboticsAPI.motionModel.IMotionContainer;
+import com.kuka.roboticsAPI.motionModel.Spline;
 import com.kuka.task.ITaskLogger;
 
 import application.opcua.Opcua;
@@ -28,12 +29,14 @@ public class QuickControl extends RoboticsAPIApplication{
 	private Tool tool;
 	@Inject
 	private ITaskLogger logger;
-	
+
+	private IMotionContainer prevMotion;
 	private IMotionContainer currentMotion;
 	
 	@Override
 	public void initialize() {
 		tool.attachTo(robot.getFlange());
+		prevMotion = null;
 		currentMotion = null;
 	}
 	
@@ -97,8 +100,10 @@ public class QuickControl extends RoboticsAPIApplication{
 	private boolean moveToPos(double[] pos) {
 		Frame frame = new Frame(pos[0], pos[1], pos[2], pos[3], pos[4], pos[5]);
 		try {
-			if(currentMotion != null) currentMotion.cancel();
-			currentMotion = tool.moveAsync(BasicMotions.ptp(frame));
+			IMotionContainer tmpMotion = prevMotion;
+			prevMotion = currentMotion;
+			currentMotion = tool.moveAsync(BasicMotions.ptp(frame).setBlendingRel(1));
+			tmpMotion.cancel();
 		} catch (Exception e) {
 			return false;
 		}

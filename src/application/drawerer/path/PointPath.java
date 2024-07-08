@@ -14,7 +14,6 @@ import com.kuka.roboticsAPI.motionModel.MotionBatch;
 import com.kuka.roboticsAPI.motionModel.RobotMotion;
 
 import application.Drawerer;
-import application.DrawererTextRef;
 import application.drawerer.parser.PathParser;
 import application.drawerer.robotControl.Canvas;
 import application.drawerer.robotControl.RobotController;

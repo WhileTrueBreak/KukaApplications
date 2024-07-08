@@ -1,5 +1,8 @@
 package application;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -30,14 +33,12 @@ public class QuickControl extends RoboticsAPIApplication{
 	@Inject
 	private ITaskLogger logger;
 
-	private IMotionContainer prevMotion;
-	private IMotionContainer currentMotion;
+	private List<IMotionContainer> queuedMotions;
 	
 	@Override
 	public void initialize() {
 		tool.attachTo(robot.getFlange());
-		prevMotion = null;
-		currentMotion = null;
+		queuedMotions = new ArrayList<IMotionContainer>();
 	}
 	
 	@Override
@@ -56,6 +57,7 @@ public class QuickControl extends RoboticsAPIApplication{
 		String statusNodePath = "Objects/RobotControl/cstatus";
 		String disconnectNodePath = "Objects/RobotControl/cdisconnect";
 
+		logger.info("Connecting");
 		Opcua opcua;
 		opcua = new Opcua("opc.tcp://172.32.1.191:4840/server");
 		for(String path:nodesToRead) {
@@ -67,7 +69,8 @@ public class QuickControl extends RoboticsAPIApplication{
 		
 		boolean stop = false;
 		boolean destUpdate = false;
-		
+
+		logger.info("Looping");
 		while(!stop) {
 			for(int i = 0;i < nodesToRead.length;i++) {
 				String path = nodesToRead[i];
@@ -100,10 +103,11 @@ public class QuickControl extends RoboticsAPIApplication{
 	private boolean moveToPos(double[] pos) {
 		Frame frame = new Frame(pos[0], pos[1], pos[2], pos[3], pos[4], pos[5]);
 		try {
-			IMotionContainer tmpMotion = prevMotion;
-			prevMotion = currentMotion;
-			currentMotion = tool.moveAsync(BasicMotions.ptp(frame).setBlendingRel(1).setJointAccelerationRel(0.1).setJointJerkRel(0.5));
-			tmpMotion.cancel();
+			queuedMotions.add(tool.moveAsync(BasicMotions.ptp(frame).setBlendingRel(1)));
+			if(queuedMotions.size() < 4) {
+				queuedMotions.get(0).cancel();
+				queuedMotions.remove(0);
+			}
 		} catch (Exception e) {
 			return false;
 		}

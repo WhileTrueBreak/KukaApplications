@@ -1,5 +1,7 @@
 package application;
 
+import java.util.Set;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -51,7 +53,10 @@ public class test extends RoboticsAPIApplication{
 				logger.info(path+": "+value);
 			}
 		}
+		
 		opcua.disconnect();
+		logger.info("Disconnected");
+		
 		
 	}
 

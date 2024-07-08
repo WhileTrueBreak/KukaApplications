@@ -1,4 +1,4 @@
-package application.parser;
+package application.drawerer.parser;
 
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
@@ -6,8 +6,8 @@ import java.util.List;
 
 import com.kuka.nav.geometry.Vector2D;
 
-import application.path.Node;
-import application.path.Path;
+import application.drawerer.path.Node;
+import application.drawerer.path.Path;
 import application.utils.MathHelper;
 
 public class PathParser {

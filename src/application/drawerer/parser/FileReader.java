@@ -1,4 +1,4 @@
-package application.parser;
+package application.drawerer.parser;
 
 import java.io.File;
 import java.io.FileNotFoundException;

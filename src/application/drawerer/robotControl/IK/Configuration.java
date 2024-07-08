@@ -1,4 +1,4 @@
-package application.robotControl.IK;
+package application.drawerer.robotControl.IK;
 
 public class Configuration {
 	

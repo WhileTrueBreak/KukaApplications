@@ -1,4 +1,4 @@
-package application.path;
+package application.drawerer.path;
 
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
@@ -15,9 +15,9 @@ import com.kuka.roboticsAPI.motionModel.RobotMotion;
 
 import application.Drawerer;
 import application.DrawererTextRef;
-import application.parser.PathParser;
-import application.robotControl.Canvas;
-import application.robotControl.RobotController;
+import application.drawerer.parser.PathParser;
+import application.drawerer.robotControl.Canvas;
+import application.drawerer.robotControl.RobotController;
 import application.utils.Bezier;
 import application.utils.Handler;
 import application.utils.MathHelper;

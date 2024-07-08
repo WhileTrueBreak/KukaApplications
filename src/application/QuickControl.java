@@ -102,7 +102,7 @@ public class QuickControl extends RoboticsAPIApplication{
 		try {
 			IMotionContainer tmpMotion = prevMotion;
 			prevMotion = currentMotion;
-			currentMotion = tool.moveAsync(BasicMotions.ptp(frame).setBlendingRel(1));
+			currentMotion = tool.moveAsync(BasicMotions.ptp(frame).setBlendingRel(1).setJointAccelerationRel(0.1).setJointJerkRel(0.5));
 			tmpMotion.cancel();
 		} catch (Exception e) {
 			return false;

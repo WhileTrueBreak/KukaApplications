@@ -7,7 +7,9 @@ import com.kuka.generated.ioAccess.Gripper2FIOGroup;
 import com.kuka.generated.ioAccess.MediaFlangeIOGroup;
 import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
 import com.kuka.roboticsAPI.deviceModel.LBR;
+import com.kuka.roboticsAPI.geometricModel.Frame;
 import com.kuka.roboticsAPI.geometricModel.Tool;
+import com.kuka.roboticsAPI.motionModel.BasicMotions;
 import com.kuka.task.ITaskLogger;
 
 import application.opcua.Opcua;
@@ -34,38 +36,64 @@ public class test extends RoboticsAPIApplication{
 	@Override
 	public void run() throws Exception {
 		
+		double[] dest = {0,0,0,0,0,0};
+		
 		String[] nodesToRead = {
 				"Objects/RobotControl/cposx",
 				"Objects/RobotControl/cposy",
 				"Objects/RobotControl/cposz",
+				"Objects/RobotControl/crota",
+				"Objects/RobotControl/crotb",
+				"Objects/RobotControl/crotc",
 		};
 		String statusNodePath = "Objects/RobotControl/cstatus";
+		String disconnectNodePath = "Objects/RobotControl/cdisconnect";
 
 		Opcua opcua;
 		opcua = new Opcua("opc.tcp://172.32.1.191:4840/server");
 		for(String path:nodesToRead) {
 			opcua.addReadableNode(path);
 		}
-		opcua.addReadableNode(statusNodePath);
+		opcua.addReadableNode(disconnectNodePath);
+		opcua.addWritableNode(disconnectNodePath);
 		opcua.addWritableNode(statusNodePath);
 		
 		boolean stop = false;
 		
 		while(!stop) {
-			for(String path:nodesToRead) {
+			for(int i = 0;i < nodesToRead.length;i++) {
+				String path = nodesToRead[i];
 				if(!opcua.hasNodeUpdated(path)) continue;
 				double value = opcua.readNode(path, Double.TYPE);
-				logger.info(path+": "+value);
+				dest[i] = value;
 			}
-			if(!opcua.hasNodeUpdated(statusNodePath)) continue;
-			int value = opcua.readNode(statusNodePath, Integer.TYPE);
+			boolean success = moveToPos(dest);
+			if(success) {
+				opcua.writeNode(statusNodePath, 1);
+			}else {
+				opcua.writeNode(statusNodePath, 0);
+			}
+			
+			if(!opcua.hasNodeUpdated(disconnectNodePath)) continue;
+			int value = opcua.readNode(disconnectNodePath, Integer.TYPE);
 			if(value == -1) stop = true;
 		}
 
-		opcua.writeNode(statusNodePath, 0);
+		opcua.writeNode(disconnectNodePath, 0);
 		opcua.shutdown();
 		logger.info("Disconnected");
 		
+	}
+	
+	private boolean moveToPos(double[] pos) {
+		Frame frame = new Frame(pos[0], pos[1], pos[2], pos[3], pos[4], pos[5]);
+		try {
+			tool.move(BasicMotions.ptp(frame));
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
 	}
 
 }

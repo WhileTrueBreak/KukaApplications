@@ -1,4 +1,4 @@
-package application.robotControl;
+package application.drawerer.robotControl;
 
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.lin;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.linRel;
@@ -17,8 +17,8 @@ import com.kuka.roboticsAPI.motionModel.SplineMotionCP;
 import com.kuka.roboticsAPI.motionModel.SplineOrientationType;
 import com.kuka.roboticsAPI.sensorModel.ForceSensorData;
 
-import application.path.Node;
-import application.path.Path;
+import application.drawerer.path.Node;
+import application.drawerer.path.Path;
 import application.utils.Handler;
 
 public class RobotController {

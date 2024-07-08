@@ -1,13 +1,13 @@
-package application.text;
+package application.drawerer.text;
 
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import application.parser.FileReader;
-import application.path.PointPath;
-import application.robotControl.Canvas;
+import application.drawerer.parser.FileReader;
+import application.drawerer.path.PointPath;
+import application.drawerer.robotControl.Canvas;
 import application.utils.Handler;
 
 public class TextManager {

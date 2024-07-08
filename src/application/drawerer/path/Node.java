@@ -1,4 +1,4 @@
-package application.path;
+package application.drawerer.path;
 
 import com.kuka.nav.geometry.Vector2D;
 

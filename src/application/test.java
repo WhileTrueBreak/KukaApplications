@@ -95,7 +95,6 @@ public class test extends RoboticsAPIApplication{
 		try {
 			tool.move(BasicMotions.ptp(frame));
 		} catch (Exception e) {
-			e.printStackTrace();
 			return false;
 		}
 		return true;

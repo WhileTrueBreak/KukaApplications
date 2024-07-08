@@ -1,4 +1,4 @@
-package application;
+package application.attachments;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;

@@ -30,7 +30,7 @@ public class test extends RoboticsAPIApplication{
 	
 	@Override
 	public void initialize() {
-		
+		tool.attachTo(robot.getFlange());
 	}
 	
 	@Override
@@ -59,19 +59,24 @@ public class test extends RoboticsAPIApplication{
 		opcua.addWritableNode(statusNodePath);
 		
 		boolean stop = false;
+		boolean destUpdate = false;
 		
 		while(!stop) {
 			for(int i = 0;i < nodesToRead.length;i++) {
 				String path = nodesToRead[i];
 				if(!opcua.hasNodeUpdated(path)) continue;
+				destUpdate = true;
 				double value = opcua.readNode(path, Double.TYPE);
 				dest[i] = value;
 			}
-			boolean success = moveToPos(dest);
-			if(success) {
-				opcua.writeNode(statusNodePath, 1);
-			}else {
-				opcua.writeNode(statusNodePath, 0);
+			if(destUpdate) {
+				boolean success = moveToPos(dest);
+				if(success) {
+					opcua.writeNode(statusNodePath, 1);
+				}else {
+					opcua.writeNode(statusNodePath, -1);
+				}
+				destUpdate = false;
 			}
 			
 			if(!opcua.hasNodeUpdated(disconnectNodePath)) continue;

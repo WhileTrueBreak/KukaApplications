@@ -14,7 +14,7 @@ import com.kuka.task.ITaskLogger;
 
 import application.opcua.Opcua;
 
-public class test extends RoboticsAPIApplication{
+public class QuickControl extends RoboticsAPIApplication{
 
 	@Inject
 	private LBR robot;
@@ -95,7 +95,6 @@ public class test extends RoboticsAPIApplication{
 		try {
 			tool.move(BasicMotions.ptp(frame));
 		} catch (Exception e) {
-			e.printStackTrace();
 			return false;
 		}
 		return true;

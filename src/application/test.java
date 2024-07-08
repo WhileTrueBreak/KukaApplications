@@ -1,7 +1,5 @@
 package application;
 
-import java.io.IOException;
-
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -11,6 +9,8 @@ import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
 import com.kuka.roboticsAPI.deviceModel.LBR;
 import com.kuka.roboticsAPI.geometricModel.Tool;
 import com.kuka.task.ITaskLogger;
+
+import application.opcua.Opcua;
 
 public class test extends RoboticsAPIApplication{
 
@@ -33,6 +33,25 @@ public class test extends RoboticsAPIApplication{
 	
 	@Override
 	public void run() throws Exception {
+		
+		String[] nodesToRead = {
+				"Objects/RobotControl/cposx",
+				"Objects/RobotControl/cposy",
+				"Objects/RobotControl/cposz",
+		};
+		Opcua opcua;
+		opcua = new Opcua("opc.tcp://172.32.1.191:4840/server");
+		for(String path:nodesToRead) {
+			opcua.addReadableNode(path);
+		}
+		for(int i = 0;i < 100;i++) {
+			for(String path:nodesToRead) {
+				if(!opcua.hasNodeUpdated(path)) continue;
+				double value = opcua.readNode(path, Double.TYPE);
+				logger.info(path+": "+value);
+			}
+		}
+		opcua.disconnect();
 		
 	}
 

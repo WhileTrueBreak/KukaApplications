@@ -6,7 +6,7 @@ import com.kuka.roboticsAPI.deviceModel.LBR;
 import com.kuka.roboticsAPI.geometricModel.Tool;
 import com.kuka.task.ITaskLogger;
 
-import application.Gripper2F;
+import application.attachments.Gripper2F;
 
 public class Handler {
 

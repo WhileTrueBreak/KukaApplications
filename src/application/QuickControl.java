@@ -104,7 +104,7 @@ public class QuickControl extends RoboticsAPIApplication{
 		Frame frame = new Frame(pos[0], pos[1], pos[2], pos[3], pos[4], pos[5]);
 		try {
 			queuedMotions.add(tool.moveAsync(BasicMotions.ptp(frame).setBlendingRel(1)));
-			if(queuedMotions.size() < 4) {
+			if(queuedMotions.size() > 3) {
 				queuedMotions.get(0).cancel();
 				queuedMotions.remove(0);
 			}

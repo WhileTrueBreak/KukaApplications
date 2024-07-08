@@ -16,6 +16,7 @@ import com.kuka.roboticsAPI.motionModel.BasicMotions;
 import com.kuka.roboticsAPI.motionModel.IMotionContainer;
 import com.kuka.roboticsAPI.motionModel.Spline;
 import com.kuka.task.ITaskLogger;
+import com.prosysopc.ua.stack.utils.StackUtils;
 
 import application.opcua.Opcua;
 
@@ -37,6 +38,7 @@ public class QuickControl extends RoboticsAPIApplication{
 	
 	@Override
 	public void initialize() {
+		StackUtils.shutdown();
 		tool.attachTo(robot.getFlange());
 		queuedMotions = new ArrayList<IMotionContainer>();
 	}

@@ -26,12 +26,13 @@ import com.kuka.roboticsAPI.motionModel.controlModeModel.CartesianImpedanceContr
 import com.kuka.roboticsAPI.sensorModel.ForceSensorData;
 import com.kuka.task.ITaskLogger;
 
-import application.parser.FileReader;
-import application.path.PathPlan;
-import application.path.PointPath;
-import application.robotControl.Canvas;
-import application.robotControl.RobotController;
-import application.text.TextManager;
+
+import application.drawerer.parser.FileReader;
+import application.drawerer.path.PathPlan;
+import application.drawerer.path.PointPath;
+import application.drawerer.robotControl.Canvas;
+import application.drawerer.robotControl.RobotController;
+import application.drawerer.text.TextManager;
 import application.utils.Handler;
 
 /*

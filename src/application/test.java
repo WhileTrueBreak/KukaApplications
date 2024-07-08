@@ -51,7 +51,8 @@ public class test extends RoboticsAPIApplication{
 				logger.info(path+": "+value);
 			}
 		}
-		opcua.disconnect();
+		opcua.shutdown();
+		logger.info("Disconnected");
 		
 	}
 

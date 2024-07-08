@@ -39,18 +39,30 @@ public class test extends RoboticsAPIApplication{
 				"Objects/RobotControl/cposy",
 				"Objects/RobotControl/cposz",
 		};
+		String statusNodePath = "Objects/RobotControl/cstatus";
+
 		Opcua opcua;
 		opcua = new Opcua("opc.tcp://172.32.1.191:4840/server");
 		for(String path:nodesToRead) {
 			opcua.addReadableNode(path);
 		}
-		for(int i = 0;i < 100;i++) {
+		opcua.addReadableNode(statusNodePath);
+		opcua.addWritableNode(statusNodePath);
+		
+		boolean stop = false;
+		
+		while(!stop) {
 			for(String path:nodesToRead) {
 				if(!opcua.hasNodeUpdated(path)) continue;
 				double value = opcua.readNode(path, Double.TYPE);
 				logger.info(path+": "+value);
 			}
+			if(!opcua.hasNodeUpdated(statusNodePath)) continue;
+			int value = opcua.readNode(statusNodePath, Integer.TYPE);
+			if(value == -1) stop = true;
 		}
+
+		opcua.writeNode(statusNodePath, 0);
 		opcua.shutdown();
 		logger.info("Disconnected");
 		

@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.ThreadPoolExecutor;
+
 import com.prosysopc.ua.ApplicationIdentity;
 import com.prosysopc.ua.UserIdentity;
 import com.prosysopc.ua.client.MonitoredDataItem;
@@ -21,6 +23,7 @@ import com.prosysopc.ua.stack.core.Identifiers;
 import com.prosysopc.ua.stack.core.MonitoringMode;
 import com.prosysopc.ua.stack.core.ReferenceDescription;
 import com.prosysopc.ua.stack.transport.security.SecurityMode;
+import com.prosysopc.ua.stack.utils.StackUtils;
 
 public class Opcua {
 	
@@ -144,6 +147,14 @@ public class Opcua {
 	
 	public void disconnect() {
 		client.disconnect();
+	}
+	
+	public void shutdown() {
+		client.disconnect();
+		ThreadPoolExecutor blockingPool = (ThreadPoolExecutor) StackUtils.getBlockingWorkExecutor();
+		ThreadPoolExecutor nonblockingPool = (ThreadPoolExecutor) StackUtils.getNonBlockingWorkExecutor();
+		StackUtils.shutdown();
+		while(blockingPool.getPoolSize() != 0 || nonblockingPool.getPoolSize() != 0);
 	}
 	
 }

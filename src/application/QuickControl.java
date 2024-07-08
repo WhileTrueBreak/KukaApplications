@@ -14,7 +14,7 @@ import com.kuka.task.ITaskLogger;
 
 import application.opcua.Opcua;
 
-public class test extends RoboticsAPIApplication{
+public class QuickControl extends RoboticsAPIApplication{
 
 	@Inject
 	private LBR robot;

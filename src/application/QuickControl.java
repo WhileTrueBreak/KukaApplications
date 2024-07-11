@@ -38,6 +38,7 @@ public class QuickControl extends RoboticsAPIApplication{
 	private ITaskLogger logger;
 
 	private List<IMotionContainer> queuedMotions;
+	private FRIJointOverlay jointOverlay;
 	
 	@Override
 	public void initialize() {
@@ -57,7 +58,7 @@ public class QuickControl extends RoboticsAPIApplication{
                 + " ReceiveMultiplier: " + friConfiguration.getReceiveMultiplier());
 
         FRISession friSession = new FRISession(friConfiguration);
-        FRIJointOverlay jointOverlay = new FRIJointOverlay(friSession);
+        jointOverlay = new FRIJointOverlay(friSession);
 		
 		double[] dest = {0,0,0,0,0,0,0};
 		
@@ -124,7 +125,7 @@ public class QuickControl extends RoboticsAPIApplication{
 			}
 			
 			PTP motion = BasicMotions.ptp(new JointPosition(pos[0], pos[1], pos[2], pos[3], pos[4], pos[5], pos[6]))
-					.setJointAccelerationRel(0.5);
+					.addMotionOverlay(jointOverlay);
 			logger.info("Motion: "+pos[0]+","+pos[1]+","+pos[2]+","+pos[3]+","+pos[4]+","+pos[5]+","+pos[6]);
 			queuedMotions.add(robot.moveAsync(motion));
 			if(queuedMotions.size() >= 3){

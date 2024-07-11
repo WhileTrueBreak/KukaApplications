@@ -109,8 +109,8 @@ public class QuickControl extends RoboticsAPIApplication{
 		try {
 			PTP motion = BasicMotions.ptp(new JointPosition(pos[0], pos[1], pos[2], pos[3], pos[4], pos[5], pos[6]))
 					.setBlendingRel(1).setJointVelocityRel(0.2);
+			logger.info("Motion: "+pos[0]+", "+pos[1]+", "+pos[2]+", "+pos[3]+", "+pos[4]+", "+pos[5]+", "+pos[6]);
 			queuedMotions.add(tool.move(motion));
-			logger.info("Motion: "+queuedMotions.get(queuedMotions.size()-1));
 			if(queuedMotions.size() > 2){
 				queuedMotions.get(0).await();
 				queuedMotions.remove(0);

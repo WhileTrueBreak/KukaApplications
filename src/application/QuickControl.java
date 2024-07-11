@@ -11,12 +11,9 @@ import com.kuka.generated.ioAccess.MediaFlangeIOGroup;
 import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
 import com.kuka.roboticsAPI.deviceModel.JointPosition;
 import com.kuka.roboticsAPI.deviceModel.LBR;
-import com.kuka.roboticsAPI.geometricModel.Frame;
 import com.kuka.roboticsAPI.geometricModel.Tool;
 import com.kuka.roboticsAPI.motionModel.BasicMotions;
 import com.kuka.roboticsAPI.motionModel.IMotionContainer;
-import com.kuka.roboticsAPI.motionModel.PTP;
-import com.kuka.roboticsAPI.motionModel.Spline;
 import com.kuka.task.ITaskLogger;
 import com.prosysopc.ua.stack.utils.StackUtils;
 
@@ -109,9 +106,9 @@ public class QuickControl extends RoboticsAPIApplication{
 	private boolean moveToPos(double[] pos) {
 		try {
 			queuedMotions.add(tool.move(BasicMotions.ptp(new JointPosition(pos[0], pos[1], pos[2], pos[3], pos[4], pos[5], pos[6]))
-					.setBlendingRel(1)));
+					.setJointVelocityRel(0.4)));
 			if(queuedMotions.size() > 2){
-//				queuedMotions.get(0).cancel();
+				queuedMotions.get(0).cancel();
 				queuedMotions.remove(0);
 			}
 		} catch (Exception e) {

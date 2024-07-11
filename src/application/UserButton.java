@@ -16,8 +16,6 @@ import com.kuka.roboticsAPI.uiModel.userKeys.UserKeyEvent;
 import com.kuka.roboticsAPI.uiModel.userKeys.UserKeyLED;
 import com.kuka.roboticsAPI.uiModel.userKeys.UserKeyLEDSize;
 
-import application.attachments.Gripper2F;
-
 /**
  * Implementation of a cyclic background task.
  * <p>

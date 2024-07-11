@@ -14,6 +14,7 @@ import com.kuka.roboticsAPI.deviceModel.LBR;
 import com.kuka.roboticsAPI.geometricModel.Tool;
 import com.kuka.roboticsAPI.motionModel.BasicMotions;
 import com.kuka.roboticsAPI.motionModel.IMotionContainer;
+import com.kuka.roboticsAPI.motionModel.PTP;
 import com.kuka.task.ITaskLogger;
 import com.prosysopc.ua.stack.utils.StackUtils;
 
@@ -108,15 +109,16 @@ public class QuickControl extends RoboticsAPIApplication{
 			if(queuedMotions.size() > 0 && queuedMotions.get(0).isFinished()){
 				queuedMotions.remove(0);
 			}
+			PTP motion = BasicMotions.ptp(new JointPosition(pos[0], pos[1], pos[2], pos[3], pos[4], pos[5], pos[6]))
+					.setJointAccelerationRel(0.5);
+			robot.move(motion);
 			logger.info("Motion: "+pos[0]+","+pos[1]+","+pos[2]+","+pos[3]+","+pos[4]+","+pos[5]+","+pos[6]);
-			queuedMotions.add(tool.moveAsync(BasicMotions.ptp(new JointPosition(pos[0], pos[1], pos[2], pos[3], pos[4], pos[5], pos[6]))
-					.setJointAccelerationRel(0.5)));
+			queuedMotions.add(robot.moveAsync(motion));
 			if(queuedMotions.size() >= 3){
 				queuedMotions.get(0).cancel();
 				queuedMotions.remove(0);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
 			return false;
 		}
 		return true;

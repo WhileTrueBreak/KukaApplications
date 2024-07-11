@@ -9,6 +9,7 @@ import javax.inject.Named;
 import com.kuka.generated.ioAccess.Gripper2FIOGroup;
 import com.kuka.generated.ioAccess.MediaFlangeIOGroup;
 import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
+import com.kuka.roboticsAPI.deviceModel.JointPosition;
 import com.kuka.roboticsAPI.deviceModel.LBR;
 import com.kuka.roboticsAPI.geometricModel.Frame;
 import com.kuka.roboticsAPI.geometricModel.Tool;
@@ -46,15 +47,16 @@ public class QuickControl extends RoboticsAPIApplication{
 	@Override
 	public void run() throws Exception {
 		
-		double[] dest = {0,0,0,0,0,0};
+		double[] dest = {0,0,0,0,0,0,0};
 		
 		String[] nodesToRead = {
-				"Objects/RobotControl/cposx",
-				"Objects/RobotControl/cposy",
-				"Objects/RobotControl/cposz",
-				"Objects/RobotControl/crota",
-				"Objects/RobotControl/crotb",
-				"Objects/RobotControl/crotc",
+				"Objects/RobotControl/cjoi0",
+				"Objects/RobotControl/cjoi1",
+				"Objects/RobotControl/cjoi2",
+				"Objects/RobotControl/cjoi3",
+				"Objects/RobotControl/cjoi4",
+				"Objects/RobotControl/cjoi5",
+				"Objects/RobotControl/cjoi6",
 		};
 		String statusNodePath = "Objects/RobotControl/cstatus";
 		String disconnectNodePath = "Objects/RobotControl/cdisconnect";
@@ -79,7 +81,7 @@ public class QuickControl extends RoboticsAPIApplication{
 				if(!opcua.hasNodeUpdated(path)) continue;
 				destUpdate = true;
 				double value = opcua.readNode(path, Double.TYPE);
-				dest[i] = value;
+				dest[i] = Math.toRadians(value);
 			}
 			if(destUpdate) {
 				boolean success = moveToPos(dest);
@@ -103,13 +105,8 @@ public class QuickControl extends RoboticsAPIApplication{
 	}
 	
 	private boolean moveToPos(double[] pos) {
-		Frame frame = new Frame(pos[0], pos[1], pos[2], pos[3], pos[4], pos[5]);
 		try {
-			queuedMotions.add(tool.moveAsync(BasicMotions.ptp(frame).setBlendingRel(1)));
-			if(queuedMotions.size() > 3) {
-				queuedMotions.get(0).cancel();
-				queuedMotions.remove(0);
-			}
+			tool.move(BasicMotions.ptp(new JointPosition(pos[0], pos[1], pos[2], pos[3], pos[4], pos[5], pos[6])));
 		} catch (Exception e) {
 			return false;
 		}

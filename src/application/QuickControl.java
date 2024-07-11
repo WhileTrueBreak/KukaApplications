@@ -105,7 +105,7 @@ public class QuickControl extends RoboticsAPIApplication{
 	
 	private boolean moveToPos(double[] pos) {
 		try {
-			if(queuedMotions.get(0).isFinished()){
+			if(queuedMotions.size() > 0 && queuedMotions.get(0).isFinished()){
 				queuedMotions.remove(0);
 			}
 			if(queuedMotions.size() <= 2){

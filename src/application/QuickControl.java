@@ -84,15 +84,16 @@ public class QuickControl extends RoboticsAPIApplication{
 				double value = opcua.readNode(path, Double.TYPE);
 				dest[i] = Math.toRadians(value);
 			}
-			if(destUpdate) {
-				boolean success = moveToPos(dest);
-				if(success) {
-					opcua.writeNode(statusNodePath, 1);
-				}else {
-					opcua.writeNode(statusNodePath, -1);
-				}
-				destUpdate = false;
-			}
+			logger.info("Motion: "+dest[0]+", "+dest[1]+", "+dest[2]+", "+dest[3]+", "+dest[4]+", "+dest[5]+", "+dest[6]);
+//			if(destUpdate) {
+//				boolean success = moveToPos(dest);
+//				if(success) {
+//					opcua.writeNode(statusNodePath, 1);
+//				}else {
+//					opcua.writeNode(statusNodePath, -1);
+//				}
+//				destUpdate = false;
+//			}
 			
 			if(!opcua.hasNodeUpdated(disconnectNodePath)) continue;
 			int value = opcua.readNode(disconnectNodePath, Integer.TYPE);
@@ -108,7 +109,7 @@ public class QuickControl extends RoboticsAPIApplication{
 	private boolean moveToPos(double[] pos) {
 		try {
 			PTP motion = BasicMotions.ptp(new JointPosition(pos[0], pos[1], pos[2], pos[3], pos[4], pos[5], pos[6]))
-					.setBlendingRel(1).setJointVelocityRel(0.2);
+					.setBlendingRel(1);
 			logger.info("Motion: "+pos[0]+", "+pos[1]+", "+pos[2]+", "+pos[3]+", "+pos[4]+", "+pos[5]+", "+pos[6]);
 			queuedMotions.add(tool.moveAsync(motion));
 			if(queuedMotions.size() > 2){

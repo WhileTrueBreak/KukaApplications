@@ -62,7 +62,7 @@ public class OCPUA_cycle	 {
 	public ScheduledExecutorService scheduler;
 	
 	@Inject	
-	private OPCUA_Client_Background1 OPCUA;
+	private OPCUA_Client_Background2 OPCUA;
 	//public ExecutorService scheduler;
 	
 	public Boolean initialize;

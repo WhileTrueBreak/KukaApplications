@@ -4,6 +4,7 @@ import java.util.concurrent.*;
 
 import javax.inject.Inject;
 
+import com.kuka.common.ThreadUtil;
 import com.kuka.roboticsAPI.applicationModel.tasks.CycleBehavior;
 import com.kuka.roboticsAPI.applicationModel.tasks.RoboticsAPICyclicBackgroundTask;
 
@@ -26,12 +27,13 @@ import com.kuka.roboticsAPI.applicationModel.tasks.RoboticsAPICyclicBackgroundTa
 * @see #run()
 * @see #dispose()
 */
-public class OPCUA_Background1 extends RoboticsAPICyclicBackgroundTask{
+public class OPCUA_Background2 extends RoboticsAPICyclicBackgroundTask{
 
 	@Inject	
 	private OCPUA_cycle cycle1;	
 	
 	public void initialize(){
+		ThreadUtil.milliSleep(10000);
 		initializeCyclic(0, 500, TimeUnit.MILLISECONDS,	CycleBehavior.BestEffort);
 		cycle1.initialize();
 		cycle1.startCycle();

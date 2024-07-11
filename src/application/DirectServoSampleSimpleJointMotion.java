@@ -103,7 +103,7 @@ public class DirectServoSampleSimpleJointMotion extends RoboticsAPIApplication
         aDirectServoMotion.setMinimumTrajectoryExecutionTime(40e-3);
 
         getLogger().info("Starting DirectServo motion in position control mode");
-        _toolAttachedToLBR.getDefaultMotionFrame().moveAsync(aDirectServoMotion);
+        _toolAttachedToLBR.getDefaultMotionFrame().move(aDirectServoMotion);
 
         // Fetch the Runtime of the Motion part
         // NOTE: the Runtime exists AFTER motion command was issued

@@ -106,10 +106,11 @@ public class QuickControl extends RoboticsAPIApplication{
 	
 	private boolean moveToPos(double[] pos) {
 		try {
-			queuedMotions.add(tool.moveAsync(BasicMotions.ptp(new JointPosition(pos[0], pos[1], pos[2], pos[3], pos[4], pos[5], pos[6])).setBlendingRel(1).setJointVelocityRel(0.2)));
+			queuedMotions.add(tool.moveAsync(BasicMotions.ptp(new JointPosition(pos[0], pos[1], pos[2], pos[3], pos[4], pos[5], pos[6]))
+					.setBlendingRel(1).setJointVelocityRel(0.2)));
 			logger.info("Motion: "+queuedMotions.get(queuedMotions.size()-1));
 			if(queuedMotions.size() > 2){
-				queuedMotions.get(0).cancel();
+				queuedMotions.get(0).await();
 				queuedMotions.remove(0);
 			}
 		} catch (Exception e) {

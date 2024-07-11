@@ -6,6 +6,9 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import com.kuka.connectivity.fastRobotInterface.FRIConfiguration;
+import com.kuka.connectivity.fastRobotInterface.FRIJointOverlay;
+import com.kuka.connectivity.fastRobotInterface.FRISession;
 import com.kuka.generated.ioAccess.Gripper2FIOGroup;
 import com.kuka.generated.ioAccess.MediaFlangeIOGroup;
 import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
@@ -45,6 +48,16 @@ public class QuickControl extends RoboticsAPIApplication{
 	
 	@Override
 	public void run() throws Exception {
+		
+		FRIConfiguration friConfiguration = FRIConfiguration.createRemoteConfiguration(robot, "127.0.0.1");
+        friConfiguration.setSendPeriodMilliSec(5);
+
+        getLogger().info("Creating FRI connection to " + friConfiguration.getHostName());
+        getLogger().info("SendPeriod: " + friConfiguration.getSendPeriodMilliSec() + "ms |"
+                + " ReceiveMultiplier: " + friConfiguration.getReceiveMultiplier());
+
+        FRISession friSession = new FRISession(friConfiguration);
+        FRIJointOverlay jointOverlay = new FRIJointOverlay(friSession);
 		
 		double[] dest = {0,0,0,0,0,0,0};
 		

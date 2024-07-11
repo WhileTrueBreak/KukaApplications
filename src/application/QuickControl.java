@@ -105,7 +105,6 @@ public class QuickControl extends RoboticsAPIApplication{
 	
 	private boolean moveToPos(double[] pos) {
 		try {
-			logger.info("queue: "+queuedMotions.size());
 			if(queuedMotions.get(0).isFinished()){
 				queuedMotions.remove(0);
 			}
@@ -115,6 +114,7 @@ public class QuickControl extends RoboticsAPIApplication{
 						.setJointAccelerationRel(0.5)));
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			return false;
 		}
 		return true;

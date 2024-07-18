@@ -64,6 +64,7 @@ public class LBRJointSineOverlay extends RoboticsAPIApplication
         try
         {
             friSession.await(10, TimeUnit.SECONDS);
+            getLogger().info(friSession.getFRIChannelInformation().getQuality().name());
         }
         catch (final TimeoutException e)
         {

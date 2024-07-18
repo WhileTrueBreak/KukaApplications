@@ -43,13 +43,14 @@ public class LBRJointSineOverlayApp
             }
         }
 
-        String hostname = (args.length >= 1) ? args[0] : null;
+        String hostname = (args.length >= 1) ? args[0] : "172.32.1.201";
         int port = (args.length >= 2) ? Integer.valueOf(args[1]) : DEFAULT_PORTID;
         int jointMask = (args.length >= 3) ? Integer.valueOf(args[2]) : DEFAULT_JOINTMASK;
         double frequency = (args.length >= 4) ? Double.valueOf(args[3]) : DEFAULT_FREQUENCY;
         double amplitude = (args.length >= 5) ? Double.valueOf(args[4]) : DEFAULT_AMPLITUDE;
         double filterCoeff = (args.length >= 6) ? Double.valueOf(args[5]) : DEFAULT_FILTER_COEFFICIENT;
 
+        Logger.getAnonymousLogger().info("Hostname: " + hostname);
         Logger.getAnonymousLogger().info("Enter LBRJointSineOverlay Client Application");
 
         /***************************************************************************/
@@ -76,7 +77,7 @@ public class LBRJointSineOverlayApp
 
         // connect client application to KUKA Sunrise controller
         app.connect(port, hostname);
-
+        
         /***************************************************************************/
         /*                                                                         */
         /* Standard application structure */

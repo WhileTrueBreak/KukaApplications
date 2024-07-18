@@ -205,5 +205,8 @@
 			<attribute name="javadoc_location" value="jar:platform:/resource/_Robot2_KP/KUKAJavaLib/#Bundle-JavaDoc#!/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="lib/com.kuka.connectivity.fastRobotInterface.clientSDK_1.15.1.Con1-17-0_2-javadoc.jar"/>
+	<classpathentry kind="lib" path="lib/com.kuka.connectivity.fastRobotInterface.clientSDK_1.15.1.Con1-17-0_2.jar"/>
+	<classpathentry kind="lib" path="lib/protobuf-java-2.5.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

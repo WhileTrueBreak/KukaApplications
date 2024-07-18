@@ -1,15 +1,14 @@
-package connectivity.fri.sdk.example.lbrJointSineOverlay;
+package application.fri.client;
 
 import java.util.logging.Logger;
-
+import com.kuka.connectivity.fastRobotInterface.*;
 import com.kuka.connectivity.fastRobotInterface.clientSDK.clientLBR.LBRClient;
 import com.kuka.connectivity.fastRobotInterface.clientSDK.clientLBR.LBRState;
 
 /**
  * Test client that can overlay interpolator joint positions with sine waves.
  */
-public class LBRJointSineOverlayClient extends LBRClient
-{
+public class LBRJointSineOverlayClient extends LBRClient {
     //!< bit mask encoding of joints to be overlaid
     private int _jointMask;
 
@@ -45,8 +44,7 @@ public class LBRJointSineOverlayClient extends LBRClient
      *            filter coefficient between 0 (filter off) and 1 (max filter)
      */
     public LBRJointSineOverlayClient(int jointMask, double freqHz,
-            double amplRad, double filterCoeff)
-    {
+            double amplRad, double filterCoeff) {
         _freqHz = freqHz;
         _amplRad = amplRad;
         _filterCoeff = filterCoeff;
@@ -61,10 +59,8 @@ public class LBRJointSineOverlayClient extends LBRClient
     }
 
     @Override
-    public void onStateChange(FRISessionState oldState, FRISessionState newState)
-    {
-        switch (newState)
-        {
+    public void onStateChange(FRISessionState oldState, FRISessionState newState) {
+        switch (newState) {
         case MONITORING_READY:
             // (re)initialize sine parameters when entering Monitoring
             _offset = 0.0;
@@ -82,8 +78,7 @@ public class LBRJointSineOverlayClient extends LBRClient
      * Callback for the FRI state 'Commanding Active'.
      */
     @Override
-    public void command()
-    {
+    public void command() {
         // calculate new offset
         double newOffset = _amplRad * Math.sin(_phi);
         _offset = _offset * _filterCoeff + newOffset * (1.0 - _filterCoeff);

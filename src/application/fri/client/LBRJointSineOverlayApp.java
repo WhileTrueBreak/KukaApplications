@@ -18,10 +18,10 @@ import com.kuka.connectivity.fastRobotInterface.clientSDK.connection.UdpConnecti
  */
 public class LBRJointSineOverlayApp
 {
-    private LBRJointSineOverlayApp()
-    {
-        // only for sonar
-    }
+//    private LBRJointSineOverlayApp()
+//    {
+//        // only for sonar
+//    }
 
     private static final int DEFAULT_PORTID = 30200;
     private static final double DEFAULT_FREQUENCY = 0.25;
@@ -29,20 +29,9 @@ public class LBRJointSineOverlayApp
     private static final double DEFAULT_FILTER_COEFFICIENT = 0.99;
     private static final int DEFAULT_JOINTMASK = 0x8;
 
-    /**
-     * Auto-generated method stub. Do not modify the contents of this method.
-     * 
-     * @param argv
-     *            the arguments
-     * 
-     * 
-     */
-    public static void main(String[] argv)
-    {
-        if (argv.length > 0)
-        {
-            if ("help".equals(argv[0]))
-            {
+    public static void main(String[] args) {
+        if (args.length > 0) {
+            if ("help".equals(args[0])) {
                 Logger.getAnonymousLogger().info("\nKUKA LBR joint sine overlay test application\n\n\tCommand line arguments:");
                 Logger.getAnonymousLogger().info("\t1) remote hostname (optional)");
                 Logger.getAnonymousLogger().info("\t2) port ID (optional)");
@@ -54,12 +43,12 @@ public class LBRJointSineOverlayApp
             }
         }
 
-        String hostname = (argv.length >= 1) ? argv[0] : null;
-        int port = (argv.length >= 2) ? Integer.valueOf(argv[1]) : DEFAULT_PORTID;
-        int jointMask = (argv.length >= 3) ? Integer.valueOf(argv[2]) : DEFAULT_JOINTMASK;
-        double frequency = (argv.length >= 4) ? Double.valueOf(argv[3]) : DEFAULT_FREQUENCY;
-        double amplitude = (argv.length >= 5) ? Double.valueOf(argv[4]) : DEFAULT_AMPLITUDE;
-        double filterCoeff = (argv.length >= 6) ? Double.valueOf(argv[5]) : DEFAULT_FILTER_COEFFICIENT;
+        String hostname = (args.length >= 1) ? args[0] : null;
+        int port = (args.length >= 2) ? Integer.valueOf(args[1]) : DEFAULT_PORTID;
+        int jointMask = (args.length >= 3) ? Integer.valueOf(args[2]) : DEFAULT_JOINTMASK;
+        double frequency = (args.length >= 4) ? Double.valueOf(args[3]) : DEFAULT_FREQUENCY;
+        double amplitude = (args.length >= 5) ? Double.valueOf(args[4]) : DEFAULT_AMPLITUDE;
+        double filterCoeff = (args.length >= 6) ? Double.valueOf(args[5]) : DEFAULT_FILTER_COEFFICIENT;
 
         Logger.getAnonymousLogger().info("Enter LBRJointSineOverlay Client Application");
 
@@ -97,8 +86,7 @@ public class LBRJointSineOverlayApp
 
         // repeatedly call the step routine to receive and process FRI packets
         boolean success = true;
-        while (success)
-        {
+        while (success) {
             success = app.step();
         }
 

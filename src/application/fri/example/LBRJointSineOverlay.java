@@ -5,9 +5,11 @@ import static com.kuka.roboticsAPI.motionModel.BasicMotions.ptp;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
+import com.kuka.connectivity.fastRobotInterface.FRIChannelInformation;
 import com.kuka.connectivity.fastRobotInterface.FRIConfiguration;
 import com.kuka.connectivity.fastRobotInterface.FRIJointOverlay;
 import com.kuka.connectivity.fastRobotInterface.FRISession;
+import com.kuka.connectivity.fastRobotInterface.IFRISessionListener;
 import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
 import com.kuka.roboticsAPI.controllerModel.Controller;
 import com.kuka.roboticsAPI.deviceModel.LBR;
@@ -46,6 +48,18 @@ public class LBRJointSineOverlay extends RoboticsAPIApplication
         FRISession friSession = new FRISession(friConfiguration);
         FRIJointOverlay jointOverlay = new FRIJointOverlay(friSession);
 
+        IFRISessionListener listener = new IFRISessionListener(){
+        	@Override
+        	public void onFRIConnectionQualityChanged(FRIChannelInformation friChannelInformation){
+	        	getLogger().info("QualityChangedEvent - quality:" + friChannelInformation.getQuality());
+        	}
+        	@Override
+        	public void onFRISessionStateChanged(FRIChannelInformation friChannelInformation){
+	        	getLogger().info("SessionStateChangedEvent - session state:" + friChannelInformation.getFRISessionState());
+	        	}
+        	};
+        friSession.addFRISessionListener(listener);
+        
         // wait until FRI session is ready to switch to command mode
         try
         {

@@ -1,7 +1,6 @@
 package application.fri.client;
 
 import java.util.logging.Logger;
-import com.kuka.connectivity.fastRobotInterface.*;
 import com.kuka.connectivity.fastRobotInterface.clientSDK.clientLBR.LBRClient;
 import com.kuka.connectivity.fastRobotInterface.clientSDK.clientLBR.LBRState;
 

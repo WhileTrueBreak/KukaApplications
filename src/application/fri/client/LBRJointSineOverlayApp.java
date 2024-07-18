@@ -1,4 +1,4 @@
-package connectivity.fri.sdk.example.lbrJointSineOverlay;
+package application.fri.client;
 
 import java.util.logging.Logger;
 

@@ -77,6 +77,7 @@ public class LBRJointSineOverlayApp
 
         // connect client application to KUKA Sunrise controller
         app.connect(port, hostname);
+        Logger.getAnonymousLogger().info("Connection: "+Boolean.toString(connection.isOpen()));
         
         /***************************************************************************/
         /*                                                                         */
@@ -89,6 +90,7 @@ public class LBRJointSineOverlayApp
         boolean success = true;
         while (success) {
             success = app.step();
+            Logger.getAnonymousLogger().info("Stepped");
         }
 
         /***************************************************************************/
